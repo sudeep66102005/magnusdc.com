@@ -16,23 +16,15 @@ export function PageHero({
   children,
 }: PageHeroProps) {
   return (
-    <section
-      className={cn(
-        "bg-gradient-to-b from-primary/5 to-white py-16 lg:py-20",
-        className
-      )}
-    >
-      <div className="mx-auto max-w-4xl px-4 text-center lg:px-8">
+    <section className={cn("brand-grid relative overflow-hidden border-b border-[#dce5f1] bg-[#f4f8ff] py-20 lg:py-28", className)}>
+      <div className="absolute -left-24 top-0 size-72 rounded-full bg-[#31B4F4]/10 blur-3xl" />
+      <div className="relative mx-auto max-w-5xl px-5 text-center sm:px-8">
         {eyebrow && (
-          <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-            {eyebrow}
-          </p>
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-[#DA1C29]">{eyebrow}</p>
         )}
-        <h1 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
-          {title}
-        </h1>
+        <h1 className="mt-4 text-4xl font-black leading-[1.03] tracking-[-0.045em] text-[#142F86] sm:text-5xl lg:text-6xl">{title}</h1>
         {description && (
-          <p className="mt-4 text-lg text-slate-600">{description}</p>
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-[#607089]">{description}</p>
         )}
         {children}
       </div>
