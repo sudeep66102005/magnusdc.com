@@ -62,22 +62,22 @@ export default function HomePage() {
       <section className="relative overflow-hidden bg-[#f7faff]">
         <div className="brand-grid absolute inset-0 opacity-60" />
         <div className="absolute -left-40 top-24 size-96 rounded-full bg-[#31B4F4]/10 blur-3xl" />
-        <div className="relative mx-auto grid min-h-[680px] max-w-[1440px] items-center gap-12 px-5 py-14 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:px-12 lg:py-20 xl:px-20">
-          <div className="relative z-10 max-w-2xl">
+        <div className="relative mx-auto grid w-full min-w-0 max-w-[1440px] items-center gap-10 px-4 py-10 sm:gap-12 sm:px-8 sm:py-14 lg:grid-cols-[0.9fr_1.1fr] lg:px-12 lg:py-20 xl:px-20">
+          <div className="relative z-10 min-w-0 max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-[#142F86]/10 bg-white/80 px-3.5 py-2 text-xs font-bold uppercase tracking-[0.16em] text-[#142F86] shadow-sm backdrop-blur">
               <span className="size-2 rounded-full bg-[#DA1C29]" />
               Radiologist-led excellence
             </div>
-            <h1 className="mt-7 text-[clamp(3.15rem,6vw,6.25rem)] font-black leading-[0.94] tracking-[-0.055em] text-[#102A75]">
+            <h1 className="mt-6 text-[clamp(2.55rem,12vw,6.25rem)] font-black leading-[0.98] tracking-[-0.05em] text-[#102A75] sm:mt-7 sm:leading-[0.94]">
               Clarity for every health decision.
             </h1>
             <p className="mt-7 max-w-xl text-lg leading-8 text-[#4f5f78] sm:text-xl">
               Advanced diagnostics, laboratory services and multispecialty care—brought together with precision, transparency and genuine compassion.
             </p>
-            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-8 grid w-full gap-3 sm:mt-9 sm:flex sm:flex-row">
               <Button
                 size="lg"
-                className="h-13 rounded-full bg-[#142F86] px-7 text-base shadow-[0_14px_34px_-16px_rgba(20,47,134,0.85)] hover:bg-[#0f266f]"
+                className="h-13 w-full rounded-full bg-[#142F86] px-5 text-base shadow-[0_14px_34px_-16px_rgba(20,47,134,0.85)] hover:bg-[#0f266f] sm:w-auto sm:px-7"
                 render={<Link href="/patient-info/appointment-booking" />}
               >
                 Book an appointment
@@ -86,68 +86,73 @@ export default function HomePage() {
               <Button
                 variant="outline"
                 size="lg"
-                className="h-13 rounded-full border-[#142F86]/20 bg-white/70 px-7 text-base text-[#142F86] hover:bg-white"
+                className="h-13 w-full rounded-full border-[#142F86]/20 bg-white/70 px-5 text-base text-[#142F86] hover:bg-white sm:w-auto sm:px-7"
                 render={<Link href="/diagnostics" />}
               >
                 Explore diagnostics
               </Button>
             </div>
-            <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm font-semibold text-[#41516b]">
-              {["Same-day slots", "Timely reporting", "Patient-first care"].map((item) => (
-                <span key={item} className="flex items-center gap-2">
-                  <CircleCheck className="size-4 text-[#31B4F4]" />
-                  {item}
+            <div className="mt-8 grid min-w-0 grid-cols-2 gap-x-3 gap-y-3 text-xs font-semibold text-[#41516b] min-[420px]:text-sm sm:mt-9 sm:flex sm:flex-wrap sm:gap-x-6">
+              {["Same-day slots", "Timely reporting", "Patient-first care"].map((item, index) => (
+                <span
+                  key={item}
+                  className={`flex min-w-0 items-center gap-2 ${index === 2 ? "col-span-2" : ""}`}
+                >
+                  <CircleCheck className="size-4 shrink-0 text-[#31B4F4]" />
+                  <span className="min-w-0 leading-5">{item}</span>
                 </span>
               ))}
             </div>
           </div>
 
-          <div className="relative lg:pl-4">
-            <div className="premium-shadow relative aspect-[4/4.4] min-h-[510px] overflow-hidden rounded-[2.5rem] border-[6px] border-white bg-[#142F86] sm:aspect-[4/3.65] lg:aspect-[4/4.6] xl:aspect-[4/3.9]">
+          <div className="relative w-full min-w-0 lg:pl-4">
+            <div className="premium-shadow relative h-[500px] w-full min-w-0 overflow-hidden rounded-[1.75rem] border-4 border-white bg-[#142F86] sm:h-auto sm:min-h-[510px] sm:aspect-[4/3.65] sm:rounded-[2.5rem] sm:border-[6px] lg:aspect-[4/4.6] xl:aspect-[4/3.9]">
               <Image
                 src={`${basePath}/assets/images/mri-suite.webp`}
                 alt="Advanced MRI suite at Clarus Magnus Health and Diagnostics"
                 fill
                 priority
-                sizes="(max-width: 1024px) 100vw, 55vw"
+                sizes="(max-width: 1024px) calc(100vw - 32px), 55vw"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#091a4d]/90 via-[#091a4d]/5 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-7 text-white sm:p-9">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#8ed7fa]">Precision imaging</p>
-                <p className="mt-2 max-w-md text-2xl font-bold leading-tight sm:text-3xl">Advanced 3 Tesla MRI for exceptional diagnostic confidence.</p>
-              </div>
-            </div>
-            <div className="absolute -left-4 top-10 rounded-2xl border border-white/70 bg-white/95 p-4 shadow-xl backdrop-blur sm:-left-8 sm:p-5">
-              <div className="flex items-center gap-3">
-                <span className="flex size-11 items-center justify-center rounded-xl bg-[#EAF7FE] text-[#142F86]">
-                  <ShieldCheck className="size-5" />
-                </span>
-                <div>
-                  <p className="text-lg font-black text-[#142F86]">18+ years</p>
-                  <p className="text-xs font-semibold text-[#65728a]">of trusted healthcare</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#091a4d]/95 via-[#091a4d]/5 to-transparent" />
+
+              <div className="absolute left-3 top-3 max-w-[calc(100%_-_1.5rem)] rounded-2xl border border-white/70 bg-white/95 p-3 shadow-xl backdrop-blur sm:left-5 sm:top-5 sm:p-5">
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-[#EAF7FE] text-[#142F86] sm:size-11">
+                    <ShieldCheck className="size-4 sm:size-5" />
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-base font-black text-[#142F86] sm:text-lg">18+ years</p>
+                    <p className="text-[11px] font-semibold leading-4 text-[#65728a] sm:text-xs">of trusted healthcare</p>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="absolute -bottom-5 right-5 rounded-2xl bg-[#DA1C29] px-5 py-4 text-white shadow-xl sm:right-10">
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-white/75">Available</p>
-              <p className="mt-0.5 text-lg font-black">MRI &amp; CT · 24/7</p>
+
+              <div className="absolute inset-x-0 bottom-0 min-w-0 p-5 text-white sm:p-9">
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[#DA1C29] px-3 py-1.5 text-xs font-black shadow-lg sm:px-4 sm:py-2">
+                  <span className="rounded-full bg-white/20 px-1.5 py-0.5">24/7</span>
+                  MRI &amp; CT available
+                </div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8ed7fa] sm:text-xs sm:tracking-[0.2em]">Precision imaging</p>
+                <p className="mt-2 max-w-md text-xl font-bold leading-[1.2] sm:text-3xl sm:leading-tight">Advanced 3 Tesla MRI for exceptional diagnostic confidence.</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <section className="border-y border-[#dbe5f2] bg-white">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-[#dbe5f2] px-5 lg:grid-cols-4 lg:divide-y-0 lg:px-8">
+        <div className="mx-auto grid min-w-0 max-w-7xl grid-cols-2 divide-x divide-y divide-[#dbe5f2] sm:px-8 lg:grid-cols-4 lg:divide-y-0">
           {[
             ["18+", "Years of trusted care"],
             ["3T", "Advanced MRI technology"],
             ["24/7", "MRI and CT services"],
             ["One roof", "Diagnostics and specialists"],
           ].map(([value, label]) => (
-            <div key={label} className="px-4 py-7 text-center sm:px-8">
-              <p className="text-2xl font-black tracking-tight text-[#142F86] sm:text-3xl">{value}</p>
-              <p className="mt-1 text-xs font-bold uppercase tracking-[0.12em] text-[#6c788d] sm:text-sm">{label}</p>
+            <div key={label} className="min-w-0 px-3 py-6 text-center sm:px-8 sm:py-7">
+              <p className="break-words text-2xl font-black tracking-tight text-[#142F86] sm:text-3xl">{value}</p>
+              <p className="mt-1 break-words text-[11px] font-bold uppercase leading-5 tracking-[0.08em] text-[#6c788d] sm:text-sm sm:tracking-[0.12em]">{label}</p>
             </div>
           ))}
         </div>

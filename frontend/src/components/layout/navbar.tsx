@@ -48,14 +48,14 @@ export function Navbar() {
       </div>
 
       <div className="border-b border-[#dbe5f2] bg-white/95 shadow-[0_10px_30px_-24px_rgba(20,47,134,0.7)] backdrop-blur-xl">
-        <div className="mx-auto flex h-[76px] max-w-7xl items-center justify-between gap-6 px-5 sm:px-8">
-          <Link href="/" className="relative block h-[54px] w-[190px] shrink-0" aria-label="Clarus Magnus home">
+        <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-3 px-4 sm:h-[76px] sm:gap-6 sm:px-8">
+          <Link href="/" className="relative block h-[48px] w-[160px] min-w-0 shrink-0 sm:h-[54px] sm:w-[190px]" aria-label="Clarus Magnus home">
             <Image
               src={`${basePath}/assets/logo/clarus-magnus-logo.png`}
               alt="Clarus Magnus Health and Diagnostics"
               fill
               priority
-              sizes="190px"
+              sizes="(max-width: 639px) 160px, 190px"
               className="object-contain object-left"
             />
           </Link>
@@ -94,7 +94,7 @@ export function Navbar() {
               >
                 <Menu className="size-5" />
               </SheetTrigger>
-              <SheetContent side="right" className="w-[320px] border-l-[#dbe5f2] bg-white p-0 sm:w-[380px]">
+              <SheetContent side="right" className="w-[320px] max-w-full border-l-[#dbe5f2] bg-white p-0 sm:w-[380px]">
                 <SheetHeader className="border-b border-[#dbe5f2] px-6 py-5">
                   <SheetTitle className="text-left text-[#142F86]">Explore Clarus Magnus</SheetTitle>
                 </SheetHeader>
