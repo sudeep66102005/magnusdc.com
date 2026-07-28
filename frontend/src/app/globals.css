@@ -114,6 +114,12 @@
     @apply border-border outline-ring/50;
   }
 
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
+
   html {
     @apply font-sans;
     scroll-behavior: smooth;
@@ -121,6 +127,7 @@
 
   body {
     @apply bg-background text-foreground;
+    min-width: 0;
     text-rendering: optimizeLegibility;
   }
 
