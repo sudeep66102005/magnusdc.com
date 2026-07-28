@@ -2,7 +2,7 @@ name: Deploy Frontend to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, scaffold/frontend-backend-structure]
     paths:
       - "frontend/**"
       - ".github/workflows/deploy-pages.yml"
