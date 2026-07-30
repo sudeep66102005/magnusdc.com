@@ -58,7 +58,7 @@ export default function HealthPackagesPage() {
 
         <div className="mt-16 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#DA1C29]">Popular preventive options</p>
+            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#DA1C29]">Routine &amp; diabetic profiles</p>
             <h2 className="mt-3 text-3xl font-black tracking-[-0.035em] text-[#142F86] sm:text-4xl">Start with a trusted baseline.</h2>
           </div>
           <p className="flex items-center gap-2 text-xs font-bold text-[#6c788d]"><Info className="size-4 text-[#31B4F4]" /> Guide updated {healthPackageGuideDate}</p>

@@ -156,14 +156,15 @@ function DesktopDropdown({ group }: { group: HeaderGroup }) {
         if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setOpen(false);
       }}
     >
-      <Link
-        href={group.href}
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
         aria-expanded={open}
         className="flex h-full items-center gap-1.5 border-b-2 border-transparent px-3 text-[13px] font-black text-[#32415b] transition hover:border-[#31B4F4] hover:text-[#142F86] focus-visible:border-[#31B4F4] focus-visible:text-[#142F86] focus-visible:outline-none"
       >
         {group.label}
         <ChevronDown className={`size-3.5 transition duration-300 ${open ? "rotate-180" : ""}`} />
-      </Link>
+      </button>
       <div className={`absolute left-0 top-full z-[70] w-[620px] pt-3 transition duration-300 ease-out ${open ? "visible translate-y-0 opacity-100" : "invisible translate-y-3 opacity-0"}`}>
         <div className="grid grid-cols-[0.8fr_1.2fr] overflow-hidden rounded-3xl border border-[#d8e3f0] bg-white shadow-[0_28px_80px_-28px_rgba(10,31,87,0.42)]">
           <div className="bg-[#102A75] p-7 text-white">
@@ -213,7 +214,7 @@ function LocationMenu() {
     >
       <button
         type="button"
-        onClick={() => setOpen((current) => !current)}
+        onClick={() => setOpen(true)}
         className="flex h-full items-center gap-2 text-left text-white/82 transition hover:text-white focus-visible:text-white focus-visible:outline-none"
         aria-label="View centre location and nearby areas"
         aria-expanded={open}
@@ -275,7 +276,10 @@ export function Navbar() {
   const searchResults = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     if (!normalized) return searchItems.slice(0, 8);
-    return searchItems.filter((item) => item.label.toLowerCase().includes(normalized)).slice(0, 10);
+    return searchItems.filter((item) => {
+      const searchableText = [item.label, item.description, item.href].filter(Boolean).join(" ").toLowerCase();
+      return searchableText.includes(normalized);
+    }).slice(0, 10);
   }, [query]);
 
   return (
@@ -334,6 +338,30 @@ export function Navbar() {
                   <Link href="/patient-info/appointment-booking" onClick={() => setMobileOpen(false)} className="flex flex-col items-center gap-2 rounded-xl px-2 py-3 text-center text-[10px] font-black text-[#142F86]"><CalendarDays className="size-4 text-[#31B4F4]" />Appointment</Link>
                   <a href={siteConfig.phone.href} className="flex flex-col items-center gap-2 rounded-xl bg-[#DA1C29] px-2 py-3 text-center text-[10px] font-black text-white"><Ambulance className="size-4" />Emergency</a>
                 </div>
+                <div className="border-b border-[#dbe5f2] px-5 py-4">
+                  <label htmlFor="mobile-site-search" className="sr-only">Search Clarus Magnus</label>
+                  <div className="flex items-center gap-2 rounded-xl border border-[#d4dfec] bg-[#f8fbff] px-3 focus-within:border-[#31B4F4]">
+                    <Search className="size-4 text-[#31B4F4]" />
+                    <input
+                      id="mobile-site-search"
+                      value={query}
+                      onChange={(event) => setQuery(event.target.value)}
+                      className="h-11 min-w-0 flex-1 bg-transparent text-sm font-bold text-[#263858] outline-none placeholder:text-[#8b97a9]"
+                      placeholder="Search services or packages"
+                      autoComplete="off"
+                    />
+                  </div>
+                  {query.trim() && (
+                    <div className="mt-2 grid gap-1">
+                      {searchResults.slice(0, 5).map((item) => (
+                        <Link key={`mobile-${item.label}-${item.href}`} href={item.href} onClick={() => setMobileOpen(false)} className="flex items-center justify-between rounded-lg px-2 py-2 text-xs font-bold text-[#52627a] hover:bg-[#EAF7FE] hover:text-[#142F86]">
+                          {item.label}<ArrowRight className="size-3.5 text-[#31B4F4]" />
+                        </Link>
+                      ))}
+                      {searchResults.length === 0 && <p className="px-2 py-2 text-xs leading-5 text-[#718097]">No match found. Call {siteConfig.phone.display} for help.</p>}
+                    </div>
+                  )}
+                </div>
                 <nav className="px-5 py-4" aria-label="Mobile navigation">
                   {headerGroups.map((group) => (
                     <details key={group.label} className="group border-b border-[#e4eaf2]">
@@ -341,6 +369,7 @@ export function Navbar() {
                         {group.label}<ChevronDown className="size-4 text-[#31B4F4] transition group-open:rotate-180" />
                       </summary>
                       <div className="grid grid-cols-2 gap-1 pb-4">
+                        <Link href={group.href} onClick={() => setMobileOpen(false)} className="rounded-xl bg-[#142F86] px-3 py-2.5 text-xs font-black leading-5 text-white">View {group.label}</Link>
                         {group.links.map((link) => <Link key={link.label} href={link.href} onClick={() => setMobileOpen(false)} className="rounded-xl bg-[#f5f9ff] px-3 py-2.5 text-xs font-bold leading-5 text-[#52627a]">{link.label}</Link>)}
                       </div>
                     </details>
