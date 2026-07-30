@@ -1,58 +1,52 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import { PageHero } from "@/components/shared/page-hero";
 import { Section } from "@/components/shared/section";
 import { PackageCard } from "@/components/shared/package-card";
-import { getHealthPackagesByCategory } from "@/lib/data/health-packages";
-import type { HealthPackageContent } from "@/lib/data/health-packages";
-
-const categoryMeta: Record<
-  HealthPackageContent["category"],
-  { title: string; description: string; eyebrow: string }
-> = {
-  checkup: {
-    eyebrow: "Preventive health",
-    title: "Health checkup packages",
-    description: "From practical baseline screening to comprehensive preventive assessments for individuals and families.",
-  },
-  "womens-health": {
-    eyebrow: "Women’s health",
-    title: "Care designed around every life stage",
-    description: "Thoughtful screening for preventive wellness, hormonal health, PCOD and pregnancy care.",
-  },
-  "corporate-health": {
-    eyebrow: "Workplace wellness",
-    title: "Corporate health packages",
-    description: "Structured pre-employment and executive assessments designed to support healthier organisations.",
-  },
-};
+import {
+  getHealthPackagesByCategory,
+  packageCategoryDetails,
+  type HealthPackageCategory,
+} from "@/lib/data/health-packages";
 
 interface CategoryPageProps {
   params: Promise<{ category: string }>;
 }
 
+function isPackageCategory(value: string): value is HealthPackageCategory {
+  return value in packageCategoryDetails;
+}
+
 export function generateStaticParams() {
-  return Object.keys(categoryMeta).map((category) => ({ category }));
+  return Object.keys(packageCategoryDetails).map((category) => ({ category }));
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { category } = await params;
-  const meta = categoryMeta[category as HealthPackageContent["category"]];
-  if (!meta) return {};
+  if (!isPackageCategory(category)) return {};
+  const meta = packageCategoryDetails[category];
   return { title: meta.title, description: meta.description };
 }
 
 export default async function HealthPackageCategoryPage({ params }: CategoryPageProps) {
   const { category } = await params;
-  const meta = categoryMeta[category as HealthPackageContent["category"]];
-  if (!meta) notFound();
+  if (!isPackageCategory(category)) notFound();
 
-  const packages = getHealthPackagesByCategory(category as HealthPackageContent["category"]);
+  const meta = packageCategoryDetails[category];
+  const packages = getHealthPackagesByCategory(category);
 
   return (
     <>
       <PageHero eyebrow={meta.eyebrow} title={meta.title} description={meta.description} />
       <Section>
+        <div className="mb-8 flex flex-col gap-3 rounded-2xl border border-[#dce5f1] bg-[#f7faff] p-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm font-bold text-[#52627a]">Showing {packages.length} packages from the current Clarus Magnus guide.</p>
+          <Link href="/health-packages" className="inline-flex items-center gap-2 text-sm font-black text-[#142F86]">
+            <ArrowLeft className="size-4" /> All package categories
+          </Link>
+        </div>
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {packages.map((pkg) => <PackageCard key={pkg.slug} pkg={pkg} />)}
         </div>

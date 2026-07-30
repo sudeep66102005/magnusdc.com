@@ -2,17 +2,12 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { HealthPackageContent } from "@/lib/data/health-packages";
-
-const categoryLabels: Record<HealthPackageContent["category"], string> = {
-  checkup: "Preventive health",
-  "womens-health": "Women’s health",
-  "corporate-health": "Corporate health",
-};
+import { packageCategoryDetails } from "@/lib/data/health-packages";
 
 export function PackageCard({ pkg }: { pkg: HealthPackageContent }) {
   return (
     <article className="flex h-full flex-col rounded-[1.75rem] border border-[#dce5f1] bg-white p-7 transition duration-300 hover:-translate-y-1 hover:border-[#31B4F4]/55 hover:shadow-[0_24px_60px_-36px_rgba(20,47,134,0.65)]">
-      <p className="text-xs font-black uppercase tracking-[0.17em] text-[#DA1C29]">{categoryLabels[pkg.category]}</p>
+      <p className="text-xs font-black uppercase tracking-[0.17em] text-[#DA1C29]">{packageCategoryDetails[pkg.category].label}</p>
       <h2 className="mt-3 text-2xl font-black leading-tight tracking-[-0.025em] text-[#142F86]">{pkg.name}</h2>
       <p className="mt-3 text-sm leading-6 text-[#65738a]">{pkg.summary}</p>
       <ul className="mt-6 space-y-2.5">

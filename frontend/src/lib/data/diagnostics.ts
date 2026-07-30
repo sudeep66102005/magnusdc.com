@@ -67,6 +67,16 @@ export const diagnostics: DiagnosticContent[] = [
       "Fibroscan technology measures liver elasticity to detect fibrosis and fatty liver disease without a biopsy.",
   },
   {
+    slug: "opg-cbct",
+    name: "Dental Imaging — OPG & CBCT",
+    summary:
+      "Digital panoramic and three-dimensional dental imaging for precise diagnosis and treatment planning.",
+    details:
+      "Our OPG and cone beam CT services support implant planning, orthodontics, impacted-tooth assessment, jaw evaluation, endodontics and oral surgery with detailed digital images.",
+    preparation:
+      "Remove spectacles, earrings, dentures, removable orthodontic appliances and other metallic objects around the head and neck. Please inform the team if you are pregnant.",
+  },
+  {
     slug: "advanced-procedures",
     name: "Advanced Procedures (EEG, ENMG, etc.)",
     summary:
