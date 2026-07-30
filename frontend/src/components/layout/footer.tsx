@@ -18,6 +18,7 @@ const companyLinks = [
   { label: "Specialties", href: "/specialties" },
   { label: "For corporates", href: "/for-corporates" },
   { label: "Patient information", href: "/patient-info" },
+  { label: "Medical library", href: "/medical-library" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -100,7 +101,8 @@ export function Footer() {
         <div>
           <h3 className="text-xs font-black uppercase tracking-[0.18em] text-[#8ed7fa]">Hours &amp; contact</h3>
           <div className="mt-5 space-y-4 text-sm text-white/65">
-            <p className="flex gap-3"><Clock3 className="mt-0.5 size-4 shrink-0 text-[#31B4F4]" /><span>{siteConfig.hours.imaging}<br />{siteConfig.hours.laboratory}<br />{siteConfig.hours.ultrasound}</span></p>
+            <p className="flex gap-3"><Clock3 className="mt-0.5 size-4 shrink-0 text-[#31B4F4]" /><span>{siteConfig.hours.imaging}<br />{siteConfig.hours.laboratory}<br />{siteConfig.hours.ultrasound}<br />{siteConfig.hours.xray}</span></p>
+            <p className="text-xs font-bold leading-5 text-[#8ed7fa]">{siteConfig.services.homeCollection}<br />{siteConfig.services.ambulance}</p>
             <a href={siteConfig.phone.href} className="flex items-center gap-3 text-base font-black text-white transition hover:text-[#8ed7fa]">
               <Phone className="size-4 text-[#31B4F4]" />
               {siteConfig.phone.display}

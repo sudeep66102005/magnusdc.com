@@ -31,6 +31,11 @@ export const siteConfig = {
     imaging: "MRI / CT: 24/7",
     laboratory: "Lab: 7:00 am – 8:30 pm",
     ultrasound: "Ultrasound: 9:00 am – 9:00 pm",
+    xray: "X-ray: 9:00 am – 8:30 pm",
+  },
+  services: {
+    ambulance: "Ambulance services available",
+    homeCollection: "Free home sample collection available*",
   },
   social: {
     facebook: "https://facebook.com/clarusmagnus",
