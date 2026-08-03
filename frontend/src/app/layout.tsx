@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Lato } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Navbar } from "@/components/layout/navbar";
@@ -7,19 +7,16 @@ import { Footer } from "@/components/layout/footer";
 import { GlobalWidgets } from "@/components/layout/global-widgets";
 import { siteConfig } from "@/lib/constants/site-config";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const lato = Lato({
+  variable: "--font-lato",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["300", "400", "700", "900"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteConfig.name} | Multi-Specialty Diagnostics & Healthcare`,
+    default: `${siteConfig.name} | Advanced Diagnostics in Koramangala`,
     template: `%s | ${siteConfig.shortName}`,
   },
   description: siteConfig.description,
@@ -32,11 +29,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-white text-slate-900">
+    <html lang="en" className={`${lato.variable} h-full antialiased`}>
+      <body className="flex min-h-full flex-col bg-white text-[#1E1E1E]">
         <QueryProvider>
           <Navbar />
           <main className="flex flex-1 flex-col">{children}</main>
