@@ -281,10 +281,10 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-[0_3px_12px_rgba(15,47,86,0.18)]">
       <div className="border-b border-slate-100 bg-white">
-        <div className="mx-auto flex h-[70px] max-w-[1440px] items-center justify-between gap-5 px-4 sm:px-8">
+        <div className="mx-auto flex h-[84px] max-w-[1440px] items-center justify-between gap-5 px-4 sm:px-8">
           <Link
             href="/"
-            className="relative block h-[48px] w-[170px] shrink-0 sm:h-[52px] sm:w-[190px]"
+            className="relative block h-[58px] w-[204px] shrink-0 sm:h-[62px] sm:w-[228px]"
             aria-label="Clarus Magnus home"
           >
             <Image
@@ -292,7 +292,7 @@ export function Navbar() {
               alt="Clarus Magnus Health and Diagnostics"
               fill
               priority
-              sizes="(max-width: 639px) 170px, 190px"
+              sizes="(max-width: 639px) 204px, 228px"
               className="object-contain object-left"
             />
           </Link>
