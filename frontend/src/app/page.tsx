@@ -1,417 +1,965 @@
-import type { CSSProperties } from "react";
 import Link from "next/link";
 import Script from "next/script";
 import { siteConfig } from "@/lib/constants/site-config";
 
-const trailPhotos = [
-  "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=560&q=82",
-  "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=560&q=82",
-  "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=560&q=82",
-  "https://images.unsplash.com/photo-1516841273335-e39b37888115?auto=format&fit=crop&w=560&q=82",
-  "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=560&q=82",
+const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const asset = (p: string) => `${BP}${p}`;
+
+/* ---- Content (Clarus Magnus business details, Dantora structure) ---- */
+
+const NAV = [
+  { label: "Home", href: "#hero" },
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Our team", href: "#team" },
 ];
 
-const services = [
+const HERO = {
+  eyebrow: "About Clarus Magnus",
+  title: "Diagnostics that begin with understanding you",
+  description:
+    "Advanced imaging, laboratory medicine and specialist care under one roof in Koramangala — radiologist-led, and explained in language you actually understand.",
+  actions: [
+    { label: "Book a visit", href: `${BP}/patient-info/appointment-booking`, primary: true },
+    { label: "Our services", href: "#services", primary: false },
+  ],
+  trustLine: "Radiologist-led care in Koramangala, Bengaluru",
+  chips: ["Diagnostic Imaging", "Laboratory", "Health Check-ups", "Specialist Care", "Women's Imaging"],
+};
+
+const WHY = {
+  eyebrow: "Why Clarus Magnus",
+  title: "One destination, one team, one clear answer",
+  description:
+    "No running across town for scans and reports. Imaging, labs and specialists share one roof — so your results connect and your next step is clear.",
+  actions: [
+    { label: "Our team", href: "#team", primary: true },
+    { label: "How we work", href: "#about", primary: false },
+  ],
+  trail: Array.from({ length: 8 }, (_, i) => asset(`/assets/dantora/why/0${i + 1}.png`)),
+};
+
+const SERVICES_INTRO = {
+  eyebrow: "Our Services",
+  title: "Everything your diagnosis needs, under one roof",
+  description:
+    "From a routine health check to advanced imaging and molecular testing — five directions covering prevention, diagnosis and long-term care.",
+};
+
+const SERVICE_CARDS = [
   {
-    number: "01",
-    label: "See deeper",
-    title: "Advanced diagnostics",
-    copy: "3 Tesla MRI, multislice CT, ultrasound, Doppler, digital X-ray, OPG and CBCT—read with radiologist-led precision.",
-    href: "/diagnostics",
-    image: "https://images.unsplash.com/photo-1516841273335-e39b37888115?auto=format&fit=crop&w=1400&q=86",
-    color: "#d9f5e9",
+    index: "01",
+    title: "Preventive Health Check-ups",
+    items: ["Men's health", "Women's health", "Executive check-up"],
+    variant: "lime" as const,
+    href: `${BP}/health-packages`,
   },
   {
-    number: "02",
-    label: "Know sooner",
-    title: "Laboratory medicine",
-    copy: "Routine, specialised and molecular testing supported by modern infrastructure and thoughtful patient guidance.",
-    href: "/laboratory",
-    image: "https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=1400&q=86",
-    color: "#f1e8ff",
+    index: "02",
+    title: "Diagnostic Imaging",
+    image: asset("/assets/dantora/services/01.png"),
+    cta: "Discover",
+    variant: "photo" as const,
+    href: `${BP}/diagnostics`,
   },
   {
-    number: "03",
-    label: "Move forward",
-    title: "Specialist care",
-    copy: "Experienced specialists working alongside diagnostics for coordinated decisions and a clearer care journey.",
-    href: "/specialties",
-    image: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=1400&q=86",
-    color: "#e8efff",
+    index: "03",
+    title: "Molecular & Genetic Testing",
+    cta: "Discover",
+    variant: "brand" as const,
+    href: `${BP}/laboratory`,
   },
   {
-    number: "04",
-    label: "Stay ahead",
-    title: "Preventive health",
-    copy: "Thoughtful health checks for individuals, families, women and organisations—made practical, personal and easy to access.",
-    href: "/health-packages",
-    image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=1400&q=86",
-    color: "#fff1dc",
+    index: "04",
+    title: "Laboratory Medicine",
+    image: asset("/assets/dantora/services/02.png"),
+    cta: "Discover",
+    variant: "photo" as const,
+    href: `${BP}/laboratory`,
   },
   {
-    number: "05",
-    label: "Care at every stage",
-    title: "Women’s imaging",
-    copy: "Dedicated women’s imaging and fetal medicine services delivered with privacy, sensitivity and specialist insight.",
-    href: "/diagnostics",
-    image: "https://images.unsplash.com/photo-1579684453423-f84349ef60b0?auto=format&fit=crop&w=1400&q=86",
-    color: "#f8e5eb",
+    index: "05",
+    title: "Specialist Care",
+    image: asset("/assets/dantora/services/03.png"),
+    cta: "Discover",
+    variant: "photo" as const,
+    href: `${BP}/specialties`,
   },
 ];
 
-const specialists = [
-  ["Radiology", "Precision imaging", "01"],
-  ["Internal medicine", "Whole-person care", "02"],
-  ["Cardiology", "Heart health", "03"],
-  ["Women’s health", "Care through every stage", "04"],
-  ["Orthopaedics", "Movement restored", "05"],
-  ["Neurology", "Expert perspective", "06"],
-];
+const ABOUT = {
+  eyebrow: "About the clinic",
+  banner: asset("/assets/dantora/about/banner.png"),
+  stats: [
+    { value: "18+", label: "Years of trusted care" },
+    { value: "3T", label: "Advanced MRI" },
+    { value: "24/7", label: "MRI & CT access" },
+    { value: "4.8", label: "Google patient rating" },
+  ],
+  paragraph: [
+    { text: "Clarus Magnus is a radiologist-led destination in Koramangala", muted: true },
+    { text: " where diagnosis and care are never separated. ", muted: false },
+    { text: "Imaging, laboratory and consulting rooms sit together, ", muted: true },
+    { text: "and your reports reach the right specialist the same day.", muted: false },
+  ],
+  actions: [
+    { label: "Book a consultation", href: "#contact", primary: true },
+    { label: "Health packages", href: `${BP}/health-packages`, primary: false },
+  ],
+};
 
-const visualAssets = [
-  ...trailPhotos,
-  ...services.map((service) => service.image),
-  "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=2200&q=88",
-];
+const TEAM = {
+  eyebrow: "Our Team",
+  title: "The specialists you'll actually see, every visit.",
+  socials: [
+    { label: "Instagram", href: siteConfig.social.instagram, icon: "instagram" },
+    { label: "Facebook", href: siteConfig.social.facebook, icon: "facebook" },
+    { label: "LinkedIn", href: siteConfig.social.linkedin, icon: "linkedin" },
+  ],
+  members: [
+    { name: "Radiology", role: "Precision imaging", image: asset("/assets/dantora/team/01.png") },
+    { name: "Internal Medicine", role: "Whole-person care", image: asset("/assets/dantora/team/02.png") },
+    { name: "Cardiology", role: "Heart health", image: asset("/assets/dantora/team/03.png") },
+    { name: "Orthopaedics", role: "Movement restored", image: asset("/assets/dantora/team/04.png") },
+    { name: "Women's Health", role: "Every life stage", image: asset("/assets/dantora/team/05.png") },
+  ],
+  more: { title: "A wider multispecialty team", cta: "Explore all", href: `${BP}/specialties` },
+};
+
+const CONTACT = {
+  eyebrow: "Get in touch",
+  title: "Not sure which scan or specialist you need? Ask us.",
+  description:
+    "Leave your details and our care team will call you back to help you choose the right scan, package or doctor — and a time that suits you.",
+  formTitle: "Request a call back",
+  submit: "Send Request",
+};
+
+const DNA_MARK =
+  "M15.0223 1.46977C15.3152 1.17693 15.791 1.17689 16.0838 1.46977C16.3763 1.76259 16.3763 2.23751 16.0838 2.53031C14.5974 4.01669 14.5974 6.42675 16.0838 7.91312C17.5702 9.39907 19.9795 9.39914 21.4657 7.91312C21.7585 7.62034 22.2333 7.62044 22.5262 7.91312C22.8189 8.20592 22.8198 8.68078 22.5272 8.97367C21.1685 10.3325 19.2557 10.7992 17.5155 10.376C17.6669 10.8911 17.7499 11.4359 17.7499 12C17.7498 15.1756 15.1754 17.7499 11.9999 17.75C11.4358 17.75 10.8909 17.6671 10.3758 17.5157C10.8003 19.2564 10.3329 21.1707 8.9735 22.5303C8.6808 22.8228 8.20584 22.8235 7.91295 22.5313C7.62011 22.2385 7.62022 21.7627 7.91295 21.4698C9.39891 19.9835 9.39867 17.5743 7.91295 16.0879C6.42657 14.6015 4.01651 14.6015 2.53014 16.0879C2.2374 16.3802 1.7624 16.3801 1.46959 16.0879C1.17675 15.7951 1.17686 15.3193 1.46959 15.0264C2.82903 13.6671 4.7426 13.1988 6.48326 13.6231C6.33203 13.1083 6.24987 12.5638 6.24986 12C6.24986 8.8244 8.82423 6.25004 11.9999 6.25004C12.5622 6.25005 13.1053 6.33195 13.619 6.48246C13.1952 4.74209 13.6633 2.82892 15.0223 1.46977ZM11.9999 7.75004C9.65265 7.75004 7.74986 9.65283 7.74986 12C7.74989 14.3472 9.65267 16.25 11.9999 16.25C14.347 16.25 16.2498 14.3472 16.2499 12C16.2499 9.65288 14.347 7.75013 11.9999 7.75004Z";
 
 const css = String.raw`
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:GRAD,ROND,wdth,wght@0,0,100,100..900&display=swap');
-.dantora-home{--ink:#112b73;--mint:#dff5ff;--acid:#f5cf48;--paper:#f7f9fc;--blue:#142f86;--sky:#31b4f4;--red:#da1c29;position:relative;isolation:isolate;overflow:clip;background:var(--paper);color:var(--ink);font-family:'Google Sans Flex',var(--font-lato),sans-serif}.dantora-home *{box-sizing:border-box}.dantora-home .dh-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.dantora-home a{color:inherit;text-decoration:none}.dantora-home button,.dantora-home input,.dantora-home select,.dantora-home textarea{font:inherit}.dantora-home .dh-shell{width:min(100% - 40px,1420px);margin-inline:auto}.dantora-home .dh-kicker{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:750;letter-spacing:.13em;text-transform:uppercase}.dantora-home .dh-kicker:before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor}.dantora-home .dh-pill{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:52px;padding:0 22px;border-radius:999px;border:1px solid rgba(8,47,39,.35);font-size:14px;font-weight:780;transition:transform .35s,background .35s,color .35s}.dantora-home .dh-pill:hover{transform:translateY(-3px);background:var(--ink);color:white}.dantora-home .dh-pill--light{border-color:rgba(255,255,255,.45)}.dantora-home .dh-pill--light:hover{background:white;color:var(--ink)}.dantora-home .dh-word{display:inline-block;overflow:hidden;vertical-align:bottom}.dantora-home .dh-word>span{display:inline-block;transform:translateY(115%);transition:transform .8s cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--word-i,0)*45ms)}.dantora-home .dh-reveal.is-visible .dh-word>span{transform:translateY(0)}.dantora-home [data-rise]{opacity:1;transform:none}.dantora-home.has-motion [data-rise]{opacity:0;transform:translateY(35px);transition:opacity .8s,transform .8s cubic-bezier(.16,1,.3,1)}.dantora-home.has-motion [data-rise].is-visible{opacity:1;transform:none}
-.dantora-home .dh-preloader{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:#112b73;color:#dff5ff;transition:visibility 0s 1.1s;animation:dh-loader-failsafe .01s 7s forwards}.dantora-home .dh-preloader:before,.dantora-home .dh-preloader:after{content:'';position:absolute;inset:0;background:#112b73;transform-origin:bottom;transition:transform 1.05s cubic-bezier(.76,0,.24,1)}.dantora-home .dh-preloader:after{background:#dff5ff;transition-delay:.09s}.dantora-home .dh-preloader__core{position:relative;z-index:2;display:grid;place-items:center;width:170px;height:170px}.dantora-home .dh-preloader__ring{position:absolute;inset:0;border:1px solid rgba(186,244,221,.25);border-top-color:#dff5ff;border-radius:50%;animation:dh-spin 1.5s linear infinite}.dantora-home .dh-preloader__mark{width:48px;height:72px;border-left:5px solid currentColor;transform:skew(-23deg)}.dantora-home .dh-preloader__percent{position:absolute;bottom:16px;font-size:12px;letter-spacing:.14em}.dantora-home.is-ready .dh-preloader{visibility:hidden}.dantora-home.is-ready .dh-preloader:before,.dantora-home.is-ready .dh-preloader:after{transform:scaleY(0)}.dantora-home.is-ready .dh-preloader__core{opacity:0;transition:opacity .25s}.dantora-home .dh-asset-error{position:fixed;left:50%;bottom:18px;z-index:9998;display:block;max-width:calc(100% - 32px);transform:translateX(-50%);padding:11px 16px;border-radius:999px;background:#ffdccf;color:#642313;box-shadow:0 10px 35px #0002;font-size:12px;font-weight:750;opacity:0;visibility:hidden;animation:dh-asset-failsafe .01s 7s forwards}.dantora-home .dh-asset-error.is-visible{opacity:1;visibility:visible;animation:none}.dantora-home.is-ready .dh-asset-error:not(.is-visible){animation:none}@keyframes dh-spin{to{transform:rotate(360deg)}}@keyframes dh-loader-failsafe{to{visibility:hidden;pointer-events:none}}@keyframes dh-asset-failsafe{to{opacity:1;visibility:visible}}
-.dantora-home .dh-hero{position:relative;min-height:min(890px,calc(100svh - 20px));overflow:hidden;border-radius:0 0 48px 48px;background:var(--mint)}.dantora-home .dh-hero__inner{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(430px,.96fr);align-items:center;min-height:min(890px,calc(100svh - 20px));padding-block:70px 56px}.dantora-home .dh-hero__copy{position:relative;z-index:3;max-width:850px}.dantora-home .dh-hero h1{margin:25px 0 29px;max-width:900px;font-size:clamp(62px,7.5vw,132px);font-weight:540;line-height:.84;letter-spacing:-.075em}.dantora-home .dh-hero h1 em{font-family:Georgia,serif;font-weight:400}.dantora-home .dh-hero__bottom{display:flex;align-items:flex-end;gap:28px;max-width:700px}.dantora-home .dh-hero__bottom p{max-width:490px;margin:0;font-size:clamp(17px,1.4vw,21px);line-height:1.5}.dantora-home .dh-hero__scene{position:absolute;z-index:1;right:-5%;top:0;width:61%;height:100%;pointer-events:none;background:radial-gradient(ellipse at 62% 50%,rgba(49,180,244,.17),transparent 48%)}.dantora-home .dh-hero__scene canvas,.dantora-home .dh-contact__scene canvas{position:absolute;inset:0;width:100%;height:100%;display:block}.dantora-home .dh-dna-fallback{z-index:0;opacity:.98;filter:contrast(1.06) saturate(.92)}.dantora-home .dh-hero__scene>canvas:not(.dh-dna-fallback),.dantora-home .dh-contact__scene>canvas:not(.dh-dna-fallback){z-index:1;opacity:.52;mix-blend-mode:multiply}.dantora-home .dh-hero__orbit{position:absolute;right:4.5%;bottom:7%;z-index:2;width:112px;height:112px;border:1px solid rgba(8,47,39,.3);border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:800;letter-spacing:.12em;text-align:center;animation:dh-orbit 14s linear infinite}@keyframes dh-orbit{to{transform:rotate(360deg)}}
-.dantora-home .dh-why{position:relative;z-index:2;padding:145px 0 175px;background:#fff}.dantora-home .dh-why__head{display:grid;grid-template-columns:.55fr 1.45fr;gap:40px}.dantora-home .dh-why h2{margin:0;max-width:1040px;font-size:clamp(52px,7.3vw,120px);font-weight:500;line-height:.93;letter-spacing:-.07em}.dantora-home .dh-why h2 em{font-family:Georgia,serif;font-weight:400;color:#315f54}.dantora-home .dh-why__foot{display:grid;grid-template-columns:.55fr 1.45fr;gap:40px;margin-top:74px}.dantora-home .dh-why__foot p{grid-column:2;max-width:670px;margin:0;font-size:21px;line-height:1.55}.dantora-home .dh-trail-layer{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}.dantora-home .dh-trail-photo{position:absolute;width:180px;height:225px;border:7px solid white;border-radius:3px;background-size:cover;background-position:center;box-shadow:0 18px 50px #112b7340;transform:translate(-50%,-50%) scale(.55) rotate(var(--r));opacity:0;animation:dh-photo 1.45s cubic-bezier(.16,1,.3,1) forwards}@keyframes dh-photo{15%,70%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(var(--r))}100%{opacity:0;transform:translate(-50%,-70%) scale(.94) rotate(var(--r))}}
-.dantora-home .dh-services{position:relative;height:500lvh;background:#0f2868;color:#f8fbff}.dantora-home .dh-services__sticky{position:sticky;top:0;height:100lvh;overflow:hidden}.dantora-home .dh-services__intro{position:absolute;z-index:5;left:20px;top:24px}.dantora-home .dh-services__track{display:flex;width:500vw;height:100%;will-change:transform}.dantora-home .dh-service{position:relative;display:grid;grid-template-columns:1fr 1fr;align-items:center;width:100vw;height:100%;flex:none;padding:100px max(20px,calc((100vw - 1420px)/2)) 55px;overflow:hidden;background:var(--card);color:var(--ink)}.dantora-home .dh-service__copy{position:relative;z-index:2;max-width:620px}.dantora-home .dh-service__num{font-size:13px;font-weight:800;letter-spacing:.16em}.dantora-home .dh-service h3{margin:30px 0 24px;font-size:clamp(58px,6.6vw,112px);font-weight:520;line-height:.9;letter-spacing:-.07em}.dantora-home .dh-service p{max-width:520px;margin:0 0 35px;font-size:19px;line-height:1.55}.dantora-home .dh-service__visual{position:relative;justify-self:end;width:min(44vw,650px);aspect-ratio:4/5;border-radius:240px 240px 26px 26px;background-size:cover;background-position:center;box-shadow:0 40px 100px #112b7335}.dantora-home .dh-service__visual:after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,transparent 45%,rgba(8,47,39,.28))}.dantora-home .dh-service__tag{position:absolute;right:-25px;bottom:55px;z-index:2;padding:17px 24px;border-radius:999px;background:#fff;color:#112b73;font-size:13px;font-weight:800;transform:rotate(-6deg)}
-.dantora-home .dh-about{position:relative;z-index:5;margin-top:-100lvh;padding:145px 0 0;border-radius:48px 48px 0 0;background:var(--paper)}.dantora-home .dh-about__lead{display:grid;grid-template-columns:.58fr 1.42fr;gap:40px}.dantora-home .dh-about h2{margin:0;font-size:clamp(55px,7.2vw,116px);font-weight:500;line-height:.91;letter-spacing:-.07em}.dantora-home .dh-about h2 em{font-family:Georgia,serif;font-weight:400}.dantora-home .dh-about__copy{grid-column:2;display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:66px}.dantora-home .dh-about__copy p{margin:0;font-size:18px;line-height:1.6}.dantora-home .dh-banner{position:relative;height:75lvh;min-height:620px;margin-top:120px;overflow:hidden;background-image:linear-gradient(0deg,#112b7366,#112b7305),url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=2200&q=88');background-size:cover;background-position:center calc(50% + var(--banner-y,0px))}.dantora-home .dh-banner__phrase{position:absolute;inset:auto 20px 28px;color:white;font-size:clamp(54px,10vw,170px);font-weight:500;line-height:.83;letter-spacing:-.075em;white-space:nowrap}.dantora-home .dh-stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #112b7330;background:var(--paper)}.dantora-home .dh-stat{min-height:310px;padding:65px 28px;border-right:1px solid #112b7330}.dantora-home .dh-stat:last-child{border-right:0}.dantora-home .dh-stat strong{display:block;font-size:clamp(58px,6.3vw,100px);font-weight:500;line-height:1;letter-spacing:-.07em}.dantora-home .dh-stat span{display:block;margin-top:27px;font-size:14px;font-weight:750;letter-spacing:.1em;text-transform:uppercase}.dantora-home .dh-rhythm{padding:140px 20px 175px;text-align:center;background:var(--paper)}.dantora-home .dh-rhythm p{margin:0;font-size:clamp(42px,6.5vw,105px);line-height:1.08;letter-spacing:-.065em;color:#a4aea8}.dantora-home .dh-rhythm span{color:var(--ink)}
-.dantora-home .dh-team{position:relative;z-index:4;height:300lvh;background:#0f2868;color:white}.dantora-home .dh-team__sticky{position:sticky;top:0;height:100lvh;overflow:hidden;padding-top:48px}.dantora-home .dh-team__head{display:flex;align-items:end;justify-content:space-between}.dantora-home .dh-team h2{margin:14px 0 0;font-size:clamp(58px,8vw,128px);font-weight:500;line-height:.9;letter-spacing:-.07em}.dantora-home .dh-team__hint{font-size:12px;font-weight:750;letter-spacing:.13em;text-transform:uppercase}.dantora-home .dh-team__rail{display:flex;gap:18px;width:max-content;margin-top:55px;padding:0 20px;cursor:grab;will-change:transform;touch-action:none}.dantora-home .dh-team__rail.is-dragging{cursor:grabbing}.dantora-home .dh-person{position:relative;width:min(33vw,470px);height:48lvh;min-height:390px;overflow:hidden;border-radius:22px;background:#dff5ff;color:#112b73;user-select:none}.dantora-home .dh-person:nth-child(2n){background:#e8efff}.dantora-home .dh-person:nth-child(3n){background:#fff1dc}.dantora-home .dh-person__index{position:absolute;right:20px;top:18px;font-size:13px;font-weight:800}.dantora-home .dh-person__halo{position:absolute;left:50%;top:45%;width:72%;aspect-ratio:1;border:1px solid currentColor;border-radius:50%;transform:translate(-50%,-50%);opacity:.25}.dantora-home .dh-person__glyph{position:absolute;left:50%;top:42%;font-family:Georgia,serif;font-size:clamp(100px,12vw,180px);transform:translate(-50%,-50%);opacity:.85}.dantora-home .dh-person__copy{position:absolute;left:25px;right:25px;bottom:24px;border-top:1px solid #112b7350;padding-top:18px}.dantora-home .dh-person__copy strong{font-size:22px}.dantora-home .dh-person__copy span{display:block;margin-top:6px;font-size:14px}.dantora-home .dh-team__progress{position:absolute;left:20px;right:20px;bottom:25px;height:2px;background:#ffffff2a}.dantora-home .dh-team__progress span{display:block;width:20%;height:100%;background:var(--acid);transform-origin:left}
-.dantora-home .dh-contact{position:relative;z-index:6;min-height:100lvh;margin-top:-100lvh;display:grid;align-items:center;overflow:hidden;border-radius:48px 48px 0 0;background:#dff5ff}.dantora-home .dh-contact__scene{position:absolute;inset:0 0 0 38%;opacity:.78;pointer-events:none}.dantora-home .dh-contact__inner{position:relative;z-index:2;display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center;padding-block:100px}.dantora-home .dh-contact h2{margin:18px 0 25px;font-size:clamp(59px,7.4vw,122px);font-weight:500;line-height:.84;letter-spacing:-.075em}.dantora-home .dh-contact__details{font-size:17px;line-height:1.7}.dantora-home .dh-contact__details a{text-decoration:underline;text-underline-offset:4px}.dantora-home .dh-form{padding:35px;border:1px solid rgba(255,255,255,.65);border-radius:28px;background:rgba(255,255,255,.48);box-shadow:0 35px 100px rgba(8,47,39,.16);backdrop-filter:blur(24px)}.dantora-home .dh-form h3{margin:0;font-size:30px;line-height:1.05;letter-spacing:-.04em}.dantora-home .dh-form>p{margin:12px 0 24px;line-height:1.55}.dantora-home .dh-form__choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}.dantora-home .dh-form__choice{display:flex;align-items:center;justify-content:space-between;min-height:58px;padding:13px 15px;border:1px solid rgba(8,47,39,.22);border-radius:12px;background:rgba(255,255,255,.62);font-size:13px;font-weight:750;transition:background .3s,transform .3s}.dantora-home .dh-form__choice:hover{background:white;transform:translateY(-2px)}.dantora-home .dh-form__grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.dantora-home .dh-field{display:flex;flex-direction:column;gap:8px}.dantora-home .dh-field--wide{grid-column:1/-1}.dantora-home .dh-field label{font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}.dantora-home .dh-field input,.dantora-home .dh-field select,.dantora-home .dh-field textarea{width:100%;min-height:54px;padding:13px 15px;border:1px solid rgba(8,47,39,.22);border-radius:12px;outline:none;background:rgba(255,255,255,.68);color:#112b73}.dantora-home .dh-field textarea{height:92px;resize:vertical}.dantora-home .dh-field input:focus,.dantora-home .dh-field select:focus,.dantora-home .dh-field textarea:focus{border-color:#112b73}.dantora-home .dh-form__submit{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;margin-top:17px;border:0;border-radius:999px;background:#112b73;color:white;font-weight:800;cursor:pointer;transition:transform .3s,background .3s}.dantora-home .dh-form__submit:hover{transform:translateY(-2px);background:#142f86}.dantora-home .dh-form__note{margin:13px 0 0;font-size:11px;line-height:1.5;opacity:.75}.dantora-home :is(a,button):focus-visible{outline:3px solid var(--red);outline-offset:4px}
-@media(min-width:1024px) and (max-width:1279px){.dantora-home .dh-services__sticky,.dantora-home .dh-team__sticky{top:84px;height:calc(100lvh - 84px)}.dantora-home .dh-services__intro{top:18px}.dantora-home .dh-team__sticky{padding-top:32px}}
-@media(min-width:1280px){.dantora-home .dh-services__sticky,.dantora-home .dh-team__sticky{top:128px;height:calc(100lvh - 128px)}.dantora-home .dh-services__intro{top:18px}.dantora-home .dh-team__sticky{padding-top:28px}.dantora-home .dh-team__rail{margin-top:35px}.dantora-home .dh-person{height:44lvh}}
-@media(max-width:1023px){.dantora-home .dh-shell{width:min(100% - 32px,760px)}.dantora-home .dh-hero,.dantora-home .dh-hero__inner{min-height:800px}.dantora-home .dh-hero__inner{display:block;padding-top:70px}.dantora-home .dh-hero__copy{max-width:680px}.dantora-home .dh-hero h1{font-size:clamp(58px,13vw,94px)}.dantora-home .dh-hero__bottom{display:block}.dantora-home .dh-hero__bottom .dh-pill{margin-top:25px}.dantora-home .dh-hero__scene{right:-24%;top:33%;width:90%;height:70%;opacity:.8}.dantora-home .dh-hero__orbit{display:none}.dantora-home .dh-why{padding:100px 0 120px}.dantora-home .dh-why__head,.dantora-home .dh-why__foot,.dantora-home .dh-about__lead{grid-template-columns:1fr}.dantora-home .dh-why__foot p,.dantora-home .dh-about__copy{grid-column:1}.dantora-home .dh-services{height:auto}.dantora-home .dh-services__sticky{position:relative;height:auto;overflow:visible;padding:90px 0}.dantora-home .dh-services__intro{left:16px}.dantora-home .dh-services__track{display:grid;width:auto;height:auto;gap:16px;padding:0 16px;transform:none!important}.dantora-home .dh-service{width:100%;height:auto;min-height:620px;padding:80px 30px 30px;border-radius:25px;grid-template-columns:1fr}.dantora-home .dh-service h3{font-size:clamp(54px,11vw,84px)}.dantora-home .dh-service__visual{width:100%;height:280px;aspect-ratio:auto;border-radius:150px 150px 18px 18px;margin-top:38px}.dantora-home .dh-service__tag{right:15px}.dantora-home .dh-about{margin-top:0;padding-top:100px}.dantora-home .dh-about__copy{grid-template-columns:1fr;margin-top:45px}.dantora-home .dh-banner{height:62lvh;min-height:480px;margin-top:80px}.dantora-home .dh-stats{grid-template-columns:1fr 1fr}.dantora-home .dh-stat{min-height:230px;border-bottom:1px solid #112b7330}.dantora-home .dh-stat:nth-child(2){border-right:0}.dantora-home .dh-rhythm{padding:100px 16px 120px}.dantora-home .dh-team{height:auto;padding:90px 0}.dantora-home .dh-team__sticky{position:relative;height:auto;overflow:hidden;padding:0}.dantora-home .dh-team__head{align-items:start;flex-direction:column}.dantora-home .dh-team__hint{margin-top:20px}.dantora-home .dh-team__rail{overflow-x:auto;width:auto;padding-bottom:30px;scroll-snap-type:x mandatory;transform:none!important}.dantora-home .dh-person{flex:0 0 min(75vw,430px);width:auto;height:520px;scroll-snap-align:center}.dantora-home .dh-team__progress{display:none}.dantora-home .dh-contact{margin-top:0;border-radius:36px 36px 0 0}.dantora-home .dh-contact__scene{inset:25% -30% 0 0;opacity:.48}.dantora-home .dh-contact__inner{grid-template-columns:1fr;padding-block:90px}.dantora-home .dh-form{margin-top:20px}}
-@media(max-width:600px){.dantora-home .dh-shell{width:calc(100% - 28px)}.dantora-home .dh-hero{border-radius:0 0 30px 30px}.dantora-home .dh-hero,.dantora-home .dh-hero__inner{min-height:760px}.dantora-home .dh-hero h1{font-size:clamp(54px,17vw,76px)}.dantora-home .dh-hero__scene{right:-48%;top:38%;width:135%}.dantora-home .dh-why h2,.dantora-home .dh-about h2{font-size:clamp(48px,14vw,69px)}.dantora-home .dh-trail-photo{width:125px;height:155px}.dantora-home .dh-service{padding-inline:22px}.dantora-home .dh-service__visual{height:240px}.dantora-home .dh-about{border-radius:30px 30px 0 0}.dantora-home .dh-stats{grid-template-columns:1fr}.dantora-home .dh-stat{min-height:190px;border-right:0}.dantora-home .dh-rhythm p{font-size:42px}.dantora-home .dh-team h2{font-size:65px}.dantora-home .dh-person{flex-basis:84vw;height:470px}.dantora-home .dh-contact h2{font-size:63px}.dantora-home .dh-contact__inner{gap:25px}.dantora-home .dh-form{padding:24px 18px}.dantora-home .dh-form__choices,.dantora-home .dh-form__grid{grid-template-columns:1fr}.dantora-home .dh-field--wide{grid-column:auto}}
-@media(prefers-reduced-motion:reduce){.dantora-home *{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important}.dantora-home .dh-word>span,.dantora-home [data-rise]{opacity:1!important;transform:none!important;transition:none!important}.dantora-home .dh-hero__orbit,.dantora-home .dh-preloader__ring{animation:none}.dantora-home .dh-preloader,.dantora-home .dh-trail-layer,.dantora-home .dh-hero__scene>canvas:not(.dh-dna-fallback),.dantora-home .dh-contact__scene>canvas:not(.dh-dna-fallback){display:none}.dantora-home .dh-services,.dantora-home .dh-team{height:auto}.dantora-home .dh-services__sticky,.dantora-home .dh-team__sticky{position:relative;top:0;height:auto;overflow:hidden}.dantora-home .dh-services__track{display:grid;width:auto;transform:none!important}.dantora-home .dh-service{width:100%;min-height:75svh}.dantora-home .dh-about,.dantora-home .dh-contact{margin-top:0}.dantora-home .dh-team{padding-block:80px}.dantora-home .dh-team__rail{overflow-x:auto;max-width:100%;transform:none!important;touch-action:auto}.dantora-home .dh-team__progress{display:none}}
-`;
 
-const helixVertex = String.raw`
-precision highp float;
-uniform float uTime;
-uniform float uWallTime;
-uniform float uPixelScale;
-uniform vec2 uCursor;
-attribute float aSeed;
-attribute float aKind;
-varying float vAlpha;
-varying float vKind;
-vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x,289.0);}
-vec4 taylorInvSqrt(vec4 r){return 1.79284291400159-.85373472095314*r;}
-float snoise(vec3 v){const vec2 C=vec2(1.0/6.0,1.0/3.0);const vec4 D=vec4(0.0,.5,1.0,2.0);vec3 i=floor(v+dot(v,C.yyy));vec3 x0=v-i+dot(i,C.xxx);vec3 g=step(x0.yzx,x0.xyz);vec3 l=1.0-g;vec3 i1=min(g.xyz,l.zxy);vec3 i2=max(g.xyz,l.zxy);vec3 x1=x0-i1+C.xxx;vec3 x2=x0-i2+C.yyy;vec3 x3=x0-D.yyy;i=mod(i,289.0);vec4 p=permute(permute(permute(i.z+vec4(0.0,i1.z,i2.z,1.0))+i.y+vec4(0.0,i1.y,i2.y,1.0))+i.x+vec4(0.0,i1.x,i2.x,1.0));float n_=1.0/7.0;vec3 ns=n_*D.wyz-D.xzx;vec4 j=p-49.0*floor(p*ns.z*ns.z);vec4 x_=floor(j*ns.z);vec4 y_=floor(j-7.0*x_);vec4 x=x_*ns.x+ns.yyyy;vec4 y=y_*ns.x+ns.yyyy;vec4 h=1.0-abs(x)-abs(y);vec4 b0=vec4(x.xy,y.xy);vec4 b1=vec4(x.zw,y.zw);vec4 s0=floor(b0)*2.0+1.0;vec4 s1=floor(b1)*2.0+1.0;vec4 sh=-step(h,vec4(0.0));vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy;vec4 a1=b1.xzyw+s1.xzyw*sh.zzww;vec3 p0=vec3(a0.xy,h.x);vec3 p1=vec3(a0.zw,h.y);vec3 p2=vec3(a1.xy,h.z);vec3 p3=vec3(a1.zw,h.w);vec4 norm=taylorInvSqrt(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));p0*=norm.x;p1*=norm.y;p2*=norm.z;p3*=norm.w;vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.0);m=m*m;return 42.0*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));}
-void main(){
-  vec3 p=position;float t=uTime*.09;float wobble=snoise(vec3(p.xy*.32,aSeed+t));
-  p.x+=wobble*(aKind<.5?.16:.52);p.y+=sin(t+aSeed*21.0)*.08;
-  p.xy+=uCursor*(aKind<.5?.08:.025)*(1.0+sin(aSeed*40.0));
-  vec4 mv=modelViewMatrix*vec4(p,1.0);gl_Position=projectionMatrix*mv;
-  float base=aKind<.5?2.1:1.25;gl_PointSize=clamp(base*uPixelScale*(9.0/-mv.z),1.0,7.0);
-  vAlpha=(aKind<.5?.78:.22)*(0.65+0.35*sin(aSeed*40.0+uTime+uWallTime*.03));vKind=aKind;
-}`;
+body:has(.cm-root) > header.sticky{display:none!important}
+html:has(.cm-root){scroll-behavior:smooth}
 
-const helixFragment = String.raw`
-precision highp float;
-uniform vec3 uHelixColor;
-uniform vec3 uInkColor;
-varying float vAlpha;
-varying float vKind;
-void main(){vec2 q=gl_PointCoord-.5;float d=dot(q,q);if(d>.25)discard;float soft=smoothstep(.25,.03,d);vec3 c=mix(uHelixColor,uInkColor,vKind);gl_FragColor=vec4(c,soft*vAlpha);}
-`;
+.cm-root{--green:#246f65;--green-deep:#054038;--lime:#f8ffb4;--lime-b:#e5ed9b;--mint:#eff4f2;--mint-deep:#e5f1ed;--ink:#000;--muted:rgba(0,0,0,.4);--subtle:rgba(0,0,0,.5);--line:rgba(0,0,0,.1);--glass:rgba(255,255,255,.8);--glass-s:rgba(255,255,255,.5);--glass-strong:rgba(255,255,255,.9);
+  position:relative;isolation:isolate;background:#fff;color:var(--ink);font-family:'Google Sans Flex',var(--font-lato),system-ui,sans-serif;font-weight:300;line-height:1.2;-webkit-font-smoothing:antialiased;overflow-x:clip}
+.cm-root *{box-sizing:border-box}
+.cm-root a{color:inherit;text-decoration:none}
+.cm-root button,.cm-root input,.cm-root textarea{font:inherit;color:inherit}
+.cm-root ::selection{background:rgba(36,111,101,.22);color:var(--green-deep)}
+.cm-shell{width:min(100% - 5rem,90rem);margin-inline:auto}
+.cm-eyebrow{font-size:.875rem;font-weight:500;letter-spacing:.02em;text-transform:uppercase;color:var(--green);margin:0}
+.cm-lead{font-size:clamp(2.25rem,5.4vw,3.75rem);line-height:1.05;font-weight:300;letter-spacing:-.01em;margin:0}
+.cm-body{font-size:1rem;line-height:1.35;font-weight:300;margin:0}
 
-const atmoVertex = String.raw`
-precision highp float;
-uniform float uTime;
-uniform float uPixelScale;
-uniform float uAtmoSize;
-attribute float aSeed;
-varying float vAlpha;
-void main(){vec3 p=position;p.y+=sin(uTime*.11+aSeed*18.0)*.12;vec4 mv=modelViewMatrix*vec4(p,1.0);gl_Position=projectionMatrix*mv;gl_PointSize=uAtmoSize*uPixelScale;vAlpha=uAtmoSize;}
-`;
+/* buttons */
+.cm-btn{display:inline-flex;align-items:center;justify-content:center;height:3rem;padding:0 2rem;border-radius:46px;border:1px solid transparent;font-size:1.25rem;font-weight:300;white-space:nowrap;transition:background .15s,color .15s,transform .3s}
+.cm-btn:hover{transform:translateY(-2px)}
+.cm-btn--primary{background:var(--green);border-color:var(--green-deep);color:#fff}
+.cm-btn--primary:hover{background:var(--green-deep)}
+.cm-btn--secondary{background:var(--lime);border-color:var(--lime-b);color:#000}
+.cm-btn--secondary:hover{background:var(--lime-b)}
+.cm-btn--arrow{height:3.375rem;gap:.625rem;padding-right:.125rem;padding-left:2rem}
+.cm-disc{display:grid;place-items:center;width:3rem;height:3rem;flex:none;border-radius:999px;background:var(--lime);color:#000}
+.cm-arrow{width:1rem;height:1rem;display:block}
 
-const atmoFragment = String.raw`
-precision highp float;varying float vAlpha;void main(){gl_FragColor=vec4(1.0,1.0,1.0,vAlpha);}
-`;
+/* header */
+.cm-header{position:fixed;inset-inline:0;top:1rem;z-index:60;padding-inline:1.25rem;pointer-events:none}
+@media(min-width:768px){.cm-header{padding-inline:2.5rem}}
+.cm-header__row{display:flex;align-items:center;justify-content:space-between}
+.cm-header__left{display:flex;align-items:center;gap:.5rem}
+.cm-glass{pointer-events:auto;border-radius:8px;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.cm-logo{display:flex;align-items:center;gap:.75rem;height:3.375rem;padding:0 1rem 0 .375rem}
+.cm-logo__mark{display:grid;place-items:center;width:2.625rem;height:2.625rem;border-radius:4px;background:var(--green);color:var(--lime)}
+.cm-logo__mark svg{width:1.5rem;height:1.5rem}
+.cm-logo__name{font-size:1.25rem;line-height:1.1;font-weight:300;white-space:nowrap}
+.cm-nav{display:none;align-items:center;height:3.375rem;padding:0 2.25rem}
+.cm-nav ul{display:flex;align-items:center;gap:2.25rem;margin:0;padding:0;list-style:none}
+.cm-nav a{font-size:1rem;font-weight:300;transition:color .15s}
+.cm-nav a:hover{color:var(--green)}
+.cm-header__cta{display:none}
+@media(min-width:1024px){.cm-nav{display:flex}.cm-header__cta{display:block}}
+.cm-header__cta[data-hidden="true"]{opacity:0;transform:translateY(-24px);pointer-events:none}
+.cm-header__cta{transition:opacity .4s,transform .4s}
+.cm-burger{pointer-events:auto;display:grid;place-items:center;width:3.375rem;height:3.375rem}
+@media(min-width:1024px){.cm-burger{display:none}}
+.cm-burger span{display:block;width:1.25rem;height:1px;background:#000;transition:transform .25s,opacity .15s}
+.cm-burger span+span{margin-top:.3125rem}
+.cm-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(.34375rem) rotate(45deg)}
+.cm-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.cm-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-.34375rem) rotate(-45deg)}
+.cm-mobile{position:absolute;top:4.125rem;right:1.25rem;width:min(18rem,calc(100vw - 2.5rem));display:flex;flex-direction:column;gap:.5rem;padding:1.25rem;transform-origin:top right;transform:scale(.94);opacity:0;visibility:hidden;transition:opacity .2s,transform .2s,visibility .2s}
+@media(min-width:1024px){.cm-mobile{display:none}}
+.cm-mobile[data-open="true"]{opacity:1;transform:scale(1);visibility:visible}
+.cm-mobile ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.cm-mobile a{padding:.75rem 0;font-size:1.125rem;font-weight:300}
+.cm-mobile .cm-btn{width:100%;justify-content:space-between}
 
-const interactiveScript = String.raw`
-async function initClarusHome(root){
-  if(root.dataset.dhInitialized==='true')return;
-  root.dataset.dhInitialized='true';
-  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!reducedMotion)root.classList.add('has-motion');
-  const state={sceneReady:reducedMotion,docReady:document.readyState==='complete',fontsReady:false,minReady:reducedMotion};
-  const pct=root.querySelector('[data-load-percent]');
-  let displayed=0;
-  const gate=()=>{
-    if(!root.isConnected)return;
-    const target=[state.docReady,state.fontsReady,state.minReady,state.sceneReady].filter(Boolean).length*25;
-    displayed+=(target-displayed)*.16;if(pct)pct.textContent=String(Math.min(100,Math.round(displayed))).padStart(2,'0')+'%';
-    if(target===100&&displayed>98){root.classList.add('is-ready');return;}requestAnimationFrame(gate);
-  };
-  gate();
-  if(!state.docReady)window.addEventListener('load',()=>state.docReady=true,{once:true});
-  Promise.resolve(document.fonts&&document.fonts.ready).then(()=>state.fontsReady=true).catch(()=>state.fontsReady=true);
-  setTimeout(()=>state.minReady=true,1100);
-  setTimeout(()=>{state.docReady=true;state.fontsReady=true;state.minReady=true;state.sceneReady=true;},6500);
+/* generic section */
+.cm-section{position:relative}
+.cm-panel{background:var(--mint)}
+.cm-round-b{border-radius:0 0 48px 48px}
+.cm-round-t{border-radius:48px 48px 0 0}
 
-  const subscribers=new Set();const cleaners=[];let last=performance.now();let rafId=0;
-  const tick=now=>{if(!root.isConnected){cleaners.forEach(fn=>fn());subscribers.clear();return;}const gap=Math.min(.05,Math.max(0,(now-last)/1000));last=now;if(!document.hidden)subscribers.forEach(fn=>fn(now,gap));rafId=requestAnimationFrame(tick);};rafId=requestAnimationFrame(tick);
-  cleaners.push(()=>cancelAnimationFrame(rafId));
-  const subscribe=fn=>{subscribers.add(fn);return()=>subscribers.delete(fn);};
-  const spring=(value=0)=>({value,target:value,velocity:0,step(dt,k=150,d=22){const a=(this.target-this.value)*k-this.velocity*d;this.velocity+=a*dt;this.value+=this.velocity*dt;return this.value;}});
-
-  const revealEls=[...root.querySelectorAll('.dh-reveal')];
-  revealEls.forEach(el=>{let wordIndex=0;const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);nodes.forEach(node=>{if(!(node.nodeValue||'').trim())return;const fragment=document.createDocumentFragment();(node.nodeValue||'').split(/(\s+)/).forEach(word=>{if(/^\s+$/.test(word)){fragment.appendChild(document.createTextNode(word));return;}const outer=document.createElement('span');const inner=document.createElement('span');outer.className='dh-word';outer.style.setProperty('--word-i',String(wordIndex++));inner.textContent=word;outer.appendChild(inner);fragment.appendChild(outer);});node.replaceWith(fragment);});});
-  const io=new IntersectionObserver(entries=>entries.forEach(entry=>entry.target.classList.toggle('is-visible',entry.isIntersecting)),{threshold:.18});cleaners.push(()=>io.disconnect());
-  revealEls.forEach(el=>io.observe(el));root.querySelectorAll('[data-rise]').forEach(el=>io.observe(el));
-
-  const assetBanner=root.querySelector('.dh-asset-error');
-  const photos=JSON.parse(root.dataset.photos||'[]');
-  photos.forEach(src=>{const image=new Image();image.onerror=()=>assetBanner&&assetBanner.classList.add('is-visible');image.src=src;});
-  const why=root.querySelector('.dh-why');const trailLayer=root.querySelector('.dh-trail-layer');let lastTrail={x:0,y:0};let photoIndex=0;
-  if(!reducedMotion&&why&&trailLayer)why.addEventListener('pointermove',event=>{const rect=why.getBoundingClientRect();const x=event.clientX-rect.left,y=event.clientY-rect.top;if(Math.hypot(x-lastTrail.x,y-lastTrail.y)<90)return;lastTrail={x,y};const card=document.createElement('span');card.className='dh-trail-photo';card.style.left=x+'px';card.style.top=y+'px';card.style.backgroundImage='url("'+photos[photoIndex%photos.length]+'")';card.style.setProperty('--r',(-10+Math.random()*20)+'deg');trailLayer.appendChild(card);photoIndex++;setTimeout(()=>card.remove(),1500);});
-
-  const servicesSection=root.querySelector('.dh-services');const servicesTrack=root.querySelector('.dh-services__track');
-  const serviceSpring=spring(0);subscribe((now,dt)=>{if(!servicesSection||!servicesTrack||reducedMotion||innerWidth<1024)return;const rect=servicesSection.getBoundingClientRect();serviceSpring.target=Math.min(1,Math.max(0,-rect.top/Math.max(1,rect.height-innerHeight)));const p=serviceSpring.step(dt,120,25);servicesTrack.style.transform='translate3d('+(-p*400)+'vw,0,0)';});
-
-  const banner=root.querySelector('.dh-banner');subscribe(()=>{if(!banner)return;const r=banner.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;const p=(innerHeight-r.top)/(innerHeight+r.height);banner.style.setProperty('--banner-y',((p-.5)*130)+'px');});
-  const counters=[...root.querySelectorAll('[data-count]')];const counted=new WeakSet();const countIO=new IntersectionObserver(entries=>entries.forEach(entry=>{if(!entry.isIntersecting||counted.has(entry.target))return;counted.add(entry.target);const el=entry.target;const end=Number(el.dataset.count);const suffix=el.dataset.suffix||'';el.textContent='0';const start=performance.now();const run=now=>{const p=Math.min(1,(now-start)/1500);el.textContent=Math.round(end*(1-Math.pow(1-p,3)))+suffix;if(p<1)requestAnimationFrame(run);};requestAnimationFrame(run);}),{threshold:.35});cleaners.push(()=>countIO.disconnect());if(!reducedMotion)counters.forEach(el=>countIO.observe(el));
-
-  const team=root.querySelector('.dh-team');const rail=root.querySelector('.dh-team__rail');const progress=root.querySelector('.dh-team__progress span');
-  const railSpring=spring(0);let drag=false,dragStart=0,startOffset=0,dragOffset=0,previousX=0,previousAt=0,glideVelocity=0;
-  const maxRail=()=>rail?Math.max(0,rail.scrollWidth-innerWidth+40):0;const teamScrollTarget=()=>{if(!team)return 0;const r=team.getBoundingClientRect();const p=Math.min(1,Math.max(0,-r.top/Math.max(1,r.height-innerHeight)));return-p*maxRail();};
-  if(rail){rail.addEventListener('pointerdown',e=>{if(reducedMotion||innerWidth<1024)return;drag=true;rail.classList.add('is-dragging');rail.setPointerCapture(e.pointerId);dragStart=e.clientX;startOffset=dragOffset;previousX=e.clientX;previousAt=performance.now();glideVelocity=0;});rail.addEventListener('pointermove',e=>{if(!drag)return;const now=performance.now();dragOffset=startOffset+e.clientX-dragStart;glideVelocity=(e.clientX-previousX)/Math.max(1,now-previousAt)*1000;previousX=e.clientX;previousAt=now;const base=teamScrollTarget();const bounded=Math.min(0,Math.max(-maxRail(),base+dragOffset));dragOffset=bounded-base;railSpring.target=bounded;});const release=e=>{if(!drag)return;drag=false;rail.classList.remove('is-dragging');if(rail.hasPointerCapture(e.pointerId))rail.releasePointerCapture(e.pointerId);};rail.addEventListener('pointerup',release);rail.addEventListener('pointercancel',release);}
-  subscribe((now,dt)=>{if(!team||!rail||reducedMotion||innerWidth<1024)return;const base=teamScrollTarget();if(!drag){dragOffset+=glideVelocity*dt;glideVelocity*=Math.pow(.035,dt);}const bounded=Math.min(0,Math.max(-maxRail(),base+dragOffset));dragOffset=bounded-base;railSpring.target=bounded;const x=railSpring.step(dt,130,23);rail.style.transform='translate3d('+x+'px,0,0)';if(progress)progress.style.transform='scaleX('+(maxRail()?Math.abs(x)/maxRail():0)+')';});
-
-  function createCanvasDna(container,isHero){
-    const canvas=container&&container.querySelector('[data-dna-fallback]');if(!canvas)return null;const ctx=canvas.getContext('2d');if(!ctx)return null;
-    const amount=isHero?1450:1000;const particles=Array.from({length:amount},(_,i)=>{const a=positive(seeded(i,21)),b=positive(seeded(i,22)),c=positive(seeded(i,23)),d=positive(seeded(i,24));return{y:a*2-1,strand:i%2,jitter:(b-.5),depth:c,size:d,cloud:i%7===0};});
-    let width=0,height=0,dpr=1,pointerX=0,pointerY=0;
-    const onPointer=e=>{pointerX=(e.clientX/innerWidth-.5)*2;pointerY=(e.clientY/innerHeight-.5)*2;};window.addEventListener('pointermove',onPointer,{passive:true});
-    const paint=seconds=>{const rect=container.getBoundingClientRect();if(rect.width<2||rect.height<2)return;if(rect.bottom<0||rect.top>innerHeight)return;const nextDpr=Math.min(devicePixelRatio||1,1.5),w=Math.round(rect.width),h=Math.round(rect.height);if(w!==width||h!==height||nextDpr!==dpr){width=w;height=h;dpr=nextDpr;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);canvas.style.width=w+'px';canvas.style.height=h+'px';}ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);const cx=width*(isHero?.56:.61)+pointerX*10,cy=height*.5+pointerY*7;const radius=Math.min(width*.27,height*.2);const phase=seconds*.22;ctx.globalCompositeOperation='multiply';
-      for(let i=0;i<18;i++){const f=i/17,y=cy+(f-.5)*height*.94;const wave=f*Math.PI*5.4+phase;const x=cx+Math.cos(wave)*radius;const spread=radius*(1.25+positive(seeded(i,31))*.8);const grad=ctx.createRadialGradient(x,y,0,x,y,spread);grad.addColorStop(0,i%3===0?'rgba(49,180,244,.085)':'rgba(20,47,134,.07)');grad.addColorStop(.45,'rgba(20,47,134,.025)');grad.addColorStop(1,'rgba(20,47,134,0)');ctx.fillStyle=grad;ctx.beginPath();ctx.arc(x,y,spread,0,Math.PI*2);ctx.fill();}
-      for(let i=0;i<19;i++){const f=i/18,y=cy+(f-.5)*height*.88;const wave=(f*2-1)*Math.PI*2.7+phase;const depth=Math.sin(wave);const x1=cx+Math.cos(wave)*radius,x2=cx-Math.cos(wave)*radius;for(let j=0;j<32;j++){const q=j/31,x=x1+(x2-x1)*q+Math.sin(j*2.1+i)*.8;const fade=Math.sin(Math.PI*q);ctx.fillStyle='rgba(20,47,134,'+(.035+.12*fade*(.65+.35*depth))+')';ctx.beginPath();ctx.arc(x,y+Math.sin(q*Math.PI)*2,Math.max(.55,1.45*fade),0,Math.PI*2);ctx.fill();}}
-      particles.forEach((p,i)=>{const wave=p.y*Math.PI*2.7+phase+p.strand*Math.PI;let localRadius=radius;if(p.cloud)localRadius*=1.25+p.depth*1.25;const z=Math.sin(wave),perspective=.76+(z+1)*.12;const x=cx+Math.cos(wave)*localRadius*perspective+p.jitter*(p.cloud?90:15);const y=cy+p.y*height*.47+Math.sin(seconds*.3+i)*3*p.depth;const alpha=p.cloud?.018+p.depth*.04:.16+p.depth*.42;const size=p.cloud?.7+p.size*2.2:.85+p.size*2.8+(z+1)*.55;ctx.fillStyle=p.cloud?'rgba(49,180,244,'+alpha+')':'rgba(12,39,101,'+alpha+')';ctx.beginPath();ctx.arc(x,y,size,0,Math.PI*2);ctx.fill();});
-      ctx.globalCompositeOperation='source-over';if(isHero)state.sceneReady=true;};
-    paint(0);const unsubscribe=reducedMotion?null:subscribe(now=>paint(now*.001));return()=>{if(unsubscribe)unsubscribe();window.removeEventListener('pointermove',onPointer);};
-  }
-  const heroDnaCleanup=createCanvasDna(root.querySelector('[data-scene="hero"]'),true);if(heroDnaCleanup)cleaners.push(heroDnaCleanup);const contactDnaCleanup=createCanvasDna(root.querySelector('[data-scene="contact"]'),false);if(contactDnaCleanup)cleaners.push(contactDnaCleanup);
-
-  if(reducedMotion)return;
-  let THREE,EffectComposer,RenderPass,ShaderPass;
-  try{
-    const modules=await Promise.all([
-      import('https://unpkg.com/three@0.185.0/build/three.module.js'),
-      import('https://unpkg.com/three@0.185.0/examples/jsm/postprocessing/EffectComposer.js?module'),
-      import('https://unpkg.com/three@0.185.0/examples/jsm/postprocessing/RenderPass.js?module'),
-      import('https://unpkg.com/three@0.185.0/examples/jsm/postprocessing/ShaderPass.js?module')
-    ]);
-    THREE=modules[0];EffectComposer=modules[1].EffectComposer;RenderPass=modules[2].RenderPass;ShaderPass=modules[3].ShaderPass;
-  }catch(error){console.warn('Three.js enhancement unavailable; using canvas DNA',error);state.sceneReady=true;return;}
-
-  const grainShader={uniforms:{tDiffuse:{value:null},uAmount:{value:.025}},vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:'uniform sampler2D tDiffuse;uniform float uAmount;varying vec2 vUv;float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}void main(){vec4 c=texture2D(tDiffuse,vUv);float g=(h(gl_FragCoord.xy)-.5)*uAmount;gl_FragColor=vec4(c.rgb+g,c.a);}'};
-  const shaderNodes=['#dh-helix-v','#dh-helix-f','#dh-atmo-v','#dh-atmo-f'].map(selector=>document.querySelector(selector));if(shaderNodes.some(node=>!node)){state.sceneReady=true;return;}const [vHelix,fHelix,vAtmo,fAtmo]=shaderNodes.map(node=>node.textContent||'');
-
-  function seeded(i,salt){return (Math.sin(i*12.9898+salt*78.233)*43758.5453)%1;}
-  function positive(v){return v<0?v+1:v;}
-  function makeCloud(count,kind){const pos=new Float32Array(count*3);const seeds=new Float32Array(count);const kinds=new Float32Array(count);for(let i=0;i<count;i++){const r1=positive(seeded(i,kind+1)),r2=positive(seeded(i,kind+2)),r3=positive(seeded(i,kind+3));if(kind===0){const y=(r1-.5)*8.4;const strand=i%2===0?0:Math.PI;const turn=y*1.9+strand;const radius=1.34+(r2-.5)*.18;pos[i*3]=Math.cos(turn)*radius+(r3-.5)*.07;pos[i*3+1]=y+(r2-.5)*.06;pos[i*3+2]=Math.sin(turn)*radius+(r3-.5)*.07;}else{const y=(r3-.5)*8.8;const turn=y*1.9+r1*Math.PI*2.0;const radius=1.2+Math.pow(r2,.65)*3.1;pos[i*3]=Math.cos(turn)*radius;pos[i*3+1]=y;pos[i*3+2]=Math.sin(turn)*radius*.66;}seeds[i]=r1;kinds[i]=kind;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));g.setAttribute('aSeed',new THREE.BufferAttribute(seeds,1));g.setAttribute('aKind',new THREE.BufferAttribute(kinds,1));return g;}
-  function makeRungs(count){const pos=new Float32Array(count*3),seeds=new Float32Array(count),kinds=new Float32Array(count);const levels=19,perLevel=Math.ceil(count/levels);for(let i=0;i<count;i++){const level=i%levels,q=Math.floor(i/levels)/Math.max(1,perLevel-1),y=-4.05+level/18*8.1,turn=y*1.9,across=1-2*q,jitter=(positive(seeded(i,41))-.5)*.045;pos[i*3]=Math.cos(turn)*1.34*across+jitter;pos[i*3+1]=y+(positive(seeded(i,42))-.5)*.04;pos[i*3+2]=Math.sin(turn)*1.34*across+jitter;seeds[i]=positive(seeded(i,43));kinds[i]=0;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));g.setAttribute('aSeed',new THREE.BufferAttribute(seeds,1));g.setAttribute('aKind',new THREE.BufferAttribute(kinds,1));return g;}
-  function makeAtmosphere(){const count=1500,pos=new Float32Array(count*3),seeds=new Float32Array(count);for(let i=0;i<count;i++){pos[i*3]=(positive(seeded(i,9))-.5)*11;pos[i*3+1]=(positive(seeded(i,10))-.5)*11;pos[i*3+2]=(positive(seeded(i,11))-.5)*8;seeds[i]=positive(seeded(i,12));}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));g.setAttribute('aSeed',new THREE.BufferAttribute(seeds,1));return g;}
-
-  function createInkScene(container,isHero){
-    if(!container)return null;
-    const renderer=new THREE.WebGLRenderer({alpha:true,antialias:false,premultipliedAlpha:true,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setClearColor(0x000000,0);renderer.outputColorSpace=THREE.SRGBColorSpace;container.appendChild(renderer.domElement);
-    const scene=new THREE.Scene();const camera=new THREE.PerspectiveCamera(38,1,.1,100);camera.position.set(0,0,10.8);
-    const atmoSize=isHero?.65:.45;const spin=0;
-    const common={uTime:{value:0},uWallTime:{value:performance.now()*.001},uPixelScale:{value:Math.min(devicePixelRatio,1.5)},uCursor:{value:new THREE.Vector2()},uHelixColor:{value:new THREE.Color().setRGB(.02,.08,.34)},uInkColor:{value:new THREE.Color().setRGB(.04,.22,.45)}};
-    const material=new THREE.ShaderMaterial({vertexShader:vHelix,fragmentShader:fHelix,uniforms:common,transparent:true,depthWrite:false,blending:THREE.MultiplyBlending,premultipliedAlpha:true});
-    const compact=innerWidth<768||navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4;const helixCount=compact?14000:32000;const rungCount=compact?7000:18000;const inkCount=compact?28000:72000;
-    const helix=new THREE.Points(makeCloud(helixCount,0),material);const rungs=new THREE.Points(makeRungs(rungCount),material);const ink=new THREE.Points(makeCloud(inkCount,1),material);helix.frustumCulled=false;rungs.frustumCulled=false;ink.frustumCulled=false;scene.add(ink,rungs,helix);
-    const atmoMat=new THREE.ShaderMaterial({vertexShader:vAtmo,fragmentShader:fAtmo,uniforms:{uTime:common.uTime,uPixelScale:common.uPixelScale,uAtmoSize:{value:atmoSize}},transparent:true,depthWrite:false,blending:THREE.MultiplyBlending,premultipliedAlpha:true});const atmo=new THREE.Points(makeAtmosphere(),atmoMat);atmo.frustumCulled=false;scene.add(atmo);
-    const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));composer.addPass(new ShaderPass(grainShader));
-    let width=0,height=0,elapsed=0,first=true;const pointerNdc=new THREE.Vector2(),worldCursor=new THREE.Vector2(),worldTarget=new THREE.Vector2(),rayPoint=new THREE.Vector3();let lastPointer=performance.now();
-    const move=e=>{const rect=container.getBoundingClientRect();pointerNdc.set(THREE.MathUtils.clamp((e.clientX-rect.left)/rect.width*2-1,-1,1),THREE.MathUtils.clamp(-((e.clientY-rect.top)/rect.height*2-1),-1,1));lastPointer=performance.now();};window.addEventListener('pointermove',move,{passive:true});
-    const unsubscribe=subscribe((now,dt)=>{const rect=container.getBoundingClientRect();const visible=rect.bottom>0&&rect.top<innerHeight&&rect.right>0&&rect.left<innerWidth;if(!visible){elapsed=Math.max(0,elapsed-dt*2.2);common.uTime.value=elapsed;return;}const w=Math.max(1,Math.round(rect.width)),h=Math.max(1,Math.round(rect.height));if(w!==width||h!==height){width=w;height=h;renderer.setSize(w,h,false);composer.setSize(w,h);camera.aspect=w/h;camera.updateProjectionMatrix();common.uPixelScale.value=Math.min(devicePixelRatio,1.5)*(h/900);}
-      elapsed=Math.min(120,elapsed+Math.min(dt,.033));common.uTime.value=elapsed;common.uWallTime.value=now*.001;if(now-lastPointer>1900)pointerNdc.set(Math.sin(now*.00031)*.22,Math.cos(now*.00023)*.16);rayPoint.set(pointerNdc.x,pointerNdc.y,.5).unproject(camera).sub(camera.position).normalize();const rayDistance=-camera.position.z/rayPoint.z;rayPoint.multiplyScalar(rayDistance).add(camera.position);worldTarget.set(THREE.MathUtils.clamp(rayPoint.x/5,-1,1),THREE.MathUtils.clamp(rayPoint.y/5,-1,1));worldCursor.lerp(worldTarget,.045);common.uCursor.value.copy(worldCursor);helix.rotation.y=(isHero ? .12 : -.18)+spin;rungs.rotation.y=helix.rotation.y;ink.rotation.z=(isHero ? -.12 : .08)+spin;composer.render();if(first){first=false;if(isHero)state.sceneReady=true;}
-    });return()=>{unsubscribe();window.removeEventListener('pointermove',move);helix.geometry.dispose();rungs.geometry.dispose();ink.geometry.dispose();atmo.geometry.dispose();material.dispose();atmoMat.dispose();composer.dispose();renderer.dispose();renderer.domElement.remove();};
-  }
-  try{const heroCleanup=createInkScene(root.querySelector('[data-scene="hero"]'),true);if(heroCleanup)cleaners.push(heroCleanup);const contactCleanup=createInkScene(root.querySelector('[data-scene="contact"]'),false);if(contactCleanup)cleaners.push(contactCleanup);}catch(error){console.warn('Interactive WebGL enhancement unavailable; using canvas DNA',error);state.sceneReady=true;}
+/* HERO */
+.cm-hero{min-height:100lvh;overflow:hidden;padding:7rem 1.25rem 3rem}
+@media(min-width:768px){.cm-hero{padding-inline:2.5rem}}
+.cm-hero__inner{position:relative}
+.cm-hero__copy{position:relative;z-index:3;display:flex;flex-direction:column;gap:1.5rem;max-width:44.75rem}
+.cm-hero__head{display:flex;flex-direction:column;gap:1rem}
+.cm-hero__actions{display:flex;flex-wrap:wrap;gap:1rem;position:relative;z-index:3}
+.cm-hero__actions .cm-btn{width:11.25rem}
+.cm-hero__scene{position:relative;z-index:1;height:40lvh;margin:1.5rem -1.25rem 0;pointer-events:none}
+@media(min-width:768px){.cm-hero__scene{margin-inline:-2.5rem}}
+.cm-dna{display:block;width:100%;height:100%}
+.cm-hero__meta{display:flex;flex-direction:column;gap:1.5rem}
+.cm-hero__rule{border:0;border-top:1px solid var(--line)}
+.cm-hero__trust{display:flex;align-items:center;gap:.75rem;font-size:1rem;color:var(--green);margin:0}
+.cm-hero__trust span{height:1px;width:3.125rem;background:var(--green)}
+.cm-chips{display:flex;flex-wrap:wrap;gap:.25rem;margin:0;padding:0;list-style:none}
+.cm-chips li{border:1px solid var(--line);background:var(--glass-s);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:37px;padding:.75rem 1.25rem;font-size:.875rem;font-weight:300}
+@media(min-width:1024px){
+  .cm-hero{padding:0;height:100lvh;min-height:0}
+  .cm-hero__inner{height:100%}
+  .cm-hero__copy{position:absolute;top:28.55%;left:2.5rem;gap:3rem}
+  .cm-hero__head{gap:2rem}
+  .cm-hero__copy .cm-body{width:30.875rem}
+  .cm-hero__scene{position:absolute;inset-block:0;left:22.5rem;width:71.25rem;height:auto;margin:0}
+  .cm-hero__actions{position:absolute;top:89.375%;left:2.5rem}
+  .cm-hero__rule{position:absolute;top:78.625%;right:2.5rem;left:2.5625rem}
+  .cm-hero__trust{position:absolute;top:83.625%;left:2.5rem}
+  .cm-chips{position:absolute;top:83.625%;left:55.5625rem;width:31.9375rem;justify-content:flex-end;gap:.25rem}
+  .cm-chips li{padding:1rem 2rem;font-size:1rem}
+  .cm-lead{font-size:3.75rem}
 }
-if(!window.__clarusHomeBoot){
-  const boot=()=>{const root=document.querySelector('.dantora-home');if(root)initClarusHome(root);};
-  const navigationObserver=new MutationObserver(boot);
-  navigationObserver.observe(document.documentElement,{childList:true,subtree:true});
-  window.__clarusHomeBoot={boot,navigationObserver};
-  boot();
-}else{
-  window.__clarusHomeBoot.boot();
+
+/* WHY */
+.cm-why{min-height:100lvh;display:grid;place-items:center;overflow:hidden;background:#fff;text-align:center;padding:6rem 1.25rem}
+.cm-why__inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:2rem;width:min(100% - 2.5rem,44.75rem)}
+.cm-why .cm-lead{width:100%}
+@media(min-width:1024px){.cm-why .cm-lead{width:39.25rem}.cm-why .cm-body{width:27.625rem}}
+.cm-why__actions{display:flex;gap:1rem}
+.cm-why__actions .cm-btn{width:11.25rem}
+.cm-trail{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+.cm-trail__card{position:absolute;top:0;left:0;width:13.5rem;height:17rem;border-radius:24px;background-size:cover;background-position:center;will-change:transform,opacity;opacity:0}
+
+/* SERVICES */
+.cm-services{position:relative;background:#fff}
+.cm-services__runway{position:relative;height:400lvh}
+.cm-services__sticky{position:sticky;top:0;height:100lvh;overflow:hidden}
+.cm-services__intro{display:flex;flex-direction:column;gap:1rem;padding:6rem 1.25rem 0}
+@media(min-width:768px){.cm-services__intro{padding-inline:2.5rem}}
+.cm-services__track{display:flex;gap:.625rem;position:absolute;top:46%;right:0;bottom:1.25rem;left:1.25rem;will-change:transform}
+@media(min-width:768px){.cm-services__track{left:2.5rem}}
+.cm-card{position:relative;display:flex;flex-direction:column;justify-content:space-between;flex:none;width:78vw;max-width:22rem;height:100%;overflow:hidden;border-radius:24px;padding:1.5rem}
+.cm-card__num{font-size:1rem;margin:0}
+.cm-card__title{font-size:1.5rem;line-height:1.1;font-weight:300;margin:0}
+.cm-card__head{position:relative;z-index:2;display:flex;flex-direction:column;gap:1rem}
+.cm-card__img{position:absolute;inset:0;object-fit:cover;width:100%;height:100%}
+.cm-card__scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,64,56,.15),rgba(5,64,56,.55))}
+.cm-card--lime{background:var(--lime);border:1px solid var(--lime-b)}
+.cm-card--brand{background:var(--green);color:#fff}
+.cm-card--photo{color:#fff}
+.cm-card__list{position:relative;z-index:2;display:flex;flex-direction:column;gap:1rem;list-style:none;margin:0;padding:0}
+.cm-card__list li{display:flex;flex-direction:column;gap:1rem}
+.cm-card__row{display:flex;align-items:center;justify-content:space-between;font-size:1rem}
+.cm-card__rule{height:1px;width:100%;background:var(--line)}
+.cm-card__cta{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between}
+.cm-card__cta p{margin:0;font-size:1rem}
+.cm-card__ring{display:grid;place-items:center;width:3.5rem;height:3.5rem;border-radius:999px;border:1px solid #fff;color:#fff}
+@media(min-width:1024px){
+  .cm-services__intro{padding:0}
+  .cm-services__intro .cm-eyebrow{position:absolute;top:14%;left:66.75rem;width:20.75rem}
+  .cm-services__intro .cm-services__title{position:absolute;top:14%;left:2.5rem;width:43.5rem}
+  .cm-services__intro .cm-services__desc{position:absolute;top:21%;left:66.75rem;width:20.75rem}
+  .cm-services__track{top:39%;bottom:2.5rem;width:85rem}
+  .cm-card{width:27.9375rem;max-width:none;padding:2rem}
+  .cm-card--lime{width:35.0625rem}
+  .cm-card__title{font-size:2rem}
+  .cm-card__num,.cm-card__row,.cm-card__cta p{font-size:1.25rem}
+  .cm-card__ring{width:4.5rem;height:4.5rem}
+  .cm-services__title.cm-lead{font-size:3.75rem}
+}
+
+/* ABOUT */
+.cm-about{position:relative;z-index:10;margin-top:-100lvh;background:var(--mint-deep);padding:4rem 1.25rem}
+@media(min-width:768px){.cm-about{padding-inline:2.5rem}}
+.cm-about__banner{position:relative;overflow:hidden;border-radius:24px;height:16rem}
+.cm-about__banner img{position:absolute;inset-inline:0;width:100%;object-fit:cover;will-change:transform}
+.cm-about__content{margin-top:2.5rem;display:flex;flex-direction:column;gap:2.5rem}
+.cm-about__stats{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem .625rem}
+.cm-stat{display:flex;flex-direction:column;gap:1rem;border-left:1px solid var(--green);padding-left:1rem}
+.cm-stat dd{font-size:2.5rem;line-height:1.05;font-weight:300;margin:0}
+.cm-stat dt{font-size:.875rem;font-weight:300}
+.cm-about__para{font-size:1.375rem;line-height:1.2;font-weight:300;margin:0}
+.cm-about__para .muted{color:var(--muted)}
+.cm-about__actions{display:flex;flex-wrap:wrap;gap:1rem}
+@media(min-width:768px){.cm-about__banner{height:24rem}.cm-about__para{font-size:1.75rem}}
+@media(min-width:1024px){
+  .cm-about{height:71.5rem;padding:0}
+  .cm-about__banner{position:absolute;top:2.5rem;left:2.5rem;width:85rem;height:31.25rem}
+  .cm-about__content{position:absolute;top:37.75rem;left:2.375rem;width:85.125rem;margin:0;flex-direction:row;align-items:center;justify-content:space-between;gap:0}
+  .cm-about__left{display:flex;flex-direction:column;gap:5.5rem;width:28rem}
+  .cm-about__stats{gap:5.625rem .625rem}
+  .cm-stat{gap:2.375rem;padding-left:1.5rem}
+  .cm-stat dd{font-size:3.75rem}
+  .cm-stat dt{font-size:1rem}
+  .cm-about__right{display:flex;flex-direction:column;gap:8.375rem;width:49.3125rem}
+  .cm-about__para{font-size:2.25rem}
+  .cm-about__actions .cm-btn:first-child{width:15rem}
+  .cm-about__actions .cm-btn:last-child{width:11.25rem}
+}
+
+/* TEAM */
+.cm-team{position:sticky;top:0;z-index:10;height:100lvh;display:flex;flex-direction:column;justify-content:center;background:var(--mint-deep);padding-top:18%}
+@media(min-width:768px){.cm-team{padding-top:12%}}
+@media(min-width:1024px){.cm-team{padding-top:6%}}
+.cm-team__frame{display:flex;flex-direction:column;height:74%}
+@media(min-width:1024px){.cm-team__frame{height:86%}}
+.cm-rail{display:flex;gap:.6875rem;flex:1;min-height:0;overflow-x:auto;overscroll-behavior-x:contain;padding-left:1.25rem;cursor:grab;scroll-behavior:auto;user-select:none;scrollbar-width:none;-ms-overflow-style:none}
+.cm-rail::-webkit-scrollbar{display:none}
+.cm-rail:active{cursor:grabbing}
+.cm-rail img{pointer-events:none}
+@media(min-width:768px){.cm-rail{padding-left:2.5rem}}
+.cm-team__intro{display:flex;flex-direction:column;justify-content:space-between;flex:none;width:80vw;max-width:22rem;border-radius:24px;background:var(--green);color:#fff;padding:1.5rem}
+.cm-team__intro h2{font-size:1.5rem;line-height:1.1;font-weight:300;margin:0}
+.cm-team__eyebrow{font-size:.875rem;font-weight:500;text-transform:uppercase;opacity:.7;margin:0}
+.cm-team__socials{display:flex;gap:.75rem;list-style:none;margin:0;padding:0}
+.cm-team__socials a{display:block;width:3rem;height:3rem;transition:opacity .15s}
+.cm-team__socials a:hover{opacity:.8}
+.cm-team__socials img{width:100%;height:100%}
+.cm-person{position:relative;flex:none;width:70vw;max-width:20.75rem;height:100%;overflow:hidden;border-radius:24px}
+.cm-person img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cm-person figcaption{position:absolute;inset-inline:2rem;bottom:2rem;height:4rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;border-radius:8px;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);text-align:center}
+.cm-person figcaption p{margin:0}
+.cm-person__name{font-size:1rem;font-weight:500}
+.cm-person__role{font-size:.875rem;font-weight:300;color:var(--subtle)}
+.cm-team__more{display:flex;flex-direction:column;justify-content:space-between;flex:none;width:70vw;max-width:20.75rem;border-radius:24px;border:1px solid var(--lime-b);background:var(--lime);color:#000;padding:1.5rem}
+.cm-team__more p{margin:0;font-size:1.5rem;line-height:1.1;font-weight:300}
+.cm-team__more .cm-card__cta span:last-child{border-color:currentColor;color:currentColor}
+.cm-team__more .cm-card__ring{border-color:currentColor;color:currentColor}
+.cm-team__gutter{flex:none;width:2.5rem}
+.cm-team__bar{position:relative;height:.125rem;margin:1.5rem 1.25rem 0;background:var(--line)}
+@media(min-width:768px){.cm-team__bar{margin-inline:2.5rem}}
+.cm-team__bar span{position:absolute;inset:0;transform-origin:left;background:var(--green);transform:scaleX(.65)}
+@media(min-width:1024px){
+  .cm-team__intro{width:27.9375rem;max-width:none;padding:2rem}
+  .cm-team__intro h2{font-size:2rem;width:21rem}
+  .cm-team__socials a{width:4rem;height:4rem}
+  .cm-person{width:20.75rem}
+  .cm-team__more{width:20.75rem;padding:2rem}
+  .cm-team__more p{font-size:2rem}
+}
+
+/* CONTACT */
+.cm-contact{position:relative;z-index:20;min-height:100lvh;overflow:hidden;background:var(--mint);padding:7rem 1.25rem 5rem}
+@media(min-width:768px){.cm-contact{padding-inline:2.5rem}}
+.cm-contact__scene{display:none}
+.cm-contact__head{display:flex;flex-direction:column;gap:1.5rem}
+.cm-contact__title{font-size:clamp(2.25rem,5.4vw,3.75rem);line-height:1.05;font-weight:300;margin:0}
+.cm-contact__details{font-size:1rem;line-height:1.7;margin:0}
+.cm-contact__details a{color:var(--green);text-decoration:underline;text-underline-offset:3px}
+.cm-contact__details strong{font-weight:500}
+.cm-form{margin-top:2rem;display:flex;flex-direction:column;gap:2rem;border-radius:24px;background:var(--glass-strong);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:1.5rem}
+.cm-form__mark{display:grid;place-items:center;width:2.625rem;height:2.625rem;border-radius:4px;background:var(--green);color:var(--lime)}
+.cm-form__mark svg{width:1.5rem;height:1.5rem}
+.cm-form h3{font-size:1.75rem;line-height:1.1;font-weight:300;margin:0}
+.cm-form form{display:flex;flex-direction:column;gap:1.5rem}
+.cm-field{display:flex;flex-direction:column;gap:1rem}
+.cm-field label{font-size:.875rem;font-weight:500;text-transform:uppercase;color:var(--green)}
+.cm-field input,.cm-field textarea{width:100%;border:1px solid var(--line);background:transparent;border-radius:8px;padding:1.25rem 2rem;font-weight:300;outline:none}
+.cm-field input::placeholder,.cm-field textarea::placeholder{color:var(--subtle)}
+.cm-field input:focus,.cm-field textarea:focus{border-color:var(--green)}
+.cm-field textarea{resize:none;min-height:5.5rem}
+.cm-form__consent{font-size:1rem;font-weight:300;color:var(--subtle);margin:0}
+.cm-form__consent a{color:var(--ink);text-decoration:underline}
+.cm-form__submit{display:flex;align-items:center;justify-content:space-between;height:3.375rem;border:1px solid var(--green-deep);background:var(--green);color:#fff;border-radius:46px;padding:0 .125rem 0 2rem;font-size:1.25rem;font-weight:300;cursor:pointer;transition:background .15s}
+.cm-form__submit:hover{background:var(--green-deep)}
+@media(min-width:768px){.cm-form{padding:2rem}}
+@media(min-width:1024px){
+  .cm-contact{height:100lvh;min-height:0;padding:0}
+  .cm-contact__scene{display:block;position:absolute;inset-block:0;left:7.0625rem;width:71.125rem;pointer-events:none}
+  .cm-contact__head{position:absolute;top:35.25%;left:2.5625rem;width:42.75rem;gap:3rem}
+  .cm-contact__title{font-size:3.75rem}
+  .cm-contact__details{width:27.6875rem}
+  .cm-form{position:absolute;top:1rem;right:2.5rem;bottom:2.5rem;width:35.0625rem;margin:0;gap:3rem}
+  .cm-form form{flex:1}
+  .cm-form__submit{margin-top:auto}
+}
+
+/* reveals */
+.cm-root .cm-reveal .cm-word{display:inline-block;overflow:hidden;vertical-align:top}
+.cm-root .cm-reveal .cm-word>span{display:inline-block;transform:translateY(110%);transition:transform .8s cubic-bezier(.2,0,0,1);transition-delay:calc(var(--w,0)*40ms)}
+.cm-root.is-ready .cm-reveal.in .cm-word>span{transform:translateY(0)}
+.cm-root [data-rise]{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,0,0,1)}
+.cm-root.is-ready [data-rise].in{opacity:1;transform:none}
+
+/* preloader */
+.cm-pre{position:fixed;inset:0;z-index:90;display:grid;place-items:center;background:var(--green-deep);color:var(--lime);transition:transform .9s cubic-bezier(.76,0,.24,1),visibility 0s .9s;animation:cmPreFail .01s 7s forwards}
+.cm-root.is-ready .cm-pre{transform:translateY(-100%);visibility:hidden}
+.cm-pre__mark{width:3.5rem;height:3.5rem;animation:cmSpin 1.4s linear infinite}
+@keyframes cmSpin{to{transform:rotate(360deg)}}
+@keyframes cmPreFail{to{visibility:hidden;pointer-events:none;transform:translateY(-100%)}}
+
+@media(prefers-reduced-motion:reduce){
+  html:has(.cm-root){scroll-behavior:auto}
+  .cm-root .cm-reveal .cm-word>span,.cm-root [data-rise]{transition:none!important;transform:none!important;opacity:1!important}
+  .cm-pre{display:none}
+  .cm-services__runway{height:auto}
+  .cm-services__sticky{position:relative;height:auto;overflow:visible}
+  .cm-services__track{position:relative;inset:auto;flex-wrap:wrap;transform:none!important;padding:2rem 1.25rem}
+  .cm-card{width:100%;max-width:none;min-height:70svh}
+  .cm-about{margin-top:0}
+  .cm-team{position:relative;height:auto;padding:5rem 0}
+  .cm-hero__scene,.cm-contact__scene,.cm-trail{display:none}
 }
 `;
+
+/* ---- DNA ink shaders (verbatim from Dantora source) + config ---- */
+
+const SNOISE = String.raw`
+  vec4 permute(vec4 x){return mod(((x*34.0)+1.0)*x, 289.0);}
+  vec4 taylorInvSqrt(vec4 r){return 1.79284291400159 - 0.85373472095314 * r;}
+  float snoise(vec3 v){
+    const vec2 C = vec2(1.0/6.0, 1.0/3.0); const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+    vec3 i = floor(v + dot(v, C.yyy)); vec3 x0 = v - i + dot(i, C.xxx);
+    vec3 g = step(x0.yzx, x0.xyz); vec3 l = 1.0 - g;
+    vec3 i1 = min(g.xyz, l.zxy); vec3 i2 = max(g.xyz, l.zxy);
+    vec3 x1 = x0 - i1 + 1.0 * C.xxx; vec3 x2 = x0 - i2 + 2.0 * C.xxx; vec3 x3 = x0 - 1.0 + 3.0 * C.xxx;
+    i = mod(i, 289.0);
+    vec4 p = permute(permute(permute(i.z + vec4(0.0, i1.z, i2.z, 1.0)) + i.y + vec4(0.0, i1.y, i2.y, 1.0)) + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+    float n_ = 1.0/7.0; vec3 ns = n_ * D.wyz - D.xzx;
+    vec4 j = p - 49.0 * floor(p * ns.z *ns.z);
+    vec4 x_ = floor(j * ns.z); vec4 y_ = floor(j - 7.0 * x_);
+    vec4 x = x_ *ns.x + ns.yyyy; vec4 y = y_ *ns.x + ns.yyyy; vec4 h = 1.0 - abs(x) - abs(y);
+    vec4 b0 = vec4(x.xy, y.xy); vec4 b1 = vec4(x.zw, y.zw);
+    vec4 s0 = floor(b0)*2.0 + 1.0; vec4 s1 = floor(b1)*2.0 + 1.0; vec4 sh = -step(h, vec4(0.0));
+    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy; vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+    vec3 p0 = vec3(a0.xy,h.x); vec3 p1 = vec3(a0.zw,h.y); vec3 p2 = vec3(a1.xy,h.z); vec3 p3 = vec3(a1.zw,h.w);
+    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+    p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+    vec4 m = max(0.5 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0); m = m * m;
+    return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+  }
+  float random(vec3 p) { return fract(sin(dot(p, vec3(12.9898, 78.233, 45.164))) * 43758.5453); }
+  vec3 helixPoint(float rnd1, float rnd2, float rnd3, float rnd4, float twist, float radius, float height, float thick, float wave, float time) {
+    float y = (rnd2 * 2.0 - 1.0) * height;
+    vec3 core;
+    if (rnd1 < 0.85) {
+      float strand = step(0.5, rnd1) * 3.14159265;
+      float a = y * twist + strand;
+      core = vec3(radius * cos(a), y, radius * sin(a));
+      core += (vec3(rnd2, rnd3, rnd4) - 0.5) * thick;
+    } else {
+      float rungT = rnd3;
+      float dy = floor(y * 2.2) / 2.2;
+      float a = dy * twist;
+      vec3 p1 = vec3(radius * cos(a), dy, radius * sin(a));
+      vec3 p2 = vec3(radius * cos(a + 3.14159265), dy, radius * sin(a + 3.14159265));
+      core = mix(p1, p2, rungT) + (vec3(rnd2, rnd4, rnd3) - 0.5) * 0.08;
+    }
+    core.x += sin(time * 0.5 + y * 0.6) * wave;
+    core.z += cos(time * 0.4 + y * 0.6) * wave;
+    return core;
+  }`;
+
+const HELIX_V = String.raw`
+  uniform float uTime, uHelixSize, uTwist, uRadius, uHeight, uThick, uWave;
+  uniform float uPixelScale;
+  uniform vec3 uHelixA, uHelixB;
+  uniform vec3 uCursor; uniform float uRepelRadius, uRepelStrength, uActivity;
+  varying vec3 vColor; varying float vFade;
+  ${SNOISE}
+  void main() {
+    vec3 s = position;
+    float rnd1 = random(s), rnd2 = random(s + 1.7), rnd3 = random(s + 3.3), rnd4 = random(s + 5.9);
+    vec3 p = helixPoint(rnd1, rnd2, rnd3, rnd4, uTwist, uRadius, uHeight, uThick, uWave, uTime);
+    vec3 wp = (modelMatrix * vec4(p, 1.0)).xyz;
+    vec3 toP = wp - uCursor;
+    float fall = smoothstep(uRepelRadius, 0.0, length(toP));
+    wp += normalize(toP + vec3(1e-4)) * fall * uRepelStrength * uActivity;
+    vec4 mv = viewMatrix * vec4(wp, 1.0);
+    vColor = mix(uHelixB, uHelixA, rnd4);
+    vFade = 0.65 + 0.35 * rnd2;
+    gl_PointSize = uHelixSize * uPixelScale * (12.0 / -mv.z);
+    gl_PointSize = max(gl_PointSize, 1.5);
+    gl_Position = projectionMatrix * mv;
+  }`;
+
+const HELIX_F = String.raw`
+  uniform float uBrightness, uHelixOpacity, uAppear;
+  varying vec3 vColor; varying float vFade;
+  void main() {
+    vec2 xy = gl_PointCoord - 0.5;
+    float ll = length(xy);
+    if (ll > 0.5) discard;
+    float soft = smoothstep(0.5, 0.05, ll);
+    float cov = clamp(soft * vFade * uHelixOpacity * uAppear * uBrightness, 0.0, 1.0);
+    gl_FragColor = vec4(mix(vec3(1.0), vColor, cov), 1.0);
+  }`;
+
+const INK_V = String.raw`
+  uniform float uTime, uInkSize, uTwist, uRadius, uHeight, uThick, uWave;
+  uniform float uEmitRate, uSpread, uRise, uTurb, uNoiseFreq, uNoiseEvolve, uInkGrow;
+  uniform float uPixelScale;
+  uniform vec3 uInkCore, uInkMid, uInkEdge;
+  uniform vec3 uCursor; uniform float uRepelRadius, uRepelStrength, uActivity;
+  varying vec3 vColor; varying float vAlpha;
+  ${SNOISE}
+  void main() {
+    vec3 s = position;
+    float rnd1 = random(s), rnd2 = random(s + 1.7), rnd3 = random(s + 3.3), rnd4 = random(s + 5.9);
+    float seed = random(s + 9.1);
+    float life = fract(seed + uTime * uEmitRate);
+    float birthTime = uTime - life / max(uEmitRate, 1e-4);
+    vec3 birth = helixPoint(rnd1, rnd2, rnd3, rnd4, uTwist, uRadius, uHeight, uThick, uWave, birthTime);
+    vec3 outward = normalize(vec3(birth.x, 0.0, birth.z) + vec3(1e-4));
+    float e = uTime * uNoiseEvolve;
+    vec3 np = birth * uNoiseFreq;
+    vec3 flow = vec3(
+      snoise(np + vec3(e, 0.0, 0.0)),
+      snoise(np + vec3(0.0, e, 0.0) + 11.0),
+      snoise(np + vec3(0.0, 0.0, e) + 23.0)
+    );
+    vec3 disp = outward * life * uSpread
+              + flow * pow(life, 1.4) * uTurb
+              + vec3(0.0, life * uRise, 0.0);
+    vec3 p = birth + disp;
+    vec3 wp = (modelMatrix * vec4(p, 1.0)).xyz;
+    vec3 toP = wp - uCursor;
+    float fall = smoothstep(uRepelRadius, 0.0, length(toP));
+    wp += normalize(toP + vec3(1e-4)) * fall * uRepelStrength * uActivity;
+    vec4 mv = viewMatrix * vec4(wp, 1.0);
+    vec3 c = mix(uInkCore, uInkMid, smoothstep(0.0, 0.4, life));
+    c = mix(c, uInkEdge, smoothstep(0.35, 1.0, life));
+    vColor = c;
+    vAlpha = smoothstep(0.0, 0.06, life) * (1.0 - smoothstep(0.4, 1.0, life));
+    float grow = 0.35 + life * uInkGrow;
+    gl_PointSize = uInkSize * grow * uPixelScale * (12.0 / -mv.z);
+    gl_PointSize = max(gl_PointSize, 1.0);
+    gl_Position = projectionMatrix * mv;
+  }`;
+
+const INK_F = String.raw`
+  uniform float uBrightness, uInkOpacity, uAppear;
+  varying vec3 vColor; varying float vAlpha;
+  void main() {
+    vec2 xy = gl_PointCoord - 0.5;
+    float ll = length(xy);
+    if (ll > 0.5) discard;
+    float soft = exp(-ll * ll * 7.0);
+    float cov = clamp(soft * vAlpha * uInkOpacity * uAppear * uBrightness, 0.0, 1.0);
+    gl_FragColor = vec4(mix(vec3(1.0), vColor, cov), 1.0);
+  }`;
+
+const dnaScript = String.raw`
+const CFG={bgColor:'#eff4f2',helixColorA:'#247061',helixColorB:'#4ca98a',inkCore:'#81a297',inkMid:'#f7fec3',inkEdge:'#246f65',camDist:12,helixSize:1,inkSize:6,brightness:0.4,helixOpacity:1.54,inkOpacity:0.86,inkGrow:1.8,radius:1.75,height:6.8,twist:0.65,strandThick:0.39,wave:0.5,spin:0,tilt:-0.34,emitRate:0.19,spread:0.6,rise:-0.2,turbulence:1.6,noiseFreq:1.05,noiseEvolve:0.1,parallax:3,pointerRadius:5,pointerStrength:1.55,maxPixelRatio:1.5};
+const REF_H=1600, MAXD=0.05, EASE_P=0.05, EASE_C=0.15, EASE_A=0.08, IDLE=3, A_DELAY=0.2, A_DUR=1.6;
+const HELIX_V=${JSON.stringify(HELIX_V)};
+const HELIX_F=${JSON.stringify(HELIX_F)};
+const INK_V=${JSON.stringify(INK_V)};
+const INK_F=${JSON.stringify(INK_F)};
+
+function initClarus(root){
+  if(root.dataset.cm==='1')return; root.dataset.cm='1';
+  const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // shared ticker
+  const subs=new Set(); let last=performance.now(), rafId=0; const cleaners=[];
+  const tick=now=>{ if(!root.isConnected){cleaners.forEach(f=>f());subs.clear();return;} const dt=Math.min(.05,Math.max(0,(now-last)/1000)); last=now; if(!document.hidden) subs.forEach(f=>f(now,dt)); rafId=requestAnimationFrame(tick); };
+  rafId=requestAnimationFrame(tick); cleaners.push(()=>cancelAnimationFrame(rafId));
+  const sub=f=>{subs.add(f);return()=>subs.delete(f);};
+  function spring(v){return {v:v,t:v,vel:0,step(dt,k,d){const a=(this.t-this.v)*k-this.vel*d;this.vel+=a*dt;this.v+=this.vel*dt;return this.v;}};}
+
+  // reveals: split words
+  const reveals=[...root.querySelectorAll('.cm-reveal')];
+  if(!reduce) reveals.forEach(el=>{ let wi=0; const walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT); const nodes=[]; while(walk.nextNode())nodes.push(walk.currentNode); nodes.forEach(n=>{ if(!(n.nodeValue||'').trim())return; const frag=document.createDocumentFragment(); (n.nodeValue||'').split(/(\s+)/).forEach(w=>{ if(/^\s+$/.test(w)){frag.appendChild(document.createTextNode(w));return;} const o=document.createElement('span'); o.className='cm-word'; o.style.setProperty('--w',String(wi++)); const inner=document.createElement('span'); inner.textContent=w; o.appendChild(inner); frag.appendChild(o); }); n.replaceWith(frag); }); });
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); }),{threshold:.18});
+  reveals.forEach(el=>io.observe(el)); root.querySelectorAll('[data-rise]').forEach(el=>io.observe(el)); cleaners.push(()=>io.disconnect());
+
+  // header CTA hide over contact
+  const cta=root.querySelector('.cm-header__cta'); const contact=root.querySelector('#contact');
+  if(cta&&contact){ const o=new IntersectionObserver(([e])=>{ cta.dataset.hidden=e.isIntersecting?'true':'false'; },{threshold:0}); o.observe(contact); cleaners.push(()=>o.disconnect()); }
+
+  // mobile menu
+  const burger=root.querySelector('.cm-burger'); const menu=root.querySelector('.cm-mobile');
+  if(burger&&menu){ const toggle=v=>{ const open=v!==undefined?v:menu.dataset.open!=='true'; menu.dataset.open=open?'true':'false'; burger.setAttribute('aria-expanded',open?'true':'false'); }; burger.addEventListener('click',()=>toggle()); menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggle(false))); }
+
+  // cursor trail (why)
+  const trail=root.querySelector('.cm-trail'); const why=root.querySelector('.cm-why');
+  if(!reduce&&trail&&why){ const imgs=JSON.parse(trail.dataset.imgs||'[]'); let lastP=null, id=0; why.addEventListener('pointermove',ev=>{ if(ev.pointerType!=='mouse')return; const b=why.getBoundingClientRect(); const x=ev.clientX-b.left, y=ev.clientY-b.top; if(lastP&&Math.hypot(x-lastP.x,y-lastP.y)<90)return; lastP={x,y}; const i=id++; const card=document.createElement('span'); card.className='cm-trail__card'; card.style.backgroundImage='url('+imgs[i%imgs.length]+')'; const tilt=(Math.random()-0.5)*24; card.style.transform='translate3d('+x+'px,'+y+'px,0) translate(-50%,-50%) rotate('+tilt+'deg) scale(.4)'; card.style.opacity='0'; trail.appendChild(card); requestAnimationFrame(()=>{ card.style.transition='transform .5s cubic-bezier(.2,0,0,1),opacity .18s'; card.style.transform='translate3d('+x+'px,'+y+'px,0) translate(-50%,-50%) rotate('+tilt+'deg) scale(1)'; card.style.opacity='1'; }); while(trail.children.length>5){ const old=trail.firstChild; old.style.transition='transform .3s ease,opacity .18s'; old.style.opacity='0'; old.style.transform=old.style.transform.replace('scale(1)','scale(.4)'); const rm=old; setTimeout(()=>rm.remove(),320); trail.removeChild(old); trail.appendChild(rm); } }); why.addEventListener('pointerleave',()=>{ lastP=null; [...trail.children].forEach(c=>{ c.style.opacity='0'; setTimeout(()=>c.remove(),300); }); }); }
+
+  // services scrub
+  const runway=root.querySelector('.cm-services__runway'); const track=root.querySelector('.cm-services__track');
+  if(runway&&track){ const sp=spring(0); sub((now,dt)=>{ if(reduce)return; const vh=window.innerHeight; const scrubbable=runway.offsetHeight-vh*3; if(scrubbable<=0)return; const prog=Math.min(1,Math.max(0,-runway.getBoundingClientRect().top/scrubbable)); const travel=Math.max(track.scrollWidth-track.clientWidth,0); sp.t=-prog*travel; const x=sp.step(dt,180,26); track.style.transform='translate3d('+x+'px,0,0)'; }); }
+
+  // about banner parallax
+  const banner=root.querySelector('.cm-about__banner img'); const frame=root.querySelector('.cm-about__banner');
+  if(banner&&frame){ banner.style.top='-25%'; banner.style.height='150%'; const sp=spring(0); sub((now,dt)=>{ const r=frame.getBoundingClientRect(); const span=window.innerHeight+r.height; if(span<=0)return; const prog=Math.min(1,Math.max(0,(window.innerHeight-r.top)/span)); sp.t=prog-0.5; const s=sp.step(dt,180,40); banner.style.transform='translate3d(0,'+(s*25)+'%,0)'; }); }
+
+  // stat counters
+  root.querySelectorAll('[data-count]').forEach(el=>{ const full=el.dataset.count||''; const m=/^(\D*)(\d+)(\D*)$/.exec(full); if(!m||reduce){el.textContent=full;return;} const pre=m[1],target=+m[2],suf=m[3]; let done=false; const o=new IntersectionObserver(([e])=>{ if(!e.isIntersecting){done=false;el.textContent=pre+'0'+suf;return;} if(done)return; done=true; const start=performance.now(); const run=now=>{ const p=Math.min(1,(now-start)/1400); el.textContent=pre+Math.round(target*(1-Math.pow(1-p,3)))+suf; if(p<1)requestAnimationFrame(run); }; requestAnimationFrame(run); },{threshold:.3}); o.observe(el); cleaners.push(()=>o.disconnect()); });
+
+  // team drag rail
+  const rail=root.querySelector('.cm-rail'); const bar=root.querySelector('.cm-team__bar span');
+  if(rail){ let down=false,sx=0,sl=0,moved=false; const MINF=890/1360; const syncBar=()=>{ if(!bar)return; const max=rail.scrollWidth-rail.clientWidth; const f=max>0?MINF+(1-MINF)*(rail.scrollLeft/max):MINF; bar.style.transform='scaleX('+f+')'; }; rail.addEventListener('scroll',syncBar); rail.addEventListener('pointerdown',e=>{ if(e.pointerType==='touch')return; e.preventDefault(); down=true;moved=false;sx=e.clientX;sl=rail.scrollLeft; rail.setPointerCapture(e.pointerId); }); rail.addEventListener('pointermove',e=>{ if(!down)return; const d=e.clientX-sx; if(Math.abs(d)>4)moved=true; rail.scrollLeft=sl-d; }); const up=e=>{ if(!down)return; down=false; if(rail.hasPointerCapture(e.pointerId))rail.releasePointerCapture(e.pointerId); }; rail.addEventListener('pointerup',up); rail.addEventListener('pointercancel',up); rail.addEventListener('click',e=>{ if(moved){e.preventDefault();e.stopPropagation();moved=false;} },true); syncBar(); }
+
+  // contact form -> WhatsApp
+  const form=root.querySelector('.cm-form form');
+  if(form){ form.addEventListener('submit',e=>{ e.preventDefault(); const fd=new FormData(form); const name=(fd.get('name')||'').toString().trim(); const phone=(fd.get('phone')||'').toString().trim(); const msg=(fd.get('message')||'').toString().trim(); const text='Callback request from the Clarus Magnus website.'+(name?'\nName: '+name:'')+(phone?'\nPhone: '+phone:'')+(msg?'\nMessage: '+msg:''); const url=${JSON.stringify(siteConfig.whatsapp.href)}+'?text='+encodeURIComponent(text); window.open(url,'_blank','noopener'); }); }
+
+  // preloader readiness
+  const state={scene:reduce,load:document.readyState==='complete',fonts:false,min:reduce};
+  const ready=()=>{ if(state.scene&&state.load&&state.fonts&&state.min) root.classList.add('is-ready'); };
+  if(!state.load) window.addEventListener('load',()=>{state.load=true;ready();},{once:true});
+  Promise.resolve(document.fonts&&document.fonts.ready).then(()=>{state.fonts=true;ready();}).catch(()=>{state.fonts=true;ready();});
+  setTimeout(()=>{state.min=true;ready();},900);
+  setTimeout(()=>{state.scene=state.load=state.fonts=state.min=true;ready();},6500);
+
+  // DNA scenes
+  if(reduce){state.scene=true;ready();return;}
+  (async()=>{
+    let THREE;
+    try{ THREE=await import('https://unpkg.com/three@0.185.1/build/three.module.js'); }
+    catch(err){ console.warn('three unavailable',err); state.scene=true; ready(); return; }
+    const hx=v=>{const n=parseInt(v.slice(1),16);return [((n>>16)&255)/255,((n>>8)&255)/255,(n&255)/255];};
+    function makeScene(canvas,isHero){
+      const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+      const bg=new THREE.Color(); bg.setRGB.apply(bg,hx(CFG.bgColor));
+      renderer.setClearColor(bg,1);
+      const scene=new THREE.Scene(); scene.background=bg; scene.fog=new THREE.Fog(bg,0,22);
+      const cam=new THREE.PerspectiveCamera(45,1,0.1,200); cam.position.set(0,0,CFG.camDist); scene.add(cam);
+      const tilt=new THREE.Group(); const spin=new THREE.Group(); tilt.add(spin); scene.add(tilt); tilt.rotation.z=CFG.tilt;
+      const compact=window.innerWidth<900||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
+      const hCount=compact?16000:40000, iCount=compact?60000:160000;
+      const U={uTime:{value:0},uAppear:{value:0},uHelixA:{value:new THREE.Vector3().fromArray(hx(CFG.helixColorA))},uHelixB:{value:new THREE.Vector3().fromArray(hx(CFG.helixColorB))},uInkCore:{value:new THREE.Vector3().fromArray(hx(CFG.inkCore))},uInkMid:{value:new THREE.Vector3().fromArray(hx(CFG.inkMid))},uInkEdge:{value:new THREE.Vector3().fromArray(hx(CFG.inkEdge))},uHelixSize:{value:CFG.helixSize},uInkSize:{value:CFG.inkSize},uBrightness:{value:CFG.brightness},uHelixOpacity:{value:CFG.helixOpacity},uInkOpacity:{value:CFG.inkOpacity},uInkGrow:{value:CFG.inkGrow},uRadius:{value:CFG.radius},uHeight:{value:CFG.height},uTwist:{value:CFG.twist},uThick:{value:CFG.strandThick},uWave:{value:CFG.wave},uEmitRate:{value:CFG.emitRate},uSpread:{value:CFG.spread},uRise:{value:CFG.rise},uTurb:{value:CFG.turbulence},uNoiseFreq:{value:CFG.noiseFreq},uNoiseEvolve:{value:CFG.noiseEvolve},uCursor:{value:new THREE.Vector3()},uRepelRadius:{value:CFG.pointerRadius},uRepelStrength:{value:CFG.pointerStrength},uActivity:{value:0},uPixelScale:{value:1}};
+      function seedGeo(count){ const g=new THREE.BufferGeometry(); const a=new Float32Array(count*3); for(let i=0;i<a.length;i++)a[i]=Math.random()*64; g.setAttribute('position',new THREE.BufferAttribute(a,3)); return g; }
+      function mat(vs,fs){ return new THREE.ShaderMaterial({uniforms:U,vertexShader:vs,fragmentShader:fs,transparent:true,depthWrite:false,depthTest:false,blending:THREE.MultiplyBlending,premultipliedAlpha:true}); }
+      const helix=new THREE.Points(seedGeo(hCount),mat(HELIX_V,HELIX_F)); helix.frustumCulled=false;
+      const ink=new THREE.Points(seedGeo(iCount),mat(INK_V,INK_F)); ink.frustumCulled=false;
+      spin.add(ink,helix);
+      let W=0,H=0,elapsed=0,firstDraw=false; const started=performance.now(); let lastF=performance.now()/1000;
+      const pT={x:0,y:0},pE={x:0,y:0}; let active=false,lastMove=performance.now(),activity=0;
+      const cursorWorld=new THREE.Vector3(),cursorTarget=new THREE.Vector3(),ndc=new THREE.Vector3(),ray=new THREE.Vector3();
+      function setSize(w,h){ if(w<=0||h<=0)return; W=w;H=h; const pr=Math.min(window.devicePixelRatio,CFG.maxPixelRatio); renderer.setPixelRatio(pr); renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); U.uPixelScale.value=(h*pr)/REF_H; }
+      const onMove=e=>{ if(!isVisible())return; const r=canvas.getBoundingClientRect(); if(!r.width||!r.height)return; pT.x=Math.max(-1,Math.min(1,((e.clientX-r.left)/r.width)*2-1)); pT.y=Math.max(-1,Math.min(1,-(((e.clientY-r.top)/r.height)*2-1))); active=true; lastMove=performance.now(); };
+      const onLeave=()=>{active=false;};
+      const fine=window.matchMedia('(pointer: fine)').matches;
+      if(fine){ window.addEventListener('pointermove',onMove,{passive:true}); document.documentElement.addEventListener('mouseleave',onLeave); }
+      let lastW=0,lastH=0;
+      function syncSize(){ const r=canvas.getBoundingClientRect(); const w=Math.round(r.width),h=Math.round(r.height); if(w===lastW&&h===lastH)return; lastW=w;lastH=h; setSize(w,h); }
+      const ro=new ResizeObserver(syncSize); ro.observe(canvas); syncSize();
+      function isVisible(){ const r=canvas.getBoundingClientRect(); return r.width>0&&r.height>0&&r.bottom>0&&r.top<window.innerHeight; }
+      function reset(){ elapsed=0; lastF=performance.now()/1000; pT.x=pT.y=pE.x=pE.y=0; cursorWorld.set(0,0,0); activity=0; active=false; }
+      let wasVisible=true;
+      function render(){ const now=performance.now(); const wc=now/1000; const dt=Math.min(MAXD,wc-lastF); lastF=wc; elapsed+=dt; pE.x+=(pT.x-pE.x)*EASE_P; pE.y+=(pT.y-pE.y)*EASE_P; U.uTime.value=elapsed; spin.rotation.y=0; cam.position.x=pE.x*CFG.parallax; cam.position.y=pE.y*CFG.parallax; cam.position.z=CFG.camDist; cam.lookAt(0,0,0); cursorTarget.set(0,0,0); if(active){ ndc.set(pE.x,pE.y,0.5).unproject(cam); ray.copy(ndc).sub(cam.position).normalize(); const dz=ray.z; if(Math.abs(dz)>1e-4){ const d=-cam.position.z/dz; if(d>0&&isFinite(d)) cursorTarget.copy(cam.position).addScaledVector(ray,d); } } cursorWorld.lerp(cursorTarget,EASE_C); const idle=(now-lastMove)/1000; const want=(active&&idle<IDLE)?1:0; activity+=(want-activity)*EASE_A; U.uCursor.value.copy(cursorWorld); U.uActivity.value=activity; const sm=(now-started)/1000; U.uAppear.value=Math.max(0,Math.min(1,(sm-A_DELAY)/A_DUR)); renderer.render(scene,cam); }
+      const unsub=sub(()=>{ if(!isVisible()){ if(wasVisible){wasVisible=false;reset();} return; } wasVisible=true; render(); if(!firstDraw){firstDraw=true; if(isHero){state.scene=true;ready();}} });
+      cleaners.push(()=>{ unsub(); ro.disconnect(); window.removeEventListener('pointermove',onMove); document.documentElement.removeEventListener('mouseleave',onLeave); helix.geometry.dispose(); helix.material.dispose(); ink.geometry.dispose(); ink.material.dispose(); renderer.dispose(); });
+      return true;
+    }
+    const heroC=root.querySelector('[data-scene="hero"] canvas'); const contactC=root.querySelector('[data-scene="contact"] canvas');
+    let any=false;
+    if(heroC) any=makeScene(heroC,true)||any;
+    if(contactC&&window.innerWidth>=1024) makeScene(contactC,false);
+    if(!heroC){ state.scene=true; ready(); }
+  })();
+}
+if(!window.__cmBoot){ const boot=()=>{ const r=document.querySelector('.cm-root'); if(r) initClarus(r); }; const mo=new MutationObserver(boot); mo.observe(document.documentElement,{childList:true,subtree:true}); window.__cmBoot={boot,mo}; boot(); } else { window.__cmBoot.boot(); }
+`;
+
+function DnaMark() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path fillRule="evenodd" clipRule="evenodd" d={DNA_MARK} fill="currentColor" />
+    </svg>
+  );
+}
+
+function Arrow() {
+  return (
+    <svg className="cm-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
 export default function HomePage() {
   return (
-    <div className="dantora-home" data-photos={JSON.stringify(visualAssets)}>
+    <div className="cm-root">
       <style>{css}</style>
-      <script
-        type="importmap"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            imports: {
-              three: "https://unpkg.com/three@0.185.0/build/three.module.js",
-              "three/addons/": "https://unpkg.com/three@0.185.0/examples/jsm/",
-            },
-          }),
-        }}
-      />
-      <script id="dh-helix-v" type="x-shader/x-vertex">{helixVertex}</script>
-      <script id="dh-helix-f" type="x-shader/x-fragment">{helixFragment}</script>
-      <script id="dh-atmo-v" type="x-shader/x-vertex">{atmoVertex}</script>
-      <script id="dh-atmo-f" type="x-shader/x-fragment">{atmoFragment}</script>
 
-      <div className="dh-preloader" aria-hidden="true">
-        <div className="dh-preloader__core">
-          <span className="dh-preloader__ring" />
-          <span className="dh-preloader__mark" />
-          <span className="dh-preloader__percent" data-load-percent>00%</span>
-        </div>
+      <div className="cm-pre" aria-hidden="true">
+        <svg className="cm-pre__mark" viewBox="0 0 24 24" fill="none">
+          <path fillRule="evenodd" clipRule="evenodd" d={DNA_MARK} fill="currentColor" />
+        </svg>
       </div>
-      <div className="dh-asset-error" role="status">Some visual assets could not load. Core healthcare information remains available.</div>
 
-      <section className="dh-hero" aria-labelledby="dh-hero-title">
-        <div className="dh-shell dh-hero__inner">
-          <div className="dh-hero__copy">
-            <p className="dh-kicker" data-rise>Radiologist-led care · Koramangala</p>
-            <h1 id="dh-hero-title" className="dh-reveal">Clarity, <em>alive</em> in every detail.</h1>
-            <div className="dh-hero__bottom" data-rise>
-              <p>Advanced diagnostics, laboratory medicine and multispecialty care—connected by precision, transparency and genuine care.</p>
-              <Link className="dh-pill" href="/patient-info/appointment-booking">Book a visit <span aria-hidden="true">↗</span></Link>
+      <header className="cm-header">
+        <div className="cm-header__row">
+          <div className="cm-header__left">
+            <a href="#hero" className="cm-glass cm-logo">
+              <span className="cm-logo__mark"><DnaMark /></span>
+              <span className="cm-logo__name">Clarus Magnus</span>
+            </a>
+            <nav aria-label="Primary" className="cm-glass cm-nav">
+              <ul>
+                {NAV.map((l) => (
+                  <li key={l.href}><a href={l.href}>{l.label}</a></li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+          <div className="cm-header__cta">
+            <a href="#contact" className="cm-btn cm-btn--primary cm-btn--arrow">
+              <span>Contact Us</span><span className="cm-disc"><Arrow /></span>
+            </a>
+          </div>
+          <button type="button" className="cm-glass cm-burger" aria-expanded="false" aria-label="Open menu">
+            <span /><span /><span />
+          </button>
+          <nav aria-label="Primary" className="cm-glass cm-mobile" data-open="false">
+            <ul>
+              {NAV.map((l) => (
+                <li key={l.href}><a href={l.href}>{l.label}</a></li>
+              ))}
+            </ul>
+            <a href="#contact" className="cm-btn cm-btn--primary cm-btn--arrow">
+              <span>Contact Us</span><span className="cm-disc"><Arrow /></span>
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      {/* HERO */}
+      <section id="hero" className="cm-section cm-panel cm-round-b cm-hero">
+        <div className="cm-hero__inner cm-shell">
+          <div className="cm-hero__copy">
+            <div className="cm-hero__head">
+              <p className="cm-eyebrow" data-rise>{HERO.eyebrow}</p>
+              <h1 className="cm-lead cm-reveal">{HERO.title}</h1>
             </div>
+            <p className="cm-body cm-reveal">{HERO.description}</p>
           </div>
-          <div className="dh-hero__scene" data-scene="hero" aria-hidden="true"><canvas className="dh-dna-fallback" data-dna-fallback /></div>
-          <div className="dh-hero__orbit" aria-hidden="true">24/7 MRI · CT ·</div>
-        </div>
-      </section>
 
-      <section className="dh-why" aria-labelledby="dh-why-title">
-        <div className="dh-trail-layer" aria-hidden="true" />
-        <div className="dh-shell">
-          <div className="dh-why__head">
-            <p className="dh-kicker" data-rise>Why Clarus Magnus</p>
-            <h2 id="dh-why-title" className="dh-reveal">Because a clear answer can change <em>everything.</em></h2>
-          </div>
-          <div className="dh-why__foot">
-            <p data-rise>For more than 18 years, people across Bengaluru have trusted us to turn uncertainty into an informed next step. We bring advanced technology, expert interpretation and compassionate guidance together under one roof.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="dh-services" aria-labelledby="dh-services-title">
-        <h2 id="dh-services-title" className="dh-sr-only">Our healthcare services</h2>
-        <div className="dh-services__sticky">
-          <p className="dh-services__intro dh-kicker">Explore care</p>
-          <div className="dh-services__track">
-            {services.map((service) => (
-              <article className="dh-service" key={service.title} style={{ "--card": service.color } as CSSProperties}>
-                <div className="dh-service__copy">
-                  <span className="dh-service__num">{service.number} · {service.label}</span>
-                  <h3>{service.title}</h3>
-                  <p>{service.copy}</p>
-                  <Link className="dh-pill" href={service.href}>Discover service <span aria-hidden="true">↗</span></Link>
-                </div>
-                <div className="dh-service__visual" style={{ backgroundImage: `url("${service.image}")` }} aria-hidden="true">
-                  <span className="dh-service__tag">Clarity in motion</span>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="dh-about" aria-labelledby="dh-about-title">
-        <div className="dh-shell">
-          <div className="dh-about__lead">
-            <p className="dh-kicker" data-rise>18+ years of trust</p>
-            <h2 id="dh-about-title" className="dh-reveal">Deep expertise. <em>Human</em> perspective.</h2>
-          </div>
-          <div className="dh-about__copy">
-            <p data-rise>Clarus Magnus is a modern, radiologist-led healthcare destination in Koramangala, Bengaluru—built around clinically meaningful answers, not disconnected appointments.</p>
-            <p data-rise>From a 3 Tesla MRI to preventive health and multispecialty consultation, every service is designed to help patients understand what comes next.</p>
-          </div>
-        </div>
-        <div className="dh-banner" role="img" aria-label="A modern clinical environment">
-          <p className="dh-banner__phrase">Closer to answers.</p>
-        </div>
-        <div className="dh-stats">
-          <div className="dh-stat"><strong data-count="18" data-suffix="+">18+</strong><span>Years of trusted care</span></div>
-          <div className="dh-stat"><strong data-count="24" data-suffix="/7">24/7</strong><span>MRI &amp; CT access</span></div>
-          <div className="dh-stat"><strong data-count="3" data-suffix="T">3T</strong><span>Advanced MRI</span></div>
-          <div className="dh-stat"><strong>4.8/5</strong><span>Google review rating</span></div>
-        </div>
-        <div className="dh-rhythm">
-          <p className="dh-reveal">Technology that sees. <span>Experts who listen.</span> Care that stays human.</p>
-        </div>
-      </section>
-
-      <section className="dh-team" aria-labelledby="dh-team-title">
-        <div className="dh-team__sticky">
-          <div className="dh-shell dh-team__head">
-            <div><p className="dh-kicker">Our specialists</p><h2 id="dh-team-title">One connected team.</h2></div>
-            <Link className="dh-team__hint" href="/specialties">Explore all specialties ↗</Link>
-          </div>
-          <div className="dh-team__rail">
-            {specialists.map(([name, focus, index]) => (
-              <Link className="dh-person" href="/specialties" key={name}>
-                <span className="dh-person__index">{index}</span>
-                <span className="dh-person__halo" />
-                <span className="dh-person__glyph" aria-hidden="true">{name.charAt(0)}</span>
-                <span className="dh-person__copy"><strong>{name}</strong><span>{focus}</span></span>
+          <div className="cm-hero__actions" data-rise>
+            {HERO.actions.map((a) => (
+              <Link key={a.href} href={a.href} className={`cm-btn ${a.primary ? "cm-btn--primary" : "cm-btn--secondary"}`}>
+                {a.label}
               </Link>
             ))}
           </div>
-          <div className="dh-team__progress" aria-hidden="true"><span /></div>
+
+          <div className="cm-hero__scene" data-scene="hero" aria-hidden="true">
+            <canvas className="cm-dna" />
+          </div>
+
+          <hr className="cm-hero__rule" data-rise />
+          <p className="cm-hero__trust" data-rise>{HERO.trustLine}<span aria-hidden="true" /></p>
+          <ul className="cm-chips" data-rise>
+            {HERO.chips.map((c) => <li key={c}>{c}</li>)}
+          </ul>
         </div>
       </section>
 
-      <section className="dh-contact" aria-labelledby="dh-contact-title">
-        <div className="dh-contact__scene" data-scene="contact" aria-hidden="true"><canvas className="dh-dna-fallback" data-dna-fallback /></div>
-        <div className="dh-shell dh-contact__inner">
-          <div>
-            <p className="dh-kicker" data-rise>Your next clear step</p>
-            <h2 id="dh-contact-title" className="dh-reveal">Let’s make health feel <em>clearer.</em></h2>
-            <p className="dh-contact__details" data-rise>
+      {/* WHY */}
+      <section id="why" className="cm-section cm-why">
+        <div className="cm-trail" aria-hidden="true" data-imgs={JSON.stringify(WHY.trail)} />
+        <div className="cm-why__inner cm-shell">
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", width: "100%" }}>
+            <p className="cm-eyebrow" data-rise>{WHY.eyebrow}</p>
+            <h2 className="cm-lead cm-reveal">{WHY.title}</h2>
+          </div>
+          <p className="cm-body cm-reveal">{WHY.description}</p>
+          <div className="cm-why__actions">
+            {WHY.actions.map((a) => (
+              <Link key={a.href} href={a.href} className={`cm-btn ${a.primary ? "cm-btn--primary" : "cm-btn--secondary"}`}>
+                {a.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES */}
+      <section id="services" className="cm-services">
+        <div className="cm-services__runway">
+          <div className="cm-services__sticky cm-round-t cm-panel">
+            <div className="cm-services__intro">
+              <p className="cm-eyebrow" data-rise>{SERVICES_INTRO.eyebrow}</p>
+              <h2 className="cm-lead cm-services__title cm-reveal">{SERVICES_INTRO.title}</h2>
+              <p className="cm-body cm-services__desc cm-reveal">{SERVICES_INTRO.description}</p>
+            </div>
+            <div className="cm-services__track">
+              {SERVICE_CARDS.map((card) => (
+                <article key={card.index} className={`cm-card cm-card--${card.variant}`}>
+                  {card.image && (
+                    <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img className="cm-card__img" src={card.image} alt="" />
+                      <span className="cm-card__scrim" aria-hidden="true" />
+                    </>
+                  )}
+                  <div className="cm-card__head">
+                    <p className="cm-card__num">{card.index}</p>
+                    <h3 className="cm-card__title">{card.title}</h3>
+                  </div>
+                  {card.items && (
+                    <ul className="cm-card__list">
+                      {card.items.map((item, i) => (
+                        <li key={item}>
+                          {i > 0 && <span className="cm-card__rule" aria-hidden="true" />}
+                          <span className="cm-card__row">{item}<Arrow /></span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {card.cta && (
+                    <Link href={card.href} className="cm-card__cta">
+                      <p>{card.cta}</p>
+                      <span className="cm-card__ring"><Arrow /></span>
+                    </Link>
+                  )}
+                  {card.items && (
+                    <Link href={card.href} aria-label={card.title} style={{ position: "absolute", inset: 0, zIndex: 3 }} />
+                  )}
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT */}
+      <section id="about" className="cm-about cm-round-t">
+        <div className="cm-shell" style={{ height: "100%", position: "relative" }}>
+          <div className="cm-about__banner">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={ABOUT.banner} alt="" />
+          </div>
+          <div className="cm-about__content">
+            <div className="cm-about__left">
+              <p className="cm-eyebrow" data-rise>{ABOUT.eyebrow}</p>
+              <dl className="cm-about__stats">
+                {ABOUT.stats.map((s) => (
+                  <div className="cm-stat" key={s.label}>
+                    <dd data-count={s.value}>{s.value}</dd>
+                    <dt>{s.label}</dt>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            <div className="cm-about__right">
+              <p className="cm-about__para cm-reveal">
+                {ABOUT.paragraph.map((f) => (
+                  <span key={f.text} className={f.muted ? "muted" : ""}>{f.text}</span>
+                ))}
+              </p>
+              <div className="cm-about__actions">
+                {ABOUT.actions.map((a) => (
+                  <Link key={a.href} href={a.href} className={`cm-btn ${a.primary ? "cm-btn--primary" : "cm-btn--secondary"}`}>
+                    {a.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TEAM */}
+      <section id="team" className="cm-team">
+        <div className="cm-team__frame">
+          <div className="cm-rail">
+            <div className="cm-team__intro">
+              <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
+                <p className="cm-team__eyebrow" data-rise>{TEAM.eyebrow}</p>
+                <h2>{TEAM.title}</h2>
+              </div>
+              <ul className="cm-team__socials">
+                {TEAM.socials.map((s) => (
+                  <li key={s.icon}>
+                    <a href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={asset(`/assets/dantora/icons/${s.icon}.svg`)} alt="" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {TEAM.members.map((m) => (
+              <figure className="cm-person" key={m.name}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={m.image} alt={`${m.name} at Clarus Magnus`} />
+                <figcaption>
+                  <p className="cm-person__name">{m.name}</p>
+                  <p className="cm-person__role">{m.role}</p>
+                </figcaption>
+              </figure>
+            ))}
+
+            <Link href={TEAM.more.href} className="cm-team__more">
+              <p>{TEAM.more.title}</p>
+              <span className="cm-card__cta">
+                <span style={{ fontSize: "1rem" }}>{TEAM.more.cta}</span>
+                <span className="cm-card__ring"><Arrow /></span>
+              </span>
+            </Link>
+            <span className="cm-team__gutter" aria-hidden="true" />
+          </div>
+          <div className="cm-team__bar" aria-hidden="true"><span /></div>
+        </div>
+      </section>
+
+      {/* CONTACT */}
+      <section id="contact" className="cm-contact cm-round-t">
+        <div className="cm-contact__scene" data-scene="contact" aria-hidden="true">
+          <canvas className="cm-dna" />
+        </div>
+        <div className="cm-shell" style={{ height: "100%", position: "relative" }}>
+          <div className="cm-contact__head">
+            <p className="cm-eyebrow" data-rise>{CONTACT.eyebrow}</p>
+            <h2 className="cm-contact__title cm-reveal">{CONTACT.title}</h2>
+            <p className="cm-contact__details" data-rise>
               <strong>{siteConfig.address.line1}</strong><br />
-              Call <a href={siteConfig.phone.href}>{siteConfig.phone.display}</a><br />
-              <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a><br />
-              {siteConfig.address.line2}<br />{siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}<br />
-              {siteConfig.hours.imaging}<br />
-              <a href={siteConfig.address.mapsHref}>Open in Google Maps ↗</a><br />
-              <Link href="/contact">Contact our care team ↗</Link>
+              Call <a href={siteConfig.phone.href}>{siteConfig.phone.display}</a> · <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a><br />
+              {siteConfig.address.line2}, {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}<br />
+              {siteConfig.hours.imaging} · <a href={siteConfig.address.mapsHref} target="_blank" rel="noopener noreferrer">Open in Maps</a>
             </p>
           </div>
-          <div className="dh-form" data-rise>
-            <h3>Choose the right starting point.</h3>
-            <p>Explore care now, or continue to our appointment page to share your details securely.</p>
-            <div className="dh-form__choices">
-              <Link className="dh-form__choice" href="/diagnostics">Diagnostics <span aria-hidden="true">↗</span></Link>
-              <Link className="dh-form__choice" href="/laboratory">Laboratory <span aria-hidden="true">↗</span></Link>
-              <Link className="dh-form__choice" href="/specialties">Specialists <span aria-hidden="true">↗</span></Link>
-              <Link className="dh-form__choice" href="/health-packages">Health packages <span aria-hidden="true">↗</span></Link>
-            </div>
-            <Link className="dh-form__submit" href="/patient-info/appointment-booking">Continue to appointment booking ↗</Link>
-            <p className="dh-form__note">No medical or contact details are collected on this page. For urgent assistance, please call our care team.</p>
+          <div className="cm-form">
+            <span className="cm-form__mark"><DnaMark /></span>
+            <h3>{CONTACT.formTitle}</h3>
+            <form>
+              <div className="cm-field">
+                <label htmlFor="cm-name">Your name</label>
+                <input id="cm-name" name="name" type="text" placeholder="Name" />
+              </div>
+              <div className="cm-field">
+                <label htmlFor="cm-phone">Your phone</label>
+                <input id="cm-phone" name="phone" type="tel" placeholder="Phone" />
+              </div>
+              <div className="cm-field">
+                <label htmlFor="cm-message">Your message</label>
+                <textarea id="cm-message" name="message" rows={1} placeholder="Message" />
+              </div>
+              <p className="cm-form__consent">
+                By submitting, you agree to our{" "}
+                <Link href={`${BP}/privacy-policy`}>Privacy Policy</Link> and the processing of your personal data.
+              </p>
+              <button type="submit" className="cm-form__submit">
+                <span>{CONTACT.submit}</span>
+                <span className="cm-disc"><Arrow /></span>
+              </button>
+            </form>
           </div>
         </div>
       </section>
 
-      <Script
-        id="clarus-home-interactions"
-        type="module"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{ __html: interactiveScript }}
-      />
+      <Script id="cm-interactions" type="module" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: dnaScript }} />
     </div>
   );
 }
