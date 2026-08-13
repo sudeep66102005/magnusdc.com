@@ -2,18 +2,33 @@ import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 import { siteConfig } from "@/lib/constants/site-config";
+import { mainNav } from "@/lib/constants/navigation";
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const asset = (p: string) => `${BP}${p}`;
 
 /* ---- Content (Clarus Magnus business details, Dantora structure) ---- */
 
-const NAV = [
-  { label: "Home", href: "#hero" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Our team", href: "#team" },
-];
+const HEADER_NAV = mainNav.map((item) => {
+  const sourceChildren = item.children?.length
+    ? [...item.children]
+    : [{ label: item.label, href: item.href }];
+  const children = sourceChildren.some((child) => child.href === item.href)
+    ? sourceChildren
+    : [{ label: `${item.label} Overview`, href: item.href }, ...sourceChildren];
+
+  if (item.label === "Specialties") {
+    children.push({ label: "Book Appointment", href: "/patient-info/appointment-booking" });
+  }
+  if (item.label === "Diagnostics") {
+    children.push({ label: "Book Appointment", href: "/patient-info/appointment-booking" });
+  }
+  if (item.label === "Laboratory") {
+    children.push({ label: "Book Test", href: "/patient-info/appointment-booking" });
+  }
+
+  return { ...item, children };
+});
 
 const HERO = {
   eyebrow: "About Clarus Magnus",
@@ -173,27 +188,48 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-glass{pointer-events:auto;border-radius:8px;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 .cm-logo{display:flex;align-items:center;justify-content:flex-start;width:10rem;height:3.375rem;padding:.1875rem .75rem}
 .cm-logo__image{display:block;width:auto;height:3rem;max-width:100%;object-fit:contain;object-position:left center}
-.cm-nav{display:none;align-items:center;height:3.375rem;padding:0 2.25rem}
-.cm-nav ul{display:flex;align-items:center;gap:2.25rem;margin:0;padding:0;list-style:none}
-.cm-nav a{font-size:1rem;font-weight:400;transition:color .15s}
-.cm-nav a:hover{color:var(--green)}
+.cm-nav{display:none;align-items:stretch;height:3.375rem;padding:0 .35rem;overflow:visible}
+.cm-nav>ul{display:flex;align-items:stretch;gap:0;margin:0;padding:0;list-style:none}
+.cm-nav__item{position:relative;display:flex;align-items:stretch}
+.cm-nav__item--has-children::after{content:"";position:absolute;top:100%;right:0;left:0;height:.5rem}
+.cm-nav__link{display:flex;align-items:center;gap:.25rem;height:100%;padding:0 .45rem;border-radius:6px;color:#142F86;font-size:.72rem;font-weight:700;white-space:nowrap;transition:background .15s,color .15s}
+.cm-nav__link:hover,.cm-nav__item:focus-within>.cm-nav__link{background:rgb(49 180 244 / .12);color:#142F86}
+.cm-nav__link:focus-visible,.cm-nav__dropdown a:focus-visible{outline:2px solid #31B4F4;outline-offset:-2px}
+.cm-nav__chevron{width:.7rem;height:.7rem;flex:none;transition:transform .15s}
+.cm-nav__item:hover .cm-nav__chevron,.cm-nav__item:focus-within .cm-nav__chevron{transform:rotate(180deg)}
+.cm-nav__dropdown{position:absolute;top:calc(100% + .4rem);left:0;z-index:100;width:20rem;max-width:calc(100vw - 5rem);max-height:min(65vh,30rem);overflow-y:auto;border:1px solid var(--line);border-top:3px solid #31B4F4;border-radius:0 0 12px 12px;background:#FFFFFF;box-shadow:0 18px 45px rgb(20 47 134 / .18);opacity:0;visibility:hidden;pointer-events:none;transform:translateY(.4rem);transition:opacity .15s,transform .15s,visibility .15s}
+.cm-nav__item:nth-last-child(-n+3) .cm-nav__dropdown{right:0;left:auto}
+.cm-nav__item:hover .cm-nav__dropdown,.cm-nav__item:focus-within .cm-nav__dropdown{opacity:1;visibility:visible;pointer-events:auto;transform:none}
+.cm-nav__item[data-escape-closed="true"] .cm-nav__dropdown{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(.4rem)}
+.cm-nav__item[data-escape-closed="true"] .cm-nav__chevron{transform:none}
+.cm-nav__dropdown ul{display:block;margin:0;padding:.45rem 0;list-style:none}
+.cm-nav__dropdown a{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:2.65rem;padding:.6rem 1rem;border-bottom:1px solid rgb(20 47 134 / .08);color:#142F86;font-size:.82rem;font-weight:700;line-height:1.3;transition:background .15s,color .15s}
+.cm-nav__dropdown li:last-child a{border-bottom:0}
+.cm-nav__dropdown a:hover,.cm-nav__dropdown a:focus-visible{background:rgb(49 180 244 / .1);color:#DA1C29}
+.cm-nav__dropdown-arrow{color:#31B4F4;font-size:1rem}
 .cm-header__cta{display:none}
-@media(min-width:1024px){.cm-nav{display:flex}.cm-header__cta{display:block}}
+@media(min-width:1280px) and (hover:hover) and (pointer:fine){.cm-nav{display:flex}.cm-header__cta{display:block}.cm-burger{display:none}.cm-mobile{display:none}}
+@media(min-width:1536px) and (hover:hover) and (pointer:fine){.cm-nav{padding-inline:.65rem}.cm-nav__link{padding-inline:.65rem;font-size:.8rem}}
 .cm-header__cta[data-hidden="true"]{opacity:0;transform:translateY(-24px);pointer-events:none}
 .cm-header__cta{transition:opacity .4s,transform .4s}
 .cm-burger{pointer-events:auto;display:grid;place-items:center;width:3.375rem;height:3.375rem}
-@media(min-width:1024px){.cm-burger{display:none}}
 .cm-burger span{display:block;width:1.25rem;height:1px;background:#142F86;transition:transform .25s,opacity .15s}
 .cm-burger span+span{margin-top:.3125rem}
 .cm-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(.34375rem) rotate(45deg)}
 .cm-burger[aria-expanded="true"] span:nth-child(2){opacity:0}
 .cm-burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-.34375rem) rotate(-45deg)}
-.cm-mobile{position:absolute;top:4.125rem;right:1.25rem;width:min(18rem,calc(100vw - 2.5rem));display:flex;flex-direction:column;gap:.5rem;padding:1.25rem;transform-origin:top right;transform:scale(.94);opacity:0;visibility:hidden;transition:opacity .2s,transform .2s,visibility .2s}
-@media(min-width:1024px){.cm-mobile{display:none}}
+.cm-mobile{position:absolute;top:4.125rem;right:1.25rem;width:min(23rem,calc(100vw - 2.5rem));max-height:calc(100vh - 5.5rem);overflow-y:auto;display:flex;flex-direction:column;gap:.75rem;padding:1rem 1.25rem;transform-origin:top right;transform:scale(.94);opacity:0;visibility:hidden;transition:opacity .2s,transform .2s,visibility .2s}
 .cm-mobile[data-open="true"]{opacity:1;transform:scale(1);visibility:visible}
-.cm-mobile ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.cm-mobile a{padding:.75rem 0;font-size:1.125rem;font-weight:400}
+.cm-mobile__list,.cm-mobile__children{list-style:none;margin:0;padding:0}
+.cm-mobile__item{border-bottom:1px solid rgb(20 47 134 / .1)}
+.cm-mobile__item summary{display:flex;cursor:pointer;align-items:center;justify-content:space-between;gap:1rem;min-height:3rem;color:#142F86;font-size:.95rem;font-weight:700;list-style:none}
+.cm-mobile__item summary::-webkit-details-marker{display:none}
+.cm-mobile__item details[open] summary .cm-nav__chevron{transform:rotate(180deg)}
+.cm-mobile__children{margin:0 0 .6rem;padding-left:.75rem;border-left:2px solid rgb(49 180 244 / .35)}
+.cm-mobile__children a{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.55rem .5rem;color:rgb(20 47 134 / .78);font-size:.85rem;font-weight:700;line-height:1.3}
+.cm-mobile__children a:hover{color:#DA1C29}
 .cm-mobile .cm-btn{width:100%;justify-content:space-between}
+@media(prefers-reduced-motion:reduce){.cm-nav__dropdown,.cm-nav__chevron,.cm-mobile{transition:none}}
 
 /* generic section */
 .cm-section{position:relative}
@@ -582,7 +618,30 @@ function initClarus(root){
 
   // mobile menu
   const burger=root.querySelector('.cm-burger'); const menu=root.querySelector('.cm-mobile');
-  if(burger&&menu){ const toggle=v=>{ const open=v!==undefined?v:menu.dataset.open!=='true'; menu.dataset.open=open?'true':'false'; burger.setAttribute('aria-expanded',open?'true':'false'); }; burger.addEventListener('click',()=>toggle()); menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggle(false))); }
+  if(burger&&menu){
+    const toggle=v=>{ const open=v!==undefined?v:menu.dataset.open!=='true'; menu.dataset.open=open?'true':'false'; burger.setAttribute('aria-expanded',open?'true':'false'); burger.setAttribute('aria-label',open?'Close menu':'Open menu'); if(!open)menu.querySelectorAll('details[open]').forEach(d=>d.removeAttribute('open')); };
+    const onBurger=()=>toggle(); const onKey=e=>{ if(e.key==='Escape'&&menu.dataset.open==='true'){toggle(false);burger.focus();} };
+    burger.addEventListener('click',onBurger); document.addEventListener('keydown',onKey); menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>toggle(false)));
+    cleaners.push(()=>{burger.removeEventListener('click',onBurger);document.removeEventListener('keydown',onKey);});
+  }
+
+  // desktop dropdown keyboard behavior
+  const desktopItems=[...root.querySelectorAll('.cm-nav__item')];
+  if(desktopItems.length){
+    const resetters=[];
+    desktopItems.forEach(item=>{
+      const reset=()=>{delete item.dataset.escapeClosed;};
+      const onFocusOut=e=>{if(!item.contains(e.relatedTarget))reset();};
+      item.addEventListener('pointerenter',reset); item.addEventListener('focusout',onFocusOut); resetters.push(()=>{item.removeEventListener('pointerenter',reset);item.removeEventListener('focusout',onFocusOut);});
+    });
+    const onDesktopKey=e=>{
+      const active=document.activeElement; const item=active&&active.closest?active.closest('.cm-nav__item'):null;
+      if(!item||!root.contains(item))return;
+      if(e.key==='Escape'){e.preventDefault();item.dataset.escapeClosed='true';item.querySelector('.cm-nav__link')?.focus();}
+      if(e.key==='ArrowDown'&&active.classList.contains('cm-nav__link')){e.preventDefault();delete item.dataset.escapeClosed;item.querySelector('.cm-nav__dropdown a')?.focus();}
+    };
+    document.addEventListener('keydown',onDesktopKey); cleaners.push(()=>{document.removeEventListener('keydown',onDesktopKey);resetters.forEach(fn=>fn());});
+  }
 
   // cursor trail (why)
   const trail=root.querySelector('.cm-trail'); const why=root.querySelector('.cm-why');
@@ -720,10 +779,29 @@ export default function HomePage() {
                 className="cm-logo__image"
               />
             </a>
-            <nav aria-label="Primary" className="cm-glass cm-nav">
+            <nav aria-label="Primary navigation" className="cm-glass cm-nav">
               <ul>
-                {NAV.map((l) => (
-                  <li key={l.href}><a href={l.href}>{l.label}</a></li>
+                {HEADER_NAV.map((item) => (
+                  <li className="cm-nav__item cm-nav__item--has-children" key={item.href}>
+                    <Link href={item.href} className="cm-nav__link">
+                      <span>{item.label}</span>
+                      <svg className="cm-nav__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                        <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </Link>
+                    <div className="cm-nav__dropdown">
+                      <ul>
+                        {item.children.map((child) => (
+                          <li key={`${item.label}-${child.href}-${child.label}`}>
+                            <Link href={child.href}>
+                              <span>{child.label}</span>
+                              <span className="cm-nav__dropdown-arrow" aria-hidden="true">›</span>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </li>
                 ))}
               </ul>
             </nav>
@@ -733,13 +811,32 @@ export default function HomePage() {
               <span>Contact Us</span><span className="cm-disc"><Arrow /></span>
             </a>
           </div>
-          <button type="button" className="cm-glass cm-burger" aria-expanded="false" aria-label="Open menu">
+          <button type="button" className="cm-glass cm-burger" aria-expanded="false" aria-controls="cm-mobile-menu" aria-label="Open menu">
             <span /><span /><span />
           </button>
-          <nav aria-label="Primary" className="cm-glass cm-mobile" data-open="false">
-            <ul>
-              {NAV.map((l) => (
-                <li key={l.href}><a href={l.href}>{l.label}</a></li>
+          <nav id="cm-mobile-menu" aria-label="Mobile navigation" className="cm-glass cm-mobile" data-open="false">
+            <ul className="cm-mobile__list">
+              {HEADER_NAV.map((item) => (
+                <li className="cm-mobile__item" key={item.href}>
+                  <details>
+                    <summary>
+                      <span>{item.label}</span>
+                      <svg className="cm-nav__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                        <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </summary>
+                    <ul className="cm-mobile__children">
+                      {item.children.map((child) => (
+                        <li key={`${item.label}-${child.href}-${child.label}`}>
+                          <Link href={child.href}>
+                            <span>{child.label}</span>
+                            <span className="cm-nav__dropdown-arrow" aria-hidden="true">›</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </li>
               ))}
             </ul>
             <a href="#contact" className="cm-btn cm-btn--primary cm-btn--arrow">
