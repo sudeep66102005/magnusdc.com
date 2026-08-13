@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
 import { siteConfig } from "@/lib/constants/site-config";
@@ -170,10 +171,8 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-header__row{display:flex;align-items:center;justify-content:space-between}
 .cm-header__left{display:flex;align-items:center;gap:.5rem}
 .cm-glass{pointer-events:auto;border-radius:8px;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-.cm-logo{display:flex;align-items:center;gap:.75rem;height:3.375rem;padding:0 1rem 0 .375rem}
-.cm-logo__mark{display:grid;place-items:center;width:2.625rem;height:2.625rem;border-radius:4px;background:var(--green);color:var(--lime)}
-.cm-logo__mark svg{width:1.5rem;height:1.5rem}
-.cm-logo__name{font-size:1.25rem;line-height:1.1;font-weight:700;white-space:nowrap}
+.cm-logo{display:flex;align-items:center;justify-content:flex-start;width:10rem;height:3.375rem;padding:.1875rem .75rem}
+.cm-logo__image{display:block;width:auto;height:3rem;max-width:100%;object-fit:contain;object-position:left center}
 .cm-nav{display:none;align-items:center;height:3.375rem;padding:0 2.25rem}
 .cm-nav ul{display:flex;align-items:center;gap:2.25rem;margin:0;padding:0;list-style:none}
 .cm-nav a{font-size:1rem;font-weight:400;transition:color .15s}
@@ -716,9 +715,15 @@ export default function HomePage() {
       <header className="cm-header">
         <div className="cm-header__row">
           <div className="cm-header__left">
-            <a href="#hero" className="cm-glass cm-logo">
-              <span className="cm-logo__mark"><DnaMark /></span>
-              <span className="cm-logo__name">Clarus Magnus</span>
+            <a href="#hero" className="cm-glass cm-logo" aria-label="Clarus Magnus Health and Diagnostics home">
+              <Image
+                src={asset("/assets/logo/clarus-magnus-logo.png")}
+                alt="Clarus Magnus Health and Diagnostics"
+                width={1126}
+                height={459}
+                priority
+                className="cm-logo__image"
+              />
             </a>
             <nav aria-label="Primary" className="cm-glass cm-nav">
               <ul>
