@@ -46,7 +46,7 @@ Koramangala, HSR Layout, BTM Layout, Indiranagar, Bellandur, Ejipura, Adugodi, S
 - **Signal red / accent:** #DA1C29
 - **Body font:** Lato (with system fallbacks)
 - Home landing page additionally uses a Dantora-inspired green/lime/mint palette
-  (green #246F65, deep green #054038, lime #F8FFB4, mint #EFF4F2) and the Google Sans Flex font.
+  (green #246F65, deep green #054038, lime #F8FFB4, mint #EFF4F2) while retaining the brand Lato typography.
 
 > Note: The original **Clarus Magnus Brand Guidelines.pdf** and **Packages PDF** use embedded
 > (CID) fonts, so their text could not be auto-extracted to plain text. The brand colours above

@@ -10,7 +10,7 @@ import { siteConfig } from "@/lib/constants/site-config";
 const lato = Lato({
   variable: "--font-lato",
   subsets: ["latin"],
-  weight: ["300", "400", "700", "900"],
+  weight: ["300", "400", "700"],
   display: "swap",
 });
 
