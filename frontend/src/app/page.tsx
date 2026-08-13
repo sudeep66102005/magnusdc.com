@@ -634,7 +634,7 @@ function initClarus(root){
       const cam=new THREE.PerspectiveCamera(45,1,0.1,200); cam.position.set(0,0,CFG.camDist); scene.add(cam);
       const tilt=new THREE.Group(); const spin=new THREE.Group(); tilt.add(spin); scene.add(tilt); tilt.rotation.z=CFG.tilt;
       const compact=window.innerWidth<900||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
-      const hCount=compact?16000:40000, iCount=compact?60000:160000;
+      const hCount=compact?9000:20000, iCount=compact?26000:64000;
       const U={uTime:{value:0},uAppear:{value:0},uHelixA:{value:new THREE.Vector3().fromArray(hx(CFG.helixColorA))},uHelixB:{value:new THREE.Vector3().fromArray(hx(CFG.helixColorB))},uInkCore:{value:new THREE.Vector3().fromArray(hx(CFG.inkCore))},uInkMid:{value:new THREE.Vector3().fromArray(hx(CFG.inkMid))},uInkEdge:{value:new THREE.Vector3().fromArray(hx(CFG.inkEdge))},uHelixSize:{value:CFG.helixSize},uInkSize:{value:CFG.inkSize},uBrightness:{value:CFG.brightness},uHelixOpacity:{value:CFG.helixOpacity},uInkOpacity:{value:CFG.inkOpacity},uInkGrow:{value:CFG.inkGrow},uRadius:{value:CFG.radius},uHeight:{value:CFG.height},uTwist:{value:CFG.twist},uThick:{value:CFG.strandThick},uWave:{value:CFG.wave},uEmitRate:{value:CFG.emitRate},uSpread:{value:CFG.spread},uRise:{value:CFG.rise},uTurb:{value:CFG.turbulence},uNoiseFreq:{value:CFG.noiseFreq},uNoiseEvolve:{value:CFG.noiseEvolve},uCursor:{value:new THREE.Vector3()},uRepelRadius:{value:CFG.pointerRadius},uRepelStrength:{value:CFG.pointerStrength},uActivity:{value:0},uPixelScale:{value:1}};
       function seedGeo(count){ const g=new THREE.BufferGeometry(); const a=new Float32Array(count*3); for(let i=0;i<a.length;i++)a[i]=Math.random()*64; g.setAttribute('position',new THREE.BufferAttribute(a,3)); return g; }
       function mat(vs,fs){ return new THREE.ShaderMaterial({uniforms:U,vertexShader:vs,fragmentShader:fs,transparent:true,depthWrite:false,depthTest:false,blending:THREE.MultiplyBlending,premultipliedAlpha:true}); }
@@ -798,7 +798,7 @@ export default function HomePage() {
                   {card.image && (
                     <>
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img className="cm-card__img" src={card.image} alt="" />
+                      <img className="cm-card__img" src={card.image} alt="" loading="lazy" decoding="async" />
                       <span className="cm-card__scrim" aria-hidden="true" />
                     </>
                   )}
@@ -837,7 +837,7 @@ export default function HomePage() {
         <div className="cm-shell" style={{ height: "100%", position: "relative" }}>
           <div className="cm-about__banner">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={ABOUT.banner} alt="" />
+            <img src={ABOUT.banner} alt="" loading="lazy" decoding="async" />
           </div>
           <div className="cm-about__content">
             <div className="cm-about__left">
@@ -893,7 +893,7 @@ export default function HomePage() {
             {TEAM.members.map((m) => (
               <figure className="cm-person" key={m.name}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={m.image} alt={`${m.name} at Clarus Magnus`} />
+                <img src={m.image} alt={`${m.name} at Clarus Magnus`} loading="lazy" decoding="async" />
                 <figcaption>
                   <p className="cm-person__name">{m.name}</p>
                   <p className="cm-person__role">{m.role}</p>
