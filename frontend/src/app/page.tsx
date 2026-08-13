@@ -139,11 +139,13 @@ const DNA_MARK =
   "M15.0223 1.46977C15.3152 1.17693 15.791 1.17689 16.0838 1.46977C16.3763 1.76259 16.3763 2.23751 16.0838 2.53031C14.5974 4.01669 14.5974 6.42675 16.0838 7.91312C17.5702 9.39907 19.9795 9.39914 21.4657 7.91312C21.7585 7.62034 22.2333 7.62044 22.5262 7.91312C22.8189 8.20592 22.8198 8.68078 22.5272 8.97367C21.1685 10.3325 19.2557 10.7992 17.5155 10.376C17.6669 10.8911 17.7499 11.4359 17.7499 12C17.7498 15.1756 15.1754 17.7499 11.9999 17.75C11.4358 17.75 10.8909 17.6671 10.3758 17.5157C10.8003 19.2564 10.3329 21.1707 8.9735 22.5303C8.6808 22.8228 8.20584 22.8235 7.91295 22.5313C7.62011 22.2385 7.62022 21.7627 7.91295 21.4698C9.39891 19.9835 9.39867 17.5743 7.91295 16.0879C6.42657 14.6015 4.01651 14.6015 2.53014 16.0879C2.2374 16.3802 1.7624 16.3801 1.46959 16.0879C1.17675 15.7951 1.17686 15.3193 1.46959 15.0264C2.82903 13.6671 4.7426 13.1988 6.48326 13.6231C6.33203 13.1083 6.24987 12.5638 6.24986 12C6.24986 8.8244 8.82423 6.25004 11.9999 6.25004C12.5622 6.25005 13.1053 6.33195 13.619 6.48246C13.1952 4.74209 13.6633 2.82892 15.0223 1.46977ZM11.9999 7.75004C9.65265 7.75004 7.74986 9.65283 7.74986 12C7.74989 14.3472 9.65267 16.25 11.9999 16.25C14.347 16.25 16.2498 14.3472 16.2499 12C16.2499 9.65288 14.347 7.75013 11.9999 7.75004Z";
 
 const css = String.raw`
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:GRAD,ROND,wdth,wght@0,0,100,100..900&display=swap');
+
 body:has(.cm-root) > header.sticky{display:none!important}
 html:has(.cm-root){scroll-behavior:smooth}
 
 .cm-root{--green:#246f65;--green-deep:#054038;--lime:#f8ffb4;--lime-b:#e5ed9b;--mint:#eff4f2;--mint-deep:#e5f1ed;--ink:#000;--muted:rgba(0,0,0,.4);--subtle:rgba(0,0,0,.5);--line:rgba(0,0,0,.1);--glass:rgba(255,255,255,.8);--glass-s:rgba(255,255,255,.5);--glass-strong:rgba(255,255,255,.96);
-  position:relative;isolation:isolate;background:#fff;color:var(--ink);font-family:var(--font-lato),system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-weight:300;line-height:1.2;-webkit-font-smoothing:antialiased;overflow-x:clip}
+  position:relative;isolation:isolate;background:#fff;color:var(--ink);font-family:'Google Sans Flex',var(--font-lato),system-ui,sans-serif;font-weight:300;line-height:1.2;-webkit-font-smoothing:antialiased;overflow-x:clip}
 .cm-root *{box-sizing:border-box}
 .cm-root a{color:inherit;text-decoration:none}
 .cm-root button,.cm-root input,.cm-root textarea{font:inherit;color:inherit}
