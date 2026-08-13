@@ -50,7 +50,7 @@ export default function AboutPage() {
           <div>
             <p className="text-xs font-black uppercase tracking-[0.2em] text-[#DA1C29]">Who we are</p>
             <h2 className="mt-4 text-3xl font-black leading-tight tracking-[-0.035em] text-[#142F86] sm:text-4xl">Modern diagnostics with a deeply human centre.</h2>
-            <div className="mt-6 space-y-5 text-lg leading-8 text-[#607089]">
+            <div className="mt-6 space-y-5 text-lg leading-8 text-[#142F86]/70">
               <p>Located in the heart of Koramangala, Clarus Magnus has been thoughtfully transformed into a modern healthcare destination offering advanced diagnostics, laboratory services and multispecialty consultations under one roof.</p>
               <p>Every investigation is supported by experienced radiologists and healthcare professionals committed to clinically meaningful insights. For us, diagnostics are not merely tests—they are the foundation of better healthcare.</p>
               <p>By combining technology with expert interpretation and personalised attention, we help patients and doctors move forward with greater clarity, confidence and peace of mind.</p>
@@ -59,15 +59,15 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section className="bg-[#f4f8ff]" title="The Clarus Magnus difference" description="A more thoughtful standard of diagnostic and specialty care.">
+      <Section className="bg-[#31B4F4]/8" title="The Clarus Magnus difference" description="A more thoughtful standard of diagnostic and specialty care.">
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {difference.map(({ icon: Icon, title, description }) => (
             <div key={title} className="rounded-[1.75rem] border border-white bg-white p-7 shadow-[0_18px_48px_-36px_rgba(20,47,134,0.7)]">
-              <span className="flex size-12 items-center justify-center rounded-2xl bg-[#EAF7FE] text-[#142F86]">
+              <span className="flex size-12 items-center justify-center rounded-2xl bg-[#31B4F4]/12 text-[#142F86]">
                 <Icon className="size-5" />
               </span>
               <h3 className="mt-6 text-xl font-black text-[#142F86]">{title}</h3>
-              <p className="mt-3 text-sm leading-6 text-[#65738a]">{description}</p>
+              <p className="mt-3 text-sm leading-6 text-[#142F86]/70">{description}</p>
             </div>
           ))}
         </div>
@@ -75,13 +75,13 @@ export default function AboutPage() {
 
       <Section>
         <div className="grid gap-5 md:grid-cols-2">
-          <div className="rounded-[2rem] border border-[#dce5f1] p-8 sm:p-10">
+          <div className="rounded-[2rem] border border-[#142F86]/18 p-8 sm:p-10">
             <p className="text-xs font-black uppercase tracking-[0.2em] text-[#DA1C29]">Our vision</p>
             <h2 className="mt-4 text-3xl font-black tracking-[-0.03em] text-[#142F86]">Bengaluru’s most trusted destination for diagnostics and specialty healthcare.</h2>
-            <p className="mt-5 leading-8 text-[#607089]">A place where advanced technology, clinical excellence and compassionate care come together to improve lives.</p>
+            <p className="mt-5 leading-8 text-[#142F86]/70">A place where advanced technology, clinical excellence and compassionate care come together to improve lives.</p>
           </div>
-          <div className="rounded-[2rem] bg-[#102A75] p-8 text-white sm:p-10">
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#8ed7fa]">Our mission</p>
+          <div className="rounded-[2rem] bg-[#142F86] p-8 text-white sm:p-10">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#31B4F4]">Our mission</p>
             <h2 className="mt-4 text-3xl font-black tracking-[-0.03em]">Accurate diagnostics. Expert support. Exceptional experiences.</h2>
             <p className="mt-5 leading-8 text-white/70">Delivered through innovation, integrity and a relentless focus on quality and patient confidence.</p>
           </div>

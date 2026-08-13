@@ -17,7 +17,7 @@ export function Section({ title, description, className, children }: SectionProp
               <h2 className="text-3xl font-black leading-tight tracking-[-0.035em] text-[#142F86] sm:text-4xl">{title}</h2>
             )}
             {description && (
-              <p className="mt-4 text-lg leading-8 text-[#607089]">{description}</p>
+              <p className="mt-4 text-lg leading-8 text-[#142F86]/70">{description}</p>
             )}
           </div>
         )}

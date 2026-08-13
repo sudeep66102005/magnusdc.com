@@ -11,7 +11,7 @@ export default function PrivacyPolicyPage() {
     <>
       <PageHero eyebrow="Legal" title="Privacy Policy" />
       <Section>
-        <div className="mx-auto max-w-3xl space-y-4 text-slate-700">
+        <div className="mx-auto max-w-3xl space-y-4 text-[#142F86]/82">
           <p>
             This Privacy Policy explains how Clarus Magnus Health &amp;
             Diagnostics collects, uses, and safeguards patient information.

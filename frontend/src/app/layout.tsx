@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${lato.variable} h-full antialiased`}>
-      <body className="flex min-h-full flex-col bg-white text-[#1E1E1E]">
+      <body className="flex min-h-full flex-col bg-background text-foreground">
         <QueryProvider>
           <Navbar />
           <main className="flex flex-1 flex-col">{children}</main>

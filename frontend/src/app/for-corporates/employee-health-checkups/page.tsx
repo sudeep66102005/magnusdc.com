@@ -16,7 +16,7 @@ export default function EmployeeHealthCheckupsPage() {
         description="Flexible, scalable checkup programs designed to fit your organization's schedule and budget."
       />
       <Section>
-        <div className="mx-auto max-w-3xl space-y-4 text-slate-700">
+        <div className="mx-auto max-w-3xl space-y-4 text-[#142F86]/82">
           <p>
             We offer on-site camps and in-clinic checkup slots for
             organizations of any size, with digital reporting and HR-friendly

@@ -138,7 +138,7 @@ export function AppointmentForm() {
       </Button>
 
       {isSuccess && (
-        <p className="text-sm font-medium text-emerald-600">
+        <p className="text-sm font-medium text-primary">
           Your appointment request has been received. Our team will confirm shortly.
         </p>
       )}

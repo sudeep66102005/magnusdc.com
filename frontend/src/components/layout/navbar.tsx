@@ -47,28 +47,28 @@ const quickActions: QuickAction[] = [
     href: "/patient-info/patient-support#reports",
     icon: FileText,
     className:
-      "border border-[#16a8bb] bg-white text-[#142F86] hover:bg-[#edfafd]",
+      "border border-[#31B4F4] bg-white text-[#142F86] hover:bg-[#31B4F4]/10",
   },
   {
     label: "Appointment",
     shortLabel: "Appointment",
     href: "/patient-info/appointment-booking",
     icon: CalendarDays,
-    className: "bg-[#08a7b4] text-white hover:bg-[#078f9b]",
+    className: "bg-[#31B4F4] text-[#142F86] hover:bg-[#31B4F4]/80",
   },
   {
     label: "Emergency",
     shortLabel: "Emergency",
     href: siteConfig.phone.href,
     icon: Ambulance,
-    className: "bg-[#DA1C29] text-white hover:bg-[#bf1723]",
+    className: "bg-[#DA1C29] text-white hover:bg-[#DA1C29]/80",
   },
   {
     label: "Book Appointments & Health Checkup Packages",
     shortLabel: "Health Packages",
     href: "/health-packages",
     icon: HeartPulse,
-    className: "bg-[#087f98] text-white hover:bg-[#066b81]",
+    className: "bg-[#142F86] text-white hover:bg-[#142F86]/80",
   },
 ];
 
@@ -255,15 +255,15 @@ function DesktopMenuItem({ item }: { item: HeaderGroup }) {
       </Link>
 
       <div className="invisible absolute left-0 top-full z-[80] min-w-64 translate-y-1 pt-1 opacity-0 transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-        <ul className="max-h-[65vh] overflow-y-auto border-t-[3px] border-[#0aaeb1] bg-white py-1.5 shadow-[0_12px_28px_rgba(15,47,86,0.28)]">
+        <ul className="max-h-[65vh] overflow-y-auto border-t-[3px] border-[#31B4F4] bg-white py-1.5 shadow-[0_12px_28px_rgba(20,47,134,0.28)]">
           {item.links.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="flex items-center justify-between gap-6 border-b border-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-700 transition-colors last:border-0 hover:bg-[#eaf9fb] hover:text-[#087f98] focus-visible:bg-[#eaf9fb] focus-visible:text-[#087f98] focus-visible:outline-none"
+                className="flex items-center justify-between gap-6 border-b border-[#142F86]/10 px-4 py-2.5 text-sm font-semibold text-[#142F86]/82 transition-colors last:border-0 hover:bg-[#31B4F4]/10 hover:text-[#142F86] focus-visible:bg-[#31B4F4]/10 focus-visible:text-[#142F86] focus-visible:outline-none"
               >
                 {link.label}
-                <span className="text-[#0aaeb1]" aria-hidden="true">
+                <span className="text-[#31B4F4]" aria-hidden="true">
                   ›
                 </span>
               </Link>
@@ -279,8 +279,8 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white shadow-[0_3px_12px_rgba(15,47,86,0.18)]">
-      <div className="border-b border-slate-100 bg-white">
+    <header className="sticky top-0 z-50 w-full bg-white shadow-[0_3px_12px_rgba(20,47,134,0.18)]">
+      <div className="border-b border-[#142F86]/10 bg-white">
         <div className="mx-auto flex h-[84px] max-w-[1440px] items-center justify-between gap-5 px-4 sm:px-8">
           <Link
             href="/"
@@ -306,7 +306,7 @@ export function Navbar() {
           <div className="flex items-center gap-2 xl:hidden">
             <a
               href={siteConfig.phone.href}
-              className="hidden size-10 items-center justify-center rounded-full bg-[#eaf8fc] text-[#142F86] sm:flex"
+              className="hidden size-10 items-center justify-center rounded-full bg-[#31B4F4]/10 text-[#142F86] sm:flex"
               aria-label={`Call ${siteConfig.phone.display}`}
             >
               <Phone className="size-4" />
@@ -328,15 +328,15 @@ export function Navbar() {
 
               <SheetContent
                 side="right"
-                className="w-[min(390px,92vw)] gap-0 overflow-y-auto border-l-[#dbe5f2] bg-white p-0"
+                className="w-[min(390px,92vw)] gap-0 overflow-y-auto border-l-[#142F86]/18 bg-white p-0"
               >
-                <SheetHeader className="border-b border-[#dbe5f2] px-5 py-4">
+                <SheetHeader className="border-b border-[#142F86]/18 px-5 py-4">
                   <SheetTitle className="pr-10 text-left font-black text-[#142F86]">
                     Explore Clarus Magnus
                   </SheetTitle>
                 </SheetHeader>
 
-                <div className="grid grid-cols-2 gap-2 border-b border-[#dbe5f2] bg-[#f6fbfd] p-3">
+                <div className="grid grid-cols-2 gap-2 border-b border-[#142F86]/18 bg-[#31B4F4]/8 p-3">
                   {quickActions.map((action) => (
                     <div key={action.label} onClick={() => setMobileOpen(false)}>
                       <QuickActionLink action={action} mobile />
@@ -347,12 +347,12 @@ export function Navbar() {
                 <nav className="px-5 py-3" aria-label="Mobile navigation">
                   {navigation.map((item) =>
                     item.links ? (
-                      <details key={item.label} className="group border-b border-slate-100">
-                        <summary className="flex cursor-pointer list-none items-center justify-between py-3.5 text-sm font-black text-[#263858] marker:content-none">
+                      <details key={item.label} className="group border-b border-[#142F86]/10">
+                        <summary className="flex cursor-pointer list-none items-center justify-between py-3.5 text-sm font-black text-[#142F86] marker:content-none">
                           {item.label}
-                          <ChevronDown className="size-4 text-[#08a7b4] transition-transform group-open:rotate-180" />
+                          <ChevronDown className="size-4 text-[#31B4F4] transition-transform group-open:rotate-180" />
                         </summary>
-                        <div className="mb-3 border-l-2 border-[#08a7b4]/30 pl-3">
+                        <div className="mb-3 border-l-2 border-[#31B4F4]/30 pl-3">
                           <Link
                             href={item.href}
                             onClick={() => setMobileOpen(false)}
@@ -365,7 +365,7 @@ export function Navbar() {
                               key={link.href}
                               href={link.href}
                               onClick={() => setMobileOpen(false)}
-                              className="block py-2 text-sm font-semibold text-slate-600 hover:text-[#087f98]"
+                              className="block py-2 text-sm font-semibold text-[#142F86]/70 hover:text-[#142F86]"
                             >
                               {link.label}
                             </Link>
@@ -377,14 +377,14 @@ export function Navbar() {
                         key={item.href}
                         href={item.href}
                         onClick={() => setMobileOpen(false)}
-                        className="block border-b border-slate-100 py-3.5 text-sm font-black text-[#263858]"
+                        className="block border-b border-[#142F86]/10 py-3.5 text-sm font-black text-[#142F86]"
                       >
                         {item.label}
                       </Link>
                     ),
                   )}
 
-                  <div className="mt-4 rounded-md bg-gradient-to-r from-[#0b5ba8] to-[#08a7a7] p-4 text-white">
+                  <div className="mt-4 rounded-md bg-gradient-to-r from-[#142F86] to-[#142F86] p-4 text-white">
                     <p className="text-xs font-black uppercase tracking-[0.14em] text-white/70">
                       Need help?
                     </p>
@@ -403,7 +403,7 @@ export function Navbar() {
         </div>
       </div>
 
-      <div className="hidden h-11 bg-gradient-to-r from-[#075aa8] via-[#087fa5] to-[#08aaa6] xl:block">
+      <div className="hidden h-11 bg-gradient-to-r from-[#142F86] via-[#142F86] to-[#142F86] xl:block">
         <div className="mx-auto flex h-full max-w-[1440px] items-stretch justify-between px-8">
           <nav className="flex h-full items-stretch" aria-label="Primary navigation">
             {navigation.map((item) => (

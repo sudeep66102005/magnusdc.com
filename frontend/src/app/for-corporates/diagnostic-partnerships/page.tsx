@@ -16,7 +16,7 @@ export default function DiagnosticPartnershipsPage() {
         description="Establish a long-term partnership for reliable, preferential-rate diagnostic services."
       />
       <Section>
-        <div className="mx-auto max-w-3xl space-y-4 text-slate-700">
+        <div className="mx-auto max-w-3xl space-y-4 text-[#142F86]/82">
           <p>
             We work with hospitals, clinics, and insurers to provide
             dependable diagnostic imaging and laboratory coverage under

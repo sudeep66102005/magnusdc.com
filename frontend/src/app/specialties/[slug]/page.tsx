@@ -42,7 +42,7 @@ export default async function SpecialtyDetailPage({ params }: SpecialtyPageProps
         description={specialty.summary}
       />
       <Section>
-        <div className="mx-auto max-w-3xl space-y-6 text-slate-700">
+        <div className="mx-auto max-w-3xl space-y-6 text-[#142F86]/82">
           <p>
             Our {specialty.name.toLowerCase()} team combines experienced
             clinicians with advanced diagnostic support to deliver accurate,

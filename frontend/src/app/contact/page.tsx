@@ -24,8 +24,8 @@ export default function ContactPage() {
             <div className="flex items-start gap-3">
               <Phone className="mt-1 size-5 text-primary" />
               <div>
-                <p className="font-semibold text-slate-900">Phone</p>
-                <a href={siteConfig.phone.href} className="text-slate-600 hover:text-primary">
+                <p className="font-semibold text-[#142F86]">Phone</p>
+                <a href={siteConfig.phone.href} className="text-[#142F86]/70 hover:text-primary">
                   {siteConfig.phone.display}
                 </a>
               </div>
@@ -33,10 +33,10 @@ export default function ContactPage() {
             <div className="flex items-start gap-3">
               <Mail className="mt-1 size-5 text-primary" />
               <div>
-                <p className="font-semibold text-slate-900">Email</p>
+                <p className="font-semibold text-[#142F86]">Email</p>
                 <a
                   href={`mailto:${siteConfig.email}`}
-                  className="text-slate-600 hover:text-primary"
+                  className="text-[#142F86]/70 hover:text-primary"
                 >
                   {siteConfig.email}
                 </a>
@@ -45,8 +45,8 @@ export default function ContactPage() {
             <div className="flex items-start gap-3">
               <MapPin className="mt-1 size-5 text-primary" />
               <div>
-                <p className="font-semibold text-slate-900">Address</p>
-                <p className="text-slate-600">
+                <p className="font-semibold text-[#142F86]">Address</p>
+                <p className="text-[#142F86]/70">
                   {siteConfig.address.line1}
                   <br />
                   {siteConfig.address.line2}
