@@ -92,7 +92,7 @@ export function CorporateInquiryForm() {
       </Button>
 
       {isSuccess && (
-        <p className="text-sm font-medium text-emerald-600">
+        <p className="text-sm font-medium text-primary">
           Thank you! Our corporate care team will reach out shortly.
         </p>
       )}

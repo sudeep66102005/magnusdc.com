@@ -38,7 +38,7 @@ export default function ForCorporatesPage() {
       <Section
         title="Request a Corporate Consultation"
         description="Tell us about your organization and our team will get in touch."
-        className="bg-slate-50"
+        className="bg-[#31B4F4]/8"
       >
         <div className="mx-auto max-w-xl">
           <CorporateInquiryForm />

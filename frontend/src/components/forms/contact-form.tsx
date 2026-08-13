@@ -73,7 +73,7 @@ export function ContactForm() {
       </Button>
 
       {isSuccess && (
-        <p className="text-sm font-medium text-emerald-600">
+        <p className="text-sm font-medium text-primary">
           Thanks for reaching out. We&apos;ll get back to you soon.
         </p>
       )}

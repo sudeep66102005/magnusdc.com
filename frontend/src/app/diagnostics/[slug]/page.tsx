@@ -35,11 +35,11 @@ export default async function DiagnosticDetailPage({ params }: DiagnosticPagePro
     <>
       <PageHero eyebrow="Diagnostics" title={item.name} description={item.summary} />
       <Section>
-        <div className="mx-auto max-w-3xl space-y-6 text-slate-700">
+        <div className="mx-auto max-w-3xl space-y-6 text-[#142F86]/82">
           <p>{item.details}</p>
           {item.preparation && (
-            <div className="rounded-lg border bg-slate-50 p-4">
-              <p className="font-semibold text-slate-900">Preparation Instructions</p>
+            <div className="rounded-lg border bg-[#31B4F4]/8 p-4">
+              <p className="font-semibold text-[#142F86]">Preparation Instructions</p>
               <p className="mt-1 text-sm">{item.preparation}</p>
             </div>
           )}

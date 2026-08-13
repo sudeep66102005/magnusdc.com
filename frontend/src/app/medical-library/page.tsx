@@ -61,16 +61,16 @@ export default function MedicalLibraryPage() {
           {guides.map((guide) => {
             const Icon = guide.icon;
             return (
-              <Link key={guide.title} href={guide.href} className="group rounded-[1.75rem] border border-[#dce5f1] bg-white p-7 transition duration-300 hover:-translate-y-1 hover:border-[#31B4F4]/60 hover:shadow-[0_24px_60px_-36px_rgba(20,47,134,0.65)]">
-                <span className="flex size-11 items-center justify-center rounded-2xl bg-[#EAF7FE] text-[#142F86]"><Icon className="size-5" /></span>
+              <Link key={guide.title} href={guide.href} className="group rounded-[1.75rem] border border-[#142F86]/18 bg-white p-7 transition duration-300 hover:-translate-y-1 hover:border-[#31B4F4]/60 hover:shadow-[0_24px_60px_-36px_rgba(20,47,134,0.65)]">
+                <span className="flex size-11 items-center justify-center rounded-2xl bg-[#31B4F4]/12 text-[#142F86]"><Icon className="size-5" /></span>
                 <h2 className="mt-6 text-xl font-black text-[#142F86]">{guide.title}</h2>
-                <p className="mt-3 text-sm leading-7 text-[#65738a]">{guide.description}</p>
+                <p className="mt-3 text-sm leading-7 text-[#142F86]/70">{guide.description}</p>
                 <span className="mt-6 flex items-center gap-2 text-sm font-black text-[#DA1C29]">Read guide <ArrowRight className="size-4 transition group-hover:translate-x-1" /></span>
               </Link>
             );
           })}
         </div>
-        <div className="mt-10 rounded-2xl border border-[#dbe5f2] bg-[#f5f9ff] p-5 text-sm leading-7 text-[#607089]">
+        <div className="mt-10 rounded-2xl border border-[#142F86]/18 bg-[#31B4F4]/8 p-5 text-sm leading-7 text-[#142F86]/70">
           <strong className="text-[#142F86]">Important:</strong> These guides provide general preparation information and do not replace advice from your doctor or the Clarus Magnus clinical team. Preparation varies by examination; always follow the instructions provided when booking.
         </div>
       </Section>

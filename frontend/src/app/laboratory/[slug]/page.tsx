@@ -33,7 +33,7 @@ export default async function LabDetailPage({ params }: LabPageProps) {
     <>
       <PageHero eyebrow="Laboratory" title={item.name} description={item.summary} />
       <Section>
-        <div className="mx-auto max-w-3xl space-y-6 text-slate-700">
+        <div className="mx-auto max-w-3xl space-y-6 text-[#142F86]/82">
           <p>{item.details}</p>
           <Button size="lg" render={<Link href="/patient-info/appointment-booking" />}>
             Book a Test

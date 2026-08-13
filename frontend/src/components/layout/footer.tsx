@@ -26,17 +26,17 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto bg-[#091a4d] text-white">
+    <footer className="mt-auto bg-[#142F86] text-white">
       <div className="border-b border-white/10">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#8ed7fa]">Clarity starts here</p>
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#31B4F4]">Clarity starts here</p>
             <h2 className="mt-3 max-w-2xl text-3xl font-black tracking-[-0.035em] sm:text-4xl">Need help choosing the right scan, test or health package?</h2>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
             <Link
               href="/patient-info/appointment-booking"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-sm font-black text-[#142F86] transition hover:bg-[#EAF7FE]"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-sm font-black text-[#142F86] transition hover:bg-[#31B4F4]/15"
             >
               Book appointment
               <ArrowUpRight className="size-4" />
@@ -77,7 +77,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-xs font-black uppercase tracking-[0.18em] text-[#8ed7fa]">Services</h3>
+          <h3 className="text-xs font-black uppercase tracking-[0.18em] text-[#31B4F4]">Services</h3>
           <ul className="mt-5 space-y-3">
             {serviceLinks.map((link) => (
               <li key={link.href}>
@@ -88,7 +88,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-xs font-black uppercase tracking-[0.18em] text-[#8ed7fa]">Explore</h3>
+          <h3 className="text-xs font-black uppercase tracking-[0.18em] text-[#31B4F4]">Explore</h3>
           <ul className="mt-5 space-y-3">
             {companyLinks.map((link) => (
               <li key={link.href}>
@@ -99,11 +99,11 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="text-xs font-black uppercase tracking-[0.18em] text-[#8ed7fa]">Hours &amp; contact</h3>
+          <h3 className="text-xs font-black uppercase tracking-[0.18em] text-[#31B4F4]">Hours &amp; contact</h3>
           <div className="mt-5 space-y-4 text-sm text-white/65">
             <p className="flex gap-3"><Clock3 className="mt-0.5 size-4 shrink-0 text-[#31B4F4]" /><span>{siteConfig.hours.imaging}<br />{siteConfig.hours.laboratory}<br />{siteConfig.hours.ultrasound}<br />{siteConfig.hours.xray}</span></p>
-            <p className="text-xs font-bold leading-5 text-[#8ed7fa]">{siteConfig.services.homeCollection}<br />{siteConfig.services.ambulance}</p>
-            <a href={siteConfig.phone.href} className="flex items-center gap-3 text-base font-black text-white transition hover:text-[#8ed7fa]">
+            <p className="text-xs font-bold leading-5 text-[#31B4F4]">{siteConfig.services.homeCollection}<br />{siteConfig.services.ambulance}</p>
+            <a href={siteConfig.phone.href} className="flex items-center gap-3 text-base font-black text-white transition hover:text-[#31B4F4]">
               <Phone className="size-4 text-[#31B4F4]" />
               {siteConfig.phone.display}
             </a>
