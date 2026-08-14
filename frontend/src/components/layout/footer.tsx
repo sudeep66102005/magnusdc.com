@@ -26,24 +26,24 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto border-t border-[#142F86]/14 bg-white text-[#142F86]">
-      <div className="border-b border-[#142F86]/10">
+    <footer className="mt-auto border-t border-white/10 bg-[#142F86] text-white">
+      <div className="border-b border-white/10">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           <div>
             <p className="text-xs font-black uppercase tracking-[0.2em] text-[#31B4F4]">Clarity starts here</p>
-            <h2 className="mt-3 max-w-2xl text-3xl font-black tracking-[-0.035em] sm:text-4xl">Need help choosing the right scan, test or health package?</h2>
+            <h2 className="mt-3 max-w-2xl text-3xl font-black tracking-[-0.035em] text-white sm:text-4xl">Need help choosing the right scan, test or health package?</h2>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
             <Link
               href="/patient-info/appointment-booking"
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-[#142F86] px-6 text-sm font-black text-white transition hover:bg-[#DA1C29]"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-sm font-black text-[#142F86] transition hover:bg-[#DA1C29] hover:text-white"
             >
               Book appointment
               <ArrowUpRight className="size-4" />
             </Link>
             <a
               href={siteConfig.phone.href}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-[#142F86]/20 px-6 text-sm font-black text-[#142F86] transition hover:bg-[#31B4F4]/10"
+              className="inline-flex h-12 items-center justify-center gap-2 rounded-full border border-white/25 px-6 text-sm font-black text-white transition hover:bg-white/10"
             >
               <Phone className="size-4" />
               Call us
@@ -63,13 +63,13 @@ export function Footer() {
               className="object-contain p-2"
             />
           </div>
-          <p className="mt-6 max-w-sm text-sm leading-7 text-[#142F86]/64">Radiologist-led advanced diagnostics, laboratory services and multispecialty care—delivered with precision and compassion in Koramangala.</p>
-          <div className="mt-7 space-y-3 text-sm text-[#142F86]/72">
-            <a href={siteConfig.address.mapsHref} target="_blank" rel="noreferrer" className="flex items-start gap-3 transition hover:text-[#142F86]">
+          <p className="mt-6 max-w-sm text-sm leading-7 text-white/70">Radiologist-led advanced diagnostics, laboratory services and multispecialty care—delivered with precision and compassion in Koramangala.</p>
+          <div className="mt-7 space-y-3 text-sm text-white/80">
+            <a href={siteConfig.address.mapsHref} target="_blank" rel="noreferrer" className="flex items-start gap-3 transition hover:text-white">
               <MapPin className="mt-0.5 size-4 shrink-0 text-[#31B4F4]" />
               <span>{siteConfig.address.line2}, {siteConfig.address.city} {siteConfig.address.zip}</span>
             </a>
-            <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-3 transition hover:text-[#142F86]">
+            <a href={`mailto:${siteConfig.email}`} className="flex items-center gap-3 transition hover:text-white">
               <Mail className="size-4 text-[#31B4F4]" />
               {siteConfig.email}
             </a>
@@ -81,7 +81,7 @@ export function Footer() {
           <ul className="mt-5 space-y-3">
             {serviceLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-sm text-[#142F86]/65 transition hover:text-[#142F86]">{link.label}</Link>
+                <Link href={link.href} className="text-sm text-white/75 transition hover:text-white">{link.label}</Link>
               </li>
             ))}
           </ul>
@@ -92,7 +92,7 @@ export function Footer() {
           <ul className="mt-5 space-y-3">
             {companyLinks.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className="text-sm text-[#142F86]/65 transition hover:text-[#142F86]">{link.label}</Link>
+                <Link href={link.href} className="text-sm text-white/75 transition hover:text-white">{link.label}</Link>
               </li>
             ))}
           </ul>
@@ -100,10 +100,10 @@ export function Footer() {
 
         <div>
           <h3 className="text-xs font-black uppercase tracking-[0.18em] text-[#31B4F4]">Hours &amp; contact</h3>
-          <div className="mt-5 space-y-4 text-sm text-[#142F86]/65">
+          <div className="mt-5 space-y-4 text-sm text-white/75">
             <p className="flex gap-3"><Clock3 className="mt-0.5 size-4 shrink-0 text-[#31B4F4]" /><span>{siteConfig.hours.imaging}<br />{siteConfig.hours.laboratory}<br />{siteConfig.hours.ultrasound}<br />{siteConfig.hours.xray}</span></p>
             <p className="text-xs font-bold leading-5 text-[#31B4F4]">{siteConfig.services.homeCollection}<br />{siteConfig.services.ambulance}</p>
-            <a href={siteConfig.phone.href} className="flex items-center gap-3 text-base font-black text-[#142F86] transition hover:text-[#DA1C29]">
+            <a href={siteConfig.phone.href} className="flex items-center gap-3 text-base font-black text-white transition hover:text-[#DA1C29]">
               <Phone className="size-4 text-[#31B4F4]" />
               {siteConfig.phone.display}
             </a>
@@ -111,12 +111,12 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-[#142F86]/10">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-5 text-xs text-[#142F86]/45 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+      <div className="border-t border-white/10">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 py-5 text-xs text-white/55 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <p>© {year} {siteConfig.name}. All rights reserved.</p>
           <nav className="flex gap-5">
-            <Link href="/privacy-policy" className="transition hover:text-[#142F86]">Privacy</Link>
-            <Link href="/terms-and-conditions" className="transition hover:text-[#142F86]">Terms</Link>
+            <Link href="/privacy-policy" className="transition hover:text-white">Privacy</Link>
+            <Link href="/terms-and-conditions" className="transition hover:text-white">Terms</Link>
           </nav>
         </div>
       </div>
