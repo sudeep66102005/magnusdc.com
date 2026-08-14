@@ -207,16 +207,15 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-nav__dropdown li:last-child a{border-bottom:0}
 .cm-nav__dropdown a:hover,.cm-nav__dropdown a:focus-visible{background:rgb(49 180 244 / .1);color:#DA1C29}
 .cm-nav__dropdown-arrow{color:#31B4F4;font-size:1.25rem}
-.cm-header__cta{display:none}
-.cm-header__cta .cm-btn--arrow{height:6.5rem;gap:1rem;padding-right:.35rem;padding-left:2.25rem;font-size:1.5rem}
-.cm-header__cta .cm-disc{width:5.75rem;height:5.75rem}
-.cm-header__cta .cm-arrow{width:1.5rem;height:1.5rem}
+.cm-nav__item--contact{align-items:center;margin-left:.5rem;padding:.5rem 0}
+.cm-nav__contact{display:flex;align-items:center;gap:.75rem;height:100%;padding:0 .35rem 0 1.25rem;border-radius:999px;background:var(--green);color:#FFFFFF;font-size:1rem;font-weight:700;white-space:nowrap;transition:background .15s,transform .15s}
+.cm-nav__contact:hover{background:var(--green-deep);transform:translateY(-1px)}
+.cm-nav__contact:focus-visible{outline:2px solid #31B4F4;outline-offset:2px}
+.cm-nav__contact .cm-disc{width:2.75rem;height:2.75rem;background:var(--lime);color:#142F86}
+.cm-nav__contact .cm-arrow{width:1rem;height:1rem}
 @media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{width:14rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
 @media(min-width:1536px){.cm-logo{width:15rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
-@media(min-width:1720px){.cm-header__cta{display:block}}
-@media(min-width:1920px){.cm-logo{width:20rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}}
-.cm-header__cta[data-hidden="true"]{opacity:0;transform:translateY(-24px);pointer-events:none}
-.cm-header__cta{transition:opacity .4s,transform .4s}
+@media(min-width:1920px){.cm-logo{width:20rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}.cm-nav__contact{font-size:1.25rem;padding:0 .5rem 0 1.75rem}.cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}.cm-nav__contact .cm-arrow{width:1.25rem;height:1.25rem}}
 .cm-burger{pointer-events:auto;display:grid;place-items:center;width:6.5rem;height:6.5rem}
 .cm-burger span{display:block;width:2rem;height:2px;background:#142F86;transition:transform .25s,opacity .15s}
 .cm-burger span+span{margin-top:.5rem}
@@ -235,6 +234,9 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-mobile__children a:hover{color:#DA1C29}
 .cm-mobile .cm-btn{width:100%;height:4.5rem;justify-content:space-between;font-size:1.35rem}
 .cm-mobile .cm-disc{width:4rem;height:4rem}
+.cm-mobile__item--contact{border-bottom:0}
+.cm-mobile .cm-nav__contact{width:100%;height:4.5rem;justify-content:space-between;padding:0 .35rem 0 1.5rem;font-size:1.25rem}
+.cm-mobile .cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}
 @media(max-width:359px){.cm-logo{width:10.75rem;height:5.5rem;padding-inline:.75rem}.cm-logo__image{height:5rem}.cm-burger{width:5.5rem;height:5.5rem}.cm-mobile{top:6.25rem;max-height:calc(100vh - 7.5rem)}}
 @media(prefers-reduced-motion:reduce){.cm-nav__dropdown,.cm-nav__chevron,.cm-mobile{transition:none}}
 
@@ -621,10 +623,6 @@ function initClarus(root){
   const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); }),{threshold:.18});
   reveals.forEach(el=>io.observe(el)); root.querySelectorAll('[data-rise]').forEach(el=>io.observe(el)); cleaners.push(()=>io.disconnect());
 
-  // header CTA hide over contact
-  const cta=root.querySelector('.cm-header__cta'); const contact=root.querySelector('#contact');
-  if(cta&&contact){ const o=new IntersectionObserver(([e])=>{ cta.dataset.hidden=e.isIntersecting?'true':'false'; },{threshold:0}); o.observe(contact); cleaners.push(()=>o.disconnect()); }
-
   // mobile menu
   const burger=root.querySelector('.cm-burger'); const menu=root.querySelector('.cm-mobile');
   if(burger&&menu){
@@ -795,15 +793,62 @@ export default function HomePage() {
             <nav aria-label="Primary navigation" className="cm-glass cm-nav">
               <ul>
                 {HEADER_NAV.map((item) => (
-                  <li className="cm-nav__item cm-nav__item--has-children" key={item.href}>
-                    <Link href={item.href} className="cm-nav__link">
-                      <span>{item.label}</span>
-                      <svg className="cm-nav__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                        <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                  item.label === "Contact Us" ? (
+                    <li className="cm-nav__item cm-nav__item--contact" key={item.href}>
+                      <Link href={item.href} className="cm-nav__contact">
+                        <span>Contact Us</span>
+                        <span className="cm-disc"><Arrow /></span>
+                      </Link>
+                    </li>
+                  ) : (
+                    <li className="cm-nav__item cm-nav__item--has-children" key={item.href}>
+                      <Link href={item.href} className="cm-nav__link">
+                        <span>{item.label}</span>
+                        <svg className="cm-nav__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                          <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </Link>
+                      <div className="cm-nav__dropdown">
+                        <ul>
+                          {item.children.map((child) => (
+                            <li key={`${item.label}-${child.href}-${child.label}`}>
+                              <Link href={child.href}>
+                                <span>{child.label}</span>
+                                <span className="cm-nav__dropdown-arrow" aria-hidden="true">›</span>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </li>
+                  )
+                ))}
+              </ul>
+            </nav>
+          </div>
+          <button type="button" className="cm-glass cm-burger" aria-expanded="false" aria-controls="cm-mobile-menu" aria-label="Open menu">
+            <span /><span /><span />
+          </button>
+          <nav id="cm-mobile-menu" aria-label="Mobile navigation" className="cm-glass cm-mobile" data-open="false">
+            <ul className="cm-mobile__list">
+              {HEADER_NAV.map((item) => (
+                item.label === "Contact Us" ? (
+                  <li className="cm-mobile__item cm-mobile__item--contact" key={item.href}>
+                    <Link href={item.href} className="cm-nav__contact">
+                      <span>Contact Us</span>
+                      <span className="cm-disc"><Arrow /></span>
                     </Link>
-                    <div className="cm-nav__dropdown">
-                      <ul>
+                  </li>
+                ) : (
+                  <li className="cm-mobile__item" key={item.href}>
+                    <details>
+                      <summary>
+                        <span>{item.label}</span>
+                        <svg className="cm-nav__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                          <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </summary>
+                      <ul className="cm-mobile__children">
                         {item.children.map((child) => (
                           <li key={`${item.label}-${child.href}-${child.label}`}>
                             <Link href={child.href}>
@@ -813,43 +858,9 @@ export default function HomePage() {
                           </li>
                         ))}
                       </ul>
-                    </div>
+                    </details>
                   </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
-          <div className="cm-header__cta">
-            <a href="#contact" className="cm-btn cm-btn--primary cm-btn--arrow">
-              <span>Contact Us</span><span className="cm-disc"><Arrow /></span>
-            </a>
-          </div>
-          <button type="button" className="cm-glass cm-burger" aria-expanded="false" aria-controls="cm-mobile-menu" aria-label="Open menu">
-            <span /><span /><span />
-          </button>
-          <nav id="cm-mobile-menu" aria-label="Mobile navigation" className="cm-glass cm-mobile" data-open="false">
-            <ul className="cm-mobile__list">
-              {HEADER_NAV.map((item) => (
-                <li className="cm-mobile__item" key={item.href}>
-                  <details>
-                    <summary>
-                      <span>{item.label}</span>
-                      <svg className="cm-nav__chevron" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                        <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </summary>
-                    <ul className="cm-mobile__children">
-                      {item.children.map((child) => (
-                        <li key={`${item.label}-${child.href}-${child.label}`}>
-                          <Link href={child.href}>
-                            <span>{child.label}</span>
-                            <span className="cm-nav__dropdown-arrow" aria-hidden="true">›</span>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
-                </li>
+                )
               ))}
             </ul>
           </nav>
