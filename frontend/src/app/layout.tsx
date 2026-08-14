@@ -30,6 +30,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${lato.variable} h-full antialiased`}>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if('scrollRestoration' in window.history){window.history.scrollRestoration='manual';}window.scrollTo(0,0);}catch(e){}",
+          }}
+        />
+      </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <QueryProvider>
           <Navbar />
