@@ -509,18 +509,18 @@ const SNOISE = String.raw`
   vec3 helixPoint(float rnd1, float rnd2, float rnd3, float rnd4, float twist, float radius, float height, float thick, float wave, float time) {
     float y = (rnd2 * 2.0 - 1.0) * height;
     vec3 core;
-    if (rnd1 < 0.85) {
-      float strand = step(0.5, rnd1) * 3.14159265;
+    if (rnd1 < 0.62) {
+      float strand = step(0.31, rnd1) * 3.14159265;
       float a = y * twist + strand;
       core = vec3(radius * cos(a), y, radius * sin(a));
       core += (vec3(rnd2, rnd3, rnd4) - 0.5) * thick;
     } else {
       float rungT = rnd3;
-      float dy = floor(y * 2.2) / 2.2;
+      float dy = floor(y * 2.6) / 2.6;
       float a = dy * twist;
       vec3 p1 = vec3(radius * cos(a), dy, radius * sin(a));
       vec3 p2 = vec3(radius * cos(a + 3.14159265), dy, radius * sin(a + 3.14159265));
-      core = mix(p1, p2, rungT) + (vec3(rnd2, rnd4, rnd3) - 0.5) * 0.08;
+      core = mix(p1, p2, rungT) + (vec3(rnd2, rnd4, rnd3) - 0.5) * 0.045;
     }
     core.x += sin(time * 0.5 + y * 0.6) * wave;
     core.z += cos(time * 0.4 + y * 0.6) * wave;
@@ -543,11 +543,17 @@ const HELIX_V = String.raw`
     float fall = smoothstep(uRepelRadius, 0.0, length(toP));
     wp += normalize(toP + vec3(1e-4)) * fall * uRepelStrength * uActivity;
     vec4 mv = viewMatrix * vec4(wp, 1.0);
-    vColor = mix(uHelixB, uHelixA, rnd4);
-    vFade = 0.65 + 0.35 * rnd2;
+    vec4 clip = projectionMatrix * mv;
+    vec2 ndc = clip.xy / max(clip.w, 1e-4);
+    float gx = clamp((ndc.x + 1.0) * 0.5, 0.0, 1.0);
+    float gy = clamp((1.0 - ndc.y) * 0.5, 0.0, 1.0);
+    float grad = clamp(gx * 0.62 + gy * 0.38, 0.0, 1.0);
+    float shade = pow(grad, 1.15);
+    vColor = mix(uHelixB, uHelixA, clamp(shade * 1.2, 0.0, 1.0));
+    vFade = (0.78 + 0.22 * rnd2) * smoothstep(0.06, 0.58, grad);
     gl_PointSize = uHelixSize * uPixelScale * (12.0 / -mv.z);
-    gl_PointSize = max(gl_PointSize, 1.5);
-    gl_Position = projectionMatrix * mv;
+    gl_PointSize = max(gl_PointSize, 1.7);
+    gl_Position = clip;
   }`;
 
 const HELIX_F = String.raw`
@@ -594,14 +600,19 @@ const INK_V = String.raw`
     float fall = smoothstep(uRepelRadius, 0.0, length(toP));
     wp += normalize(toP + vec3(1e-4)) * fall * uRepelStrength * uActivity;
     vec4 mv = viewMatrix * vec4(wp, 1.0);
+    vec4 clip = projectionMatrix * mv;
+    vec2 ndc = clip.xy / max(clip.w, 1e-4);
+    float gx = clamp((ndc.x + 1.0) * 0.5, 0.0, 1.0);
+    float gy = clamp((1.0 - ndc.y) * 0.5, 0.0, 1.0);
+    float grad = clamp(gx * 0.62 + gy * 0.38, 0.0, 1.0);
     vec3 c = mix(uInkCore, uInkMid, smoothstep(0.0, 0.4, life));
     c = mix(c, uInkEdge, smoothstep(0.35, 1.0, life));
-    vColor = c;
-    vAlpha = smoothstep(0.0, 0.06, life) * (1.0 - smoothstep(0.4, 1.0, life));
+    vColor = mix(uInkMid, c, clamp(pow(grad, 1.15) * 1.2, 0.0, 1.0));
+    vAlpha = smoothstep(0.0, 0.06, life) * (1.0 - smoothstep(0.4, 1.0, life)) * smoothstep(0.06, 0.58, grad);
     float grow = 0.35 + life * uInkGrow;
     gl_PointSize = uInkSize * grow * uPixelScale * (12.0 / -mv.z);
     gl_PointSize = max(gl_PointSize, 1.0);
-    gl_Position = projectionMatrix * mv;
+    gl_Position = clip;
   }`;
 
 const INK_F = String.raw`
@@ -617,7 +628,7 @@ const INK_F = String.raw`
   }`;
 
 const dnaScript = String.raw`
-const CFG={bgColor:'#FFFFFF',helixColorA:'#142F86',helixColorB:'#31B4F4',inkCore:'#142F86',inkMid:'#31B4F4',inkEdge:'#DA1C29',camDist:12,helixSize:1,inkSize:6,brightness:0.4,helixOpacity:1.54,inkOpacity:0.86,inkGrow:1.8,radius:1.75,height:6.8,twist:0.65,strandThick:0.39,wave:0.5,spin:0,tilt:-0.34,emitRate:0.19,spread:0.6,rise:-0.2,turbulence:1.6,noiseFreq:1.05,noiseEvolve:0.1,parallax:3,pointerRadius:5,pointerStrength:1.55,maxPixelRatio:1.5};
+const CFG={bgColor:'#FFFFFF',helixColorA:'#142F86',helixColorB:'#31B4F4',inkCore:'#142F86',inkMid:'#31B4F4',inkEdge:'#1E6FA8',camDist:12,helixSize:1.3,inkSize:6,brightness:0.92,helixOpacity:2.15,inkOpacity:0.62,inkGrow:1.8,radius:1.75,height:6.8,twist:0.65,strandThick:0.39,wave:0.5,spin:0,tilt:-0.34,emitRate:0.19,spread:0.6,rise:-0.2,turbulence:1.6,noiseFreq:1.05,noiseEvolve:0.1,parallax:3,pointerRadius:5,pointerStrength:1.55,maxPixelRatio:1.5};
 const REF_H=1600, MAXD=0.05, EASE_P=0.05, EASE_C=0.15, EASE_A=0.08, IDLE=3, A_DELAY=0.2, A_DUR=1.6;
 const HELIX_V=${JSON.stringify(HELIX_V)};
 const HELIX_F=${JSON.stringify(HELIX_F)};
