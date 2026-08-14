@@ -213,9 +213,6 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-nav__contact:focus-visible{outline:2px solid #31B4F4;outline-offset:2px}
 .cm-nav__contact .cm-disc{width:2.75rem;height:2.75rem;background:var(--lime);color:#142F86}
 .cm-nav__contact .cm-arrow{width:1rem;height:1rem}
-@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{width:14rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
-@media(min-width:1536px){.cm-logo{width:15rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
-@media(min-width:1920px){.cm-logo{width:20rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}.cm-nav__contact{font-size:1.25rem;padding:0 .5rem 0 1.75rem}.cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}.cm-nav__contact .cm-arrow{width:1.25rem;height:1.25rem}}
 .cm-burger{pointer-events:auto;display:grid;place-items:center;width:6.5rem;height:6.5rem}
 .cm-burger span{display:block;width:2rem;height:2px;background:#142F86;transition:transform .25s,opacity .15s}
 .cm-burger span+span{margin-top:.5rem}
@@ -237,6 +234,9 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-mobile__item--contact{border-bottom:0}
 .cm-mobile .cm-nav__contact{width:100%;height:4.5rem;justify-content:space-between;padding:0 .35rem 0 1.5rem;font-size:1.25rem}
 .cm-mobile .cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}
+@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{width:14rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
+@media(min-width:1536px){.cm-logo{width:15rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
+@media(min-width:1920px){.cm-logo{width:20rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}.cm-nav__contact{font-size:1.25rem;padding:0 .5rem 0 1.75rem}.cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}.cm-nav__contact .cm-arrow{width:1.25rem;height:1.25rem}}
 @media(max-width:359px){.cm-logo{width:10.75rem;height:5.5rem;padding-inline:.75rem}.cm-logo__image{height:5rem}.cm-burger{width:5.5rem;height:5.5rem}.cm-mobile{top:6.25rem;max-height:calc(100vh - 7.5rem)}}
 @media(prefers-reduced-motion:reduce){.cm-nav__dropdown,.cm-nav__chevron,.cm-mobile{transition:none}}
 
