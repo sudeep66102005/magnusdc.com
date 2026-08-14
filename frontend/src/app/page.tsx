@@ -137,10 +137,14 @@ const ABOUT = {
     { value: "4.8", label: "Google patient rating" },
   ],
   paragraph: [
-    { text: "Clarus Magnus is a radiologist-led destination in Koramangala", muted: true },
+    { text: "Clarus Magnus is a radiologist-led destination in ", muted: true },
+    { text: "Koramangala", muted: true, accent: true },
     { text: " where diagnosis and care are never separated. ", muted: false },
-    { text: "Imaging, laboratory and consulting rooms sit together, ", muted: true },
-    { text: "and your reports reach the right specialist the same day.", muted: false },
+    { text: "Imaging, laboratory", muted: true, accent: true },
+    { text: " and consulting rooms sit together, ", muted: true },
+    { text: "and your reports reach the ", muted: false },
+    { text: "right specialist", muted: false, accent: true },
+    { text: " the same day.", muted: false },
   ],
   actions: [
     { label: "Book a consultation", href: "#contact", primary: true },
@@ -400,6 +404,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-stat dt{font-size:.875rem;font-weight:400}
 .cm-about__para{font-size:1.375rem;line-height:1.2;font-weight:400;margin:0}
 .cm-about__para .muted{color:var(--muted)}
+.cm-about__para .accent{font-family:var(--font-playfair),Georgia,serif;font-style:italic;font-weight:700}
 .cm-about__actions{display:flex;flex-wrap:wrap;gap:1rem}
 @media(min-width:768px){.cm-about__banner{height:24rem}.cm-about__para{font-size:1.75rem}}
 @media(min-width:1024px){
@@ -1098,7 +1103,7 @@ export default function HomePage() {
             <div className="cm-about__right">
               <p className="cm-about__para cm-reveal">
                 {ABOUT.paragraph.map((f) => (
-                  <span key={f.text} className={f.muted ? "muted" : ""}>{f.text}</span>
+                  <span key={f.text} className={`${f.muted ? "muted" : ""}${f.accent ? " accent" : ""}`}>{f.text}</span>
                 ))}
               </p>
               <div className="cm-about__actions">
