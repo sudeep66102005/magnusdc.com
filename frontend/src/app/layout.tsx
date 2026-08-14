@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lato, Playfair_Display } from "next/font/google";
+import { Lato, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { Navbar } from "@/components/layout/navbar";
@@ -12,6 +12,13 @@ const lato = Lato({
   variable: "--font-lato",
   subsets: ["latin"],
   weight: ["300", "400", "700"],
+  display: "swap",
+});
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["400", "600", "800"],
   display: "swap",
 });
 
@@ -38,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${lato.variable} ${playfairDisplay.variable} h-full antialiased`}>
+    <html lang="en" className={`${lato.variable} ${playfairDisplay.variable} ${inter.variable} h-full antialiased`}>
       <head>
         <script
           dangerouslySetInnerHTML={{
