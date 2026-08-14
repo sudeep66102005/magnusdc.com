@@ -66,44 +66,36 @@ const SERVICES_INTRO = {
     "From a routine health check to advanced imaging and molecular testing — five directions covering prevention, diagnosis and long-term care.",
 };
 
+const svcImg = (f: string) => encodeURI(`${BP}/assets/uploads/services/${f}`);
+
 const SERVICE_CARDS = [
   {
-    index: "01",
-    title: "Preventive Health Check-ups",
-    items: ["Men's health", "Women's health", "Executive check-up"],
-    variant: "lime" as const,
-    href: `${BP}/health-packages`,
-  },
-  {
-    index: "02",
-    title: "Diagnostic Imaging",
-    image: asset("/assets/dantora/services/01.png"),
-    cta: "Discover",
-    variant: "photo" as const,
+    title: "Imaging",
+    tagline: "3T MRI, CT and ultrasound \u2014 read by radiologists, reported the same day.",
     href: `${BP}/diagnostics`,
+    desktop: svcImg("desktop imaging image.jpeg"),
+    mobile: svcImg("mobile imaging image.jpeg"),
   },
   {
-    index: "03",
-    title: "Molecular & Genetic Testing",
-    cta: "Discover",
-    variant: "brand" as const,
+    title: "Laboratory",
+    tagline: "Full pathology, biochemistry and molecular testing under one roof.",
     href: `${BP}/laboratory`,
+    desktop: svcImg("desktop image of Laboratory.jpeg"),
+    mobile: svcImg("mobile image of laboratory.jpeg"),
   },
   {
-    index: "04",
-    title: "Laboratory Medicine",
-    image: asset("/assets/dantora/services/02.png"),
-    cta: "Discover",
-    variant: "photo" as const,
-    href: `${BP}/laboratory`,
-  },
-  {
-    index: "05",
     title: "Specialist Care",
-    image: asset("/assets/dantora/services/03.png"),
-    cta: "Discover",
-    variant: "photo" as const,
+    tagline: "Consultants across every major specialty, connected to your reports.",
     href: `${BP}/specialties`,
+    desktop: svcImg("desktop image of Specialist Care.jpeg"),
+    mobile: svcImg("mobile image of Specialist Care.jpeg"),
+  },
+  {
+    title: "Women\u2019s & Fetal Medicine",
+    tagline: "Care for every life stage, from fertility to fetal wellbeing.",
+    href: `${BP}/specialties`,
+    desktop: svcImg("desktop image of Women's & Fetal Medicine.jpeg"),
+    mobile: svcImg("mobile image of Women's & Fetal Medicine.jpeg"),
   },
 ];
 
@@ -336,41 +328,35 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-trail__card{position:absolute;top:0;left:0;width:13.5rem;height:17rem;border-radius:24px;background-size:cover;background-position:center;will-change:transform,opacity;opacity:0}
 
 /* SERVICES */
-.cm-services{position:relative;background:#FFFFFF}
-.cm-services__runway{position:relative;height:400lvh}
-.cm-services__sticky{position:sticky;top:0;height:100lvh;overflow:hidden}
-.cm-services__intro{display:flex;flex-direction:column;gap:1rem;padding:6rem 1.25rem 0}
-@media(min-width:768px){.cm-services__intro{padding-inline:2.5rem}}
-.cm-services__track{display:flex;gap:.625rem;position:absolute;top:46%;right:0;bottom:1.25rem;left:1.25rem;will-change:transform}
-@media(min-width:768px){.cm-services__track{left:2.5rem}}
-.cm-card{position:relative;display:flex;flex-direction:column;justify-content:space-between;flex:none;width:78vw;max-width:22rem;height:100%;overflow:hidden;border:1px solid var(--line);border-radius:24px;background:#FFFFFF;color:#142F86;padding:1.5rem}
-.cm-card__num{font-size:1rem;margin:0}
-.cm-card__title{font-size:1.5rem;line-height:1.1;font-weight:700;margin:0}
-.cm-card__head{position:relative;z-index:2;display:flex;flex-direction:column;gap:1rem}
-.cm-card__img{position:absolute;inset:0;object-fit:cover;object-position:center;width:100%;height:100%}
-.cm-card--lime,.cm-card--brand{background:#FFFFFF;color:#142F86;border-color:var(--line)}
-.cm-card--photo{color:#142F86}
-.cm-card--photo .cm-card__head,.cm-card--photo .cm-card__cta{background:#FFFFFF;border-radius:12px;padding:1rem}
-.cm-card__list{position:relative;z-index:2;display:flex;flex-direction:column;gap:1rem;list-style:none;margin:0;padding:0}
-.cm-card__list li{display:flex;flex-direction:column;gap:1rem}
-.cm-card__row{display:flex;align-items:center;justify-content:space-between;font-size:1rem}
-.cm-card__rule{height:1px;width:100%;background:var(--line)}
+.cm-services{position:relative;background:#FFFFFF;padding:5rem 1.25rem 4rem}
+@media(min-width:768px){.cm-services{padding-inline:2.5rem}}
+.cm-services__intro{display:flex;flex-direction:column;gap:1rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center;align-items:center}
+.cm-svc-grid{display:grid;grid-template-columns:1fr;gap:1.25rem;width:min(100%,84rem);margin-inline:auto}
+@media(min-width:768px){.cm-svc-grid{grid-template-columns:1fr 1fr}}
+.cm-svc{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:26rem;overflow:hidden;border-radius:20px;background:#142F86}
+@media(min-width:768px){.cm-svc{min-height:32rem}}
+.cm-svc__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,0,0,1)}
+.cm-svc:hover .cm-svc__img{transform:scale(1.05)}
+.cm-svc__scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgb(0 0 0 / .55),rgb(0 0 0 / .18) 45%,rgb(0 0 0 / .68))}
+.cm-svc__head{position:relative;z-index:2;padding:1.75rem}
+@media(min-width:768px){.cm-svc__head{padding:2rem}}
+.cm-svc__title{margin:0;font-size:2rem;line-height:1.05;font-weight:700;letter-spacing:-.02em;color:#FFFFFF}
+@media(min-width:768px){.cm-svc__title{font-size:2.5rem}}
+.cm-svc__tag{margin:.75rem 0 0;max-width:24rem;font-size:.95rem;line-height:1.45;font-weight:700;color:rgb(255 255 255 / .92)}
+.cm-svc__actions{position:relative;z-index:2;display:flex;flex-direction:column;gap:.75rem;padding:1.75rem}
+@media(min-width:520px){.cm-svc__actions{flex-direction:row}}
+@media(min-width:768px){.cm-svc__actions{padding:2rem}}
+.cm-svc__btn{display:inline-flex;flex:1 1 0;min-width:0;align-items:center;justify-content:center;gap:.5rem;height:3rem;padding:0 1.25rem;border-radius:999px;font-size:.95rem;font-weight:700;white-space:nowrap;transition:background .2s,color .2s}
+.cm-svc__btn--primary{background:#142F86;color:#FFFFFF}
+.cm-svc__btn--primary:hover{background:#31B4F4;color:#142F86}
+.cm-svc__btn--light{background:#FFFFFF;color:#142F86}
+.cm-svc__btn--light:hover{background:#31B4F4;color:#FFFFFF}
+.cm-svc__btn .cm-arrow{width:1rem;height:1rem}
 .cm-card__cta{position:relative;z-index:2;display:flex;align-items:flex-end;justify-content:space-between}
 .cm-card__cta p{margin:0;font-size:1rem}
 .cm-card__ring{display:grid;place-items:center;width:3.5rem;height:3.5rem;border-radius:999px;border:1px solid #142F86;color:#142F86}
-@media(min-width:1024px){
-  .cm-services__intro{padding:0}
-  .cm-services__intro .cm-eyebrow{position:absolute;top:14%;left:66.75rem;width:20.75rem}
-  .cm-services__intro .cm-services__title{position:absolute;top:14%;left:2.5rem;width:43.5rem}
-  .cm-services__intro .cm-services__desc{position:absolute;top:21%;left:66.75rem;width:20.75rem}
-  .cm-services__track{top:39%;bottom:2.5rem;width:85rem}
-  .cm-card{width:27.9375rem;max-width:none;padding:2rem}
-  .cm-card--lime{width:35.0625rem}
-  .cm-card__title{font-size:2rem}
-  .cm-card__num,.cm-card__row,.cm-card__cta p{font-size:1.25rem}
-  .cm-card__ring{width:4.5rem;height:4.5rem}
-  .cm-services__title.cm-lead{font-size:3.75rem}
-}
+@media(min-width:1024px){.cm-card__cta p{font-size:1.25rem}.cm-card__ring{width:4.5rem;height:4.5rem}}
+
 
 /* ABOUT */
 .cm-about{position:relative;z-index:10;margin-top:0;background:#FFFFFF;padding:4rem 1.25rem}
@@ -498,10 +484,7 @@ html:has(.cm-root){scroll-behavior:smooth}
   html:has(.cm-root){scroll-behavior:auto}
   .cm-root .cm-reveal .cm-word>span,.cm-root [data-rise]{transition:none!important;transform:none!important;opacity:1!important}
   .cm-pre{display:none}
-  .cm-services__runway{height:auto}
-  .cm-services__sticky{position:relative;height:auto;overflow:visible}
-  .cm-services__track{position:relative;inset:auto;flex-wrap:wrap;transform:none!important;padding:2rem 1.25rem}
-  .cm-card{width:100%;max-width:none;min-height:70svh}
+  .cm-svc__img{transition:none}
   .cm-about{margin-top:0}
   .cm-team{position:relative;height:auto;padding:5rem 0}
   .cm-hero__scene,.cm-contact__scene,.cm-trail{display:none}
@@ -719,10 +702,6 @@ function initClarus(root){
     why.addEventListener('pointerleave',()=>{ lastP=null; [...trail.children].forEach(fade); });
     cleaners.push(()=>{ [...pending.keys()].forEach(finish); });
   }
-
-  // services scrub
-  const runway=root.querySelector('.cm-services__runway'); const track=root.querySelector('.cm-services__track');
-  if(runway&&track){ const sp=spring(0); sub((now,dt)=>{ if(reduce)return; const vh=window.innerHeight; const scrubbable=runway.offsetHeight-vh; if(scrubbable<=0)return; const prog=Math.min(1,Math.max(0,-runway.getBoundingClientRect().top/scrubbable)); const travel=Math.max(track.scrollWidth-track.clientWidth,0); sp.t=-prog*travel; const x=sp.step(dt,180,26); track.style.transform='translate3d('+x+'px,0,0)'; }); }
 
   // about banner parallax
   const banner=root.querySelector('.cm-about__banner img'); const frame=root.querySelector('.cm-about__banner');
@@ -1019,48 +998,33 @@ export default function HomePage() {
 
       {/* SERVICES */}
       <section id="services" className="cm-services">
-        <div className="cm-services__runway">
-          <div className="cm-services__sticky cm-round-t cm-panel">
-            <div className="cm-services__intro">
-              <p className="cm-eyebrow" data-rise>{SERVICES_INTRO.eyebrow}</p>
-              <h2 className="cm-lead cm-services__title cm-reveal">{SERVICES_INTRO.title}</h2>
-            </div>
-            <div className="cm-services__track">
-              {SERVICE_CARDS.map((card) => (
-                <article key={card.index} className={`cm-card cm-card--${card.variant}`}>
-                  {card.image && (
-                    <>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img className="cm-card__img" src={card.image} alt="" loading="lazy" decoding="async" />
-                    </>
-                  )}
-                  <div className="cm-card__head">
-                    <p className="cm-card__num">{card.index}</p>
-                    <h3 className="cm-card__title">{card.title}</h3>
-                  </div>
-                  {card.items && (
-                    <ul className="cm-card__list">
-                      {card.items.map((item, i) => (
-                        <li key={item}>
-                          {i > 0 && <span className="cm-card__rule" aria-hidden="true" />}
-                          <span className="cm-card__row">{item}<Arrow /></span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {card.cta && (
-                    <Link href={card.href} className="cm-card__cta">
-                      <p>{card.cta}</p>
-                      <span className="cm-card__ring"><Arrow /></span>
-                    </Link>
-                  )}
-                  {card.items && (
-                    <Link href={card.href} aria-label={card.title} style={{ position: "absolute", inset: 0, zIndex: 3 }} />
-                  )}
-                </article>
-              ))}
-            </div>
-          </div>
+        <div className="cm-services__intro">
+          <p className="cm-eyebrow" data-rise>{SERVICES_INTRO.eyebrow}</p>
+          <h2 className="cm-lead cm-services__title cm-reveal">{SERVICES_INTRO.title}</h2>
+        </div>
+        <div className="cm-svc-grid">
+          {SERVICE_CARDS.map((card) => (
+            <article key={card.title} className="cm-svc">
+              <picture>
+                <source media="(min-width: 768px)" srcSet={card.desktop} />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="cm-svc__img" src={card.mobile} alt={card.title} loading="lazy" decoding="async" />
+              </picture>
+              <span className="cm-svc__scrim" aria-hidden="true" />
+              <div className="cm-svc__head">
+                <h3 className="cm-svc__title">{card.title}</h3>
+                <p className="cm-svc__tag">{card.tagline}</p>
+              </div>
+              <div className="cm-svc__actions">
+                <Link href={card.href} className="cm-svc__btn cm-svc__btn--primary">
+                  <span>Explore More</span><Arrow />
+                </Link>
+                <Link href="#contact" className="cm-svc__btn cm-svc__btn--light">
+                  <span>Contact Us</span>
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
