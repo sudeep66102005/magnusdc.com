@@ -34,15 +34,10 @@ const HERO = {
   eyebrow: "Trusted. Accurate. Caring.",
   titleAccent: "Clarity",
   title: "in every diagnosis",
-  description: "Advanced diagnosis. Expert specialist care that understand you.",
+  description: "Advanced diagnostics. Expert specialists. Care that understands you.",
   actions: [
     { label: "Book a visit", href: `${BP}/patient-info/appointment-booking`, primary: true },
     { label: "Our services", href: "#services", primary: false },
-  ],
-  stats: [
-    { value: "18+", label: "Years of experience", icon: "shield" as const },
-    { value: "3T", label: "Advanced MRI", icon: "scan" as const },
-    { value: "20+", label: "Specialist consultants", icon: "team" as const },
   ],
   trustLine: "Radiologist-led care in Koramangala, Bengaluru",
   chips: ["Diagnostic Imaging", "Laboratory", "Health Check-ups", "Specialist Care", "Women's Imaging"],
@@ -182,8 +177,15 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-btn:hover{transform:translateY(-2px)}
 .cm-btn--pill{gap:.6rem}
 .cm-btn--pill .cm-arrow{width:1.1rem;height:1.1rem}
-.cm-btn--outline{background:transparent;border-color:var(--line);color:var(--green)}
-.cm-btn--outline:hover{background:rgb(20 47 134 / .05)}
+.cm-hero__button{position:relative;isolation:isolate;overflow:hidden;border-color:transparent;transition:color .9s ease,transform .3s}
+.cm-hero__button::before{content:"";position:absolute;inset:0;z-index:0;transform:translateX(-105%);transition:transform 1s cubic-bezier(.22,1,.36,1)}
+.cm-hero__button>span,.cm-hero__button>.cm-arrow{position:relative;z-index:1}
+.cm-hero__button:hover::before,.cm-hero__button:focus-visible::before{transform:translateX(0)}
+.cm-hero__button--primary{background:#142F86;color:#FFFFFF}
+.cm-hero__button--primary::before{background:linear-gradient(110deg,#142F86 0%,#31B4F4 52%,#142F86 100%)}
+.cm-hero__button--secondary{background:#31B4F4;color:#142F86}
+.cm-hero__button--secondary::before{background:linear-gradient(110deg,#31B4F4 0%,#142F86 52%,#31B4F4 100%)}
+.cm-hero__button--secondary:hover,.cm-hero__button--secondary:focus-visible{color:#FFFFFF}
 .cm-btn--primary{background:var(--green);border-color:var(--green-deep);color:#FFFFFF}
 .cm-btn--primary:hover{background:var(--green-deep)}
 .cm-btn--secondary{background:var(--lime);border-color:var(--lime-b);color:#142F86}
@@ -259,42 +261,35 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-round-t{border-radius:48px 48px 0 0}
 
 /* HERO */
-.cm-hero{position:relative;min-height:100lvh;overflow:hidden;padding:7rem 1.25rem 3rem}
+.cm-hero{position:relative;min-height:100lvh;overflow:hidden;padding:9rem 1.25rem 4rem}
 @media(min-width:768px){.cm-hero{padding-inline:2.5rem}}
-.cm-hero__inner{position:relative}
+.cm-hero__inner{position:relative;min-height:calc(100lvh - 13rem);display:flex;flex-direction:column}
 .cm-hero__copy{position:relative;z-index:3;display:flex;flex-direction:column;gap:1.5rem;max-width:44.75rem}
 .cm-hero__head{display:flex;flex-direction:column;gap:1rem}
-.cm-hero__desc{color:var(--subtle);border-left:2px solid var(--lime);padding-left:1rem}
-.cm-hero__actions{display:flex;flex-wrap:wrap;gap:1rem;position:relative;z-index:3}
-.cm-hero__actions .cm-btn{width:11.25rem}
-.cm-hero__scene{position:absolute;inset-block:0;right:-15%;left:auto;width:75%;z-index:1;height:auto;margin:0;pointer-events:none}
+.cm-hero__desc{max-width:18rem;color:var(--subtle);border-left:2px solid var(--lime);padding-left:1rem}
+.cm-hero__actions{display:flex;flex-direction:column;flex-wrap:wrap;gap:1rem;position:relative;z-index:3;margin-top:2.5rem}
+.cm-hero__actions .cm-btn{width:min(100%,16rem)}
+.cm-hero__scene{position:absolute;top:1.5rem;right:0;left:auto;width:52%;height:30rem;z-index:1;margin:0;pointer-events:none}
 .cm-dna{display:block;width:100%;height:100%}
 .cm-hero__meta{display:flex;flex-direction:column;gap:1.5rem}
-.cm-hero__stats{position:relative;z-index:3;display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:0;border:1px solid var(--line);border-radius:20px;background:rgb(255 255 255 / .88);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);padding:1.5rem 1rem}
-.cm-hero__stat{display:flex;flex-direction:column;align-items:center;gap:.5rem;text-align:center;border-left:1px solid var(--line);padding-left:1rem;margin-left:-1rem}
-.cm-hero__stat:first-child{border-left:0;margin-left:0}
-.cm-hero__stat-icon{display:grid;place-items:center;width:2.75rem;height:2.75rem;border-radius:999px;background:rgb(49 180 244 / .12);color:var(--green)}
-.cm-hero__stat-icon svg{width:1.375rem;height:1.375rem}
-.cm-hero__stat dd{font-size:1.75rem;line-height:1.1;font-weight:700;margin:0;color:var(--green)}
-.cm-hero__stat dt{font-size:.8rem;font-weight:400;color:var(--subtle);margin:0}
-.cm-hero__rule{border:0;border-top:1px solid var(--line)}
-.cm-hero__trust{display:flex;align-items:center;gap:.75rem;font-size:1rem;color:var(--green);margin:0}
+.cm-hero__rule{border:0;border-top:1px solid var(--line);margin:3rem 0 0}
+.cm-hero__trust{display:flex;align-items:center;gap:.75rem;font-size:1rem;color:var(--green);margin:1.25rem 0 0}
 .cm-hero__trust span{height:1px;width:3.125rem;background:var(--green)}
-.cm-chips{display:flex;flex-wrap:wrap;gap:.25rem;margin:0;padding:0;list-style:none}
+.cm-chips{display:flex;flex-wrap:wrap;gap:.25rem;margin:1.25rem 0 0;padding:0;list-style:none}
 .cm-chips li{border:1px solid var(--line);background:var(--glass-s);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:37px;padding:.75rem 1.25rem;font-size:.875rem;font-weight:400}
 @media(min-width:1024px){
   .cm-hero{padding:0;height:100lvh;min-height:0}
-  .cm-hero__inner{height:100%}
+  .cm-hero__inner{display:block;height:100%;min-height:0}
   .cm-hero__copy{position:absolute;top:28.55%;left:2.5rem;gap:3rem}
   .cm-hero__head{gap:2rem}
   .cm-hero__copy .cm-body{width:30.875rem}
-  .cm-hero__desc{display:none}
+  .cm-hero__desc{max-width:none}
   .cm-hero__scene{position:absolute;inset-block:0;right:auto;left:22.5rem;width:71.25rem;height:auto;margin:0}
-  .cm-hero__actions{position:absolute;top:89.375%;left:2.5rem}
-  .cm-hero__stats{display:none}
-  .cm-hero__rule{position:absolute;top:78.625%;right:2.5rem;left:2.5625rem}
-  .cm-hero__trust{position:absolute;top:83.625%;left:2.5rem}
-  .cm-chips{position:absolute;top:83.625%;left:55.5625rem;width:31.9375rem;justify-content:flex-end;gap:.25rem}
+  .cm-hero__actions{position:absolute;top:89.375%;left:2.5rem;flex-direction:row;margin-top:0}
+  .cm-hero__actions .cm-btn{width:11.25rem}
+  .cm-hero__rule{position:absolute;top:78.625%;right:2.5rem;left:2.5625rem;margin:0}
+  .cm-hero__trust{position:absolute;top:83.625%;left:2.5rem;margin:0}
+  .cm-chips{position:absolute;top:83.625%;left:55.5625rem;width:31.9375rem;justify-content:flex-end;gap:.25rem;margin:0}
   .cm-chips li{padding:1rem 2rem;font-size:1rem}
   .cm-lead{font-size:3.75rem}
 }
@@ -716,12 +711,13 @@ function initClarus(root){
     if(!root.isConnected)return;
     const hx=v=>{const n=parseInt(v.slice(1),16);return [((n>>16)&255)/255,((n>>8)&255)/255,(n&255)/255];};
     function makeScene(canvas){
+      const isMobileHero=window.innerWidth<1024&&canvas.closest('[data-scene="hero"]');
       const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
       const bg=new THREE.Color(); bg.setRGB.apply(bg,hx(CFG.bgColor));
       renderer.setClearColor(bg,1);
       const scene=new THREE.Scene(); scene.background=bg; scene.fog=new THREE.Fog(bg,0,22);
       const cam=new THREE.PerspectiveCamera(45,1,0.1,200); cam.position.set(0,0,CFG.camDist); scene.add(cam);
-      const tilt=new THREE.Group(); const spin=new THREE.Group(); tilt.add(spin); scene.add(tilt); tilt.rotation.z=CFG.tilt;
+      const tilt=new THREE.Group(); const spin=new THREE.Group(); tilt.add(spin); scene.add(tilt); tilt.rotation.z=CFG.tilt; tilt.scale.setScalar(isMobileHero ? 0.62 : 1);
       const compact=window.innerWidth<1024||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
       const hCount=compact?4500:14000, iCount=compact?14000:44000;
       const U={uTime:{value:0},uAppear:{value:0},uHelixA:{value:new THREE.Vector3().fromArray(hx(CFG.helixColorA))},uHelixB:{value:new THREE.Vector3().fromArray(hx(CFG.helixColorB))},uInkCore:{value:new THREE.Vector3().fromArray(hx(CFG.inkCore))},uInkMid:{value:new THREE.Vector3().fromArray(hx(CFG.inkMid))},uInkEdge:{value:new THREE.Vector3().fromArray(hx(CFG.inkEdge))},uHelixSize:{value:CFG.helixSize},uInkSize:{value:CFG.inkSize},uBrightness:{value:CFG.brightness},uHelixOpacity:{value:CFG.helixOpacity},uInkOpacity:{value:CFG.inkOpacity},uInkGrow:{value:CFG.inkGrow},uRadius:{value:CFG.radius},uHeight:{value:CFG.height},uTwist:{value:CFG.twist},uThick:{value:CFG.strandThick},uWave:{value:CFG.wave},uEmitRate:{value:CFG.emitRate},uSpread:{value:CFG.spread},uRise:{value:CFG.rise},uTurb:{value:CFG.turbulence},uNoiseFreq:{value:CFG.noiseFreq},uNoiseEvolve:{value:CFG.noiseEvolve},uCursor:{value:new THREE.Vector3()},uRepelRadius:{value:CFG.pointerRadius},uRepelStrength:{value:CFG.pointerStrength},uActivity:{value:0},uPixelScale:{value:1}};
@@ -783,34 +779,6 @@ function Arrow() {
   return (
     <svg className="cm-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
       <path d="M4 12L12 4M12 4H5M12 4V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function StatIcon({ name }: { name: "shield" | "scan" | "team" }) {
-  if (name === "shield") {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-        <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    );
-  }
-  if (name === "scan") {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <circle cx="12" cy="9" r="4.5" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M6 20c0-3 2.5-5 6-5s6 2 6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        <path d="M4 20h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    );
-  }
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="8.5" cy="8" r="2.75" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="16" cy="9" r="2.25" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M3.5 19c0-2.9 2.3-5 5-5s5 2.1 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M14.5 14.5c2.4.3 4 2.1 4 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
@@ -932,22 +900,12 @@ export default function HomePage() {
 
           <div className="cm-hero__actions" data-rise>
             {HERO.actions.map((a) => (
-              <Link key={a.href} href={a.href} className={`cm-btn cm-btn--pill ${a.primary ? "cm-btn--primary" : "cm-btn--outline"}`}>
+              <Link key={a.href} href={a.href} className={`cm-btn cm-btn--pill cm-hero__button ${a.primary ? "cm-hero__button--primary" : "cm-hero__button--secondary"}`}>
                 <span>{a.label}</span>
                 <Arrow />
               </Link>
             ))}
           </div>
-
-          <dl className="cm-hero__stats" data-rise>
-            {HERO.stats.map((s) => (
-              <div className="cm-hero__stat" key={s.label}>
-                <span className="cm-hero__stat-icon" aria-hidden="true"><StatIcon name={s.icon} /></span>
-                <dd data-count={s.value}>{s.value}</dd>
-                <dt>{s.label}</dt>
-              </div>
-            ))}
-          </dl>
 
           <div className="cm-hero__scene" data-scene="hero" aria-hidden="true">
             <canvas className="cm-dna" />
