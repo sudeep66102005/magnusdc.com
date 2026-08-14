@@ -150,20 +150,16 @@ const ABOUT = {
 
 const TEAM = {
   eyebrow: "Our Team",
-  title: "The specialists you'll actually see, every visit.",
-  socials: [
-    { label: "Instagram", href: siteConfig.social.instagram, icon: "instagram" },
-    { label: "Facebook", href: siteConfig.social.facebook, icon: "facebook" },
-    { label: "LinkedIn", href: siteConfig.social.linkedin, icon: "linkedin" },
-  ],
+  title: "The specialists you\u2019ll actually see, every visit.",
   members: [
-    { name: "Radiology", role: "Precision imaging", image: asset("/assets/dantora/team/01.png") },
-    { name: "Internal Medicine", role: "Whole-person care", image: asset("/assets/dantora/team/02.png") },
-    { name: "Cardiology", role: "Heart health", image: asset("/assets/dantora/team/03.png") },
-    { name: "Orthopaedics", role: "Movement restored", image: asset("/assets/dantora/team/04.png") },
-    { name: "Women's Health", role: "Every life stage", image: asset("/assets/dantora/team/05.png") },
+    { name: "Radiology", specialty: "Imaging", degree: "", experience: "", image: asset("/assets/dantora/team/01.png"), href: `${BP}/specialties` },
+    { name: "Internal Medicine", specialty: "General Medicine", degree: "", experience: "", image: asset("/assets/dantora/team/02.png"), href: `${BP}/specialties` },
+    { name: "Cardiology", specialty: "Heart Care", degree: "", experience: "", image: asset("/assets/dantora/team/03.png"), href: `${BP}/specialties` },
+    { name: "Orthopaedics", specialty: "Bone & Joint", degree: "", experience: "", image: asset("/assets/dantora/team/04.png"), href: `${BP}/specialties` },
+    { name: "Women\u2019s Health", specialty: "Obstetrics & Gynaecology", degree: "", experience: "", image: asset("/assets/dantora/team/05.png"), href: `${BP}/specialties` },
+    { name: "ENT", specialty: "Ear, Nose & Throat", degree: "", experience: "", image: asset("/assets/dantora/team/01.png"), href: `${BP}/specialties` },
   ],
-  more: { title: "A wider multispecialty team", cta: "Explore all", href: `${BP}/specialties` },
+  more: { title: "A wider multispecialty team", cta: "View More Doctors", href: `${BP}/specialties` },
 };
 
 const CONTACT = {
@@ -423,45 +419,24 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-about__actions .cm-btn--primary:hover{background:var(--green);color:#FFFFFF}
 
 /* TEAM */
-.cm-team{position:sticky;top:0;z-index:10;height:100lvh;display:flex;flex-direction:column;justify-content:center;background:var(--mint-deep);padding-top:18%}
-@media(min-width:768px){.cm-team{padding-top:12%}}
-@media(min-width:1024px){.cm-team{padding-top:6%}}
-.cm-team__frame{display:flex;flex-direction:column;height:74%}
-@media(min-width:1024px){.cm-team__frame{height:86%}}
-.cm-rail{display:flex;gap:.6875rem;flex:1;min-height:0;overflow-x:auto;overscroll-behavior-x:contain;padding-left:1.25rem;cursor:grab;scroll-behavior:auto;user-select:none;scrollbar-width:none;-ms-overflow-style:none}
-.cm-rail::-webkit-scrollbar{display:none}
-.cm-rail:active{cursor:grabbing}
-.cm-rail img{pointer-events:none}
-@media(min-width:768px){.cm-rail{padding-left:2.5rem}}
-.cm-team__intro{display:flex;flex-direction:column;justify-content:space-between;flex:none;width:80vw;max-width:22rem;border:1px solid var(--line);border-radius:24px;background:#FFFFFF;color:#142F86;padding:1.5rem}
-.cm-team__intro h2{font-size:1.5rem;line-height:1.1;font-weight:700;margin:0}
-.cm-team__eyebrow{font-size:.875rem;font-weight:700;text-transform:uppercase;color:#142F86;margin:0}
-.cm-team__socials{display:flex;gap:.75rem;list-style:none;margin:0;padding:0}
-.cm-team__socials a{display:block;width:3rem;height:3rem;border-radius:999px;background:#142F86;transition:opacity .15s}
-.cm-team__socials a:hover{opacity:.8}
-.cm-team__socials img{width:100%;height:100%}
-.cm-person{position:relative;flex:none;width:70vw;max-width:20.75rem;height:100%;overflow:hidden;border-radius:24px}
-.cm-person img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.cm-person figcaption{position:absolute;inset-inline:2rem;bottom:2rem;height:4rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.25rem;border-radius:8px;background:#FFFFFF;text-align:center}
-.cm-person figcaption p{margin:0}
-.cm-person__name{font-size:1rem;font-weight:700}
-.cm-person__role{font-size:.875rem;font-weight:400;color:var(--subtle)}
-.cm-team__more{display:flex;flex-direction:column;justify-content:space-between;flex:none;width:70vw;max-width:20.75rem;border-radius:24px;border:1px solid var(--line);background:#FFFFFF;color:#142F86;padding:1.5rem}
-.cm-team__more p{margin:0;font-size:1.5rem;line-height:1.1;font-weight:700}
-.cm-team__more .cm-card__cta span:last-child{border-color:currentColor;color:currentColor}
-.cm-team__more .cm-card__ring{border-color:currentColor;color:currentColor}
-.cm-team__gutter{flex:none;width:2.5rem}
-.cm-team__bar{position:relative;height:.125rem;margin:1.5rem 1.25rem 0;background:var(--line)}
-@media(min-width:768px){.cm-team__bar{margin-inline:2.5rem}}
-.cm-team__bar span{position:absolute;inset:0;transform-origin:left;background:var(--green);transform:scaleX(.65)}
-@media(min-width:1024px){
-  .cm-team__intro{width:27.9375rem;max-width:none;padding:2rem}
-  .cm-team__intro h2{font-size:2rem;width:21rem}
-  .cm-team__socials a{width:4rem;height:4rem}
-  .cm-person{width:20.75rem}
-  .cm-team__more{width:20.75rem;padding:2rem}
-  .cm-team__more p{font-size:2rem}
-}
+.cm-team{position:relative;z-index:10;background:#FFFFFF;padding:5rem 1.25rem}
+@media(min-width:768px){.cm-team{padding-inline:2.5rem}}
+.cm-team__head{display:flex;flex-direction:column;align-items:center;gap:1rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center}
+.cm-docs{display:grid;grid-template-columns:1fr;gap:1.25rem;width:min(100%,84rem);margin-inline:auto}
+@media(min-width:640px){.cm-docs{grid-template-columns:1fr 1fr}}
+@media(min-width:1024px){.cm-docs{grid-template-columns:repeat(3,1fr)}}
+.cm-doc{display:flex;align-items:stretch;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#F7F9FC}
+.cm-doc__photo{position:relative;flex:0 0 42%;min-height:13rem;background:#E9EEF6}
+.cm-doc__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
+.cm-doc__body{flex:1 1 auto;display:flex;flex-direction:column;align-items:flex-start;gap:.3rem;padding:1.1rem 1rem}
+.cm-doc__spec{margin:0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.8rem;font-weight:400;color:var(--muted)}
+.cm-doc__name{margin:.1rem 0 0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.15rem;line-height:1.2;font-weight:800;letter-spacing:-.02em;color:var(--green)}
+.cm-doc__deg,.cm-doc__exp{margin:0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.8rem;font-weight:400;line-height:1.25;color:var(--subtle)}
+.cm-doc__btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;margin-top:auto;width:100%;height:2.6rem;border-radius:8px;background:var(--green);color:#FFFFFF!important;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.9rem;font-weight:700;transition:background .2s}
+.cm-doc__btn:hover{background:#31B4F4;color:#142F86!important}
+.cm-team__more-wrap{display:flex;justify-content:center;margin-top:2rem}
+.cm-doc__btn--more{width:auto;padding:0 1.75rem;height:3rem}
+.cm-doc__btn--more .cm-arrow{width:1rem;height:1rem}
 
 /* CONTACT */
 .cm-contact{position:relative;z-index:20;min-height:100lvh;overflow:hidden;background:#FFFFFF;padding:7rem 1.25rem 5rem}
@@ -519,7 +494,6 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-pre{display:none}
   .cm-svc__img{transition:none}
   .cm-about{margin-top:0}
-  .cm-team{position:relative;height:auto;padding:5rem 0}
   .cm-hero__scene,.cm-contact__scene,.cm-trail{display:none}
 }
 `;
@@ -743,9 +717,7 @@ function initClarus(root){
   // stat counters
   root.querySelectorAll('[data-count]').forEach(el=>{ const full=el.dataset.count||''; const m=/^(\D*)(\d+)(\D*)$/.exec(full); if(!m||reduce){el.textContent=full;return;} const pre=m[1],target=+m[2],suf=m[3]; let done=false; const o=new IntersectionObserver(([e])=>{ if(!e.isIntersecting){done=false;el.textContent=pre+'0'+suf;return;} if(done)return; done=true; const start=performance.now(); const run=now=>{ const p=Math.min(1,(now-start)/1400); el.textContent=pre+Math.round(target*(1-Math.pow(1-p,3)))+suf; if(p<1)requestAnimationFrame(run); }; requestAnimationFrame(run); },{threshold:.3}); o.observe(el); cleaners.push(()=>o.disconnect()); });
 
-  // team drag rail
-  const rail=root.querySelector('.cm-rail'); const bar=root.querySelector('.cm-team__bar span');
-  if(rail){ let down=false,sx=0,sl=0,moved=false; const MINF=890/1360; const syncBar=()=>{ if(!bar)return; const max=rail.scrollWidth-rail.clientWidth; const f=max>0?MINF+(1-MINF)*(rail.scrollLeft/max):MINF; bar.style.transform='scaleX('+f+')'; }; rail.addEventListener('scroll',syncBar); rail.addEventListener('pointerdown',e=>{ if(e.pointerType==='touch')return; e.preventDefault(); down=true;moved=false;sx=e.clientX;sl=rail.scrollLeft; rail.setPointerCapture(e.pointerId); }); rail.addEventListener('pointermove',e=>{ if(!down)return; const d=e.clientX-sx; if(Math.abs(d)>4)moved=true; rail.scrollLeft=sl-d; }); const up=e=>{ if(!down)return; down=false; if(rail.hasPointerCapture(e.pointerId))rail.releasePointerCapture(e.pointerId); }; rail.addEventListener('pointerup',up); rail.addEventListener('pointercancel',up); rail.addEventListener('click',e=>{ if(moved){e.preventDefault();e.stopPropagation();moved=false;} },true); syncBar(); }
+  // team drag rail removed with the doctor card grid
 
   // contact form -> WhatsApp
   const form=root.querySelector('.cm-form form');
@@ -1139,46 +1111,31 @@ export default function HomePage() {
 
       {/* TEAM */}
       <section id="team" className="cm-team">
-        <div className="cm-team__frame">
-          <div className="cm-rail">
-            <div className="cm-team__intro">
-              <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-                <p className="cm-team__eyebrow" data-rise>{TEAM.eyebrow}</p>
-                <h2>{TEAM.title}</h2>
-              </div>
-              <ul className="cm-team__socials">
-                {TEAM.socials.map((s) => (
-                  <li key={s.icon}>
-                    <a href={s.href} aria-label={s.label} target="_blank" rel="noopener noreferrer">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={asset(`/assets/dantora/icons/${s.icon}.svg`)} alt="" />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {TEAM.members.map((m) => (
-              <figure className="cm-person" key={m.name}>
+        <div className="cm-team__head">
+          <p className="cm-eyebrow" data-rise>{TEAM.eyebrow}</p>
+          <h2 className="cm-lead cm-reveal">{TEAM.title}</h2>
+        </div>
+        <div className="cm-docs">
+          {TEAM.members.map((m) => (
+            <article className="cm-doc" key={m.name}>
+              <div className="cm-doc__photo">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={m.image} alt={`${m.name} at Clarus Magnus`} loading="lazy" decoding="async" />
-                <figcaption>
-                  <p className="cm-person__name">{m.name}</p>
-                  <p className="cm-person__role">{m.role}</p>
-                </figcaption>
-              </figure>
-            ))}
-
-            <Link href={TEAM.more.href} className="cm-team__more">
-              <p>{TEAM.more.title}</p>
-              <span className="cm-card__cta">
-                <span style={{ fontSize: "1rem" }}>{TEAM.more.cta}</span>
-                <span className="cm-card__ring"><Arrow /></span>
-              </span>
-            </Link>
-            <span className="cm-team__gutter" aria-hidden="true" />
-          </div>
-          <div className="cm-team__bar" aria-hidden="true"><span /></div>
+                <img src={m.image} alt={m.name} loading="lazy" decoding="async" />
+              </div>
+              <div className="cm-doc__body">
+                <p className="cm-doc__spec">{m.specialty}</p>
+                <h3 className="cm-doc__name">{m.name}</h3>
+                {m.degree ? <p className="cm-doc__deg">{m.degree}</p> : null}
+                {m.experience ? <p className="cm-doc__exp">{m.experience}</p> : null}
+                <Link href={m.href} className="cm-doc__btn">View Profile</Link>
+              </div>
+            </article>
+          ))}
+        </div>
+        <div className="cm-team__more-wrap">
+          <Link href={TEAM.more.href} className="cm-doc__btn cm-doc__btn--more">
+            <span>{TEAM.more.cta}</span><Arrow />
+          </Link>
         </div>
       </section>
 
