@@ -319,6 +319,17 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-why__stat dd{font-size:2rem;line-height:1;font-weight:700;margin:0;color:var(--green)}
 .cm-why__stat dt{font-size:.9rem;font-weight:400;color:var(--subtle);margin:0;max-width:7rem}
 @media(min-width:1024px){.cm-why__stats{gap:1.5rem 3.5rem}.cm-why__stat dd{font-size:2.5rem}}
+@media(max-width:1023px){
+  .cm-why__stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem .5rem;width:100%}
+  .cm-why__stat{flex-direction:column;align-items:center;text-align:center;gap:.55rem}
+  .cm-why__stat-icon{width:3rem;height:3rem}
+  .cm-why__stat-icon svg{width:1.5rem;height:1.5rem}
+  .cm-why__stat-text{align-items:center;text-align:center}
+  .cm-why__stat dd{font-size:1.6rem}
+  .cm-why__stat dt{font-size:.78rem;max-width:6.5rem}
+  .cm-why__actions{width:100%;gap:.75rem}
+  .cm-why__actions .cm-btn{flex:1 1 0;width:auto;min-width:0;height:2.875rem;padding:0 .75rem;font-size:.95rem}
+}
 .cm-why__actions{display:flex;gap:1rem}
 .cm-why__actions .cm-btn{width:11.25rem}
 .cm-trail{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
