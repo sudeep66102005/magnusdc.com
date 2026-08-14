@@ -247,15 +247,14 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-round-t{border-radius:48px 48px 0 0}
 
 /* HERO */
-.cm-hero{min-height:100lvh;overflow:hidden;padding:7rem 1.25rem 3rem}
+.cm-hero{position:relative;min-height:100lvh;overflow:hidden;padding:7rem 1.25rem 3rem}
 @media(min-width:768px){.cm-hero{padding-inline:2.5rem}}
 .cm-hero__inner{position:relative}
 .cm-hero__copy{position:relative;z-index:3;display:flex;flex-direction:column;gap:1.5rem;max-width:44.75rem}
 .cm-hero__head{display:flex;flex-direction:column;gap:1rem}
 .cm-hero__actions{display:flex;flex-wrap:wrap;gap:1rem;position:relative;z-index:3}
 .cm-hero__actions .cm-btn{width:11.25rem}
-.cm-hero__scene{position:relative;z-index:1;height:40lvh;margin:1.5rem -1.25rem 0;pointer-events:none}
-@media(min-width:768px){.cm-hero__scene{margin-inline:-2.5rem}}
+.cm-hero__scene{position:absolute;inset:0;z-index:1;height:auto;margin:0;pointer-events:none}
 .cm-dna{display:block;width:100%;height:100%}
 .cm-hero__meta{display:flex;flex-direction:column;gap:1.5rem}
 .cm-hero__rule{border:0;border-top:1px solid var(--line)}
@@ -875,7 +874,6 @@ export default function HomePage() {
               <p className="cm-eyebrow" data-rise>{HERO.eyebrow}</p>
               <h1 className="cm-lead cm-reveal">{HERO.title}</h1>
             </div>
-            <p className="cm-body cm-reveal">{HERO.description}</p>
           </div>
 
           <div className="cm-hero__actions" data-rise>
@@ -906,7 +904,6 @@ export default function HomePage() {
             <p className="cm-eyebrow" data-rise>{WHY.eyebrow}</p>
             <h2 className="cm-lead cm-reveal">{WHY.title}</h2>
           </div>
-          <p className="cm-body cm-reveal">{WHY.description}</p>
           <div className="cm-why__actions">
             {WHY.actions.map((a) => (
               <Link key={a.href} href={a.href} className={`cm-btn ${a.primary ? "cm-btn--primary" : "cm-btn--secondary"}`}>
@@ -924,7 +921,6 @@ export default function HomePage() {
             <div className="cm-services__intro">
               <p className="cm-eyebrow" data-rise>{SERVICES_INTRO.eyebrow}</p>
               <h2 className="cm-lead cm-services__title cm-reveal">{SERVICES_INTRO.title}</h2>
-              <p className="cm-body cm-services__desc cm-reveal">{SERVICES_INTRO.description}</p>
             </div>
             <div className="cm-services__track">
               {SERVICE_CARDS.map((card) => (
