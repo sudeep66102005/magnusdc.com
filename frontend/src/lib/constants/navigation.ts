@@ -37,6 +37,17 @@ export const mainNav: NavItem[] = [
     href: "/about",
   },
   {
+    label: "Services",
+    href: "/services",
+    children: [
+      { label: "All Services", href: "/services" },
+      { label: "Imaging", href: "/diagnostics" },
+      { label: "Laboratory", href: "/laboratory" },
+      { label: "Specialist Care", href: "/specialties" },
+      { label: "Health Packages", href: "/health-packages" },
+    ],
+  },
+  {
     label: "Specialties",
     href: "/specialties",
     children: [
