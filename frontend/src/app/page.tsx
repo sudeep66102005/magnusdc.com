@@ -43,10 +43,15 @@ const HERO = {
 };
 
 const WHY = {
-  eyebrow: "Why Clarus Magnus",
-  title: "One destination, one team, one clear answer",
+  eyebrow: "Our brand story",
+  title: "18 years of trust. A new era of healthcare.",
   description:
-    "No running across town for scans and reports. Imaging, labs and specialists share one roof — so your results connect and your next step is clear.",
+    "Built on 18 years of healthcare experience, Clarus Magnus Health & Diagnostics represents a new chapter—bringing together advanced diagnostics, specialist-led care and a modern patient experience.",
+  stats: [
+    { value: "18+", label: "Years of experience", icon: "shield" as const },
+    { value: "3T", label: "Advanced MRI", icon: "scan" as const },
+    { value: "20+", label: "Specialist consultants", icon: "team" as const },
+  ],
   actions: [
     { label: "Our team", href: "#team", primary: true },
     { label: "How we work", href: "#about", primary: false },
@@ -279,7 +284,6 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-hero__inner{width:100%}
   .cm-hero__rule,.cm-hero__trust,.cm-chips{display:none}
   .cm-hero__scene{top:-9rem;right:-1.25rem;bottom:-4rem;left:-1.25rem;width:auto;height:auto}
-  .cm-why{display:none}
 }
 @media(min-width:768px) and (max-width:1023px){
   .cm-hero__scene{right:-2.5rem;left:-2.5rem}
@@ -302,10 +306,19 @@ html:has(.cm-root){scroll-behavior:smooth}
 }
 
 /* WHY */
-.cm-why{position:relative;z-index:15;min-height:100lvh;display:grid;place-items:center;overflow:hidden;background:#FFFFFF;text-align:center;padding:6rem 1.25rem}
+.cm-why{min-height:100lvh;display:grid;place-items:center;overflow:hidden;background:#FFFFFF;text-align:center;padding:6rem 1.25rem}
 .cm-why__inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:2rem;width:min(100% - 2.5rem,44.75rem)}
 .cm-why .cm-lead{width:100%}
 @media(min-width:1024px){.cm-why .cm-lead{width:39.25rem}.cm-why .cm-body{width:27.625rem}}
+.cm-why__desc{max-width:44rem;color:var(--subtle);margin:0}
+.cm-why__stats{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:1.5rem 2.5rem;margin:0}
+.cm-why__stat{display:flex;align-items:center;gap:.9rem;text-align:left}
+.cm-why__stat-icon{display:grid;place-items:center;width:3.75rem;height:3.75rem;flex:none;border-radius:999px;background:rgb(49 180 244 / .12);color:var(--green)}
+.cm-why__stat-icon svg{width:1.9rem;height:1.9rem}
+.cm-why__stat-text{display:flex;flex-direction:column;gap:.15rem}
+.cm-why__stat dd{font-size:2rem;line-height:1;font-weight:700;margin:0;color:var(--green)}
+.cm-why__stat dt{font-size:.9rem;font-weight:400;color:var(--subtle);margin:0;max-width:7rem}
+@media(min-width:1024px){.cm-why__stats{gap:1.5rem 3.5rem}.cm-why__stat dd{font-size:2.5rem}}
 .cm-why__actions{display:flex;gap:1rem}
 .cm-why__actions .cm-btn{width:11.25rem}
 .cm-trail{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
@@ -801,6 +814,34 @@ function Arrow() {
   );
 }
 
+function StatIcon({ name }: { name: "shield" | "scan" | "team" }) {
+  if (name === "shield") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    );
+  }
+  if (name === "scan") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="9" r="4.5" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M6 20c0-3 2.5-5 6-5s6 2 6 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path d="M4 20h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="8.5" cy="8" r="2.75" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="16" cy="9" r="2.25" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M3.5 19c0-2.9 2.3-5 5-5s5 2.1 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M14.5 14.5c2.4.3 4 2.1 4 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export default function HomePage() {
   return (
     <div className="cm-root">
@@ -935,6 +976,36 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* WHY */}
+      <section id="why" className="cm-section cm-why">
+        <div className="cm-trail" aria-hidden="true" data-imgs={JSON.stringify(WHY.trail)} />
+        <div className="cm-why__inner cm-shell">
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", width: "100%" }}>
+            <p className="cm-eyebrow" data-rise>{WHY.eyebrow}</p>
+            <h2 className="cm-lead cm-reveal">{WHY.title}</h2>
+          </div>
+          <p className="cm-body cm-why__desc cm-reveal">{WHY.description}</p>
+          <dl className="cm-why__stats" data-rise>
+            {WHY.stats.map((s) => (
+              <div className="cm-why__stat" key={s.label}>
+                <span className="cm-why__stat-icon" aria-hidden="true"><StatIcon name={s.icon} /></span>
+                <div className="cm-why__stat-text">
+                  <dd data-count={s.value}>{s.value}</dd>
+                  <dt>{s.label}</dt>
+                </div>
+              </div>
+            ))}
+          </dl>
+          <div className="cm-why__actions">
+            {WHY.actions.map((a) => (
+              <Link key={a.href} href={a.href} className={`cm-btn ${a.primary ? "cm-btn--primary" : "cm-btn--secondary"}`}>
+                {a.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SERVICES */}
       <section id="services" className="cm-services">
         <div className="cm-services__runway">
@@ -1061,24 +1132,6 @@ export default function HomePage() {
             <span className="cm-team__gutter" aria-hidden="true" />
           </div>
           <div className="cm-team__bar" aria-hidden="true"><span /></div>
-        </div>
-      </section>
-
-      {/* WHY */}
-      <section id="why" className="cm-section cm-why">
-        <div className="cm-trail" aria-hidden="true" data-imgs={JSON.stringify(WHY.trail)} />
-        <div className="cm-why__inner cm-shell">
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", width: "100%" }}>
-            <p className="cm-eyebrow" data-rise>{WHY.eyebrow}</p>
-            <h2 className="cm-lead cm-reveal">{WHY.title}</h2>
-          </div>
-          <div className="cm-why__actions">
-            {WHY.actions.map((a) => (
-              <Link key={a.href} href={a.href} className={`cm-btn ${a.primary ? "cm-btn--primary" : "cm-btn--secondary"}`}>
-                {a.label}
-              </Link>
-            ))}
-          </div>
         </div>
       </section>
 
