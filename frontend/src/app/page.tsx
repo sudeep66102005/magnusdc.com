@@ -43,7 +43,7 @@ const HERO = {
 };
 
 const WHY = {
-  eyebrow: "Our brand story",
+  eyebrow: "Why Clarus Magnus",
   title: "18 years of trust. A new era of healthcare.",
   description:
     "Built on 18 years of healthcare experience, Clarus Magnus Health & Diagnostics represents a new chapter—bringing together advanced diagnostics, specialist-led care and a modern patient experience.",
