@@ -161,7 +161,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-root{--green:#142F86;--green-deep:#DA1C29;--lime:#31B4F4;--lime-b:rgb(49 180 244 / .82);--mint:#FFFFFF;--mint-deep:#FFFFFF;--ink:#142F86;--muted:rgb(20 47 134 / .55);--subtle:rgb(20 47 134 / .72);--line:rgb(20 47 134 / .16);--glass:#FFFFFF;--glass-s:#FFFFFF;--glass-strong:#FFFFFF;
   position:relative;isolation:isolate;background:#FFFFFF;color:var(--ink);font-family:var(--font-lato),Arial,Helvetica,system-ui,sans-serif;font-weight:400;line-height:1.2;-webkit-font-smoothing:antialiased;overflow-x:clip}
 .cm-root *{box-sizing:border-box}
-.cm-root a:not(.cm-btn){color:inherit;text-decoration:none}
+.cm-root a:not(.cm-btn):not(.cm-nav__contact){color:inherit;text-decoration:none}
 .cm-root button,.cm-root input,.cm-root textarea{font:inherit;color:inherit}
 .cm-root ::selection{background:rgb(49 180 244 / .22);color:var(--green)}
 .cm-shell{width:min(100% - 5rem,90rem);margin-inline:auto}
@@ -208,8 +208,8 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-nav__dropdown a:hover,.cm-nav__dropdown a:focus-visible{background:rgb(49 180 244 / .1);color:#DA1C29}
 .cm-nav__dropdown-arrow{color:#31B4F4;font-size:1.25rem}
 .cm-nav__item--contact{align-items:center;margin-left:.5rem;padding:.5rem 0}
-.cm-nav__contact{display:flex;align-items:center;gap:.75rem;height:100%;padding:0 .35rem 0 1.25rem;border-radius:999px;background:var(--green);color:#FFFFFF;font-size:1rem;font-weight:700;white-space:nowrap;transition:background .15s,transform .15s}
-.cm-nav__contact:hover{background:var(--green-deep);transform:translateY(-1px)}
+.cm-nav__contact{display:flex;align-items:center;gap:.75rem;height:100%;padding:0 .35rem 0 1.25rem;border-radius:999px;background:linear-gradient(135deg,#142F86,#142F86);background-size:180% 180%;background-position:0% 50%;color:#FFFFFF!important;font-size:1rem;font-weight:700;white-space:nowrap;transition:background-position .5s ease,transform .15s}
+.cm-nav__contact:hover,.cm-nav__contact:focus-visible{background-image:linear-gradient(135deg,#142F86,#31B4F4,#142F86);background-position:100% 50%;transform:translateY(-1px)}
 .cm-nav__contact:focus-visible{outline:2px solid #31B4F4;outline-offset:2px}
 .cm-nav__contact .cm-disc{width:2.75rem;height:2.75rem;background:var(--lime);color:#142F86}
 .cm-nav__contact .cm-arrow{width:1rem;height:1rem}
