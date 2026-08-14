@@ -261,11 +261,11 @@ html:has(.cm-root){scroll-behavior:smooth}
 /* HERO */
 .cm-hero{position:relative;min-height:100lvh;overflow:hidden;padding:9rem 1.25rem 4rem}
 @media(min-width:768px){.cm-hero{padding-inline:2.5rem}}
-.cm-hero__inner{position:relative;min-height:calc(100lvh - 13rem);display:flex;flex-direction:column;justify-content:center}
-.cm-hero__copy{position:relative;z-index:3;display:flex;flex-direction:column;gap:0;max-width:44.75rem}
+.cm-hero__inner{position:relative;min-height:calc(100lvh - 13rem);display:flex;flex-direction:column}
+.cm-hero__copy{position:relative;z-index:3;display:flex;flex-direction:column;gap:0;max-width:44.75rem;padding-top:2.5rem}
 .cm-hero__head{display:flex;flex-direction:column;gap:0}
-.cm-hero__desc{max-width:18rem;margin-top:2.25rem;color:var(--subtle);border-left:2px solid var(--lime);padding-left:1rem}
-.cm-hero__actions{display:flex;flex-direction:row;flex-wrap:nowrap;gap:.75rem;position:relative;z-index:3;margin-top:2rem}
+.cm-hero__desc{max-width:18rem;margin-top:3rem;color:var(--subtle);border-left:2px solid var(--lime);padding-left:1rem}
+.cm-hero__actions{display:flex;flex-direction:row;flex-wrap:nowrap;gap:.75rem;position:relative;z-index:3;margin-top:2.5rem}
 .cm-hero__actions .cm-btn{flex:0 1 10.5rem;width:auto;height:2.875rem;padding:0 .85rem;font-size:.95rem}
 .cm-hero__scene{position:absolute;top:1.5rem;right:0;left:auto;width:52%;height:30rem;z-index:1;margin:0;pointer-events:none}
 .cm-dna{display:block;width:100%;height:100%}
