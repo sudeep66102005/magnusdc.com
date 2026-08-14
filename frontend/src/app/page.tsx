@@ -277,6 +277,10 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-hero__trust span{height:1px;width:3.125rem;background:var(--green)}
 .cm-chips{display:flex;flex-wrap:wrap;gap:.25rem;margin:1.25rem 0 0;padding:0;list-style:none}
 .cm-chips li{border:1px solid var(--line);background:var(--glass-s);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:37px;padding:.75rem 1.25rem;font-size:.875rem;font-weight:400}
+@media(max-width:1023px){
+  .cm-hero__inner{width:100%}
+  .cm-hero__rule,.cm-hero__trust,.cm-chips{display:none}
+}
 @media(min-width:1024px){
   .cm-hero{padding:0;height:100lvh;min-height:0}
   .cm-hero__inner{display:block;height:100%;min-height:0}
