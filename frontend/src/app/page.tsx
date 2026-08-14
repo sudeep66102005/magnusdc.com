@@ -422,18 +422,21 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-team{position:relative;z-index:10;background:#FFFFFF;padding:5rem 1.25rem}
 @media(min-width:768px){.cm-team{padding-inline:2.5rem}}
 .cm-team__head{display:flex;flex-direction:column;align-items:center;gap:1rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center}
-.cm-docs{display:grid;grid-template-columns:1fr;gap:1.25rem;width:min(100%,84rem);margin-inline:auto}
+.cm-docs{display:grid;grid-template-columns:1fr;gap:1rem;width:min(100%,84rem);margin-inline:auto}
 @media(min-width:640px){.cm-docs{grid-template-columns:1fr 1fr}}
 @media(min-width:1024px){.cm-docs{grid-template-columns:repeat(3,1fr)}}
-.cm-doc{display:flex;align-items:stretch;overflow:hidden;border:1px solid var(--line);border-radius:18px;background:#F7F9FC}
-.cm-doc__photo{position:relative;flex:0 0 42%;min-height:13rem;background:#E9EEF6}
-.cm-doc__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center}
-.cm-doc__body{flex:1 1 auto;display:flex;flex-direction:column;align-items:flex-start;gap:.3rem;padding:1.1rem 1rem}
-.cm-doc__spec{margin:0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.8rem;font-weight:400;color:var(--muted)}
-.cm-doc__name{margin:.1rem 0 0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.15rem;line-height:1.2;font-weight:800;letter-spacing:-.02em;color:var(--green)}
-.cm-doc__deg,.cm-doc__exp{margin:0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.8rem;font-weight:400;line-height:1.25;color:var(--subtle)}
-.cm-doc__btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;margin-top:auto;width:100%;height:2.6rem;border-radius:8px;background:var(--green);color:#FFFFFF!important;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.9rem;font-weight:700;transition:background .2s}
+.cm-doc{position:relative;display:flex;align-items:stretch;overflow:hidden;border-radius:8px;background:#EFF1EA;aspect-ratio:299/197;min-height:11.5rem}
+.cm-doc__photo{position:relative;flex:0 0 43%;align-self:stretch;background:#E4E8DC}
+.cm-doc__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
+.cm-doc__body{position:relative;flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:flex-start;padding:1.6rem .95rem .9rem}
+.cm-doc__go{position:absolute;top:.6rem;right:.8rem;display:grid;place-items:center;width:1.45rem;height:1.45rem;border-radius:999px;background:#1B1B1B;color:#FFFFFF!important}
+.cm-doc__go .cm-arrow{width:.75rem;height:.75rem}
+.cm-doc__spec{margin:0 1.9rem .28rem 0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.7rem;font-weight:400;line-height:1.25;color:rgb(20 47 134 / .6)}
+.cm-doc__name{margin:0 0 .28rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.95rem;line-height:1.2;font-weight:800;letter-spacing:-.015em;color:#142F86}
+.cm-doc__deg,.cm-doc__exp{margin:0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.7rem;font-weight:400;line-height:1.3;color:rgb(20 47 134 / .55)}
+.cm-doc__btn{display:inline-flex;align-items:center;justify-content:center;gap:.35rem;margin-top:auto;width:82%;height:2.1rem;border-radius:4px;background:var(--green);color:#FFFFFF!important;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.75rem;font-weight:700;transition:background .2s}
 .cm-doc__btn:hover{background:#31B4F4;color:#142F86!important}
+@media(max-width:639px){.cm-doc{aspect-ratio:auto;min-height:10.5rem}.cm-doc__photo{flex:0 0 38%}.cm-doc__btn{width:100%}}
 .cm-team__more-wrap{display:flex;justify-content:center;margin-top:2rem}
 .cm-doc__btn--more{width:auto;padding:0 1.75rem;height:3rem}
 .cm-doc__btn--more .cm-arrow{width:1rem;height:1rem}
@@ -1123,6 +1126,7 @@ export default function HomePage() {
                 <img src={m.image} alt={m.name} loading="lazy" decoding="async" />
               </div>
               <div className="cm-doc__body">
+                <Link href={m.href} className="cm-doc__go" aria-label={`View ${m.name} profile`}><Arrow /></Link>
                 <p className="cm-doc__spec">{m.specialty}</p>
                 <h3 className="cm-doc__name">{m.name}</h3>
                 {m.degree ? <p className="cm-doc__deg">{m.degree}</p> : null}
