@@ -279,6 +279,7 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-hero__inner{width:100%}
   .cm-hero__rule,.cm-hero__trust,.cm-chips{display:none}
   .cm-hero__scene{top:-9rem;right:-1.25rem;bottom:-4rem;left:-1.25rem;width:auto;height:auto}
+  .cm-why{display:none}
 }
 @media(min-width:768px) and (max-width:1023px){
   .cm-hero__scene{right:-2.5rem;left:-2.5rem}
@@ -301,7 +302,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 }
 
 /* WHY */
-.cm-why{min-height:100lvh;display:grid;place-items:center;overflow:hidden;background:#FFFFFF;text-align:center;padding:6rem 1.25rem}
+.cm-why{position:relative;z-index:15;min-height:100lvh;display:grid;place-items:center;overflow:hidden;background:#FFFFFF;text-align:center;padding:6rem 1.25rem}
 .cm-why__inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:2rem;width:min(100% - 2.5rem,44.75rem)}
 .cm-why .cm-lead{width:100%}
 @media(min-width:1024px){.cm-why .cm-lead{width:39.25rem}.cm-why .cm-body{width:27.625rem}}
@@ -934,24 +935,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* WHY */}
-      <section id="why" className="cm-section cm-why">
-        <div className="cm-trail" aria-hidden="true" data-imgs={JSON.stringify(WHY.trail)} />
-        <div className="cm-why__inner cm-shell">
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", width: "100%" }}>
-            <p className="cm-eyebrow" data-rise>{WHY.eyebrow}</p>
-            <h2 className="cm-lead cm-reveal">{WHY.title}</h2>
-          </div>
-          <div className="cm-why__actions">
-            {WHY.actions.map((a) => (
-              <Link key={a.href} href={a.href} className={`cm-btn ${a.primary ? "cm-btn--primary" : "cm-btn--secondary"}`}>
-                {a.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* SERVICES */}
       <section id="services" className="cm-services">
         <div className="cm-services__runway">
@@ -1078,6 +1061,24 @@ export default function HomePage() {
             <span className="cm-team__gutter" aria-hidden="true" />
           </div>
           <div className="cm-team__bar" aria-hidden="true"><span /></div>
+        </div>
+      </section>
+
+      {/* WHY */}
+      <section id="why" className="cm-section cm-why">
+        <div className="cm-trail" aria-hidden="true" data-imgs={JSON.stringify(WHY.trail)} />
+        <div className="cm-why__inner cm-shell">
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", width: "100%" }}>
+            <p className="cm-eyebrow" data-rise>{WHY.eyebrow}</p>
+            <h2 className="cm-lead cm-reveal">{WHY.title}</h2>
+          </div>
+          <div className="cm-why__actions">
+            {WHY.actions.map((a) => (
+              <Link key={a.href} href={a.href} className={`cm-btn ${a.primary ? "cm-btn--primary" : "cm-btn--secondary"}`}>
+                {a.label}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
