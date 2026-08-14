@@ -17,7 +17,7 @@ const HEADER_NAV = mainNav.map((item) => {
     ? sourceChildren
     : [{ label: `${item.label} Overview`, href: item.href }, ...sourceChildren];
 
-  if (item.label === "Specialties") {
+  if (item.label === "Doctors") {
     children.push({ label: "Book Appointment", href: "/patient-info/appointment-booking" });
   }
   if (item.label === "Diagnostics") {
@@ -185,6 +185,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-root button,.cm-root input,.cm-root textarea{font:inherit;color:inherit}
 .cm-root ::selection{background:rgb(49 180 244 / .22);color:var(--green)}
 .cm-shell{width:min(100% - 5rem,90rem);margin-inline:auto}
+@media(max-width:1023px){.cm-shell{width:100%}}
 .cm-eyebrow{font-size:.875rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--green);margin:0}
 .cm-lead{font-size:clamp(2.25rem,5.4vw,3.75rem);line-height:1.05;font-weight:700;letter-spacing:-.01em;margin:0}
 .cm-lead__accent{display:block;font-size:1.25em;font-family:var(--font-playfair),Georgia,serif;font-style:italic;font-weight:700;background:linear-gradient(120deg,var(--green),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}

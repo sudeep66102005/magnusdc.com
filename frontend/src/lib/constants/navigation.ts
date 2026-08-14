@@ -48,7 +48,7 @@ export const mainNav: NavItem[] = [
     ],
   },
   {
-    label: "Specialties",
+    label: "Doctors",
     href: "/specialties",
     children: [
       { label: "All Specialties", href: "/specialties" },
