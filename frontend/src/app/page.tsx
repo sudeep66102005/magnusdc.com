@@ -31,7 +31,6 @@ const HEADER_NAV = mainNav.map((item) => {
 });
 
 const HERO = {
-  eyebrow: "Trusted. Accurate. Caring.",
   titleAccent: "Clarity",
   title: "in every diagnosis",
   description: "Advanced diagnostics. Expert specialists. Care that understands you.",
@@ -166,7 +165,6 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-root ::selection{background:rgb(49 180 244 / .22);color:var(--green)}
 .cm-shell{width:min(100% - 5rem,90rem);margin-inline:auto}
 .cm-eyebrow{font-size:.875rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--green);margin:0}
-.cm-eyebrow--pill{display:inline-flex;align-items:center;gap:.5rem;width:fit-content;text-transform:none;letter-spacing:.01em;font-weight:400;font-size:.9rem;color:var(--subtle);background:rgb(20 47 134 / .05);border:1px solid var(--line);border-radius:999px;padding:.5rem 1.1rem}
 .cm-lead{font-size:clamp(2.25rem,5.4vw,3.75rem);line-height:1.05;font-weight:700;letter-spacing:-.01em;margin:0}
 .cm-lead__accent{display:block;font-size:1.25em;font-family:var(--font-playfair),Georgia,serif;font-style:italic;font-weight:700;background:linear-gradient(120deg,var(--green),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
 .cm-lead__rest{display:block}
@@ -263,12 +261,12 @@ html:has(.cm-root){scroll-behavior:smooth}
 /* HERO */
 .cm-hero{position:relative;min-height:100lvh;overflow:hidden;padding:9rem 1.25rem 4rem}
 @media(min-width:768px){.cm-hero{padding-inline:2.5rem}}
-.cm-hero__inner{position:relative;min-height:calc(100lvh - 13rem);display:flex;flex-direction:column}
-.cm-hero__copy{position:relative;z-index:3;display:flex;flex-direction:column;gap:1.5rem;max-width:44.75rem}
-.cm-hero__head{display:flex;flex-direction:column;gap:1rem}
-.cm-hero__desc{max-width:18rem;color:var(--subtle);border-left:2px solid var(--lime);padding-left:1rem}
-.cm-hero__actions{display:flex;flex-direction:column;flex-wrap:wrap;gap:1rem;position:relative;z-index:3;margin-top:2.5rem}
-.cm-hero__actions .cm-btn{width:min(100%,16rem)}
+.cm-hero__inner{position:relative;min-height:calc(100lvh - 13rem);display:flex;flex-direction:column;justify-content:center}
+.cm-hero__copy{position:relative;z-index:3;display:flex;flex-direction:column;gap:0;max-width:44.75rem}
+.cm-hero__head{display:flex;flex-direction:column;gap:0}
+.cm-hero__desc{max-width:18rem;margin-top:2.25rem;color:var(--subtle);border-left:2px solid var(--lime);padding-left:1rem}
+.cm-hero__actions{display:flex;flex-direction:row;flex-wrap:nowrap;gap:.75rem;position:relative;z-index:3;margin-top:2rem}
+.cm-hero__actions .cm-btn{flex:0 1 10.5rem;width:auto;height:2.875rem;padding:0 .85rem;font-size:.95rem}
 .cm-hero__scene{position:absolute;top:1.5rem;right:0;left:auto;width:52%;height:30rem;z-index:1;margin:0;pointer-events:none}
 .cm-dna{display:block;width:100%;height:100%}
 .cm-hero__meta{display:flex;flex-direction:column;gap:1.5rem}
@@ -284,13 +282,13 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(min-width:1024px){
   .cm-hero{padding:0;height:100lvh;min-height:0}
   .cm-hero__inner{display:block;height:100%;min-height:0}
-  .cm-hero__copy{position:absolute;top:28.55%;left:2.5rem;gap:3rem}
-  .cm-hero__head{gap:2rem}
+  .cm-hero__copy{position:absolute;top:50%;left:2.5rem;transform:translateY(-50%);gap:0}
+  .cm-hero__head{gap:0}
   .cm-hero__copy .cm-body{width:30.875rem}
-  .cm-hero__desc{max-width:none}
+  .cm-hero__desc{max-width:none;margin-top:2.5rem}
   .cm-hero__scene{position:absolute;inset-block:0;right:auto;left:22.5rem;width:71.25rem;height:auto;margin:0}
-  .cm-hero__actions{position:absolute;top:89.375%;left:2.5rem;flex-direction:row;margin-top:0}
-  .cm-hero__actions .cm-btn{width:11.25rem}
+  .cm-hero__actions{position:relative;top:auto;left:auto;flex-direction:row;margin-top:2rem}
+  .cm-hero__actions .cm-btn{flex:0 0 10.5rem;width:10.5rem}
   .cm-hero__rule{position:absolute;top:78.625%;right:2.5rem;left:2.5625rem;margin:0}
   .cm-hero__trust{position:absolute;top:83.625%;left:2.5rem;margin:0}
   .cm-chips{position:absolute;top:83.625%;left:55.5625rem;width:31.9375rem;justify-content:flex-end;gap:.25rem;margin:0}
@@ -893,22 +891,20 @@ export default function HomePage() {
         <div className="cm-hero__inner cm-shell">
           <div className="cm-hero__copy">
             <div className="cm-hero__head">
-              <p className="cm-eyebrow cm-eyebrow--pill" data-rise>{HERO.eyebrow}</p>
               <h1 className="cm-lead">
                 <span className="cm-lead__accent" data-rise>{HERO.titleAccent}</span>
                 <span className="cm-lead__rest cm-reveal">{HERO.title}</span>
               </h1>
             </div>
             <p className="cm-body cm-hero__desc cm-reveal">{HERO.description}</p>
-          </div>
-
-          <div className="cm-hero__actions" data-rise>
-            {HERO.actions.map((a) => (
-              <Link key={a.href} href={a.href} className={`cm-btn cm-btn--pill cm-hero__button ${a.primary ? "cm-hero__button--primary" : "cm-hero__button--secondary"}`}>
-                <span>{a.label}</span>
-                <Arrow />
-              </Link>
-            ))}
+            <div className="cm-hero__actions" data-rise>
+              {HERO.actions.map((a) => (
+                <Link key={a.href} href={a.href} className={`cm-btn cm-btn--pill cm-hero__button ${a.primary ? "cm-hero__button--primary" : "cm-hero__button--secondary"}`}>
+                  <span>{a.label}</span>
+                  <Arrow />
+                </Link>
+              ))}
+            </div>
           </div>
 
           <div className="cm-hero__scene" data-scene="hero" aria-hidden="true">
