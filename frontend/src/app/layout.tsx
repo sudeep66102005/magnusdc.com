@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Lato, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
-import { Navbar } from "@/components/layout/navbar";
+import { SiteHeader } from "@/components/layout/site-header";
 import { Footer } from "@/components/layout/footer";
 import { GlobalWidgets } from "@/components/layout/global-widgets";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
@@ -57,7 +57,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <QueryProvider>
           <ScrollToTop />
-          <Navbar />
+          <SiteHeader />
           <main className="flex flex-1 flex-col">{children}</main>
           <Footer />
           <GlobalWidgets />
