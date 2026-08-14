@@ -5,6 +5,7 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { GlobalWidgets } from "@/components/layout/global-widgets";
+import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { siteConfig } from "@/lib/constants/site-config";
 
 const lato = Lato({
@@ -40,6 +41,7 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <QueryProvider>
+          <ScrollToTop />
           <Navbar />
           <main className="flex flex-1 flex-col">{children}</main>
           <Footer />
