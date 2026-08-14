@@ -371,7 +371,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-svc__title{margin:0;font-size:2rem;line-height:1.05;font-weight:700;letter-spacing:-.02em;color:#FFFFFF}
 @media(min-width:768px){.cm-svc__title{font-size:2.5rem}}
 .cm-svc__title{font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-weight:800;letter-spacing:-.03em}
-.cm-svc__list{display:grid;grid-template-columns:1fr 1fr;gap:.5rem .9rem;margin:1.1rem 0 0;padding:0;list-style:none;max-width:26rem}
+.cm-svc__list{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;margin:1.1rem 0 0;padding:0;list-style:none;max-width:26rem}
 .cm-svc__list li{display:flex;align-items:center;gap:.5rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.9rem;font-weight:400;line-height:1.18;color:rgb(255 255 255 / .95)}
 .cm-svc__ico{display:grid;place-items:center;width:1.55rem;height:1.55rem;flex:none;border-radius:999px;background:rgb(255 255 255 / .18);color:#FFFFFF}
 .cm-svc__ico svg{width:.95rem;height:.95rem}
