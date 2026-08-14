@@ -264,8 +264,8 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-hero__inner{position:relative;min-height:calc(100lvh - 13rem);display:flex;flex-direction:column}
 .cm-hero__copy{position:relative;z-index:3;display:flex;flex-direction:column;gap:0;max-width:44.75rem;padding-top:2.5rem}
 .cm-hero__head{display:flex;flex-direction:column;gap:0}
-.cm-hero__desc{max-width:18rem;margin-top:3rem;color:var(--subtle);border-left:2px solid var(--lime);padding-left:1rem}
-.cm-hero__actions{display:flex;flex-direction:row;flex-wrap:nowrap;gap:.75rem;position:relative;z-index:3;margin-top:2.5rem}
+.cm-hero__desc{max-width:18rem;margin-top:4.25rem;color:var(--subtle);border-left:2px solid var(--lime);padding-left:1rem}
+.cm-hero__actions{display:flex;flex-direction:row;flex-wrap:nowrap;gap:.75rem;position:relative;z-index:3;margin-top:4rem}
 .cm-hero__actions .cm-btn{flex:0 1 10.5rem;width:auto;height:2.875rem;padding:0 .85rem;font-size:.95rem}
 .cm-hero__scene{position:absolute;top:1.5rem;right:0;left:auto;width:52%;height:30rem;z-index:1;margin:0;pointer-events:none}
 .cm-dna{display:block;width:100%;height:100%}
@@ -278,6 +278,10 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(max-width:1023px){
   .cm-hero__inner{width:100%}
   .cm-hero__rule,.cm-hero__trust,.cm-chips{display:none}
+  .cm-hero__scene{top:-9rem;right:-1.25rem;bottom:-4rem;left:-1.25rem;width:auto;height:auto}
+}
+@media(min-width:768px) and (max-width:1023px){
+  .cm-hero__scene{right:-2.5rem;left:-2.5rem}
 }
 @media(min-width:1024px){
   .cm-hero{padding:0;height:100lvh;min-height:0}
@@ -730,7 +734,7 @@ function initClarus(root){
       renderer.setClearColor(bg,1);
       const scene=new THREE.Scene(); scene.background=bg; scene.fog=new THREE.Fog(bg,0,22);
       const cam=new THREE.PerspectiveCamera(45,1,0.1,200); cam.position.set(0,0,CFG.camDist); scene.add(cam);
-      const tilt=new THREE.Group(); const spin=new THREE.Group(); tilt.add(spin); scene.add(tilt); tilt.rotation.z=CFG.tilt; tilt.scale.setScalar(isMobileHero ? 0.62 : 1);
+      const tilt=new THREE.Group(); const spin=new THREE.Group(); tilt.add(spin); scene.add(tilt); tilt.rotation.z=CFG.tilt; tilt.scale.setScalar(isMobileHero ? 0.92 : 1);
       const compact=window.innerWidth<1024||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
       const hCount=compact?4500:14000, iCount=compact?14000:44000;
       const U={uTime:{value:0},uAppear:{value:0},uHelixA:{value:new THREE.Vector3().fromArray(hx(CFG.helixColorA))},uHelixB:{value:new THREE.Vector3().fromArray(hx(CFG.helixColorB))},uInkCore:{value:new THREE.Vector3().fromArray(hx(CFG.inkCore))},uInkMid:{value:new THREE.Vector3().fromArray(hx(CFG.inkMid))},uInkEdge:{value:new THREE.Vector3().fromArray(hx(CFG.inkEdge))},uHelixSize:{value:CFG.helixSize},uInkSize:{value:CFG.inkSize},uBrightness:{value:CFG.brightness},uHelixOpacity:{value:CFG.helixOpacity},uInkOpacity:{value:CFG.inkOpacity},uInkGrow:{value:CFG.inkGrow},uRadius:{value:CFG.radius},uHeight:{value:CFG.height},uTwist:{value:CFG.twist},uThick:{value:CFG.strandThick},uWave:{value:CFG.wave},uEmitRate:{value:CFG.emitRate},uSpread:{value:CFG.spread},uRise:{value:CFG.rise},uTurb:{value:CFG.turbulence},uNoiseFreq:{value:CFG.noiseFreq},uNoiseEvolve:{value:CFG.noiseEvolve},uCursor:{value:new THREE.Vector3()},uRepelRadius:{value:CFG.pointerRadius},uRepelStrength:{value:CFG.pointerStrength},uActivity:{value:0},uPixelScale:{value:1}};
