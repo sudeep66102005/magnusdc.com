@@ -86,6 +86,7 @@ const SERVICE_CARDS = [
   {
     title: "Women\u2019s & Fetal Medicine",
     href: `${BP}/specialties`,
+    pos: "82% 45%",
     desktop: svcImg("updated desktop image of womens and fetal.jpeg"),
     mobile: svcImg("updated mobile image of womens and fetal.jpeg"),
     items: [
@@ -905,7 +906,7 @@ export default function HomePage() {
               <picture>
                 <source media="(min-width: 768px)" srcSet={card.desktop} />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className="cm-svc__img" src={card.mobile} alt={card.title} loading="lazy" decoding="async" />
+                <img className="cm-svc__img" src={card.mobile} alt={card.title} loading="lazy" decoding="async" style={{ objectPosition: (card as { pos?: string }).pos ?? "50% 50%" }} />
               </picture>
               <span className="cm-svc__scrim" aria-hidden="true" />
               <div className="cm-svc__head">
