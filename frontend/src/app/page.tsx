@@ -307,6 +307,10 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(min-width:768px){.cm-svc{min-height:32rem}}
 .cm-svc__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,0,0,1)}
 .cm-svc:hover .cm-svc__img{transform:scale(1.05)}
+.cm-svc--wf{justify-content:flex-end}
+.cm-svc--wf .cm-svc__head{order:2}
+.cm-svc--wf .cm-svc__actions{order:3}
+.cm-svc--wf .cm-svc__scrim{background:linear-gradient(180deg,rgb(0 0 0 / .12) 0%,rgb(0 0 0 / .28) 45%,rgb(0 0 0 / .82) 100%)}
 .cm-svc__scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgb(0 0 0 / .55),rgb(0 0 0 / .18) 45%,rgb(0 0 0 / .68))}
 .cm-svc__head{position:relative;z-index:2;padding:1.75rem}
 @media(min-width:768px){.cm-svc__head{padding:2rem}}
@@ -902,7 +906,7 @@ export default function HomePage() {
         </div>
         <div className="cm-svc-grid">
           {SERVICE_CARDS.map((card) => (
-            <article key={card.title} className="cm-svc">
+            <article key={card.title} className={`cm-svc${card.title.includes("Fetal") ? " cm-svc--wf" : ""}`}>
               <picture>
                 <source media="(min-width: 768px)" srcSet={card.desktop} />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
