@@ -86,8 +86,8 @@ const SERVICE_CARDS = [
   {
     title: "Women\u2019s & Fetal Medicine",
     href: `${BP}/specialties`,
-    desktop: svcImg("desktop image of Women's & Fetal Medicine.jpeg"),
-    mobile: svcImg("mobile image of Women's & Fetal Medicine.jpeg"),
+    desktop: svcImg("updated desktop image of womens and fetal.jpeg"),
+    mobile: svcImg("updated mobile image of womens and fetal.jpeg"),
     items: [
       { label: "Early Pregnancy", icon: "baby" },
       { label: "NT/NB", icon: "ruler" },
