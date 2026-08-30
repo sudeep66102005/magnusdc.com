@@ -7,6 +7,8 @@ import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { WhyMagnusSlideshow } from "@/components/home/why-magnus-slideshow";
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+/** Short commit of the deployed build, so the live page can be identified. */
+const BUILD = (process.env.NEXT_PUBLIC_BUILD ?? "dev").slice(0, 7);
 const asset = (p: string) => `${BP}${p}`;
 
 /* ---- Content (Clarus Magnus business details, Dantora structure) ---- */
@@ -969,7 +971,7 @@ function StatIcon({ name }: { name: "shield" | "scan" | "team" }) {
 
 export default function HomePage() {
   return (
-    <div className="cm-root">
+    <div className="cm-root" data-build={BUILD}>
       <style>{css}</style>
 
       <div className="cm-pre" aria-hidden="true">
