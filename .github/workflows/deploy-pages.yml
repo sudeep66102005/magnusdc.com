@@ -83,17 +83,33 @@ jobs:
           NEEDLES
           # The homepage shows a capped roster with a link out; the filter rail
           # lives on /specialties, so check each page for what belongs on it.
-          while IFS= read -r needle; do
-            if grep -qF -- "$needle" out/specialties/index.html; then
-              echo "ok       [specialties] $needle"
-            else
-              echo "MISSING  [specialties] $needle"
-              status=1
+          # The export path depends on the trailingSlash setting, so resolve it
+          # rather than assuming either shape.
+          spec_html=""
+          for candidate in out/specialties.html out/specialties/index.html; do
+            if [ -f "$candidate" ]; then
+              spec_html="$candidate"
+              break
             fi
-          done <<'SPECIALTY_NEEDLES'
+          done
+          if [ -z "$spec_html" ]; then
+            echo "MISSING  specialties page was not exported"
+            ls -1 out | head -30
+            status=1
+          else
+            echo "specialties page: $spec_html"
+            while IFS= read -r needle; do
+              if grep -qF -- "$needle" "$spec_html"; then
+                echo "ok       [specialties] $needle"
+              else
+                echo "MISSING  [specialties] $needle"
+                status=1
+              fi
+            done <<'SPECIALTY_NEEDLES'
           class="cm-docfilter__rail"
           class="cm-docchip
           SPECIALTY_NEEDLES
+          fi
           if grep -qF 'class="cm-team__more"' out/index.html; then
             echo "ok       homepage view-all link"
           else
