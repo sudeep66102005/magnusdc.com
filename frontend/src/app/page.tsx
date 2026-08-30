@@ -5,6 +5,7 @@ import { siteConfig } from "@/lib/constants/site-config";
 import { mainNav } from "@/lib/constants/navigation";
 import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { WhyMagnusSlideshow } from "@/components/home/why-magnus-slideshow";
+import { DoctorsSection } from "@/components/home/doctors-section";
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 /** Short commit of the deployed build, so the live page can be identified. */
@@ -166,18 +167,10 @@ const ABOUT = {
   ],
 };
 
+/** The roster itself lives in `@/lib/data/doctors` so it can be edited alone. */
 const TEAM = {
   eyebrow: "Our Team",
   title: "The specialists you\u2019ll actually see, every visit.",
-  members: [
-    { name: "Radiology", specialty: "Imaging", degree: "", experience: "", image: asset("/assets/dantora/team/01.png"), href: `${BP}/specialties` },
-    { name: "Internal Medicine", specialty: "General Medicine", degree: "", experience: "", image: asset("/assets/dantora/team/02.png"), href: `${BP}/specialties` },
-    { name: "Cardiology", specialty: "Heart Care", degree: "", experience: "", image: asset("/assets/dantora/team/03.png"), href: `${BP}/specialties` },
-    { name: "Orthopaedics", specialty: "Bone & Joint", degree: "", experience: "", image: asset("/assets/dantora/team/04.png"), href: `${BP}/specialties` },
-    { name: "Women\u2019s Health", specialty: "Obstetrics & Gynaecology", degree: "", experience: "", image: asset("/assets/dantora/team/05.png"), href: `${BP}/specialties` },
-    { name: "ENT", specialty: "Ear, Nose & Throat", degree: "", experience: "", image: asset("/assets/dantora/team/01.png"), href: `${BP}/specialties` },
-  ],
-  more: { title: "A wider multispecialty team", cta: "View More Doctors", href: `${BP}/specialties` },
 };
 
 const CONTACT = {
@@ -329,7 +322,12 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-why-mag{position:relative;z-index:10;background:#FFFFFF;padding:0}
 .cm-why-mag__frame{position:relative;overflow:hidden;width:100%;min-height:100lvh;background:#0B1533;isolation:isolate}
 .cm-why-mag__shots{position:absolute;inset:-12% 0;transform:translate3d(0,var(--cm-par,0),0);will-change:transform}
-.cm-why-mag__shot{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.05);transition:opacity 1.1s ease,transform 7s ease-out}
+/* Real picture/img rather than a background, so each slide can serve a separate
+   mobile file. Descendant selector, not a child one: this stylesheet is injected
+   as a text child of <style>, where a literal > is HTML-escaped and would kill
+   the rule. */
+.cm-why-mag__shot{position:absolute;inset:0;display:block;opacity:0;transform:scale(1.05);transition:opacity 1.1s ease,transform 7s ease-out}
+.cm-why-mag__shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
 .cm-why-mag__shot.is-on{opacity:1;transform:scale(1)}
 
 .cm-why-mag__body{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:space-between;gap:2.5rem;min-height:100lvh;padding:2rem 1.25rem}
@@ -455,8 +453,21 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(min-width:768px){.cm-team{padding-inline:2.5rem}}
 .cm-team__head{display:flex;flex-direction:column;align-items:center;gap:1rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center}
 .cm-docs{display:grid;grid-template-columns:1fr;gap:1rem;width:min(100%,84rem);margin-inline:auto}
-@media(min-width:640px){.cm-docs{grid-template-columns:1fr 1fr}}
-@media(min-width:1024px){.cm-docs{grid-template-columns:repeat(3,1fr)}}
+/* Two-up, as in the reference layout. The 299/197 ratio was tuned for three
+   columns; at two-up it would make cards absurdly tall, so height is driven by
+   content instead and the type steps up to suit the wider card. */
+@media(min-width:640px){
+  .cm-docs{grid-template-columns:1fr 1fr;gap:1.25rem}
+  .cm-doc{aspect-ratio:auto;min-height:14rem}
+  .cm-doc__photo{flex:0 0 40%}
+  .cm-doc__body{padding:1.75rem 1.25rem 1.1rem}
+  .cm-doc__spec{margin-right:2.4rem;font-size:.8125rem}
+  .cm-doc__name{font-size:1.25rem;margin-bottom:.35rem}
+  .cm-doc__deg,.cm-doc__exp{font-size:.8125rem}
+  .cm-doc__go{top:.85rem;right:1rem;width:1.9rem;height:1.9rem}
+  .cm-doc__go .cm-arrow{width:.95rem;height:.95rem}
+  .cm-doc__btn{width:min(100%,15rem);height:2.5rem;font-size:.8125rem}
+}
 .cm-doc{position:relative;display:flex;align-items:stretch;overflow:hidden;border-radius:8px;background:#EFF1EA;aspect-ratio:299/197;min-height:11.5rem}
 .cm-doc__photo{position:relative;flex:0 0 43%;align-self:stretch;background:#E4E8DC}
 .cm-doc__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
@@ -469,9 +480,19 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-doc__btn{display:inline-flex;align-items:center;justify-content:center;gap:.35rem;margin-top:auto;width:82%;height:2.1rem;border-radius:4px;background:var(--green);color:#FFFFFF!important;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.75rem;font-weight:700;transition:background .2s}
 .cm-doc__btn:hover{background:#31B4F4;color:#142F86!important}
 @media(max-width:639px){.cm-doc{aspect-ratio:auto;min-height:10.5rem}.cm-doc__photo{flex:0 0 38%}.cm-doc__btn{width:100%}}
-.cm-team__more-wrap{display:flex;justify-content:center;margin-top:2rem}
-.cm-doc__btn--more{width:auto;padding:0 1.75rem;height:3rem}
-.cm-doc__btn--more .cm-arrow{width:1rem;height:1rem}
+/* Specialty filter rail. The rail scrolls horizontally and the two chevrons
+   nudge it; each hides itself once that edge is reached. */
+.cm-docfilter{position:relative;display:flex;align-items:center;gap:.5rem;width:min(100%,84rem);margin:0 auto 1.5rem}
+.cm-docfilter__rail{display:flex;gap:.5rem;overflow-x:auto;scroll-behavior:smooth;padding:.25rem;scrollbar-width:none;-ms-overflow-style:none}
+.cm-docfilter__rail::-webkit-scrollbar{display:none}
+.cm-root .cm-docfilter__nav{flex:none;display:grid;place-items:center;width:2rem;height:2rem;border:1px solid var(--line);border-radius:999px;background:#FFFFFF;color:#142F86;cursor:pointer;padding:0}
+.cm-root .cm-docfilter__nav:hover{background:#142F86;color:#FFFFFF}
+.cm-docfilter__nav svg{width:1.1rem;height:1.1rem}
+.cm-docfilter__nav[hidden]{display:none}
+.cm-root .cm-chip{flex:none;display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;border:1px solid var(--line);border-radius:999px;background:#FFFFFF;color:#142F86;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.8125rem;font-weight:500;white-space:nowrap;cursor:pointer;transition:background .18s,color .18s,border-color .18s}
+.cm-root .cm-chip:hover{border-color:#31B4F4}
+.cm-root .cm-chip.is-on{background:#142F86;border-color:#142F86;color:#FFFFFF}
+.cm-doc__monogram{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.75rem;font-weight:700;color:rgb(20 47 134 / .35)}
 
 /* TESTIMONIALS */
 .cm-testimonials{position:relative;z-index:10;background:#F5F8FB;color:#16233B;padding:4.5rem 1.5rem 5.5rem}
@@ -1143,35 +1164,7 @@ export default function HomePage() {
       </section>
 
       {/* TEAM */}
-      <section id="team" className="cm-team">
-        <div className="cm-team__head">
-          <p className="cm-eyebrow" data-rise>{TEAM.eyebrow}</p>
-          <h2 className="cm-lead cm-reveal">{TEAM.title}</h2>
-        </div>
-        <div className="cm-docs">
-          {TEAM.members.map((m) => (
-            <article className="cm-doc" key={m.name}>
-              <div className="cm-doc__photo">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={m.image} alt={m.name} loading="lazy" decoding="async" />
-              </div>
-              <div className="cm-doc__body">
-                <Link href={m.href} className="cm-doc__go" aria-label={`View ${m.name} profile`}><Arrow /></Link>
-                <p className="cm-doc__spec">{m.specialty}</p>
-                <h3 className="cm-doc__name">{m.name}</h3>
-                {m.degree ? <p className="cm-doc__deg">{m.degree}</p> : null}
-                {m.experience ? <p className="cm-doc__exp">{m.experience}</p> : null}
-                <Link href={m.href} className="cm-doc__btn">View Profile</Link>
-              </div>
-            </article>
-          ))}
-        </div>
-        <div className="cm-team__more-wrap">
-          <Link href={TEAM.more.href} className="cm-doc__btn cm-doc__btn--more">
-            <span>{TEAM.more.cta}</span><Arrow />
-          </Link>
-        </div>
-      </section>
+      <DoctorsSection eyebrow={TEAM.eyebrow} title={TEAM.title} />
 
       <TestimonialsSection />
 

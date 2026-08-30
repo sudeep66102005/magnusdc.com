@@ -69,6 +69,8 @@ jobs:
           /assets/logo/clarus-magnus-logo.png
           .cm-about__para .accent
           .cm-why-mag__shots
+          .cm-why-mag__shot img{display:block
+          class="cm-docfilter__rail"
           NEEDLES
           # The template's DNA glyph must not come back anywhere on the page.
           if grep -qF 'M15.0223 1.46977' out/index.html; then
