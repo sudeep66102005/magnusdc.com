@@ -3,6 +3,7 @@ import Link from "next/link";
 import Script from "next/script";
 import { siteConfig } from "@/lib/constants/site-config";
 import { mainNav } from "@/lib/constants/navigation";
+import { TestimonialsSection } from "@/components/home/testimonials-section";
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const asset = (p: string) => `${BP}${p}`;
@@ -402,16 +403,53 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-doc__btn--more{width:auto;padding:0 1.75rem;height:3rem}
 .cm-doc__btn--more .cm-arrow{width:1rem;height:1rem}
 
+/* TESTIMONIALS */
+.cm-testimonials{position:relative;z-index:10;background:#F5F8FB;color:#16233B;padding:4.5rem 1.5rem 5.5rem}
+.cm-testimonials__inner{max-width:75rem;margin:0 auto}
+.cm-testimonials__head{max-width:35rem;margin:0 auto 3rem;text-align:center}
+.cm-testimonials__eyebrow{display:inline-flex;align-items:center;gap:.375rem;font-size:.8125rem;font-weight:600;letter-spacing:.02em;color:#1F5F8B;background:#EAF2F8;padding:.375rem .875rem;border-radius:999px;margin-bottom:1.125rem}
+.cm-testimonials__title{font-size:clamp(1.625rem,3.4vw,2.25rem);line-height:1.15;margin:0 0 .75rem;letter-spacing:-.01em;font-weight:700}
+.cm-testimonials__head p{margin:0;color:#4A5872;font-size:.96875rem;line-height:1.5}
+.cm-testimonials__marquee{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 3rem,#000 calc(100% - 3rem),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 3rem,#000 calc(100% - 3rem),transparent 100%)}
+.cm-testimonials__track{display:flex;gap:1.25rem;width:max-content;padding:.5rem .25rem 1.5rem;margin:0;list-style:none;animation:cmReviewsScroll 42s linear infinite}
+.cm-testimonials__marquee:hover .cm-testimonials__track,.cm-testimonials__marquee:focus-within .cm-testimonials__track{animation-play-state:paused}
+@keyframes cmReviewsScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.cm-review-card{flex:0 0 21.25rem;background:#FFFFFF;border:1px solid #E3E9F1;border-radius:16px;box-shadow:0 1px 2px rgb(22 35 59 / .04),0 8px 24px -12px rgb(22 35 59 / .12);padding:1.375rem 1.375rem 1.25rem;display:flex;flex-direction:column;gap:.875rem;scroll-snap-align:start}
+.cm-review-card__top{display:flex;align-items:center;gap:.75rem}
+.cm-review__avatar{width:2.75rem;height:2.75rem;border-radius:50%;object-fit:cover;flex-shrink:0;background:#EAF2F8}
+.cm-review__who{flex:1;min-width:0}
+.cm-review__name{margin:0;font-size:.90625rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cm-review__meta{margin:.125rem 0 0;font-size:.78125rem;color:#4A5872;display:flex;align-items:center;gap:.375rem}
+.cm-testimonials__eyebrow-stars,.cm-review__stars{display:inline-flex;align-items:center;gap:.0625rem;color:#E0A13C}
+.cm-testimonials__eyebrow-stars svg{width:.6875rem;height:.6875rem;fill:currentColor;stroke:currentColor;stroke-width:1.5}
+.cm-review__stars svg{width:.75rem;height:.75rem;fill:transparent;stroke:currentColor;stroke-width:1.5}
+.cm-review__stars svg.is-filled{fill:currentColor}
+.cm-review__google{flex-shrink:0;opacity:.9}
+.cm-review__quote{margin:0;font-size:.90625rem;line-height:1.55;color:#16233B}
+.cm-review__quote.is-clamped{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.cm-review__more{align-self:flex-start;border:0;background:none;color:#1F5F8B;font-size:.84375rem;font-weight:600;padding:0;cursor:pointer;font-family:inherit}
+.cm-review__more:hover,.cm-review__more:focus-visible{text-decoration:underline}
+.cm-testimonials .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:560px){
+  .cm-testimonials{padding:3.5rem 1rem 4rem}
+  .cm-review-card{flex-basis:17.5rem}
+}
+
 /* CONTACT */
-.cm-contact{position:relative;z-index:20;min-height:100lvh;overflow:hidden;background:#FFFFFF;padding:7rem 1.25rem 5rem}
+.cm-contact{position:relative;z-index:20;min-height:100lvh;overflow:hidden;background:#FFFFFF;padding:5rem 1.25rem}
 @media(min-width:768px){.cm-contact{padding-inline:2.5rem}}
-.cm-contact__scene{display:none}
+.cm-contact__layout{display:flex;flex-direction:column;gap:2rem}
+.cm-contact__location{display:flex;flex-direction:column;gap:1.5rem;min-width:0}
 .cm-contact__head{display:flex;flex-direction:column;gap:1.5rem}
 .cm-contact__title{font-size:clamp(2.25rem,5.4vw,3.75rem);line-height:1.05;font-weight:700;margin:0}
 .cm-contact__details{font-size:1rem;line-height:1.7;margin:0}
 .cm-contact__details a{color:var(--green);text-decoration:underline;text-underline-offset:3px}
 .cm-contact__details strong{font-weight:700}
-.cm-form{margin-top:2rem;display:flex;flex-direction:column;gap:2rem;border:1px solid var(--line);border-radius:24px;background:#FFFFFF;padding:1.5rem}
+.cm-location__map{position:relative;overflow:hidden;width:100%;height:22rem;border:1px solid var(--line);border-radius:24px;background:#EAF2F8}
+.cm-location__map iframe{display:block;width:100%;height:100%;border:0}
+.cm-location__link{position:absolute;left:1rem;bottom:1rem;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0 1.25rem;border-radius:999px;background:#142F86;color:#FFFFFF!important;font-size:.875rem;font-weight:700;text-decoration:none!important;box-shadow:0 8px 24px rgb(20 47 134 / .22)}
+.cm-location__link:hover{background:#31B4F4;color:#142F86!important}
+.cm-form{margin-top:0;display:flex;flex-direction:column;gap:2rem;border:1px solid var(--line);border-radius:24px;background:#FFFFFF;padding:1.5rem}
 .cm-form__mark{display:grid;place-items:center;width:2.625rem;height:2.625rem;border-radius:4px;background:var(--green);color:var(--lime)}
 .cm-form__mark svg{width:1.5rem;height:1.5rem}
 .cm-form h3{font-size:1.75rem;line-height:1.1;font-weight:700;margin:0}
@@ -428,12 +466,14 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-form__submit:hover{background:var(--green-deep)}
 @media(min-width:768px){.cm-form{padding:2rem}}
 @media(min-width:1024px){
-  .cm-contact{height:100lvh;min-height:0;padding:0}
-  .cm-contact__scene{display:block;position:absolute;inset-block:0;left:7.0625rem;width:71.125rem;pointer-events:none}
-  .cm-contact__head{position:absolute;top:35.25%;left:2.5625rem;width:42.75rem;gap:3rem}
+  .cm-contact{padding:2.5rem}
+  .cm-contact__layout{display:grid;grid-template-columns:minmax(0,1fr) 35.0625rem;gap:2rem;min-height:calc(100lvh - 5rem);align-items:stretch}
+  .cm-contact__location{gap:2rem}
+  .cm-contact__head{gap:1.5rem}
   .cm-contact__title{font-size:3.75rem}
-  .cm-contact__details{width:27.6875rem}
-  .cm-form{position:absolute;top:1rem;right:2.5rem;bottom:2.5rem;width:35.0625rem;margin:0;gap:3rem}
+  .cm-contact__details{max-width:36rem}
+  .cm-location__map{flex:1;height:auto;min-height:22rem}
+  .cm-form{margin:0;gap:2rem}
   .cm-form form{flex:1}
   .cm-form__submit{margin-top:auto}
 }
@@ -458,7 +498,9 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-pre{display:none}
   .cm-svc__img{transition:none}
   .cm-about{margin-top:0}
-  .cm-hero__scene,.cm-contact__scene,.cm-trail{display:none}
+  .cm-hero__scene,.cm-trail{display:none}
+  .cm-testimonials__marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+  .cm-testimonials__track{animation:none;scroll-snap-type:x proximity}
 }
 `;
 
@@ -739,14 +781,6 @@ function initClarus(root){
     const heroC=root.querySelector('[data-scene="hero"] canvas');
     if(heroC)safeMakeScene(heroC);
 
-    const contactSection=root.querySelector('#contact'); const contactC=root.querySelector('[data-scene="contact"] canvas');
-    if(contactSection&&contactC){
-      const desktop=window.matchMedia('(min-width: 1024px)'); let near=false,started=false;
-      const startContact=()=>{ if(started||!near||!desktop.matches)return; started=true; contactObserver.disconnect(); desktop.removeEventListener('change',startContact); safeMakeScene(contactC); };
-      const contactObserver=new IntersectionObserver(([entry])=>{ near=entry.isIntersecting; startContact(); },{rootMargin:'600px 0px'});
-      contactObserver.observe(contactSection); desktop.addEventListener('change',startContact);
-      cleaners.push(()=>{ contactObserver.disconnect(); desktop.removeEventListener('change',startContact); });
-    }
   })();
 }
 if(!window.__cmBoot){
@@ -1015,47 +1049,62 @@ export default function HomePage() {
         </div>
       </section>
 
+      <TestimonialsSection />
+
       {/* CONTACT */}
       <section id="contact" className="cm-contact">
-        <div className="cm-contact__scene" data-scene="contact" aria-hidden="true">
-          <canvas className="cm-dna" />
-        </div>
         <div className="cm-shell" style={{ height: "100%", position: "relative" }}>
-          <div className="cm-contact__head">
-            <p className="cm-eyebrow" data-rise>{CONTACT.eyebrow}</p>
-            <h2 className="cm-contact__title cm-reveal">{CONTACT.title}</h2>
-            <p className="cm-contact__details" data-rise>
-              <strong>{siteConfig.address.line1}</strong><br />
-              Call <a href={siteConfig.phone.href}>{siteConfig.phone.display}</a> · <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a><br />
-              {siteConfig.address.line2}, {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}<br />
-              {siteConfig.hours.imaging} · <a href={siteConfig.address.mapsHref} target="_blank" rel="noopener noreferrer">Open in Maps</a>
-            </p>
-          </div>
-          <div className="cm-form">
-            <span className="cm-form__mark"><DnaMark /></span>
-            <h3>{CONTACT.formTitle}</h3>
-            <form>
-              <div className="cm-field">
-                <label htmlFor="cm-name">Your name</label>
-                <input id="cm-name" name="name" type="text" placeholder="Name" />
+          <div className="cm-contact__layout">
+            <div className="cm-contact__location">
+              <div className="cm-contact__head">
+                <p className="cm-eyebrow" data-rise>{CONTACT.eyebrow}</p>
+                <h2 className="cm-contact__title cm-reveal">{CONTACT.title}</h2>
+                <p className="cm-contact__details" data-rise>
+                  <strong>{siteConfig.address.line1}</strong><br />
+                  Call <a href={siteConfig.phone.href}>{siteConfig.phone.display}</a> · <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a><br />
+                  {siteConfig.address.line2}, {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}<br />
+                  {siteConfig.hours.imaging} · <a href={siteConfig.address.mapsHref} target="_blank" rel="noopener noreferrer">Open in Maps</a>
+                </p>
               </div>
-              <div className="cm-field">
-                <label htmlFor="cm-phone">Your phone</label>
-                <input id="cm-phone" name="phone" type="tel" placeholder="Phone" />
+              <div className="cm-location__map" data-rise>
+                <iframe
+                  src={siteConfig.address.mapEmbedHref}
+                  title="Clarus Magnus Health and Diagnostics location in Koramangala"
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                <a className="cm-location__link" href={siteConfig.address.mapsHref} target="_blank" rel="noopener noreferrer">
+                  Open in Google Maps
+                </a>
               </div>
-              <div className="cm-field">
-                <label htmlFor="cm-message">Your message</label>
-                <textarea id="cm-message" name="message" rows={1} placeholder="Message" />
-              </div>
-              <p className="cm-form__consent">
-                By submitting, you agree to our{" "}
-                <Link href={`${BP}/privacy-policy`}>Privacy Policy</Link> and the processing of your personal data.
-              </p>
-              <button type="submit" className="cm-form__submit">
-                <span>{CONTACT.submit}</span>
-                <span className="cm-disc"><Arrow /></span>
-              </button>
-            </form>
+            </div>
+            <div className="cm-form">
+              <span className="cm-form__mark"><DnaMark /></span>
+              <h3>{CONTACT.formTitle}</h3>
+              <form>
+                <div className="cm-field">
+                  <label htmlFor="cm-name">Your name</label>
+                  <input id="cm-name" name="name" type="text" placeholder="Name" />
+                </div>
+                <div className="cm-field">
+                  <label htmlFor="cm-phone">Your phone</label>
+                  <input id="cm-phone" name="phone" type="tel" placeholder="Phone" />
+                </div>
+                <div className="cm-field">
+                  <label htmlFor="cm-message">Your message</label>
+                  <textarea id="cm-message" name="message" rows={1} placeholder="Message" />
+                </div>
+                <p className="cm-form__consent">
+                  By submitting, you agree to our{" "}
+                  <Link href={`${BP}/privacy-policy`}>Privacy Policy</Link> and the processing of your personal data.
+                </p>
+                <button type="submit" className="cm-form__submit">
+                  <span>{CONTACT.submit}</span>
+                  <span className="cm-disc"><Arrow /></span>
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </section>
