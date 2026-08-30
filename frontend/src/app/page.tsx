@@ -329,7 +329,12 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-why-mag{position:relative;z-index:10;background:#FFFFFF;padding:0}
 .cm-why-mag__frame{position:relative;overflow:hidden;width:100%;min-height:100lvh;background:#0B1533;isolation:isolate}
 .cm-why-mag__shots{position:absolute;inset:-12% 0;transform:translate3d(0,var(--cm-par,0),0);will-change:transform}
-.cm-why-mag__shot{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.05);transition:opacity 1.1s ease,transform 7s ease-out}
+/* Real picture/img rather than a background, so each slide can serve a separate
+   mobile file. Descendant selector, not a child one: this stylesheet is injected
+   as a text child of <style>, where a literal > is HTML-escaped and would kill
+   the rule. */
+.cm-why-mag__shot{position:absolute;inset:0;display:block;opacity:0;transform:scale(1.05);transition:opacity 1.1s ease,transform 7s ease-out}
+.cm-why-mag__shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
 .cm-why-mag__shot.is-on{opacity:1;transform:scale(1)}
 
 .cm-why-mag__body{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:space-between;gap:2.5rem;min-height:100lvh;padding:2rem 1.25rem}
