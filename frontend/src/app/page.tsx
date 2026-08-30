@@ -328,42 +328,38 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-trail__card{position:absolute;top:0;left:0;width:13.5rem;height:17rem;border-radius:24px;background-size:cover;background-position:center;will-change:transform,opacity;opacity:0}
 
 /* WHY MAGNUS SLIDESHOW */
-.cm-why-mag{position:relative;z-index:10;background:#FFFFFF;padding:0 1.25rem 3.5rem}
+.cm-why-mag{position:relative;z-index:10;background:#FFFFFF;padding:1rem 1.25rem 4rem}
 @media(min-width:768px){.cm-why-mag{padding-inline:2.5rem}}
 .cm-why-mag__frame{position:relative;overflow:hidden;border-radius:24px;width:min(100%,84rem);margin-inline:auto;min-height:33rem;background:#0B1533;isolation:isolate}
 @media(min-width:768px){.cm-why-mag__frame{min-height:38rem;border-radius:28px}}
 @media(min-width:1024px){.cm-why-mag__frame{min-height:44rem}}
 .cm-why-mag__shot{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.04);transition:opacity 1.1s ease,transform 6s ease-out}
 .cm-why-mag__shot.is-on{opacity:1;transform:scale(1)}
-.cm-why-mag__scrim{position:absolute;inset:0;background:linear-gradient(103deg,rgb(5 12 34 / .88) 0%,rgb(5 12 34 / .66) 34%,rgb(5 12 34 / .22) 62%,rgb(5 12 34 / .06) 100%),linear-gradient(180deg,rgb(5 12 34 / .5) 0%,rgb(5 12 34 / .18) 40%,rgb(5 12 34 / .86) 100%)}
-@media(max-width:767px){.cm-why-mag__scrim{background:linear-gradient(180deg,rgb(5 12 34 / .84) 0%,rgb(5 12 34 / .58) 46%,rgb(5 12 34 / .9) 100%)}}
+
 .cm-why-mag__body{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:space-between;gap:2.5rem;min-height:33rem;padding:1.75rem}
 @media(min-width:768px){.cm-why-mag__body{min-height:38rem;padding:2.5rem}}
 @media(min-width:1024px){.cm-why-mag__body{min-height:44rem;padding:3rem}}
 .cm-why-mag__copy{position:relative;max-width:34rem}
-.cm-why-mag__eyebrow{margin:0 0 .9rem;font-size:.8125rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8FD4FB}
 .cm-why-mag__pane{animation:cmWhyMagIn .7s cubic-bezier(.2,0,0,1) both}
 @keyframes cmWhyMagIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.cm-why-mag__title{margin:0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.75rem;line-height:1.08;font-weight:800;letter-spacing:-.025em;color:#FFFFFF}
-@media(min-width:768px){.cm-why-mag__title{font-size:2.5rem}}
-@media(min-width:1024px){.cm-why-mag__title{font-size:3rem}}
-.cm-why-mag__list{display:flex;flex-direction:column;gap:.55rem;margin:1.1rem 0 0;padding:0;list-style:none}
-.cm-why-mag__list li{display:flex;align-items:flex-start;gap:.6rem;font-size:.9375rem;line-height:1.25;color:rgb(255 255 255 / .94)}
-.cm-why-mag__list svg{width:1.05rem;height:1.05rem;flex:none;margin-top:.1rem;color:#31B4F4}
-@media(min-width:768px){.cm-why-mag__list li{font-size:1rem}}
-.cm-why-mag__foot{display:flex;flex-direction:column;gap:1.5rem}
-.cm-why-mag__tabs{display:grid;grid-template-columns:1fr 1fr;gap:.75rem 1.25rem}
-@media(min-width:640px){.cm-why-mag__tabs{grid-template-columns:repeat(4,1fr);gap:1.25rem}}
-.cm-why-mag__tab{display:flex;flex-direction:column;gap:.6rem;padding:0;border:0;background:none;text-align:left;cursor:pointer;color:rgb(255 255 255 / .62);transition:color .25s}
+.cm-why-mag__title{margin:0 0 1.15rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.5rem;line-height:1.1;font-weight:700;letter-spacing:-.01em;color:#FFFFFF;text-shadow:0 1px 14px rgb(8 16 38 / .55)}
+@media(min-width:768px){.cm-why-mag__title{font-size:1.75rem}}
+.cm-why-mag__list{display:flex;flex-direction:column;gap:.5rem;margin:0;padding:0;list-style:none}
+.cm-why-mag__list li{font-size:1.05rem;line-height:1.25;font-weight:400;color:#FFFFFF;text-shadow:0 1px 12px rgb(8 16 38 / .6)}
+@media(min-width:768px){.cm-why-mag__list{gap:.65rem}.cm-why-mag__list li{font-size:1.3rem}}
+.cm-why-mag__foot{position:relative;display:flex;flex-direction:column}
+.cm-why-mag__tabs{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.cm-why-mag__tab{display:flex;flex-direction:column;gap:.5rem;padding:0;border:0;background:none;text-align:left;cursor:pointer;color:rgb(255 255 255 / .8);transition:color .25s}
 .cm-why-mag__tab.is-on,.cm-why-mag__tab:hover,.cm-why-mag__tab:focus-visible{color:#FFFFFF}
-.cm-why-mag__tab-label{font-size:.8125rem;font-weight:700;letter-spacing:.02em}
-@media(min-width:768px){.cm-why-mag__tab-label{font-size:.9375rem}}
-.cm-why-mag__rail{position:relative;display:block;height:2px;border-radius:999px;background:rgb(255 255 255 / .28);overflow:hidden}
-.cm-why-mag__fill{position:absolute;inset:0 auto 0 0;width:0;border-radius:999px;background:#31B4F4}
+.cm-why-mag__tab-label{font-size:.8125rem;font-weight:500;letter-spacing:.01em;text-shadow:0 1px 10px rgb(8 16 38 / .55)}
+@media(min-width:768px){.cm-why-mag__tab-label{font-size:.875rem}}
+.cm-why-mag__rail{position:relative;display:block;height:1px;background:rgb(255 255 255 / .55);overflow:hidden}
+.cm-why-mag__fill{position:absolute;inset:-1px auto;left:0;width:0;background:#FFFFFF}
 .cm-why-mag__tab.is-on .cm-why-mag__fill{animation:cmWhyMagFill linear forwards}
 @keyframes cmWhyMagFill{from{width:0}to{width:100%}}
-.cm-why-mag__cta{align-self:center;display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:0 2.25rem;border-radius:999px;background:#0B1533;color:#FFFFFF!important;font-size:.9375rem;font-weight:700;text-decoration:none!important;box-shadow:0 12px 30px rgb(4 10 28 / .45);transition:background .2s,transform .3s}
-.cm-why-mag__cta:hover{background:#142F86;transform:translateY(-2px)}
+.cm-why-mag__cta{align-self:center;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;margin-top:1.6rem;padding:0 1.75rem;border-radius:8px;background:#1B1B1B;color:#FFFFFF!important;font-size:.9375rem;font-weight:600;text-decoration:none!important;transition:background .2s}
+.cm-why-mag__cta:hover{background:#142F86}
+@media(min-width:768px){.cm-why-mag__cta{margin-top:1.9rem}}
 
 /* SERVICES */
 .cm-services{position:relative;background:#FFFFFF;padding:5rem 1.25rem 4rem}
@@ -1060,8 +1056,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <WhyMagnusSlideshow />
-
       {/* SERVICES */}
       <section id="services" className="cm-services">
         <div className="cm-services__intro">
@@ -1100,6 +1094,8 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <WhyMagnusSlideshow />
 
       {/* ABOUT */}
       <section id="about" className="cm-about">

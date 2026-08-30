@@ -12,26 +12,12 @@ const slides = [
   {
     tab: "Our Lobby",
     image: hospImg("lobby 2.jpeg"),
-    headline: "A calm, open lobby — not a crowded corridor.",
-    features: ["Wide, uncluttered waiting area", "Comfortable seating for families", "Front desk in the same room"],
-  },
-  {
-    tab: "Reception",
-    image: hospImg("lobby 1.jpeg"),
-    headline: "One desk that guides your whole visit.",
-    features: ["Single point for billing and reports", "Consulting rooms a few steps away", "Warm, softly lit interiors"],
+    lines: ["Zero queues.", "Instant digital flows.", "Comfortable lounge.", "Naturally lit open space."],
   },
   {
     tab: "OPD",
     image: hospImg("opd 2.jpeg"),
-    headline: "Consulting rooms built for unhurried conversations.",
-    features: ["Doctor's desk and exam couch together", "Scan equipment in the same room", "Privacy curtain at every bed"],
-  },
-  {
-    tab: "Scan Room",
-    image: hospImg("opd 1.jpeg"),
-    headline: "Scans done right where your doctor sits.",
-    features: ["Ultrasound and Doppler on site", "Clean, air-conditioned rooms", "Reports reach your specialist the same day"],
+    lines: ["Easy access on single floor.", "Smart navigation built for you.", "State of the art electric beds."],
   },
 ] as const;
 
@@ -40,7 +26,7 @@ export function WhyMagnusSlideshow() {
   const [playing, setPlaying] = useState(true);
   const sectionRef = useRef<HTMLElement | null>(null);
 
-  // Pause the loop while the section is off-screen or the tab is hidden.
+  // Pause the loop while the section is off-screen.
   useEffect(() => {
     const node = sectionRef.current;
     if (!node || typeof IntersectionObserver === "undefined") return;
@@ -59,7 +45,7 @@ export function WhyMagnusSlideshow() {
   }, [active, playing]);
 
   return (
-    <section id="why-magnus" className="cm-why-mag" aria-label="Why Magnus" ref={sectionRef}>
+    <section id="why-magnus" className="cm-why-mag" aria-label="Inside Magnus" ref={sectionRef}>
       <div className="cm-why-mag__frame">
         {slides.map((slide, index) => (
           <div
@@ -69,26 +55,19 @@ export function WhyMagnusSlideshow() {
             aria-hidden="true"
           />
         ))}
-        <span className="cm-why-mag__scrim" aria-hidden="true" />
 
         <div className="cm-why-mag__body">
-          <div className="cm-why-mag__copy" role="group" aria-live="polite">
-            <p className="cm-why-mag__eyebrow">Why Magnus</p>
+          <div className="cm-why-mag__copy" aria-live="polite">
             {slides.map((slide, index) => (
               <div
                 key={slide.tab}
                 className={`cm-why-mag__pane${index === active ? " is-on" : ""}`}
                 hidden={index !== active}
               >
-                <h2 className="cm-why-mag__title">{slide.headline}</h2>
+                <h2 className="cm-why-mag__title">{slide.tab}</h2>
                 <ul className="cm-why-mag__list">
-                  {slide.features.map((f) => (
-                    <li key={f}>
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <path d="m5 13 4 4L19 7" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                      <span>{f}</span>
-                    </li>
+                  {slide.lines.map((line) => (
+                    <li key={line}>{line}</li>
                   ))}
                 </ul>
               </div>
@@ -102,7 +81,6 @@ export function WhyMagnusSlideshow() {
                   key={slide.tab}
                   type="button"
                   role="tab"
-                  id={`cm-why-mag-tab-${index}`}
                   className={`cm-why-mag__tab${index === active ? " is-on" : ""}`}
                   aria-selected={index === active}
                   onClick={() => setActive(index)}
@@ -124,7 +102,7 @@ export function WhyMagnusSlideshow() {
             </div>
 
             <Link href={`${BP}/patient-info/appointment-booking`} className="cm-why-mag__cta">
-              Book a visit
+              Consult our Doctor
             </Link>
           </div>
         </div>
