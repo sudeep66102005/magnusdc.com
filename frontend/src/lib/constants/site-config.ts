@@ -15,7 +15,7 @@ export const siteConfig = {
   },
   googleReviews: {
     rating: 4.8,
-    href: "https://www.google.com/maps/search/?api=1&query=Clarus+Magnus+Health+and+Diagnostics+Koramangala",
+    href: "https://www.google.com/maps/search/?api=1&query=Magnus+Diagnostic+Centre+Koramangala+Bengaluru",
   },
   address: {
     line1: "Clarus Magnus Health & Diagnostics",

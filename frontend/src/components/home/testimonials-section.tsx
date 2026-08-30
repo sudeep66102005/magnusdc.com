@@ -32,7 +32,7 @@ const reviews = [
     time: "3 months ago",
     rating: 5,
     quote:
-      "I accompanied my wife for her MRI brain scan, and the entire experience was remarkably smooth. The staff was incredibly gentle, and we encountered no issues whatsoever. The MRI process was completed swiftly, within just 20-25 minutes. We received the report within 1.5 hours, which is impressively fast compared to other centers. Highly recommended! 🌟",
+      "I accompanied my wife for her MRI brain scan, and the entire experience was remarkably smooth. The staff was incredibly gentle, and we encountered no issues whatsoever. The MRI process was completed swiftly, within just 20–25 minutes. We received the report within 1.5 hours, which is impressively fast compared to other centers. Highly recommended! 🌟",
   },
   {
     name: "Javeed Khan",
@@ -62,7 +62,7 @@ const reviews = [
     time: "4 months ago",
     rating: 5,
     quote:
-      "I recently visited Magnus Diagnostic Centre for my scan, and overall it was a good experience. The staff were polite and cooperative, and the process was handled smoothly without much waiting time.\n\nThe centre was clean and well-maintained, which made me feel comfortable during the visit. The technicians explained the procedure clearly, which helped reduce anxiety.\n\nReports were provided on time, and the overall service felt professional and reliable. Would recommend Magnus Diagnostic Centre to anyone looking for quality diagnostic services.",
+      "I recently visited Magnus Diagnostic Centre for my scan, and overall it was a good experience. The staff were polite and cooperative, and the process was handled smoothly without much waiting time. The centre was clean and well-maintained, which made me feel comfortable during the visit. The technicians explained the procedure clearly, which helped reduce anxiety. Reports were provided on time, and the overall service felt professional and reliable. Would recommend Magnus Diagnostic Centre to anyone looking for quality diagnostic services.",
   },
   {
     name: "Nishanth Amberkar",
