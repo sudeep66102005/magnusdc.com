@@ -563,10 +563,12 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-field textarea{resize:none;min-height:5.5rem}
 .cm-form__consent{font-size:1rem;font-weight:400;color:var(--subtle);margin:0}
 .cm-form__consent a{color:var(--ink);text-decoration:underline}
-/* The label is forced white with !important: the `.cm-root button{color:inherit}`
-   reset plus the navy button background make any inherited colour unreadable,
-   so this must not be overridable by anything downstream. The arrow keeps its
-   own navy colour because .cm-disc declares colour on itself. */
+/* The label is forced white with !important: the button reset above sets
+   color:inherit, and the navy button background makes any inherited colour
+   unreadable, so this must not be overridable by anything downstream. The arrow
+   keeps its own navy colour because .cm-disc declares colour on itself.
+   NOTE: never use a backtick in this stylesheet — it is a template literal and
+   a backtick ends it, which breaks the whole build. */
 .cm-root .cm-form__submit{display:flex;align-items:center;justify-content:space-between;height:3.375rem;border:1px solid var(--green-deep);background:var(--green);color:#FFFFFF!important;border-radius:46px;padding:0 .125rem 0 2rem;font-size:1.25rem;font-weight:700;cursor:pointer;transition:background .15s}
 .cm-root .cm-form__submit .cm-form__submit-label{color:#FFFFFF!important;-webkit-text-fill-color:#FFFFFF}
 .cm-root .cm-form__submit:hover{background:var(--green-deep)}
