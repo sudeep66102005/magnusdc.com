@@ -25,6 +25,8 @@ export const siteConfig = {
     zip: "560034",
     mapsHref:
       "https://www.google.com/maps/search/?api=1&query=534%2FA+7th+Cross+4th+Block+Koramangala+Bengaluru+560034",
+    mapEmbedHref:
+      "https://www.google.com/maps?q=534%2FA%2C+7th+Cross%2C+4th+Block%2C+Koramangala%2C+Bengaluru%2C+Karnataka+560034&output=embed",
   },
   email: "magnuscustomercare@gmail.com",
   hours: {
