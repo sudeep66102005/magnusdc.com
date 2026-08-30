@@ -6,6 +6,14 @@ on:
     paths:
       - "frontend/**"
       - ".github/workflows/deploy-pages.yml"
+  # Build pull requests too. Without this nothing type-checks a branch before it
+  # is merged, so a broken build can only be discovered once it is already on
+  # main and the site has stopped updating.
+  pull_request:
+    branches: [main]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -14,8 +22,10 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  # Per ref, so a pull request build never queues behind or blocks a deploy of
+  # main. Superseded pull request builds are cancelled; deploys never are.
+  group: pages-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
@@ -81,19 +91,25 @@ jobs:
           fi
           exit "$status"
 
+      # Everything below publishes, so it is skipped for pull requests — there a
+      # green build and a passing verify step are the whole point.
       - name: Add .nojekyll
+        if: github.event_name != 'pull_request'
         run: touch frontend/out/.nojekyll
 
       - name: Setup Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: frontend/out
 
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
