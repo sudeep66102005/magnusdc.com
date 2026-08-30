@@ -60,6 +60,16 @@ const WHY = {
   trail: Array.from({ length: 8 }, (_, i) => asset(`/assets/dantora/why/0${i + 1}.png`)),
 };
 
+const RATING = {
+  value: 4.5,
+  label: "Based on 4K+ Reviews",
+  faces: [
+    { label: "R", tone: "rose" },
+    { label: "M", tone: "green" },
+    { label: "B", tone: "blue" },
+  ],
+};
+
 const SERVICES_INTRO = {
   eyebrow: "Our Services",
   title: "Everything your diagnosis needs, under one roof",
@@ -232,6 +242,24 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-hero__inner{position:relative;min-height:calc(100lvh - 13rem);display:flex;flex-direction:column}
 .cm-hero__copy{position:relative;z-index:3;display:flex;flex-direction:column;gap:0;max-width:44.75rem;padding-top:2.5rem}
 .cm-hero__head{display:flex;flex-direction:column;gap:0}
+
+/* rating badge */
+.cm-rating{display:inline-flex;align-items:center;gap:.85rem;align-self:flex-start;margin:0 0 1.35rem;text-decoration:none!important}
+.cm-rating__faces{display:inline-flex;align-items:center}
+.cm-rating__face{display:grid;place-items:center;width:2.1rem;height:2.1rem;border-radius:999px;border:2px solid #FFFFFF;color:#FFFFFF;font-size:.8rem;font-weight:700;line-height:1}
+.cm-rating__face+.cm-rating__face{margin-left:-.65rem}
+.cm-rating__face--rose{background:#C15367}
+.cm-rating__face--green{background:#5AA63B}
+.cm-rating__face--blue{background:#3158A6}
+.cm-rating__face--more{background:#1AA0A8}
+.cm-rating__text{display:inline-flex;flex-direction:column;gap:.18rem}
+.cm-rating__label{font-size:.9rem;font-weight:600;color:var(--ink)}
+.cm-stars{position:relative;display:inline-block;line-height:0}
+.cm-stars__row{display:inline-flex;gap:.06rem;color:#F58220}
+.cm-stars__row svg{width:.95rem;height:.95rem;flex:none;fill:transparent;stroke:currentColor;stroke-width:1.6}
+.cm-stars__row--on{position:absolute;inset:0 auto 0 0;overflow:hidden;white-space:nowrap}
+.cm-stars__row--on svg{fill:currentColor}
+@media(min-width:1024px){.cm-rating{margin-bottom:1.6rem}.cm-rating__label{font-size:.95rem}}
 .cm-hero__desc{max-width:18rem;margin-top:4.25rem;color:var(--subtle);border-left:2px solid var(--lime);padding-left:1rem}
 .cm-hero__actions{display:flex;flex-direction:row;flex-wrap:nowrap;gap:.75rem;position:relative;z-index:3;margin-top:4rem}
 .cm-hero__actions .cm-btn{flex:0 1 10.5rem;width:auto;height:2.875rem;padding:0 .85rem;font-size:.95rem}
@@ -453,9 +481,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-contact__location{display:flex;flex-direction:column;gap:1.5rem;min-width:0}
 .cm-contact__head{display:flex;flex-direction:column;gap:1.5rem}
 .cm-contact__title{font-size:clamp(2.25rem,5.4vw,3.75rem);line-height:1.05;font-weight:700;margin:0}
-.cm-contact__details{font-size:1rem;line-height:1.7;margin:0}
-.cm-contact__details a{color:var(--green);text-decoration:underline;text-underline-offset:3px}
-.cm-contact__details strong{font-weight:700}
+
 .cm-location__map{position:relative;overflow:hidden;width:100%;height:22rem;border:1px solid var(--line);border-radius:24px;background:#EAF2F8}
 .cm-location__map iframe{display:block;width:100%;height:100%;border:0}
 .cm-location__link{position:absolute;left:1rem;bottom:1rem;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0 1.25rem;border-radius:999px;background:#142F86;color:#FFFFFF!important;font-size:.875rem;font-weight:700;text-decoration:none!important;box-shadow:0 8px 24px rgb(20 47 134 / .22)}
@@ -482,7 +508,6 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-contact__location{gap:2rem}
   .cm-contact__head{gap:1.5rem}
   .cm-contact__title{font-size:3.75rem}
-  .cm-contact__details{max-width:36rem}
   .cm-location__map{flex:1;height:auto;min-height:22rem}
   .cm-form{margin:0;gap:2rem}
   .cm-form form{flex:1}
@@ -810,6 +835,27 @@ function DnaMark() {
   );
 }
 
+const STAR_PATH =
+  "m12 2.7 2.82 5.72 6.31.92-4.56 4.44 1.08 6.29L12 17.1l-5.65 2.97 1.08-6.29-4.56-4.44 6.31-.92L12 2.7Z";
+
+function Stars({ value }: { value: number }) {
+  const pct = `${Math.max(0, Math.min(5, value)) * 20}%`;
+  return (
+    <span className="cm-stars" role="img" aria-label={`${value} out of 5 stars`}>
+      <span className="cm-stars__row" aria-hidden="true">
+        {Array.from({ length: 5 }, (_, i) => (
+          <svg key={i} viewBox="0 0 24 24" focusable="false"><path d={STAR_PATH} /></svg>
+        ))}
+      </span>
+      <span className="cm-stars__row cm-stars__row--on" style={{ width: pct }} aria-hidden="true">
+        {Array.from({ length: 5 }, (_, i) => (
+          <svg key={i} viewBox="0 0 24 24" focusable="false"><path d={STAR_PATH} /></svg>
+        ))}
+      </span>
+    </span>
+  );
+}
+
 function Arrow() {
   return (
     <svg className="cm-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -894,6 +940,24 @@ export default function HomePage() {
       <section id="hero" className="cm-section cm-panel cm-round-b cm-hero">
         <div className="cm-hero__inner cm-shell">
           <div className="cm-hero__copy">
+            <a
+              className="cm-rating"
+              href={siteConfig.googleReviews.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-rise
+            >
+              <span className="cm-rating__faces" aria-hidden="true">
+                {RATING.faces.map((f) => (
+                  <span key={f.label} className={`cm-rating__face cm-rating__face--${f.tone}`}>{f.label}</span>
+                ))}
+                <span className="cm-rating__face cm-rating__face--more">+</span>
+              </span>
+              <span className="cm-rating__text">
+                <Stars value={RATING.value} />
+                <span className="cm-rating__label">{RATING.label}</span>
+              </span>
+            </a>
             <div className="cm-hero__head">
               <h1 className="cm-lead">
                 <span className="cm-lead__accent" data-rise>{HERO.titleAccent}</span>
@@ -1068,14 +1132,7 @@ export default function HomePage() {
           <div className="cm-contact__layout">
             <div className="cm-contact__location">
               <div className="cm-contact__head">
-                <p className="cm-eyebrow" data-rise>{CONTACT.eyebrow}</p>
-                <h2 className="cm-contact__title cm-reveal">{CONTACT.title}</h2>
-                <p className="cm-contact__details" data-rise>
-                  <strong>{siteConfig.address.line1}</strong><br />
-                  Call <a href={siteConfig.phone.href}>{siteConfig.phone.display}</a> · <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a><br />
-                  {siteConfig.address.line2}, {siteConfig.address.city}, {siteConfig.address.state} {siteConfig.address.zip}<br />
-                  {siteConfig.hours.imaging} · <a href={siteConfig.address.mapsHref} target="_blank" rel="noopener noreferrer">Open in Maps</a>
-                </p>
+                <h2 className="cm-contact__title cm-reveal">{CONTACT.eyebrow}</h2>
               </div>
               <div className="cm-location__map" data-rise>
                 <iframe
