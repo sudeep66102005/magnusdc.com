@@ -448,55 +448,6 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-about__actions .cm-btn--primary{color:#FFFFFF;border-color:var(--green)}
 .cm-about__actions .cm-btn--primary:hover{background:var(--green);color:#FFFFFF}
 
-/* TEAM */
-.cm-team{position:relative;z-index:10;background:#FFFFFF;padding:5rem 1.25rem}
-@media(min-width:768px){.cm-team{padding-inline:2.5rem}}
-.cm-team__head{display:flex;flex-direction:column;align-items:center;gap:1rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center}
-.cm-docs{display:grid;grid-template-columns:1fr;gap:1rem;width:min(100%,84rem);margin-inline:auto}
-/* Two-up, as in the reference layout. The 299/197 ratio was tuned for three
-   columns; at two-up it would make cards absurdly tall, so height is driven by
-   content instead and the type steps up to suit the wider card. */
-@media(min-width:640px){
-  .cm-docs{grid-template-columns:1fr 1fr;gap:1.25rem}
-  .cm-doc{aspect-ratio:auto;min-height:14rem}
-  .cm-doc__photo{flex:0 0 40%}
-  .cm-doc__body{padding:1.75rem 1.25rem 1.1rem}
-  .cm-doc__spec{margin-right:2.4rem;font-size:.8125rem}
-  .cm-doc__name{font-size:1.25rem;margin-bottom:.35rem}
-  .cm-doc__deg,.cm-doc__exp{font-size:.8125rem}
-  .cm-doc__go{top:.85rem;right:1rem;width:1.9rem;height:1.9rem}
-  .cm-doc__go .cm-arrow{width:.95rem;height:.95rem}
-  .cm-doc__btn{width:min(100%,15rem);height:2.5rem;font-size:.8125rem}
-}
-.cm-doc{position:relative;display:flex;align-items:stretch;overflow:hidden;border-radius:8px;background:#EFF1EA;aspect-ratio:299/197;min-height:11.5rem}
-.cm-doc__photo{position:relative;flex:0 0 43%;align-self:stretch;background:#E4E8DC}
-.cm-doc__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%}
-.cm-doc__body{position:relative;flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:flex-start;padding:1.6rem .95rem .9rem}
-.cm-doc__go{position:absolute;top:.6rem;right:.8rem;display:grid;place-items:center;width:1.45rem;height:1.45rem;border-radius:999px;background:#1B1B1B;color:#FFFFFF!important}
-.cm-doc__go .cm-arrow{width:.75rem;height:.75rem}
-.cm-doc__spec{margin:0 1.9rem .28rem 0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.7rem;font-weight:400;line-height:1.25;color:rgb(20 47 134 / .6)}
-.cm-doc__name{margin:0 0 .28rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.95rem;line-height:1.2;font-weight:800;letter-spacing:-.015em;color:#142F86}
-.cm-doc__deg,.cm-doc__exp{margin:0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.7rem;font-weight:400;line-height:1.3;color:rgb(20 47 134 / .55)}
-.cm-doc__btn{display:inline-flex;align-items:center;justify-content:center;gap:.35rem;margin-top:auto;width:82%;height:2.1rem;border-radius:4px;background:var(--green);color:#FFFFFF!important;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.75rem;font-weight:700;transition:background .2s}
-.cm-doc__btn:hover{background:#31B4F4;color:#142F86!important}
-@media(max-width:639px){.cm-doc{aspect-ratio:auto;min-height:10.5rem}.cm-doc__photo{flex:0 0 38%}.cm-doc__btn{width:100%}}
-/* Specialty filter rail. The rail scrolls horizontally and the two chevrons
-   nudge it; each hides itself once that edge is reached. */
-.cm-docfilter{position:relative;display:flex;align-items:center;gap:.5rem;width:min(100%,84rem);margin:0 auto 1.5rem}
-.cm-docfilter__rail{display:flex;gap:.5rem;overflow-x:auto;scroll-behavior:smooth;padding:.25rem;scrollbar-width:none;-ms-overflow-style:none}
-.cm-docfilter__rail::-webkit-scrollbar{display:none}
-.cm-root .cm-docfilter__nav{flex:none;display:grid;place-items:center;width:2rem;height:2rem;border:1px solid var(--line);border-radius:999px;background:#FFFFFF;color:#142F86;cursor:pointer;padding:0}
-.cm-root .cm-docfilter__nav:hover{background:#142F86;color:#FFFFFF}
-.cm-docfilter__nav svg{width:1.1rem;height:1.1rem}
-.cm-docfilter__nav[hidden]{display:none}
-.cm-root .cm-chip{flex:none;display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;border:1px solid var(--line);border-radius:999px;background:#FFFFFF;color:#142F86;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.8125rem;font-weight:500;white-space:nowrap;cursor:pointer;transition:background .18s,color .18s,border-color .18s}
-.cm-root .cm-chip:hover{border-color:#31B4F4}
-.cm-root .cm-chip.is-on{background:#142F86;border-color:#142F86;color:#FFFFFF}
-/* Shown until a doctor's photograph is uploaded. Brand tint rather than the
-   template's green, so an empty tile reads as deliberate. */
-.cm-doc__photo--empty{background:linear-gradient(160deg,rgb(49 180 244 / .16),rgb(20 47 134 / .10))}
-.cm-doc__monogram{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.75rem;font-weight:700;letter-spacing:.02em;color:rgb(20 47 134 / .38)}
-@media(min-width:640px){.cm-doc__monogram{font-size:2.25rem}}
 
 /* TESTIMONIALS */
 .cm-testimonials{position:relative;z-index:10;background:#F5F8FB;color:#16233B;padding:4.5rem 1.5rem 5.5rem}
@@ -1169,8 +1120,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* TEAM */}
-      <DoctorsSection eyebrow={TEAM.eyebrow} title={TEAM.title} />
+      {/* TEAM — a taste of the roster; the full list lives on /specialties */}
+      <DoctorsSection
+        eyebrow={TEAM.eyebrow}
+        title={TEAM.title}
+        limit={6}
+        moreHref={`${BP}/specialties`}
+      />
 
       <TestimonialsSection />
 

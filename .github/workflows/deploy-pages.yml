@@ -80,8 +80,48 @@ jobs:
           .cm-about__para .accent
           .cm-why-mag__shots
           .cm-why-mag__shot img{display:block
-          class="cm-docfilter__rail"
           NEEDLES
+          # The homepage shows a capped roster with a link out; the filter rail
+          # lives on /specialties, so check each page for what belongs on it.
+          # The export path depends on the trailingSlash setting, so resolve it
+          # rather than assuming either shape.
+          spec_html=""
+          for candidate in out/specialties.html out/specialties/index.html; do
+            if [ -f "$candidate" ]; then
+              spec_html="$candidate"
+              break
+            fi
+          done
+          if [ -z "$spec_html" ]; then
+            echo "MISSING  specialties page was not exported"
+            ls -1 out | head -30
+            status=1
+          else
+            echo "specialties page: $spec_html"
+            while IFS= read -r needle; do
+              if grep -qF -- "$needle" "$spec_html"; then
+                echo "ok       [specialties] $needle"
+              else
+                echo "MISSING  [specialties] $needle"
+                status=1
+              fi
+            done <<'SPECIALTY_NEEDLES'
+          class="cm-docfilter__rail"
+          class="cm-docchip
+          SPECIALTY_NEEDLES
+          fi
+          if grep -qF 'class="cm-team__more"' out/index.html; then
+            echo "ok       homepage view-all link"
+          else
+            echo "MISSING  homepage view-all link"
+            status=1
+          fi
+          if grep -qF 'class="cm-docfilter__rail"' out/index.html; then
+            echo "MISSING  (unexpected) filter rail is on the homepage"
+            status=1
+          else
+            echo "ok       no filter rail on the homepage"
+          fi
           # The template's DNA glyph must not come back anywhere on the page.
           if grep -qF 'M15.0223 1.46977' out/index.html; then
             echo "MISSING  (unexpected) template DNA glyph is still in the page"
