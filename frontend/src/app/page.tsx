@@ -492,7 +492,11 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-root .cm-chip{flex:none;display:inline-flex;align-items:center;height:2.25rem;padding:0 1rem;border:1px solid var(--line);border-radius:999px;background:#FFFFFF;color:#142F86;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.8125rem;font-weight:500;white-space:nowrap;cursor:pointer;transition:background .18s,color .18s,border-color .18s}
 .cm-root .cm-chip:hover{border-color:#31B4F4}
 .cm-root .cm-chip.is-on{background:#142F86;border-color:#142F86;color:#FFFFFF}
-.cm-doc__monogram{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.75rem;font-weight:700;color:rgb(20 47 134 / .35)}
+/* Shown until a doctor's photograph is uploaded. Brand tint rather than the
+   template's green, so an empty tile reads as deliberate. */
+.cm-doc__photo--empty{background:linear-gradient(160deg,rgb(49 180 244 / .16),rgb(20 47 134 / .10))}
+.cm-doc__monogram{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.75rem;font-weight:700;letter-spacing:.02em;color:rgb(20 47 134 / .38)}
+@media(min-width:640px){.cm-doc__monogram{font-size:2.25rem}}
 
 /* TESTIMONIALS */
 .cm-testimonials{position:relative;z-index:10;background:#F5F8FB;color:#16233B;padding:4.5rem 1.5rem 5.5rem}

@@ -13,11 +13,13 @@ export const specialties = [
   "Physician / Internal Medicine",
   "Orthopedics",
   "Cardiology",
+  "Radiology",
   "Physiotherapy",
   "Gynecology & Obstetrics",
   "Neurology",
   "General Surgery",
   "Neurosurgery",
+  "Vascular Surgery",
   "Medical Gastroenterology",
   "Surgical Gastroenterology",
   "ENT",
@@ -29,6 +31,7 @@ export const specialties = [
   "Pulmonology",
   "Pediatrics",
   "Endocrinology",
+  "Homoeopathy",
 ] as const;
 
 export const mainNav: NavItem[] = [

@@ -50,7 +50,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
 
   return (
     <article className="cm-doc">
-      <div className="cm-doc__photo">
+      <div className={`cm-doc__photo${doctor.image ? "" : " cm-doc__photo--empty"}`}>
         {doctor.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={photo(doctor.image)} alt={doctor.name} loading="lazy" decoding="async" />
@@ -64,7 +64,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
         <Link href={href} className="cm-doc__go" aria-label={`View ${doctor.name}`}>
           <Arrow />
         </Link>
-        <p className="cm-doc__spec">{doctor.specialty}</p>
+        <p className="cm-doc__spec">{doctor.title}</p>
         <h3 className="cm-doc__name">{doctor.name}</h3>
         {doctor.degrees ? <p className="cm-doc__deg">{doctor.degrees}</p> : null}
         {doctor.experience ? <p className="cm-doc__exp">{doctor.experience}</p> : null}
