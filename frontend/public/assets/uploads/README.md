@@ -46,6 +46,39 @@ asset("/assets/uploads/doctors/dr-name.jpg")
 
 Need another category? Create a new folder here and add a matching row above.
 
+## Separate mobile and desktop photos
+
+Some sections serve a different photo on phones than on desktop, because a wide
+16:9 photo loses most of its width when cropped to a tall phone screen. These
+sections switch over at 768px.
+
+Two places use this today:
+
+| Section | Folder | Files |
+| --- | --- | --- |
+| Homepage service cards | `services` | `desktop imaging image.jpeg` + `mobile imaging image.jpeg`, and so on |
+| Homepage facility slideshow (Our Lobby / OPD) | `hospital` | `lobby 1.jpeg` … plus optional `mobile lobby 1.jpeg` … |
+
+For the facility slideshow, upload a portrait crop named `mobile ` + the existing
+file name, into `hospital`:
+
+```
+mobile lobby 1.jpeg
+mobile lobby 2.jpeg
+mobile opd 1.jpeg
+mobile opd 2.jpeg
+```
+
+Then name it on the matching slide in
+`frontend/src/components/home/why-magnus-slideshow.tsx`:
+
+```ts
+{ desktop: "lobby 1.jpeg", mobile: "mobile lobby 1.jpeg" }
+```
+
+A slide with no `mobile` file keeps using its desktop photo at every width, so
+you can add them one at a time. Portrait crops of roughly 1080 × 1920 work best.
+
 ## File guidelines
 
 - **Formats:** `.jpg` or `.webp` for photos, `.svg` or `.png` for icons and logos

@@ -11,22 +11,40 @@ const SUB_MS = 3600;
 /** How far the photo drifts as the section moves through the viewport. */
 const PARALLAX_PX = 46;
 
-const groups = [
+/**
+ * A photo may carry a mobile-specific file. `desktop` is used from 768px up and
+ * `mobile` below it, the same <picture> split the service cards use. Omit
+ * `mobile` and the desktop file is used at every width.
+ *
+ * To give a slide its own mobile photo: drop the file into
+ * `frontend/public/assets/uploads/hospital/` and name it here, e.g.
+ *   { desktop: "lobby 1.jpeg", mobile: "mobile lobby 1.jpeg" }
+ * Portrait crops work best — these slides are full-screen, so a 16:9 photo
+ * loses most of its width on a tall phone.
+ */
+type Photo = { desktop: string; mobile?: string };
+type Group = { tab: string; images: Photo[]; lines: string[] };
+
+const groups: Group[] = [
   {
     tab: "Our Lobby",
-    images: [hospImg("lobby 1.jpeg"), hospImg("lobby 2.jpeg")],
+    images: [{ desktop: "lobby 1.jpeg" }, { desktop: "lobby 2.jpeg" }],
     lines: ["Zero queues.", "Instant digital flows.", "Comfortable lounge.", "Naturally lit open space."],
   },
   {
     tab: "OPD",
-    images: [hospImg("opd 1.jpeg"), hospImg("opd 2.jpeg")],
+    images: [{ desktop: "opd 1.jpeg" }, { desktop: "opd 2.jpeg" }],
     lines: ["Easy access on single floor.", "Smart navigation built for you.", "State of the art electric beds."],
   },
-] as const;
+];
 
 /** Flattened running order: lobby 1, lobby 2, opd 1, opd 2, then loop. */
 const reel = groups.flatMap((group, groupIndex) =>
-  group.images.map((src) => ({ src, groupIndex })),
+  group.images.map((photo) => ({
+    desktop: hospImg(photo.desktop),
+    mobile: hospImg(photo.mobile ?? photo.desktop),
+    groupIndex,
+  })),
 );
 
 const firstStepOfGroup = groups.map((_, groupIndex) => reel.findIndex((s) => s.groupIndex === groupIndex));
@@ -95,11 +113,14 @@ export function WhyMagnusSlideshow() {
       <div className="cm-why-mag__frame" ref={frameRef}>
         <div className="cm-why-mag__shots" aria-hidden="true">
           {reel.map((shot, index) => (
-            <div
-              key={shot.src}
+            <picture
+              key={`${shot.groupIndex}-${index}-${shot.desktop}`}
               className={`cm-why-mag__shot${index === step ? " is-on" : ""}`}
-              style={{ backgroundImage: `url("${shot.src}")` }}
-            />
+            >
+              <source media="(min-width: 768px)" srcSet={shot.desktop} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={shot.mobile} alt="" loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+            </picture>
           ))}
         </div>
 
