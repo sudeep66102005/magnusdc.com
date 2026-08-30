@@ -356,7 +356,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 }
 .cm-why-mag__foot{position:relative;display:flex;flex-direction:column}
 .cm-why-mag__tabs{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
-.cm-why-mag__tab{display:flex;flex-direction:column;gap:.5rem;padding:0;border:0;background:none;text-align:left;cursor:pointer;color:rgb(255 255 255 / .8);transition:color .25s}
+.cm-root .cm-why-mag__tab{display:flex;flex-direction:column;gap:.5rem;padding:0;border:0;background:none;text-align:left;cursor:pointer;color:rgb(255 255 255 / .82);transition:color .25s}
 .cm-why-mag__tab.is-on,.cm-why-mag__tab:hover,.cm-why-mag__tab:focus-visible{color:#FFFFFF}
 .cm-why-mag__tab-label{font-size:.8125rem;font-weight:500;letter-spacing:.01em;text-shadow:0 1px 10px rgb(8 16 38 / .55)}
 @media(min-width:768px){.cm-why-mag__tab-label{font-size:.875rem}}
@@ -507,7 +507,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-review__quote{margin:0;font-size:.90625rem;line-height:1.55;color:#16233B;white-space:pre-line}
 .cm-review__quote.is-clamped{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;white-space:normal}
 .cm-review__actions{display:flex;flex-direction:column;align-items:flex-start;gap:.625rem;margin-top:auto}
-.cm-review__more{align-self:flex-start;border:0;background:none;color:#1F5F8B;font-size:.84375rem;font-weight:600;padding:0;cursor:pointer;font-family:inherit}
+.cm-root .cm-review__more{align-self:flex-start;border:0;background:none;color:#1F5F8B;font-size:.84375rem;font-weight:600;padding:0;cursor:pointer;font-family:inherit}
 .cm-review__more:hover,.cm-review__more:focus-visible{text-decoration:underline}
 .cm-review__google-link{display:inline-flex;align-items:center;color:#1F5F8B!important;font-size:.8125rem;font-weight:600;text-decoration:underline!important;text-underline-offset:3px}
 .cm-review__google-link:hover,.cm-review__google-link:focus-visible{color:#142F86!important}
@@ -530,8 +530,9 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-location__link{position:absolute;left:1rem;bottom:1rem;display:inline-flex;align-items:center;justify-content:center;min-height:2.75rem;padding:0 1.25rem;border-radius:999px;background:#142F86;color:#FFFFFF!important;font-size:.875rem;font-weight:700;text-decoration:none!important;box-shadow:0 8px 24px rgb(20 47 134 / .22)}
 .cm-location__link:hover{background:#31B4F4;color:#142F86!important}
 .cm-form{margin-top:0;display:flex;flex-direction:column;gap:2rem;border:1px solid var(--line);border-radius:24px;background:#FFFFFF;padding:1.5rem}
-.cm-form__mark{display:grid;place-items:center;width:2.625rem;height:2.625rem;border-radius:4px;background:var(--green);color:var(--lime)}
-.cm-form__mark svg{width:1.5rem;height:1.5rem}
+.cm-form__mark{display:flex;align-items:center}
+.cm-form__mark img{display:block;width:auto;height:2.5rem;max-width:100%;object-fit:contain;object-position:left center}
+@media(min-width:768px){.cm-form__mark img{height:2.75rem}}
 .cm-form h3{font-size:1.75rem;line-height:1.1;font-weight:700;margin:0}
 .cm-form form{display:flex;flex-direction:column;gap:1.5rem}
 .cm-field{display:flex;flex-direction:column;gap:1rem}
@@ -542,7 +543,9 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-field textarea{resize:none;min-height:5.5rem}
 .cm-form__consent{font-size:1rem;font-weight:400;color:var(--subtle);margin:0}
 .cm-form__consent a{color:var(--ink);text-decoration:underline}
-.cm-form__submit{display:flex;align-items:center;justify-content:space-between;height:3.375rem;border:1px solid var(--green-deep);background:var(--green);color:#FFFFFF;border-radius:46px;padding:0 .125rem 0 2rem;font-size:1.25rem;font-weight:700;cursor:pointer;transition:background .15s}
+/* .cm-root prefix needed: the button reset above sets color:inherit and would otherwise win */
+.cm-root .cm-form__submit{display:flex;align-items:center;justify-content:space-between;height:3.375rem;border:1px solid var(--green-deep);background:var(--green);color:#FFFFFF;border-radius:46px;padding:0 .125rem 0 2rem;font-size:1.25rem;font-weight:700;cursor:pointer;transition:background .15s}
+.cm-root .cm-form__submit>span:first-child{color:#FFFFFF}
 .cm-form__submit:hover{background:var(--green-deep)}
 @media(min-width:768px){.cm-form{padding:2rem}}
 @media(min-width:1024px){
@@ -875,14 +878,6 @@ if(!window.__cmBoot){
 } else { window.__cmBoot.boot(); }
 `;
 
-function DnaMark() {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path fillRule="evenodd" clipRule="evenodd" d={DNA_MARK} fill="currentColor" />
-    </svg>
-  );
-}
-
 const STAR_PATH =
   "m12 2.7 2.82 5.72 6.31.92-4.56 4.44 1.08 6.29L12 17.1l-5.65 2.97 1.08-6.29-4.56-4.44 6.31-.92L12 2.7Z";
 
@@ -1198,7 +1193,10 @@ export default function HomePage() {
               </div>
             </div>
             <div className="cm-form">
-              <span className="cm-form__mark"><DnaMark /></span>
+              <span className="cm-form__mark">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={asset("/assets/logo/clarus-magnus-logo.png")} alt={siteConfig.name} loading="lazy" decoding="async" />
+              </span>
               <h3>{CONTACT.formTitle}</h3>
               <form>
                 <div className="cm-field">
