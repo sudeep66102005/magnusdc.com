@@ -189,9 +189,6 @@ const CONTACT = {
   submit: "Send Request",
 };
 
-const DNA_MARK =
-  "M15.0223 1.46977C15.3152 1.17693 15.791 1.17689 16.0838 1.46977C16.3763 1.76259 16.3763 2.23751 16.0838 2.53031C14.5974 4.01669 14.5974 6.42675 16.0838 7.91312C17.5702 9.39907 19.9795 9.39914 21.4657 7.91312C21.7585 7.62034 22.2333 7.62044 22.5262 7.91312C22.8189 8.20592 22.8198 8.68078 22.5272 8.97367C21.1685 10.3325 19.2557 10.7992 17.5155 10.376C17.6669 10.8911 17.7499 11.4359 17.7499 12C17.7498 15.1756 15.1754 17.7499 11.9999 17.75C11.4358 17.75 10.8909 17.6671 10.3758 17.5157C10.8003 19.2564 10.3329 21.1707 8.9735 22.5303C8.6808 22.8228 8.20584 22.8235 7.91295 22.5313C7.62011 22.2385 7.62022 21.7627 7.91295 21.4698C9.39891 19.9835 9.39867 17.5743 7.91295 16.0879C6.42657 14.6015 4.01651 14.6015 2.53014 16.0879C2.2374 16.3802 1.7624 16.3801 1.46959 16.0879C1.17675 15.7951 1.17686 15.3193 1.46959 15.0264C2.82903 13.6671 4.7426 13.1988 6.48326 13.6231C6.33203 13.1083 6.24987 12.5638 6.24986 12C6.24986 8.8244 8.82423 6.25004 11.9999 6.25004C12.5622 6.25005 13.1053 6.33195 13.619 6.48246C13.1952 4.74209 13.6633 2.82892 15.0223 1.46977ZM11.9999 7.75004C9.65265 7.75004 7.74986 9.65283 7.74986 12C7.74989 14.3472 9.65267 16.25 11.9999 16.25C14.347 16.25 16.2498 14.3472 16.2499 12C16.2499 9.65288 14.347 7.75013 11.9999 7.75004Z";
-
 const css = String.raw`
 body:has(.cm-root) > header.sticky{display:none!important}
 html:has(.cm-root){scroll-behavior:smooth}
@@ -545,10 +542,14 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-field textarea{resize:none;min-height:5.5rem}
 .cm-form__consent{font-size:1rem;font-weight:400;color:var(--subtle);margin:0}
 .cm-form__consent a{color:var(--ink);text-decoration:underline}
-/* .cm-root prefix needed: the button reset above sets color:inherit and would otherwise win */
-.cm-root .cm-form__submit{display:flex;align-items:center;justify-content:space-between;height:3.375rem;border:1px solid var(--green-deep);background:var(--green);color:#FFFFFF;border-radius:46px;padding:0 .125rem 0 2rem;font-size:1.25rem;font-weight:700;cursor:pointer;transition:background .15s}
-.cm-root .cm-form__submit>span:first-child{color:#FFFFFF}
-.cm-form__submit:hover{background:var(--green-deep)}
+/* The label is forced white with !important: the `.cm-root button{color:inherit}`
+   reset plus the navy button background make any inherited colour unreadable,
+   so this must not be overridable by anything downstream. The arrow keeps its
+   own navy colour because .cm-disc declares colour on itself. */
+.cm-root .cm-form__submit{display:flex;align-items:center;justify-content:space-between;height:3.375rem;border:1px solid var(--green-deep);background:var(--green);color:#FFFFFF!important;border-radius:46px;padding:0 .125rem 0 2rem;font-size:1.25rem;font-weight:700;cursor:pointer;transition:background .15s}
+.cm-root .cm-form__submit .cm-form__submit-label{color:#FFFFFF!important;-webkit-text-fill-color:#FFFFFF}
+.cm-root .cm-form__submit:hover{background:var(--green-deep)}
+.cm-root .cm-form__submit:hover .cm-form__submit-label{color:#FFFFFF!important;-webkit-text-fill-color:#FFFFFF}
 @media(min-width:768px){.cm-form{padding:2rem}}
 @media(min-width:1024px){
   .cm-contact{padding:2.5rem}
@@ -572,8 +573,10 @@ html:has(.cm-root){scroll-behavior:smooth}
 /* preloader */
 .cm-pre{position:fixed;inset:0;z-index:90;display:grid;place-items:center;background:#FFFFFF;color:#142F86;transition:transform .9s cubic-bezier(.76,0,.24,1),visibility 0s .9s;animation:cmPreFail .01s 1.25s forwards}
 .cm-root.is-ready .cm-pre{transform:translateY(-100%);visibility:hidden}
-.cm-pre__mark{width:3.5rem;height:3.5rem;animation:cmSpin 1.4s linear infinite}
-@keyframes cmSpin{to{transform:rotate(360deg)}}
+/* Brand logo, not a spinning glyph — a wordmark must stay upright, so it
+   breathes instead of rotating. */
+.cm-pre__mark{display:block;width:auto;height:auto;max-width:min(17rem,62vw);max-height:5rem;object-fit:contain;animation:cmPreBreathe 1.5s ease-in-out infinite}
+@keyframes cmPreBreathe{0%,100%{opacity:.5;transform:scale(.97)}50%{opacity:1;transform:scale(1)}}
 @keyframes cmPreFail{to{visibility:hidden;pointer-events:none;transform:translateY(-100%)}}
 
 @media(prefers-reduced-motion:reduce){
@@ -975,9 +978,8 @@ export default function HomePage() {
       <style>{css}</style>
 
       <div className="cm-pre" aria-hidden="true">
-        <svg className="cm-pre__mark" viewBox="0 0 24 24" fill="none">
-          <path fillRule="evenodd" clipRule="evenodd" d={DNA_MARK} fill="currentColor" />
-        </svg>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img className="cm-pre__mark" src={asset("/assets/logo/clarus-magnus-logo.png")} alt="" />
       </div>
 
 
@@ -1218,7 +1220,7 @@ export default function HomePage() {
                   <Link href={`${BP}/privacy-policy`}>Privacy Policy</Link> and the processing of your personal data.
                 </p>
                 <button type="submit" className="cm-form__submit">
-                  <span>{CONTACT.submit}</span>
+                  <span className="cm-form__submit-label">{CONTACT.submit}</span>
                   <span className="cm-disc"><Arrow /></span>
                 </button>
               </form>
