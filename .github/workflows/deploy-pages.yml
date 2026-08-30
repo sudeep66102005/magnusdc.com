@@ -63,10 +63,20 @@ jobs:
             fi
           done <<'NEEDLES'
           .cm-root .cm-form__submit
+          cm-form__submit-label{color:#FFFFFF!important
+          class="cm-form__submit-label"
+          class="cm-pre__mark"
           /assets/logo/clarus-magnus-logo.png
           .cm-about__para .accent
           .cm-why-mag__shots
           NEEDLES
+          # The template's DNA glyph must not come back anywhere on the page.
+          if grep -qF 'M15.0223 1.46977' out/index.html; then
+            echo "MISSING  (unexpected) template DNA glyph is still in the page"
+            status=1
+          else
+            echo "ok       no template DNA glyph"
+          fi
           exit "$status"
 
       - name: Add .nojekyll
