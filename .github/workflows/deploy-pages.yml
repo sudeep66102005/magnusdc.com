@@ -43,7 +43,31 @@ jobs:
           # Point the built site at your deployed backend API.
           # Update this once the backend is hosted (e.g. Railway/Render).
           NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api' }}
+          # Stamped onto <div class="cm-root" data-build="..."> so the live page
+          # can be matched to the commit it was built from.
+          NEXT_PUBLIC_BUILD: ${{ github.sha }}
         run: npm run build
+
+      - name: Verify build output
+        working-directory: frontend
+        run: |
+          set -euo pipefail
+          echo "Stamp in built HTML: $(grep -o 'data-build="[^"]*"' out/index.html | head -1)"
+          status=0
+          while IFS= read -r needle; do
+            if grep -qF -- "$needle" out/index.html; then
+              echo "ok       $needle"
+            else
+              echo "MISSING  $needle"
+              status=1
+            fi
+          done <<'NEEDLES'
+          .cm-root .cm-form__submit
+          /assets/logo/clarus-magnus-logo.png
+          .cm-about__para .accent
+          .cm-why-mag__shots
+          NEEDLES
+          exit "$status"
 
       - name: Add .nojekyll
         run: touch frontend/out/.nojekyll
