@@ -1,47 +1,78 @@
 "use client";
 
 import { useState } from "react";
+import { siteConfig } from "@/lib/constants/site-config";
 
 const reviews = [
   {
-    name: "Ananya R.",
-    time: "3 months ago",
+    name: "RAJDEEP",
+    initials: "R",
+    avatarTone: "blue",
+    profile: "6 reviews",
+    time: "7 months ago",
     rating: 5,
-    avatar: "https://i.pravatar.cc/80?img=32",
     quote:
-      "The scan was booked the same day and the report came through faster than I expected. Staff explained every step before starting, which made the whole visit a lot less stressful than I thought it'd be.",
+      "Magnus Diagnostic Centre provides excellent service with polite staff, clean facilities, and accurate reports delivered on time. The process is smooth and professional, making patients feel comfortable and well cared for. Highly recommended for reliable diagnostic services.",
   },
   {
-    name: "Vikram S.",
-    time: "5 months ago",
-    rating: 5,
-    avatar: "https://i.pravatar.cc/80?img=12",
-    quote:
-      "Clean facility, on-time appointment, and the radiologist actually walked me through the results instead of just handing over a printout. Would recommend to anyone nearby.",
-  },
-  {
-    name: "Priya M.",
-    time: "2 months ago",
-    rating: 5,
-    avatar: "https://i.pravatar.cc/80?img=45",
-    quote:
-      "Went in for a routine ultrasound and the team was patient with all my questions. Waiting area was comfortable and the whole thing took less time than my last hospital visit.",
-  },
-  {
-    name: "Rohit K.",
+    name: "Muthu RM",
+    initials: "M",
+    avatarTone: "green",
+    profile: "2 reviews",
     time: "a month ago",
     rating: 4,
-    avatar: "https://i.pravatar.cc/80?img=51",
     quote:
-      "Good experience overall — booking on WhatsApp was quick and the front desk kept me updated when there was a short delay. Only reason it's not five stars is parking was a bit tight.",
+      "Dr. Chattbhurya conducted USG Doppler/scrotum. I am so happy that she conducted with an interactive manner comparing with old reports and the improvement thereof. Enlightened well. Best regards, Muthu.",
   },
   {
-    name: "Divya N.",
-    time: "6 months ago",
+    name: "BHARAT BHUSHAN",
+    initials: "BB",
+    avatarTone: "slate",
+    profile: "Local Guide · 45 reviews",
+    time: "3 months ago",
     rating: 5,
-    avatar: "https://i.pravatar.cc/80?img=28",
     quote:
-      "Brought my mother in for an ECHO and the technician was incredibly gentle and reassuring the whole time. They also compared it against her older reports, which we really appreciated.",
+      "I accompanied my wife for her MRI brain scan, and the entire experience was remarkably smooth. The staff was incredibly gentle, and we encountered no issues whatsoever. The MRI process was completed swiftly, within just 20-25 minutes. We received the report within 1.5 hours, which is impressively fast compared to other centers. Highly recommended! 🌟",
+  },
+  {
+    name: "Javeed Khan",
+    initials: "J",
+    avatarTone: "sky",
+    profile: "5 reviews",
+    time: "3 months ago",
+    rating: 5,
+    quote:
+      "recently visited Magnus Diagnostic Centre for an arterial Doppler test. The centre is located on the 1st floor of a new building, and the place is clean and well-maintained.\n\nThe experience was very good. Dr. Chaathuraya is a young Radiologist was very friendly and helpful. She explained the procedure clearly and made me feel comfortable during the test.\n\nOverall, I had a smooth and positive experience. I would recommend this centre for diagnostic tests.",
+  },
+  {
+    name: "Yamuna S",
+    initials: "Y",
+    avatarTone: "rose",
+    profile: "4 reviews",
+    time: "3 months ago",
+    rating: 5,
+    quote:
+      "I'm grateful that Koramangala Diagnostic Centre referred me to Magnus. I came here for my growth scan and had a great experience. The place is clean and has a really calm atmosphere. The soft music helped me relax. The receptionist was polite and friendly, and helper Mangalamma was very supportive. The doctor was excellent too. Highly recommend, Thank you.",
+  },
+  {
+    name: "shobith G P",
+    initials: "SG",
+    avatarTone: "violet",
+    profile: "3 reviews",
+    time: "4 months ago",
+    rating: 5,
+    quote:
+      "I recently visited Magnus Diagnostic Centre for my scan, and overall it was a good experience. The staff were polite and cooperative, and the process was handled smoothly without much waiting time.\n\nThe centre was clean and well-maintained, which made me feel comfortable during the visit. The technicians explained the procedure clearly, which helped reduce anxiety.\n\nReports were provided on time, and the overall service felt professional and reliable. Would recommend Magnus Diagnostic Centre to anyone looking for quality diagnostic services.",
+  },
+  {
+    name: "Nishanth Amberkar",
+    initials: "N",
+    avatarTone: "orange",
+    profile: "1 review",
+    time: "4 months ago",
+    rating: 5,
+    quote:
+      "For past six years, I’ve visited Magnus Diagnostic Centre every six months for checkups. The facility is consistently clean and professional. Dr. Satish Karur is exceptionally approachable, providing invaluable advice and personalized care. Combined with the polite staff and timely, accurate reports, it remains my most trusted choice for reliable diagnostic services in Koramangala. Highly recommended!",
   },
 ] as const;
 
@@ -79,10 +110,12 @@ function ReviewCard({ review, duplicate }: { review: (typeof reviews)[number]; d
   return (
     <li className="cm-review-card" aria-hidden={duplicate || undefined}>
       <div className="cm-review-card__top">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="cm-review__avatar" src={review.avatar} alt="" loading="lazy" />
+        <span className={`cm-review__avatar cm-review__avatar--${review.avatarTone}`} aria-hidden="true">
+          {review.initials}
+        </span>
         <div className="cm-review__who">
           <p className="cm-review__name">{review.name}</p>
+          <p className="cm-review__profile">{review.profile}</p>
           <p className="cm-review__meta">
             <StarRating rating={review.rating} className="cm-review__stars" />
             <span className="sr-only">{review.rating} out of 5 stars</span>
@@ -92,15 +125,27 @@ function ReviewCard({ review, duplicate }: { review: (typeof reviews)[number]; d
         <GoogleMark />
       </div>
       <p className={`cm-review__quote${expanded ? "" : " is-clamped"}`}>{review.quote}</p>
-      <button
-        className="cm-review__more"
-        type="button"
-        aria-expanded={expanded}
-        tabIndex={duplicate ? -1 : undefined}
-        onClick={() => setExpanded((value) => !value)}
-      >
-        {expanded ? "Show less" : "Read more"}
-      </button>
+      <div className="cm-review__actions">
+        <button
+          className="cm-review__more"
+          type="button"
+          aria-expanded={expanded}
+          tabIndex={duplicate ? -1 : undefined}
+          onClick={() => setExpanded((value) => !value)}
+        >
+          {expanded ? "Show less" : "Read more"}
+        </button>
+        <a
+          className="cm-review__google-link"
+          href={siteConfig.googleReviews.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          tabIndex={duplicate ? -1 : undefined}
+          aria-label={`Read ${review.name}'s full review on Google`}
+        >
+          Read full review on Google
+        </a>
+      </div>
     </li>
   );
 }
@@ -112,10 +157,10 @@ export function TestimonialsSection() {
         <div className="cm-testimonials__head">
           <span className="cm-testimonials__eyebrow">
             <StarRating rating={5} className="cm-testimonials__eyebrow-stars" />
-            <span>Based on 4,000+ reviews</span>
+            <span>Google patient reviews</span>
           </span>
           <h2 className="cm-testimonials__title">What patients say about their care</h2>
-          <p>Real stories from the people we&apos;ve supported, pulled straight from Google Reviews.</p>
+          <p>Real experiences shared by Magnus patients on Google Reviews.</p>
         </div>
 
         <div className="cm-testimonials__marquee">
