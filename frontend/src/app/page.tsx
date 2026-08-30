@@ -1120,12 +1120,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* TEAM — a taste of the roster; the full list lives on /specialties */}
+      {/* TEAM — a taste of the roster; the full list lives on /doctors */}
       <DoctorsSection
         eyebrow={TEAM.eyebrow}
         title={TEAM.title}
         limit={6}
-        moreHref={`${BP}/specialties`}
+        moreHref={`${BP}/doctors`}
       />
 
       <TestimonialsSection />
