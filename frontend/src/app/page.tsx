@@ -150,14 +150,13 @@ const ABOUT = {
     { value: "4.8", label: "Google patient rating" },
   ],
   paragraph: [
-    { text: "Clarus Magnus is a radiologist-led destination in ", muted: true },
-    { text: "Koramangala", muted: true, accent: true },
-    { text: " where diagnosis and care are never separated. ", muted: false },
-    { text: "Imaging, laboratory", muted: true, accent: true },
-    { text: " and consulting rooms sit together, ", muted: true },
-    { text: "and your reports reach the ", muted: false },
-    { text: "right specialist", muted: false, accent: true },
-    { text: " the same day.", muted: false },
+    { text: "Clarus Magnus is a radiologist-led destination in " },
+    { text: "Koramangala", accent: true },
+    { text: " where diagnosis and care are never separated. " },
+    { text: "Imaging, laboratory", accent: true },
+    { text: " and consulting rooms sit together, and your reports reach the " },
+    { text: "right specialist", accent: true },
+    { text: " the same day." },
   ],
   actions: [
     { label: "Book a consultation", href: "#contact", primary: true },
@@ -429,9 +428,10 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-stat{display:flex;flex-direction:column;gap:1rem;border-left:1px solid var(--green);padding-left:1rem}
 .cm-stat dd{font-size:2.5rem;line-height:1.05;font-weight:700;margin:0}
 .cm-stat dt{font-size:.875rem;font-weight:400}
-.cm-about__para{font-size:1.375rem;line-height:1.2;font-weight:400;margin:0}
-.cm-about__para .muted{color:var(--muted)}
-.cm-about__para .accent{font-family:var(--font-playfair),Georgia,serif;font-style:italic;font-weight:700}
+/* one font and one colour throughout; the three phrases differ only by dark italic */
+.cm-about__para{font-size:1.375rem;line-height:1.2;font-weight:400;color:var(--ink);margin:0}
+.cm-about__para .accent{font-family:inherit;font-style:italic;font-weight:700;color:#0A1633}
+.cm-about__right{display:flex;flex-direction:column;gap:2rem}
 .cm-about__actions{display:flex;flex-wrap:wrap;gap:1rem}
 @media(min-width:768px){.cm-about__banner{height:24rem}.cm-about__para{font-size:1.75rem}}
 @media(min-width:1024px){
@@ -1128,7 +1128,7 @@ export default function HomePage() {
             <div className="cm-about__right">
               <p className="cm-about__para cm-reveal">
                 {ABOUT.paragraph.map((f) => (
-                  <span key={f.text} className={`${f.muted ? "muted" : ""}${f.accent ? " accent" : ""}`}>{f.text}</span>
+                  <span key={f.text} className={(f as { accent?: boolean }).accent ? "accent" : undefined}>{f.text}</span>
                 ))}
               </p>
               <div className="cm-about__actions">
