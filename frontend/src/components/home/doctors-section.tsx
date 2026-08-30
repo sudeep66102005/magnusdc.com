@@ -27,6 +27,11 @@ const photo = (path: string) => encodeURI(`${BP}/assets/${path}`);
 const css = String.raw`
 .cm-team{position:relative;z-index:10;background:#FFFFFF;padding:4.5rem 1.25rem}
 @media(min-width:768px){.cm-team{padding:5rem 2.5rem}}
+/* When this section is the first thing on a page there is no hero to push it
+   clear of the site header, which is fixed: 1rem from the top plus a 4.25rem
+   bar on small screens and 6.5rem from 1024px up. */
+.cm-team--page{padding-top:6.75rem}
+@media(min-width:1024px){.cm-team--page{padding-top:9.5rem}}
 .cm-team__head{display:flex;flex-direction:column;align-items:center;gap:.85rem;max-width:56rem;margin:0 auto 2rem;text-align:center}
 .cm-team__eyebrow{margin:0;font-size:.875rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:#142F86}
 .cm-team__title{margin:0;font-size:clamp(2rem,5vw,3.25rem);line-height:1.06;font-weight:700;letter-spacing:-.01em;color:#142F86}
@@ -171,6 +176,11 @@ type DoctorsSectionProps = {
   /** Renders a "view more" link when set and the list is capped. */
   moreHref?: string;
   moreLabel?: string;
+  /**
+   * Set when this section is the first thing on a page, so it clears the fixed
+   * site header that a page hero would otherwise push it past.
+   */
+  firstOnPage?: boolean;
 };
 
 export function DoctorsSection({
@@ -180,6 +190,7 @@ export function DoctorsSection({
   showFilter = false,
   moreHref,
   moreLabel = "View All Doctors",
+  firstOnPage = false,
 }: DoctorsSectionProps) {
   const [active, setActive] = useState("All");
   const railRef = useRef<HTMLDivElement | null>(null);
@@ -214,7 +225,7 @@ export function DoctorsSection({
   const showMore = Boolean(moreHref) && matching.length > shown.length;
 
   return (
-    <section id="team" className="cm-team">
+    <section id="team" className={`cm-team${firstOnPage ? " cm-team--page" : ""}`}>
       <style>{css}</style>
 
       <div className="cm-team__head">

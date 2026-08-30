@@ -52,8 +52,9 @@ export const mainNav: NavItem[] = [
   },
   {
     label: "Doctors",
-    href: "/specialties",
+    href: "/doctors",
     children: [
+      { label: "All Doctors", href: "/doctors" },
       { label: "All Specialties", href: "/specialties" },
       ...specialties.map((name) => ({
         label: name,
@@ -144,6 +145,7 @@ export const footerNav = {
       title: "Company",
       links: [
         { label: "About Us", href: "/about" },
+        { label: "Doctors", href: "/doctors" },
         { label: "Specialties", href: "/specialties" },
         { label: "Diagnostics", href: "/diagnostics" },
         { label: "Laboratory", href: "/laboratory" },

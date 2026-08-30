@@ -81,34 +81,51 @@ jobs:
           .cm-why-mag__shots
           .cm-why-mag__shot img{display:block
           NEEDLES
-          # The homepage shows a capped roster with a link out; the filter rail
-          # lives on /specialties, so check each page for what belongs on it.
-          # The export path depends on the trailingSlash setting, so resolve it
-          # rather than assuming either shape.
-          spec_html=""
-          for candidate in out/specialties.html out/specialties/index.html; do
+          # The homepage shows a capped roster with a link out; the full roster
+          # and the filter rail live on /doctors, so check each page for what
+          # belongs on it. The export path depends on the trailingSlash setting,
+          # so resolve it rather than assuming either shape.
+          doc_html=""
+          for candidate in out/doctors.html out/doctors/index.html; do
             if [ -f "$candidate" ]; then
-              spec_html="$candidate"
+              doc_html="$candidate"
               break
             fi
           done
-          if [ -z "$spec_html" ]; then
-            echo "MISSING  specialties page was not exported"
+          if [ -z "$doc_html" ]; then
+            echo "MISSING  doctors page was not exported"
             ls -1 out | head -30
             status=1
           else
-            echo "specialties page: $spec_html"
+            echo "doctors page: $doc_html"
             while IFS= read -r needle; do
-              if grep -qF -- "$needle" "$spec_html"; then
-                echo "ok       [specialties] $needle"
+              if grep -qF -- "$needle" "$doc_html"; then
+                echo "ok       [doctors] $needle"
               else
-                echo "MISSING  [specialties] $needle"
+                echo "MISSING  [doctors] $needle"
                 status=1
               fi
-            done <<'SPECIALTY_NEEDLES'
+            done <<'DOCTOR_NEEDLES'
           class="cm-docfilter__rail"
           class="cm-docchip
-          SPECIALTY_NEEDLES
+          cm-team cm-team--page
+          DOCTOR_NEEDLES
+            # Every consultant must be on this page, not just the homepage six.
+            # Split on tags first: grep -c counts matching lines, and the export
+            # is effectively one long line. "|| true" keeps a zero count from
+            # tripping errexit via pipefail.
+            doc_count=$(tr '<' '\n' < "$doc_html" | grep -c 'class="cm-doc__name"' || true)
+            echo "doctors rendered on /doctors: $doc_count"
+            if [ "$doc_count" -lt 20 ]; then
+              echo "MISSING  /doctors is capped, expected the full roster"
+              status=1
+            fi
+          fi
+          home_count=$(tr '<' '\n' < out/index.html | grep -c 'class="cm-doc__name"' || true)
+          echo "doctors rendered on the homepage: $home_count"
+          if [ "$home_count" -eq 0 ] || [ "$home_count" -gt 8 ]; then
+            echo "MISSING  homepage roster should be a small capped set"
+            status=1
           fi
           if grep -qF 'class="cm-team__more"' out/index.html; then
             echo "ok       homepage view-all link"
