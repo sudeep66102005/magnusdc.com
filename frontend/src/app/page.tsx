@@ -337,14 +337,24 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-why-mag__body{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:space-between;gap:2.5rem;min-height:100lvh;padding:2rem 1.25rem}
 @media(min-width:768px){.cm-why-mag__body{padding:2.75rem 2.5rem}}
 @media(min-width:1024px){.cm-why-mag__body{padding:3.25rem 3rem}}
-.cm-why-mag__copy{position:relative;max-width:34rem}
+.cm-why-mag__copy{position:relative;max-width:38rem}
 .cm-why-mag__pane{animation:cmWhyMagIn .7s cubic-bezier(.2,0,0,1) both}
 @keyframes cmWhyMagIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-.cm-why-mag__title{margin:0 0 1.15rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.5rem;line-height:1.1;font-weight:700;letter-spacing:-.01em;color:#FFFFFF;text-shadow:0 1px 14px rgb(8 16 38 / .55)}
-@media(min-width:768px){.cm-why-mag__title{font-size:1.75rem}}
-.cm-why-mag__list{display:flex;flex-direction:column;gap:.5rem;margin:0;padding:0;list-style:none}
-.cm-why-mag__list li{font-size:1.05rem;line-height:1.25;font-weight:400;color:#FFFFFF;text-shadow:0 1px 12px rgb(8 16 38 / .6)}
-@media(min-width:768px){.cm-why-mag__list{gap:.65rem}.cm-why-mag__list li{font-size:1.3rem}}
+/* heading and description share one font, size and line height; only the weight differs */
+.cm-why-mag__title,.cm-why-mag__list li{font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.375rem;line-height:1.3;letter-spacing:-.01em;color:#FFFFFF;text-shadow:0 1px 12px rgb(8 16 38 / .58)}
+.cm-why-mag__title{margin:0 0 1.35rem;font-weight:700}
+.cm-why-mag__list{display:flex;flex-direction:column;gap:.35rem;margin:0;padding:0;list-style:none}
+.cm-why-mag__list li{font-weight:400}
+@media(min-width:768px){
+  .cm-why-mag__title,.cm-why-mag__list li{font-size:1.75rem}
+  .cm-why-mag__title{margin-bottom:1.5rem}
+  .cm-why-mag__list{gap:.45rem}
+}
+@media(min-width:1024px){
+  .cm-why-mag__title,.cm-why-mag__list li{font-size:2rem}
+  .cm-why-mag__title{margin-bottom:1.65rem}
+  .cm-why-mag__list{gap:.5rem}
+}
 .cm-why-mag__foot{position:relative;display:flex;flex-direction:column}
 .cm-why-mag__tabs{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 .cm-why-mag__tab{display:flex;flex-direction:column;gap:.5rem;padding:0;border:0;background:none;text-align:left;cursor:pointer;color:rgb(255 255 255 / .8);transition:color .25s}
