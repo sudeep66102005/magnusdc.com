@@ -1114,9 +1114,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* TEAM — a taste of the roster; the full list lives on /doctors. No
-          heading text here by request — the cards speak for themselves. */}
-      <DoctorsSection limit={6} moreHref={`${BP}/doctors`} />
+      {/* TEAM — a taste of the roster; the full list lives on /doctors. The
+          heading is needed here because this section sits between others and
+          would otherwise be unlabelled; /doctors passes none, since there the
+          whole page is already the roster. */}
+      <DoctorsSection title="Our Doctors" limit={6} moreHref={`${BP}/doctors`} />
 
       <TestimonialsSection />
 
