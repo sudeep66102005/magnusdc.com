@@ -24,13 +24,13 @@ const photo = (path: string) => encodeURI(`${BP}/assets/${path}`);
 const css = String.raw`
 .cm-team{position:relative;z-index:10;background:#FFFFFF;padding:4rem 1.25rem}
 @media(min-width:768px){.cm-team{padding:4.5rem 2.5rem}}
-/* When this section is the first thing on a page there is no hero to push it
-   clear of the site header, which is fixed and therefore overlays content.
-   These values are the header's exact bottom edge plus a hair: 1rem from the
-   top plus a 4.25rem bar below 1024px, and 6.5rem from 1024px up. Anything
-   more than this reads as an empty gap under the header. */
-.cm-team--page{padding-top:5.5rem}
-@media(min-width:1024px){.cm-team--page{padding-top:8rem}}
+/* Clearing the fixed site header is NOT this section's job — site-header.tsx
+   already does it globally with
+     body:not(:has(.cm-root)){padding-top:5.75rem}  (8rem from 1024px up)
+   which applies to every page except the homepage. Adding header-sized padding
+   here as well stacked the two and left a large empty band under the header.
+   So this is only a small breathing space above the filter. */
+.cm-team--page{padding-top:1rem}
 .cm-team__head{display:flex;flex-direction:column;align-items:center;gap:.85rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center}
 .cm-team__title{margin:0;font-size:clamp(2rem,5vw,3.25rem);line-height:1.06;font-weight:700;letter-spacing:-.01em;color:#142F86}
 
