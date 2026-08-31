@@ -29,15 +29,17 @@ const css = String.raw`
 @media(min-width:768px){.cm-team{padding:5rem 2.5rem}}
 /* When this section is the first thing on a page there is no hero to push it
    clear of the site header, which is fixed: 1rem from the top plus a 4.25rem
-   bar on small screens and 6.5rem from 1024px up. */
-.cm-team--page{padding-top:6.75rem}
-@media(min-width:1024px){.cm-team--page{padding-top:9.5rem}}
+   bar on small screens and 6.5rem from 1024px up. Slightly less than before:
+   with no heading above the filter, the filter itself is the first thing
+   visible and doesn't need as much breathing room above it. */
+.cm-team--page{padding-top:6rem}
+@media(min-width:1024px){.cm-team--page{padding-top:8.5rem}}
 .cm-team__head{display:flex;flex-direction:column;align-items:center;gap:.85rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center}
 .cm-team__title{margin:0;font-size:clamp(2rem,5vw,3.25rem);line-height:1.06;font-weight:700;letter-spacing:-.01em;color:#142F86}
 
 /* Filter rail. It scrolls horizontally and the chevrons nudge it; each chevron
    hides itself once the rail reaches that edge. */
-.cm-docfilter{position:relative;display:flex;align-items:center;gap:.5rem;width:min(100%,72rem);margin:0 auto 2rem}
+.cm-docfilter{position:relative;display:flex;align-items:center;gap:.5rem;width:min(100%,84rem);margin:0 auto 2rem}
 .cm-docfilter__rail{display:flex;gap:.5rem;overflow-x:auto;scroll-behavior:smooth;padding:.25rem;scrollbar-width:none;-ms-overflow-style:none}
 .cm-docfilter__rail::-webkit-scrollbar{display:none}
 .cm-docfilter__nav{flex:none;display:grid;place-items:center;width:2.25rem;height:2.25rem;padding:0;border:1px solid rgb(20 47 134 / .14);border-radius:999px;background:#FFFFFF;color:#142F86;cursor:pointer}
@@ -48,51 +50,67 @@ const css = String.raw`
 .cm-docchip:hover{border-color:#31B4F4}
 .cm-docchip.is-on{background:#142F86;border-color:#142F86;color:#FFFFFF}
 
-/* Card grid: two columns, generous gutters, matched row heights. */
-.cm-docs{display:grid;grid-template-columns:1fr;gap:1.5rem;width:min(100%,72rem);margin-inline:auto}
-@media(min-width:720px){.cm-docs{grid-template-columns:1fr 1fr;gap:1.75rem}}
+/* Card grid: two columns, generous gutters, matched row heights. Sized so
+   roughly four cards — a 2x2 block — fill a typical desktop viewport without
+   feeling cramped, rather than reading as a dense directory list. */
+.cm-docs{display:grid;grid-template-columns:1fr;gap:1.5rem;width:min(100%,84rem);margin-inline:auto}
+@media(min-width:720px){.cm-docs{grid-template-columns:1fr 1fr;gap:2rem}}
 
 /* The card. A quiet white/glass surface — a hairline border plus a soft, wide
    shadow reads as premium; a heavy border or a dark card would not. */
-.cm-doc{position:relative;display:flex;flex-direction:column;height:100%;border-radius:20px;border:1px solid rgb(20 47 134 / .08);background:#FFFFFF;box-shadow:0 1px 2px rgb(20 47 134 / .04),0 16px 40px -24px rgb(20 47 134 / .16);padding:1.75rem;gap:1.25rem;transition:box-shadow .25s ease,transform .25s ease,border-color .25s ease}
+.cm-doc{position:relative;display:flex;flex-direction:column;height:100%;min-height:16rem;border-radius:24px;border:1px solid rgb(20 47 134 / .08);background:#FFFFFF;box-shadow:0 1px 2px rgb(20 47 134 / .04),0 16px 40px -24px rgb(20 47 134 / .16);padding:2rem;gap:1.5rem;transition:box-shadow .25s ease,transform .25s ease,border-color .25s ease}
 .cm-doc:hover{box-shadow:0 4px 10px rgb(20 47 134 / .06),0 28px 56px -24px rgb(20 47 134 / .22);transform:translateY(-3px);border-color:rgb(20 47 134 / .14)}
 
-.cm-doc__top{display:flex;align-items:flex-start;gap:1.1rem}
+.cm-doc__top{display:flex;align-items:flex-start;gap:1.25rem}
 
 /* Left-side visual slot — deliberately compact, a placeholder for a future
    photo rather than the card's focal point. A perfect circle so a portrait
-   crop will sit correctly without any layout change later. */
-.cm-doc__avatar{position:relative;flex:none;width:3.75rem;height:3.75rem;border-radius:999px;overflow:hidden;background:linear-gradient(160deg,rgb(49 180 244 / .16),rgb(20 47 134 / .08));transition:transform .25s ease}
+   crop will sit correctly without any layout change later. It grows with the
+   card at wider breakpoints so it stays in proportion to a much bigger card,
+   without ever becoming the card's focus. */
+.cm-doc__avatar{position:relative;flex:none;width:4.25rem;height:4.25rem;border-radius:999px;overflow:hidden;background:linear-gradient(160deg,rgb(49 180 244 / .16),rgb(20 47 134 / .08));transition:transform .25s ease}
 .cm-doc:hover .cm-doc__avatar{transform:scale(1.04)}
 .cm-doc__avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.cm-doc__monogram{position:absolute;inset:0;display:grid;place-items:center;font-size:1.0625rem;font-weight:700;letter-spacing:.02em;color:rgb(20 47 134 / .45)}
+.cm-doc__monogram{position:absolute;inset:0;display:grid;place-items:center;font-size:1.1875rem;font-weight:700;letter-spacing:.02em;color:rgb(20 47 134 / .45)}
 
 .cm-doc__id{flex:1 1 auto;min-width:0}
 /* The name is the focal point of the card: largest, boldest, first thing read. */
-.cm-doc__name{margin:0 0 .3rem;font-size:1.1875rem;line-height:1.25;font-weight:700;letter-spacing:-.01em;color:#142F86}
-.cm-doc__spec{margin:0;font-size:.8125rem;font-weight:500;line-height:1.4;color:rgb(20 47 134 / .55)}
-.cm-doc__qual{margin:.2rem 0 0;font-size:.8125rem;font-weight:400;line-height:1.4;color:rgb(20 47 134 / .58)}
+.cm-doc__name{margin:0 0 .35rem;font-size:1.3125rem;line-height:1.25;font-weight:700;letter-spacing:-.01em;color:#142F86}
+.cm-doc__spec{margin:0;font-size:.875rem;font-weight:500;line-height:1.4;color:rgb(20 47 134 / .55)}
+.cm-doc__qual{margin:.25rem 0 0;font-size:.875rem;font-weight:400;line-height:1.4;color:rgb(20 47 134 / .58)}
 
 .cm-doc__foot{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-top:auto}
 
 /* Experience badge — a small pill with a professional icon, not a paragraph. */
-.cm-doc__badge{display:inline-flex;align-items:center;gap:.4rem;padding:.4rem .7rem;border-radius:999px;background:rgb(49 180 244 / .12);color:#142F86;font-size:.75rem;font-weight:600;line-height:1}
-.cm-doc__badge svg{width:.9rem;height:.9rem;flex:none}
+.cm-doc__badge{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .8rem;border-radius:999px;background:rgb(49 180 244 / .12);color:#142F86;font-size:.8125rem;font-weight:600;line-height:1}
+.cm-doc__badge svg{width:.95rem;height:.95rem;flex:none}
 
 /* The action is a small round arrow, not a full-width button — the badge
    already carries the supporting information. */
-.cm-doc__go{flex:none;display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:999px;background:#142F86;color:#FFFFFF;transition:background .2s ease,transform .2s ease}
-.cm-doc__go svg{width:1rem;height:1rem;transition:transform .2s ease}
+.cm-doc__go{flex:none;display:grid;place-items:center;width:2.75rem;height:2.75rem;border-radius:999px;background:#142F86;color:#FFFFFF;transition:background .2s ease,transform .2s ease}
+.cm-doc__go svg{width:1.05rem;height:1.05rem;transition:transform .2s ease}
 .cm-doc:hover .cm-doc__go{background:#31B4F4}
 .cm-doc:hover .cm-doc__go svg{transform:translate(2px,-2px)}
 
+/* This is the size step that matters most: on a desktop viewport the grid is
+   still two columns, so making the cards noticeably taller and roomier is
+   what makes four of them read as a spacious 2x2 block instead of a small,
+   dense list. */
 @media(min-width:1024px){
-  .cm-doc{padding:2rem;gap:1.5rem}
-  .cm-doc__avatar{width:4.25rem;height:4.25rem}
-  .cm-doc__name{font-size:1.375rem}
-  .cm-doc__spec,.cm-doc__qual{font-size:.875rem}
-  .cm-doc__badge{font-size:.8125rem;padding:.45rem .8rem}
-  .cm-doc__go{width:2.75rem;height:2.75rem}
+  .cm-doc{padding:2.5rem;gap:1.75rem;min-height:20rem;border-radius:28px}
+  .cm-doc__avatar{width:5rem;height:5rem}
+  .cm-doc__monogram{font-size:1.375rem}
+  .cm-doc__name{font-size:1.625rem}
+  .cm-doc__spec,.cm-doc__qual{font-size:.9375rem}
+  .cm-doc__badge{font-size:.875rem;padding:.5rem .9rem}
+  .cm-doc__go{width:3.25rem;height:3.25rem}
+  .cm-doc__go svg{width:1.15rem;height:1.15rem}
+}
+@media(min-width:1440px){
+  .cm-doc{padding:2.75rem;min-height:22rem}
+  .cm-doc__avatar{width:5.5rem;height:5.5rem}
+  .cm-doc__name{font-size:1.875rem}
+  .cm-doc__spec,.cm-doc__qual{font-size:1rem}
 }
 
 .cm-team__more-wrap{display:flex;justify-content:center;margin-top:3rem}
@@ -198,7 +216,8 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
 }
 
 type DoctorsSectionProps = {
-  title: string;
+  /** Omit entirely to render no heading — just the filter (if shown) and the cards. */
+  title?: string;
   /** Cap the number of cards. Omit to show the whole roster. */
   limit?: number;
   /** Specialty filter rail. Pointless over a capped subset, so it defaults off. */
@@ -257,9 +276,11 @@ export function DoctorsSection({
     <section id="team" className={`cm-team${firstOnPage ? " cm-team--page" : ""}`}>
       <style>{css}</style>
 
-      <div className="cm-team__head">
-        <h2 className="cm-team__title">{title}</h2>
-      </div>
+      {title ? (
+        <div className="cm-team__head">
+          <h2 className="cm-team__title">{title}</h2>
+        </div>
+      ) : null}
 
       {showFilter ? (
         <div className="cm-docfilter">
