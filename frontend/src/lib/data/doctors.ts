@@ -49,9 +49,12 @@ export const doctors: Doctor[] = [
     name: "Dr. Chaathurya R.",
     title: "Consultant Radiologist",
     specialty: "Radiology",
-    keyQualification: "MD (Radiodiagnosis)",
-    degrees:
+    // All seven of her credentials on the card by request. The ACFRG acronym is
+    // left unexpanded here purely for width — spelled out in `degrees` below.
+    keyQualification:
       "MBBS, MD (Radiodiagnosis), CCFRG, ACFRG, Fellowship in Fetal Medicine, ISUOG Certified in Fetal Echocardiography, Advanced Fellowship in Musculoskeletal Imaging",
+    degrees:
+      "MBBS — Bangalore Medical College and Research Institute, Bengaluru; MD Radiodiagnosis — Kempegowda Institute of Medical Sciences, Bengaluru; CCFRG; ACFRG (Advanced Certificate in Fetal Radiology & Genetics); Fellowship in Fetal Medicine; ISUOG Certified in Fetal Echocardiography; Advanced Fellowship in Musculoskeletal Imaging",
     experience: "9 years experience",
   },
 
