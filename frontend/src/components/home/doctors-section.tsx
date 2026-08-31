@@ -3,9 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { doctorFilters, doctors, type Doctor } from "@/lib/data/doctors";
-// Reused rather than reimplemented: this is what builds the /specialties/[slug]
-// routes, and it maps "&" to "and", which a naive slug would drop and 404 on.
-import { slugify } from "@/lib/constants/navigation";
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -28,10 +25,12 @@ const css = String.raw`
 .cm-team{position:relative;z-index:10;background:#FFFFFF;padding:4rem 1.25rem}
 @media(min-width:768px){.cm-team{padding:4.5rem 2.5rem}}
 /* When this section is the first thing on a page there is no hero to push it
-   clear of the site header, which is fixed: 1rem from the top plus a 4.25rem
-   bar on small screens and 6.5rem from 1024px up. */
-.cm-team--page{padding-top:6rem}
-@media(min-width:1024px){.cm-team--page{padding-top:8.5rem}}
+   clear of the site header, which is fixed and therefore overlays content.
+   These values are the header's exact bottom edge plus a hair: 1rem from the
+   top plus a 4.25rem bar below 1024px, and 6.5rem from 1024px up. Anything
+   more than this reads as an empty gap under the header. */
+.cm-team--page{padding-top:5.5rem}
+@media(min-width:1024px){.cm-team--page{padding-top:8rem}}
 .cm-team__head{display:flex;flex-direction:column;align-items:center;gap:.85rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center}
 .cm-team__title{margin:0;font-size:clamp(2rem,5vw,3.25rem);line-height:1.06;font-weight:700;letter-spacing:-.01em;color:#142F86}
 
@@ -69,11 +68,23 @@ const css = String.raw`
 .cm-doc__name{margin:0 0 .35rem;font-size:1.25rem;line-height:1.22;font-weight:700;letter-spacing:-.01em;color:#142F86}
 .cm-doc__qual{margin:0;font-size:.8125rem;font-weight:400;line-height:1.4;color:rgb(20 47 134 / .58)}
 
-/* Small round arrow in the corner, as in the reference. */
-.cm-doc__go{position:absolute;top:.9rem;right:.9rem;display:grid;place-items:center;width:2.1rem;height:2.1rem;border-radius:999px;background:#1B1B1B;color:#FFFFFF;transition:background .2s ease}
+/* Small round arrow in the corner. White surface with a navy glyph, so it
+   reads as a quiet control against the tinted card rather than a heavy dark
+   dot. It links to Contact Us. */
+.cm-doc__go{position:absolute;top:.9rem;right:.9rem;display:grid;place-items:center;width:2.1rem;height:2.1rem;border-radius:999px;background:#FFFFFF;color:#142F86;box-shadow:0 2px 8px rgb(20 47 134 / .16);transition:background .2s ease,color .2s ease}
 .cm-doc__go svg{width:.95rem;height:.95rem;transition:transform .2s ease}
-.cm-doc:hover .cm-doc__go{background:#142F86}
+.cm-doc:hover .cm-doc__go{background:#142F86;color:#FFFFFF}
 .cm-doc:hover .cm-doc__go svg{transform:translate(2px,-2px)}
+
+/* Years-of-experience badge. The tint is chosen from the specialty name, so
+   every doctor in a specialty gets the same accent and the page stays
+   cohesive rather than looking randomly coloured. */
+.cm-doc__badge{display:inline-flex;align-items:center;gap:.4rem;margin:.75rem 0 0;padding:.4rem .7rem;border-radius:999px;font-size:.75rem;font-weight:600;line-height:1.1}
+.cm-doc__badge svg{width:.95rem;height:.95rem;flex:none}
+.cm-doc__badge--sky{background:rgb(49 180 244 / .15);color:#0E4C7A}
+.cm-doc__badge--green{background:rgb(34 160 96 / .14);color:#166B49}
+.cm-doc__badge--violet{background:rgb(124 92 214 / .14);color:#4A3990}
+.cm-doc__badge--amber{background:rgb(214 158 46 / .18);color:#78581A}
 
 /* Book Now: solid, high-contrast, and pushed to the bottom of the card so it
    is unmistakably visible — the previous version had lost it entirely. */
@@ -89,6 +100,7 @@ const css = String.raw`
   .cm-doc__qual{font-size:.9375rem}
   .cm-doc__go{top:1.15rem;right:1.15rem;width:2.5rem;height:2.5rem}
   .cm-doc__go svg{width:1.05rem;height:1.05rem}
+  .cm-doc__badge{font-size:.8125rem;padding:.45rem .8rem;margin-top:.9rem}
   .cm-doc__btn{height:2.9rem;font-size:.9375rem}
 }
 @media(min-width:1440px){
@@ -136,8 +148,48 @@ function Chevron({ dir }: { dir: "prev" | "next" }) {
   );
 }
 
+/** Small medal glyph for the experience badge. */
+function MedalIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="9.5" r="5.5" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M12 7.6l.85 1.72 1.9.28-1.37 1.34.32 1.9L12 11.94l-1.7.9.32-1.9-1.37-1.34 1.9-.28L12 7.6Z" fill="currentColor" />
+      <path d="M9 15.2 7.5 21l4.5-2.3L16.5 21 15 15.2" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+/** Subtle accent tints for the badge, kept few so the grid stays cohesive. */
+const BADGE_TINTS = ["sky", "green", "violet", "amber"] as const;
+
+/**
+ * Picks a tint from the specialty name, so every doctor within a specialty
+ * shares one accent and the colours look deliberate rather than arbitrary.
+ */
+function badgeTint(specialty: string): (typeof BADGE_TINTS)[number] {
+  let sum = 0;
+  for (let i = 0; i < specialty.length; i += 1) sum += specialty.charCodeAt(i);
+  return BADGE_TINTS[sum % BADGE_TINTS.length];
+}
+
+/**
+ * Turns the free-text experience field into a short badge label, e.g.
+ * "25+ years experience, 20+ as a specialist" -> "25+ years experience".
+ * Entries that carry no year figure (procedure counts, fellowship notes) fall
+ * back to their first clause, and are dropped if that is still too long for a
+ * pill — better no badge than a badge that wraps across the card.
+ */
+function experienceLabel(experience: string): string | null {
+  // Split on comma-then-space only. A bare comma also appears inside numbers
+  // like "5,000+", and splitting on that yielded a badge reading just "5".
+  const first = experience.split(/,\s+/)[0].trim();
+  const years = first.match(/^([\d,]+\+?)\s*years?/i);
+  if (years) return `${years[1]} years experience`;
+  return first.length <= 32 ? first : null;
+}
+
 function DoctorCard({ doctor }: { doctor: Doctor }) {
-  const href = doctor.href ?? `${BP}/specialties/${slugify(doctor.specialty)}`;
+  const badge = doctor.experience ? experienceLabel(doctor.experience) : null;
 
   return (
     <article className="cm-doc">
@@ -152,12 +204,22 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
         )}
       </div>
       <div className="cm-doc__body">
-        <Link href={href} className="cm-doc__go" aria-label={`View ${doctor.name}`}>
+        <Link
+          href={`${BP}/contact`}
+          className="cm-doc__go"
+          aria-label={`Contact us about ${doctor.name}`}
+        >
           <Arrow />
         </Link>
         <p className="cm-doc__spec">{doctor.specialty}</p>
         <h3 className="cm-doc__name">{doctor.name}</h3>
         {doctor.keyQualification ? <p className="cm-doc__qual">{doctor.keyQualification}</p> : null}
+        {badge ? (
+          <span className={`cm-doc__badge cm-doc__badge--${badgeTint(doctor.specialty)}`}>
+            <MedalIcon />
+            {badge}
+          </span>
+        ) : null}
         <Link href={`${BP}/patient-info/appointment-booking`} className="cm-doc__btn">
           Book Now
         </Link>

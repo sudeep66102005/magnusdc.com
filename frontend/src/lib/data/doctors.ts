@@ -30,7 +30,11 @@ export type Doctor = {
    * tile, so a doctor can be listed before the photograph exists.
    */
   image?: string;
-  /** Where the card links to. Defaults to the doctor's specialty page. */
+  /**
+   * Optional per-doctor link. Currently unused by the card: the corner arrow
+   * goes to Contact Us and the button to appointment booking. Kept for a
+   * future per-doctor profile page.
+   */
   href?: string;
 };
 
