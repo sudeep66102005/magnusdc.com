@@ -18,7 +18,7 @@ const base =
 
 export function GlobalWidgets() {
   return (
-    <div className="fixed bottom-3 left-3 z-40 flex flex-col gap-2.5 sm:bottom-6 sm:left-6 sm:gap-3">
+    <div className="fixed bottom-3 right-3 z-40 flex flex-col gap-2.5 sm:bottom-6 sm:right-6 sm:gap-3">
       <a
         href={siteConfig.phone.href}
         className={`${base} bg-[#142F86] hover:bg-[#DA1C29]`}
