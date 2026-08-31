@@ -64,9 +64,15 @@ const css = String.raw`
 
 /* Right details column. */
 .cm-doc__body{position:relative;flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:flex-start;padding:1.5rem 1.25rem 1.25rem}
-.cm-doc__spec{margin:0 2.5rem .35rem 0;font-size:.8125rem;font-weight:400;line-height:1.35;color:rgb(20 47 134 / .6)}
+/* Specialty and qualification lines: Lato Light at a dark navy. Lato 300 is
+   loaded in layout.tsx, so this is a real light weight rather than a browser
+   synthesising one. Darker than before too — these were washed out at 60%
+   opacity. */
+.cm-doc__spec{margin:0 2.5rem .35rem 0;font-size:.8125rem;font-weight:300;line-height:1.35;color:#0F2461}
 .cm-doc__name{margin:0 0 .35rem;font-size:1.25rem;line-height:1.22;font-weight:700;letter-spacing:-.01em;color:#142F86}
-.cm-doc__qual{margin:0;font-size:.8125rem;font-weight:400;line-height:1.4;color:rgb(20 47 134 / .58)}
+/* Clamped to four lines so a long credential list cannot stretch the card and
+   drag its whole grid row taller with it — card size has to stay fixed. */
+.cm-doc__qual{margin:0;font-size:.8125rem;font-weight:300;line-height:1.45;color:#0F2461;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
 
 /* Small round arrow in the corner. White surface with a navy glyph, so it
    reads as a quiet control against the tinted card rather than a heavy dark
