@@ -167,11 +167,6 @@ const ABOUT = {
   ],
 };
 
-/** The roster itself lives in `@/lib/data/doctors` so it can be edited alone. */
-const TEAM = {
-  title: "Meet our specialists",
-};
-
 const CONTACT = {
   eyebrow: "Get in touch",
   title: "Not sure which scan or specialist you need? Ask us.",
@@ -1119,12 +1114,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* TEAM — a taste of the roster; the full list lives on /doctors */}
-      <DoctorsSection
-        title={TEAM.title}
-        limit={6}
-        moreHref={`${BP}/doctors`}
-      />
+      {/* TEAM — a taste of the roster; the full list lives on /doctors. No
+          heading text here by request — the cards speak for themselves. */}
+      <DoctorsSection limit={6} moreHref={`${BP}/doctors`} />
 
       <TestimonialsSection />
 

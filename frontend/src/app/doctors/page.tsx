@@ -10,16 +10,11 @@ export const metadata: Metadata = {
 };
 
 /**
- * Deliberately has no page hero. The roster is the point of this page, so the
- * heading and filter are the first thing on it — `firstOnPage` supplies the top
- * spacing the hero would otherwise have provided.
+ * Deliberately has no page hero and no section heading — the filter rail is
+ * the first thing on the page, directly followed by the cards. `firstOnPage`
+ * supplies the top spacing a hero would otherwise have provided, since the
+ * site header is fixed and would otherwise sit over the filter.
  */
 export default function DoctorsPage() {
-  return (
-    <DoctorsSection
-      title="Meet our specialists"
-      showFilter
-      firstOnPage
-    />
-  );
+  return <DoctorsSection showFilter firstOnPage />;
 }
