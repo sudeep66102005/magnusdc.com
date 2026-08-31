@@ -373,27 +373,28 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-svc--wf .cm-svc__head{order:initial;width:52%;max-width:20rem;padding-right:0}
 .cm-svc--wf .cm-svc__actions{order:initial}
 @media(max-width:1023px){
-  .cm-svc--wf .cm-svc__title{font-size:1.7rem;line-height:1.02}
+  .cm-svc--wf .cm-svc__title{font-size:2rem;line-height:1.02}
 }
 @media(max-width:767px){
   .cm-svc--wf .cm-svc__img{left:0;right:auto;width:125%;object-position:50% 40%!important}
   .cm-svc--wf .cm-svc__head{width:45%;max-width:none;padding-right:0}
-  .cm-svc--wf .cm-svc__list{gap:.4rem}
-  .cm-svc--wf .cm-svc__list li{font-size:.82rem}
+  .cm-svc--wf .cm-svc__list{gap:.45rem}
+  .cm-svc--wf .cm-svc__list li{font-size:.95rem}
 }
-/* No scrim over the service photos. The images are bright rooms, so the copy is
-   navy with a soft white halo instead of white copy on a black gradient — that
-   keeps the photo at full brightness and still reads. */
+/* Black gradient from the left edge only, fading out by 70% across. The copy
+   sits in that shaded band so it can stay plain white, while the right side of
+   the photo keeps its full brightness. No top or bottom gradient. */
+.cm-svc__scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgb(0 0 0 / .72) 0%,rgb(0 0 0 / .5) 28%,rgb(0 0 0 / .2) 50%,rgb(0 0 0 / 0) 70%)}
 .cm-svc__head{position:relative;z-index:2;padding:1.75rem}
 @media(min-width:768px){.cm-svc__head{padding:2rem}}
-.cm-svc__title{margin:0;font-size:2rem;line-height:1.05;font-weight:700;letter-spacing:-.02em;color:#142F86;text-shadow:0 1px 10px rgb(255 255 255 / .95),0 0 26px rgb(255 255 255 / .85)}
-@media(min-width:768px){.cm-svc__title{font-size:2.5rem}}
+.cm-svc__title{margin:0;font-size:2.375rem;line-height:1.05;font-weight:700;letter-spacing:-.02em;color:#FFFFFF}
+@media(min-width:768px){.cm-svc__title{font-size:3rem}}
 .cm-svc__title{font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-weight:800;letter-spacing:-.03em}
 .cm-svc__list{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;margin:1.1rem 0 0;padding:0;list-style:none;max-width:26rem}
-.cm-svc__list li{display:flex;align-items:center;gap:.5rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.9rem;font-weight:400;line-height:1.18;color:#142F86;text-shadow:0 1px 8px rgb(255 255 255 / .95),0 0 18px rgb(255 255 255 / .85)}
-.cm-svc__ico{display:grid;place-items:center;width:1.55rem;height:1.55rem;flex:none;border-radius:999px;background:rgb(255 255 255 / .82);color:#142F86;box-shadow:0 1px 6px rgb(20 47 134 / .14)}
-.cm-svc__ico svg{width:.95rem;height:.95rem}
-@media(min-width:768px){.cm-svc__list li{font-size:.95rem}.cm-svc__ico{width:1.7rem;height:1.7rem}.cm-svc__ico svg{width:1.05rem;height:1.05rem}}
+.cm-svc__list li{display:flex;align-items:center;gap:.55rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.0625rem;font-weight:400;line-height:1.2;color:#FFFFFF}
+.cm-svc__ico{display:grid;place-items:center;width:1.75rem;height:1.75rem;flex:none;border-radius:999px;background:rgb(255 255 255 / .18);color:#FFFFFF}
+.cm-svc__ico svg{width:1.05rem;height:1.05rem}
+@media(min-width:768px){.cm-svc__list li{font-size:1.125rem}.cm-svc__ico{width:1.9rem;height:1.9rem}.cm-svc__ico svg{width:1.15rem;height:1.15rem}}
 .cm-svc__actions{position:relative;z-index:2;display:flex;flex-direction:column;gap:.75rem;padding:1.75rem}
 @media(min-width:520px){.cm-svc__actions{flex-direction:row}}
 @media(min-width:768px){.cm-svc__actions{padding:2rem}}
@@ -1050,6 +1051,7 @@ export default function HomePage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img className="cm-svc__img" src={card.mobile} alt={card.title} loading="lazy" decoding="async" style={{ objectPosition: (card as { pos?: string }).pos ?? "50% 50%" }} />
               </picture>
+              <span className="cm-svc__scrim" aria-hidden="true" />
               <div className="cm-svc__head">
                 <h3 className="cm-svc__title">{card.title}</h3>
                 <ul className="cm-svc__list">
