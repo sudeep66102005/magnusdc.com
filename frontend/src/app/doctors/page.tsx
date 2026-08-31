@@ -17,8 +17,7 @@ export const metadata: Metadata = {
 export default function DoctorsPage() {
   return (
     <DoctorsSection
-      eyebrow="Our Doctors"
-      title="Meet our consultants"
+      title="Meet our specialists"
       showFilter
       firstOnPage
     />

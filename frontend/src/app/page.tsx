@@ -169,8 +169,7 @@ const ABOUT = {
 
 /** The roster itself lives in `@/lib/data/doctors` so it can be edited alone. */
 const TEAM = {
-  eyebrow: "Our Team",
-  title: "The specialists you\u2019ll actually see, every visit.",
+  title: "Meet our specialists",
 };
 
 const CONTACT = {
@@ -1122,7 +1121,6 @@ export default function HomePage() {
 
       {/* TEAM — a taste of the roster; the full list lives on /doctors */}
       <DoctorsSection
-        eyebrow={TEAM.eyebrow}
         title={TEAM.title}
         limit={6}
         moreHref={`${BP}/doctors`}
