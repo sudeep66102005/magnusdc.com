@@ -260,7 +260,16 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(max-width:1023px){
   .cm-hero__inner{width:100%}
   .cm-hero__rule,.cm-hero__trust,.cm-chips{display:none}
-  .cm-hero__scene{top:-9rem;right:-1.25rem;bottom:-4rem;left:-1.25rem;width:auto;height:auto}
+
+  .cm-hero__scene{
+    top:0;
+    right:-35%;
+    bottom:auto;
+    left:auto;
+    width:95%;
+    height:55rem;
+    opacity:.55;
+  }
 }
 @media(min-width:768px) and (max-width:1023px){
   .cm-hero__scene{right:-2.5rem;left:-2.5rem}
