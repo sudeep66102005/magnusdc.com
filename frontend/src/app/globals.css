@@ -251,12 +251,31 @@
   html {
     @apply font-sans;
     scroll-behavior: smooth;
+    /* Android Chrome inflates type on pages it decides are not mobile-ready
+       ("font boosting"), and iOS Safari does the same on rotation. Pinning the
+       adjustment to 100% is what keeps one type scale on both platforms. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
     @apply bg-background font-normal text-foreground;
     min-width: 0;
     text-rendering: optimizeLegibility;
+    /* Same rasteriser on both platforms, so weights read alike. */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Android paints a grey flash on tap, iOS a translucent one. */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* iOS zooms the viewport when a control smaller than 16px takes focus, which
+     leaves the page scaled and looking nothing like Android. 16px prevents it
+     without changing how the control looks. */
+  input,
+  select,
+  textarea {
+    font-size: max(16px, 1em);
   }
 
   h1,
