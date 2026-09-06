@@ -484,11 +484,11 @@ html:has(.cm-root){scroll-behavior:smooth}
      align-content centres the copy inside it; width:100% overrides .cm-shell's
      centred 90rem so the 2.5rem padding sets the copy's left edge, where
      left:2.5rem used to put it. */
-  /* 5rem of left padding rather than 2.5rem: the whole copy column — rating,
-     heading, dash, description, stat cards, buttons — starts 40px further in.
-     The header gets the same left inset in site-header.tsx so the logo stays
-     flush with this edge. */
-  .cm-hero__inner{position:relative;display:grid;align-content:center;width:100%;height:100%;min-height:100lvh;padding:9.5rem 2.5rem 4rem 5rem}
+  /* 7.5rem of left padding rather than the original 2.5rem: the whole copy
+     column — rating, heading, dash, description, stat cards, buttons — starts
+     120px in. The header carries the same left inset in site-header.tsx so the
+     logo stays flush with this edge. */
+  .cm-hero__inner{position:relative;display:grid;align-content:center;width:100%;height:100%;min-height:100lvh;padding:9.5rem 2.5rem 4rem 7.5rem}
 
   /* Placement only. The canvas was a fixed 71.25rem starting at 22.5rem, so it
      ended at 1500px and left ~420px of white against the right edge of a 1920px
