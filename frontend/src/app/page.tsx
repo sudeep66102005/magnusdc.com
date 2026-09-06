@@ -100,6 +100,9 @@ const SERVICE_CARDS = [
   },
   {
     title: "Women\u2019s & Fetal Medicine",
+    /* Keeps "Women's & Fetal" whole on the first line; `title` above still
+       carries the full string for the image alt text. */
+    titleLines: ["Women\u2019s & Fetal", "Medicine"],
     href: `${BP}/specialties`,
     /* One photo at both sizes, by request — the <picture> below still emits a
        desktop <source>, it just points at the same file as the <img>. */
@@ -442,8 +445,16 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(min-width:1024px){
   .cm-svc{min-height:38rem}
   .cm-svc__head{padding:1.6rem}
-  .cm-svc__title{font-size:2.4rem}
-  .cm-svc--wf .cm-svc__head{max-width:16rem}
+  /* 2.4rem + 50% */
+  .cm-svc__title{font-size:3.6rem}
+  /* "WOMEN'S & FETAL" is about 500px of uppercase Inter at 3.6rem, so the head
+     cannot stay on the 52% / 16rem leash it wears at smaller sizes. 38rem of
+     the 701px inside the card, and nowrap to hold the two lines as authored. */
+  .cm-svc--wf .cm-svc__head{width:auto;max-width:38rem}
+  .cm-svc__title-line{white-space:nowrap}
+  /* Copy now reaches ~600px across a 752px card; the stock scrim is fully
+     transparent by 526px. Carry the shading further right on this card only. */
+  .cm-svc--wf .cm-svc__scrim{background:linear-gradient(90deg,rgb(0 0 0 / .74) 0%,rgb(0 0 0 / .58) 40%,rgb(0 0 0 / .28) 66%,rgb(0 0 0 / 0) 86%)}
   .cm-svc__list{gap:.4rem;margin-top:.9rem}
   .cm-svc__list li{font-size:.95rem}
   .cm-svc__ico{width:1.55rem;height:1.55rem}
@@ -457,7 +468,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-svc--wf .cm-svc__head{order:initial;width:52%;max-width:20rem;padding-right:0}
 .cm-svc--wf .cm-svc__actions{order:initial}
 @media(max-width:1023px){
-  .cm-svc--wf .cm-svc__title{font-size:2rem;line-height:1.02}
+  .cm-svc--wf .cm-svc__title{font-size:3rem;line-height:1.02}
 }
 @media(max-width:767px){
   .cm-svc--wf .cm-svc__img{left:0;right:auto;width:125%;object-position:50% 40%!important}
@@ -473,7 +484,13 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(min-width:768px){.cm-svc__head{padding:2rem}}
 .cm-svc__title{margin:0;font-size:2.375rem;line-height:1.05;font-weight:700;letter-spacing:-.02em;color:#FFFFFF}
 @media(min-width:768px){.cm-svc__title{font-size:3rem}}
-.cm-svc__title{font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-weight:800;letter-spacing:-.03em}
+.cm-svc__title{font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-weight:800;letter-spacing:-.03em;text-transform:uppercase}
+/* At 3.6rem the heading runs past the point where the scrim has faded out, so
+   it needs its own shadow to stay legible over the bright side of the photo. */
+.cm-svc__title{text-shadow:0 2px 18px rgb(0 0 0 / .45)}
+/* One data-driven line per span, so "WOMEN'S & FETAL" / "MEDICINE" is a fixed
+   break rather than a guess about where the text happens to wrap. */
+.cm-svc__title-line{display:block}
 .cm-svc__list{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;margin:1.1rem 0 0;padding:0;list-style:none;max-width:26rem}
 .cm-svc__list li{display:flex;align-items:center;gap:.55rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.0625rem;font-weight:400;line-height:1.2;color:#FFFFFF}
 .cm-svc__ico{display:grid;place-items:center;width:1.75rem;height:1.75rem;flex:none;border-radius:999px;background:rgb(255 255 255 / .18);color:#FFFFFF}
@@ -684,8 +701,12 @@ html:has(.cm-root){scroll-behavior:smooth}
 
   /* SERVICES cards */
   .cm-services{padding:3.5rem 1.25rem 3rem}
-  .cm-svc__title{font-size:1.75rem}
-  .cm-svc--wf .cm-svc__title{font-size:1.6rem}
+  /* 1.75rem and 1.6rem, each +50%. The phone heads stay on their percentage
+     widths, so these wrap across several lines — uppercase at 2.625rem is
+     about 17px a character and there is only ~280px to play with. */
+  .cm-svc__title{font-size:2.625rem}
+  .cm-svc--wf .cm-svc__title{font-size:2.4rem}
+  .cm-svc--wf .cm-svc__head{width:62%}
   .cm-svc__list li{font-size:.9375rem}
   .cm-svc--wf .cm-svc__list li{font-size:.875rem}
   .cm-svc__btn{height:2.75rem;font-size:.875rem}
@@ -1192,7 +1213,11 @@ export default function HomePage() {
               </picture>
               <span className="cm-svc__scrim" aria-hidden="true" />
               <div className="cm-svc__head">
-                <h3 className="cm-svc__title">{card.title}</h3>
+                <h3 className="cm-svc__title">
+                  {((card as { titleLines?: string[] }).titleLines ?? [card.title]).map((line) => (
+                    <span key={line} className="cm-svc__title-line">{line}</span>
+                  ))}
+                </h3>
                 <ul className="cm-svc__list">
                   {card.items.map((it) => (
                     <li key={it.label}>
