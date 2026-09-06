@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Lato, Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
@@ -37,6 +37,21 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
+};
+
+/* Must be its own export: Next ignores `viewport` and `themeColor` when they
+   are nested in `metadata`. Without an explicit initial scale, Android Chrome
+   is free to lay the page out at its own width and boost the type, which is
+   what made the phone builds diverge. Zoom stays enabled — pinning
+   maximum-scale locks out anyone who needs to magnify. */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#142F86" },
+  ],
 };
 
 export default function RootLayout({
