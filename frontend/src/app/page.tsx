@@ -485,6 +485,15 @@ html:has(.cm-root){scroll-behavior:smooth}
      centred 90rem so the 2.5rem padding sets the copy's left edge, where
      left:2.5rem used to put it. */
   .cm-hero__inner{position:relative;display:grid;align-content:center;width:100%;height:100%;min-height:100lvh;padding:9.5rem 2.5rem 4rem}
+
+  /* Placement only. The canvas was a fixed 71.25rem starting at 22.5rem, so it
+     ended at 1500px and left ~420px of white against the right edge of a 1920px
+     screen — the band marked in the screenshot. Pinning it to the right edge
+     instead lets it span whatever is left beside the copy, which re-centres the
+     strand in that space: centre 930px -> 1140px at 1920px wide.
+     Width is the only thing changing. The helix is sized by canvas *height*
+     (fixed 45deg vertical FOV), so it neither grows nor shrinks here. */
+  .cm-hero__scene{left:22.5rem;right:0;width:auto}
   /* position:relative, never static. The canvas is opaque and positioned; a
      static parent ignores z-index, which is what put the DNA on top of the
      heading and the stat cards. */
