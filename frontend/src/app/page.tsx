@@ -435,7 +435,18 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(min-width:1024px){
   .cm-hero{background:linear-gradient(176deg,#F4F8FF 0%,#FBFDFF 46%,#FFFFFF 100%)}
   .cm-hero__rule,.cm-hero__trust,.cm-chips{display:none}
-  .cm-hero__copy{max-width:47rem}
+  /* The hero was height:100lvh with the copy absolutely centred, so a ~589px
+     column sat in a 1080px box and left ~246px of white below it before the
+     next section. Height now follows the copy, which returns to normal flow.
+     .cm-hero__scene keeps its own rule — inset-block:0 still stretches the DNA
+     canvas over whatever height the hero ends up with. */
+  .cm-hero{height:auto;min-height:0;padding:9.5rem 2.5rem 4rem}
+  /* width:100% overrides .cm-shell's centred 90rem. The copy used to be pinned
+     at left:2.5rem; in flow inside a centred shell it would start ~240px in on
+     a 1920px screen, so the shell is opened up and the hero's own padding sets
+     the left edge instead. */
+  .cm-hero__inner{display:block;height:auto;min-height:0;width:100%}
+  .cm-hero__copy{position:static;top:auto;left:auto;transform:none;max-width:47rem;padding-top:0}
 
   .cm-rating{gap:.8rem}
   .cm-rating__face{width:2.9rem;height:2.9rem;font-size:.95rem;box-shadow:0 3px 10px rgb(20 47 134 / .2)}
@@ -472,7 +483,11 @@ html:has(.cm-root){scroll-behavior:smooth}
 }
 
 /* WHY */
-.cm-why{min-height:100lvh;display:grid;place-items:center;overflow:hidden;background:#FFFFFF;text-align:center;padding:6rem 1.25rem}
+/* Height comes from the content, not from the viewport. min-height:100lvh with
+   place-items:center meant a ~440px block centred in a 1080px box, so the
+   section opened and closed with a ~320px band of white — the gap after the
+   hero. The floor is what the decorative .cm-trail cards need to travel in. */
+.cm-why{min-height:34rem;display:grid;place-items:center;overflow:hidden;background:#FFFFFF;text-align:center;padding:4.5rem 1.25rem}
 .cm-why__inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:2rem;width:min(100% - 2.5rem,44.75rem)}
 .cm-why .cm-lead{width:100%}
 @media(min-width:1024px){.cm-why .cm-lead{width:39.25rem}.cm-why .cm-body{width:27.625rem}}
@@ -549,7 +564,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(min-width:768px){.cm-why-mag__cta{margin-top:1.9rem}}
 
 /* SERVICES */
-.cm-services{position:relative;background:#FFFFFF;padding:5rem 1.25rem 4rem}
+.cm-services{position:relative;background:#FFFFFF;padding:3.5rem 1.25rem 4rem}
 @media(min-width:768px){.cm-services{padding-inline:2.5rem}}
 .cm-services__intro{display:flex;flex-direction:column;gap:1rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center;align-items:center}
 /* 106rem put two 836px cards on screen with ~110px of margin. 10% off that
