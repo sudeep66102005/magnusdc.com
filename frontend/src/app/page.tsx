@@ -310,7 +310,7 @@ html:has(.cm-root){scroll-behavior:smooth}
   /* Flat white, matching desktop. The canvas clears to an opaque white
      (setClearColor(bg,1)) and now covers the hero edge to edge, so a gradient
      behind it can only show as a seam along the canvas boundary. */
-  .cm-hero{background:#F5F9FF}
+  .cm-hero{background:#FFFFFF}
 
   /* Rating row: gold stars, one grey line of copy. */
   .cm-rating{gap:.7rem}
@@ -467,7 +467,7 @@ html:has(.cm-root){scroll-behavior:smooth}
   /* Flat white, not the gradient wash: the canvas clears to an opaque white
      (setClearColor(bg,1)) and covers the right of the hero, so a gradient
      behind it only shows as a visible seam down the canvas edge. */
-  .cm-hero{background:#F5F9FF}
+  .cm-hero{background:#FFFFFF}
   /* width:100% overrides .cm-shell's centred 90rem. The copy used to be pinned
      at left:2.5rem; in flow inside a centred shell it would start ~240px in on
      a 1920px screen, so the shell is opened up and the hero's own padding sets
@@ -1061,14 +1061,13 @@ const INK_F = String.raw`
   }`;
 
 const dnaScript = String.raw`
-/* bgColor is the canvas clear colour AND the fog colour, so it is also the wash
-   the design asks for behind the strand. It cannot be transparent: the particle
-   material is MultiplyBlending, which resolves to dst * src, and against a
-   transparent destination every particle multiplies down to nothing. Tinting the
-   clear colour is what gets the pale blue in without touching the blend mode —
-   the hero's CSS background is set to the same value so there is no seam along
-   the canvas edge. */
-const CFG={bgColor:'#F5F9FF',helixColorA:'#142F86',helixColorB:'#31B4F4',inkCore:'#142F86',inkMid:'#31B4F4',inkEdge:'#1E6FA8',camDist:12,helixSize:1.3,inkSize:6,brightness:0.92,helixOpacity:2.15,inkOpacity:0.62,inkGrow:1.8,radius:1.75,height:6.8,twist:0.65,strandThick:0.39,wave:0.5,spin:0,tilt:-0.34,emitRate:0.19,spread:0.6,rise:-0.2,turbulence:1.6,noiseFreq:1.05,noiseEvolve:0.1,parallax:3,pointerRadius:5,pointerStrength:1.55,maxPixelRatio:1.5};
+/* bgColor is the canvas clear colour AND the fog colour, so it is the hero
+   background wherever the canvas sits. Keep it pure white, and keep the hero's
+   CSS background identical, or the difference shows as a tinted panel down the
+   canvas edge. It cannot be transparent instead: the particle material is
+   MultiplyBlending, which resolves to dst * src, so against a transparent
+   destination every particle multiplies down to nothing. */
+const CFG={bgColor:'#FFFFFF',helixColorA:'#142F86',helixColorB:'#31B4F4',inkCore:'#142F86',inkMid:'#31B4F4',inkEdge:'#1E6FA8',camDist:12,helixSize:1.3,inkSize:6,brightness:0.92,helixOpacity:2.15,inkOpacity:0.62,inkGrow:1.8,radius:1.75,height:6.8,twist:0.65,strandThick:0.39,wave:0.5,spin:0,tilt:-0.34,emitRate:0.19,spread:0.6,rise:-0.2,turbulence:1.6,noiseFreq:1.05,noiseEvolve:0.1,parallax:3,pointerRadius:5,pointerStrength:1.55,maxPixelRatio:1.5};
 const REF_H=1600, MAXD=0.05, EASE_P=0.05, EASE_C=0.15, EASE_A=0.08, IDLE=3, A_DELAY=0.2, A_DUR=1.6;
 const HELIX_V=${JSON.stringify(HELIX_V)};
 const HELIX_F=${JSON.stringify(HELIX_F)};
