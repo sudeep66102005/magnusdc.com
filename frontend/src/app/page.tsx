@@ -336,10 +336,18 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-hstat--amber .cm-hstat__ico{background:rgb(245 166 35 / .16);color:#D9880A}
   .cm-hstat__value{margin:0;font-size:1.15rem;line-height:1.1;font-weight:700;color:var(--green)}
   .cm-hstat__label{margin:0;font-size:.62rem;line-height:1.25;font-weight:400;color:rgb(20 47 134 / .62)}
-  /* Two by two once four across would crush the labels. */
-  @media(max-width:400px){
-    .cm-hero__stats{grid-template-columns:repeat(2,1fr);gap:.6rem}
-    .cm-hstat__label{font-size:.7rem}
+  /* One row of four at every phone width — the design has no 2x2 state, and the
+     fold that used to live here turned the row into a block of boxes on any
+     screen under 400px. On a 393px viewport there is 353px inside the hero
+     padding, so a 0.4rem gutter leaves ~83px a card and everything below is
+     sized to fit that rather than to fold. */
+  @media(max-width:479px){
+    .cm-hero__stats{grid-template-columns:repeat(4,1fr);gap:.4rem;margin-top:1.75rem}
+    .cm-hstat{gap:.35rem;padding:.7rem .3rem;border-radius:12px}
+    .cm-hstat__ico{width:2rem;height:2rem;border-radius:9px}
+    .cm-hstat__ico svg{width:1.15rem;height:1.15rem}
+    .cm-hstat__value{font-size:1.05rem}
+    .cm-hstat__label{font-size:.55rem;line-height:1.2}
   }
 
   /* Buttons carry a leading icon; the secondary is a white card, not a fill. */
