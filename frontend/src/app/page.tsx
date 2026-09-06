@@ -307,7 +307,10 @@ html:has(.cm-root){scroll-behavior:smooth}
    own geometry and its own canvas. */
 @media(max-width:1023px){
   /* Pale blue wash instead of flat white. */
-  .cm-hero{background:linear-gradient(176deg,#F4F8FF 0%,#FBFDFF 46%,#FFFFFF 100%)}
+  /* Flat white, matching desktop. The canvas clears to an opaque white
+     (setClearColor(bg,1)) and now covers the hero edge to edge, so a gradient
+     behind it can only show as a seam along the canvas boundary. */
+  .cm-hero{background:#FFFFFF}
 
   /* Rating row: gold stars, one grey line of copy. */
   .cm-rating{gap:.7rem}
@@ -395,14 +398,24 @@ html:has(.cm-root){scroll-behavior:smooth}
     font-size: .95rem;
   }
 
+  /* Full bleed behind the copy, as it was before c04de56 shrank it to 95% width
+     pushed 35% off the right edge at opacity .55 — between that and the opaque
+     white stat cards on top of it, the strand had nothing left to show.
+     Insets resolve against .cm-hero__inner, so the negatives reach past the
+     hero's padding to the section edges. */
   .cm-hero__scene {
-    top: 0;
-    right: -35%;
-    bottom: auto;
-    left: auto;
-    width: 95%;
-    height: 55rem;
-    opacity: .55;
+    top: -6rem;
+    right: -1.25rem;
+    bottom: -2rem;
+    left: -1.25rem;
+    width: auto;
+    height: auto;
+    opacity: 1;
+  }
+
+  /* The buttons were landing under the browser's bottom chrome. */
+  .cm-hero {
+    padding-bottom: calc(3.25rem + env(safe-area-inset-bottom));
   }
 }
 @media(min-width:768px) and (max-width:1023px){
