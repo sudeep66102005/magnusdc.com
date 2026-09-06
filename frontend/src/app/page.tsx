@@ -101,7 +101,9 @@ const SERVICE_CARDS = [
   {
     title: "Women\u2019s & Fetal Medicine",
     href: `${BP}/specialties`,
-    desktop: svcImg("desktop image of Women's & Fetal Medicine.jpeg"),
+    /* One photo at both sizes, by request — the <picture> below still emits a
+       desktop <source>, it just points at the same file as the <img>. */
+    desktop: svcImg("1.mobile image of Women's & Fetal Medicine.jpeg"),
     mobile: svcImg("1.mobile image of Women's & Fetal Medicine.jpeg"),
     items: [
       { label: "Early Pregnancy", icon: "baby" },
