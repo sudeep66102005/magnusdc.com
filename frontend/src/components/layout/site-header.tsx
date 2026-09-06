@@ -33,6 +33,10 @@ function Arrow() {
 const headerCss = String.raw`/* header */
 .cm-header{position:fixed;inset-inline:0;top:1rem;z-index:60;padding-inline:1rem;pointer-events:none}
 @media(min-width:768px){.cm-header{padding-inline:2.5rem}}
+/* Left only, matching .cm-hero__inner's 5rem so the logo lines up with the copy
+   below it. The right stays at 2.5rem — raising it would pull Contact Us left,
+   which is the opposite of shifting the page right. */
+@media(min-width:1024px){.cm-header{padding-left:5rem}}
 .cm-header__row{display:flex;align-items:center;justify-content:space-between;gap:.75rem}
 .cm-header__left{display:flex;min-width:0;align-items:center;gap:.75rem}
 .cm-glass{pointer-events:auto;border-radius:12px;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
