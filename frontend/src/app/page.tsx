@@ -422,17 +422,20 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-services{position:relative;background:#FFFFFF;padding:5rem 1.25rem 4rem}
 @media(min-width:768px){.cm-services{padding-inline:2.5rem}}
 .cm-services__intro{display:flex;flex-direction:column;gap:1rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center;align-items:center}
-/* 77.5rem = 1240px, gap 1.5rem = 24px. (1240 - 24) / 2 = 608px per card. */
-.cm-svc-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;width:min(100%,77.5rem);margin-inline:auto}
+/* Keep the broad two-column grid. At its 84rem cap with a 1.25rem gap each
+   card is 662px wide — the breadth is intentionally unchanged. */
+.cm-svc-grid{display:grid;grid-template-columns:1fr;gap:1.25rem;width:min(100%,84rem);margin-inline:auto}
 @media(min-width:768px){.cm-svc-grid{grid-template-columns:1fr 1fr}}
 .cm-svc{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:26rem;overflow:hidden;border-radius:20px;background:#142F86}
 @media(min-width:768px){.cm-svc{min-height:32rem}}
-/* An aspect ratio rather than a fixed height, so the card is 608x600 once the
-   grid hits its 1240px cap and stays just as square on the way there — a flat
-   height would read as portrait at 1024px, where a column is only ~460px wide.
-   min-height is the floor that keeps Specialist Care's eight rows from being
-   clipped by the card's own overflow:hidden at the narrow end. */
-@media(min-width:1024px){.cm-svc{aspect-ratio:608/600;min-height:30rem}}
+/* Length only — the breadth above is deliberately untouched.
+   Measured off the two screenshots (1024px captures of a 1920px screen, so
+   x1.875): the card renders 682x669 today and the reference is 831x761. The
+   682 stays, the height goes to 761px = 47.5rem, which is +92px of length.
+   It has to be a min-height and not an aspect-ratio: 669px is content driving
+   the card past the old 32rem floor, so a ratio of 443/406 would compute 625px
+   against 682px of width and make the card shorter instead of taller. */
+@media(min-width:1024px){.cm-svc{min-height:47.5rem}}
 .cm-svc__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,0,0,1)}
 .cm-svc:hover .cm-svc__img{transform:scale(1.05)}
 .cm-svc--wf{justify-content:space-between}
