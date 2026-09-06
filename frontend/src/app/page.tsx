@@ -424,6 +424,52 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-chips li{padding:1rem 2rem;font-size:1rem}
   .cm-lead{font-size:3.75rem}
 }
+/* ---- Hero, desktop: the same design as the phone ----------------------------
+   Later than the block above on purpose, so these win at equal specificity.
+   The rule, the trust line and the chip rail are gone: they are not in the
+   design, and they were the three absolutely positioned pieces that made the
+   composition impossible to extend. Everything now sits in the flow of
+   .cm-hero__copy, which stays vertically centred.
+   .cm-hero__scene and .cm-dna are not mentioned here — the DNA animation keeps
+   its own geometry, untouched. */
+@media(min-width:1024px){
+  .cm-hero{background:linear-gradient(176deg,#F4F8FF 0%,#FBFDFF 46%,#FFFFFF 100%)}
+  .cm-hero__rule,.cm-hero__trust,.cm-chips{display:none}
+  .cm-hero__copy{max-width:47rem}
+
+  .cm-rating{gap:.8rem}
+  .cm-rating__face{width:2.9rem;height:2.9rem;font-size:.95rem;box-shadow:0 3px 10px rgb(20 47 134 / .2)}
+  .cm-rating__face+.cm-rating__face{margin-left:-.8rem}
+  .cm-rating__face--more{font-size:.8rem}
+  .cm-rating__label{font-size:1rem;font-weight:500;color:rgb(20 47 134 / .72)}
+  .cm-stars__row{color:#F5A623}
+  .cm-stars__row svg{width:1.15rem;height:1.15rem}
+
+  .cm-hero__dash{display:block;width:3.2rem;height:.3rem;margin:2rem 0 0;border-radius:999px;background:var(--lime);flex:none}
+  .cm-hero__desc{margin-top:1.5rem;padding-left:0;border-left:0}
+  .cm-hero__desc-line{display:block}
+  .cm-hero__copy .cm-body{width:auto;font-size:1.125rem;line-height:1.5}
+
+  .cm-hero__stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem;width:min(100%,42rem);margin:2.4rem 0 0;padding:0}
+  .cm-hstat{display:flex;flex-direction:column;align-items:center;gap:.5rem;padding:1.15rem .5rem;border:1px solid rgb(20 47 134 / .1);border-radius:16px;background:#FFFFFF;box-shadow:0 10px 26px -14px rgb(20 47 134 / .3);text-align:center}
+  .cm-hstat__ico{display:grid;place-items:center;width:2.9rem;height:2.9rem;border-radius:13px}
+  .cm-hstat__ico svg{width:1.6rem;height:1.6rem}
+  .cm-hstat--sky .cm-hstat__ico{background:rgb(49 180 244 / .14);color:#1E86C7}
+  .cm-hstat--violet .cm-hstat__ico{background:rgb(115 83 155 / .14);color:#73539B}
+  .cm-hstat--green .cm-hstat__ico{background:rgb(90 166 59 / .14);color:#4E8F33}
+  .cm-hstat--amber .cm-hstat__ico{background:rgb(245 166 35 / .16);color:#D9880A}
+  .cm-hstat__value{margin:0;font-size:1.5rem;line-height:1.05;font-weight:700;color:var(--green)}
+  .cm-hstat__label{margin:0;font-size:.8rem;line-height:1.3;font-weight:400;color:rgb(20 47 134 / .62)}
+
+  .cm-hero__actions{margin-top:2.2rem;gap:1rem}
+  .cm-hero__actions .cm-btn{flex:0 0 auto;width:auto;min-width:14.5rem;height:3.75rem;justify-content:flex-start;gap:.7rem;padding:0 1.35rem;border-radius:16px;font-size:1.05rem}
+  .cm-btn__ico{display:grid;place-items:center;flex:none}
+  .cm-btn__ico svg{width:1.35rem;height:1.35rem}
+  .cm-btn__label{flex:1;text-align:left}
+  .cm-hero__actions .cm-arrow{width:1.25rem;height:1.25rem;flex:none}
+  .cm-hero__button--secondary{background:#FFFFFF;border-color:rgb(20 47 134 / .12);color:var(--green);box-shadow:0 10px 26px -14px rgb(20 47 134 / .32)}
+  .cm-hero__button--secondary::before{background:linear-gradient(110deg,#FFFFFF 0%,rgb(49 180 244 / .16) 52%,#FFFFFF 100%)}
+}
 
 /* WHY */
 .cm-why{min-height:100lvh;display:grid;place-items:center;overflow:hidden;background:#FFFFFF;text-align:center;padding:6rem 1.25rem}
