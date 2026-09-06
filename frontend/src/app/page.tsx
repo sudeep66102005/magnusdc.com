@@ -484,7 +484,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(min-width:768px){.cm-svc__head{padding:2rem}}
 .cm-svc__title{margin:0;font-size:2.375rem;line-height:1.05;font-weight:700;letter-spacing:-.02em;color:#FFFFFF}
 @media(min-width:768px){.cm-svc__title{font-size:3rem}}
-.cm-svc__title{font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-weight:800;letter-spacing:-.03em;text-transform:uppercase}
+.cm-svc__title{font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-weight:800;letter-spacing:-.03em}
 /* At 3.6rem the heading runs past the point where the scrim has faded out, so
    it needs its own shadow to stay legible over the bright side of the photo. */
 .cm-svc__title{text-shadow:0 2px 18px rgb(0 0 0 / .45)}
