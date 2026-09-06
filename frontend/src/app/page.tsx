@@ -73,13 +73,17 @@ const WHY = {
   trail: Array.from({ length: 8 }, (_, i) => asset(`/assets/dantora/why/0${i + 1}.png`)),
 };
 
+const tImg = (f: string) => encodeURI(`${BP}/assets/uploads/testimonials/${f}`);
+
 const RATING = {
   value: 5,
   label: "Trusted by 4K+ customers",
+  /* Decorative: the row is aria-hidden and the rating is announced by Stars,
+     so these carry empty alt text rather than invented patient names. */
   faces: [
-    { label: "R", tone: "rose" },
-    { label: "M", tone: "green" },
-    { label: "B", tone: "blue" },
+    { src: tImg("images one].jpeg") },
+    { src: tImg("testimonial 2.jpeg") },
+    { src: tImg("testimonila 3.jpeg") },
   ],
 };
 
@@ -277,6 +281,24 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-hero__inner{width:100%}
   .cm-hero__rule,.cm-hero__trust,.cm-chips{display:none}
 }
+/* ---- Guards, deliberately outside every media query -------------------------
+   The stat cards, the dash and the button icons belong to the phone and tablet
+   composition, but the markup is in the DOM at every width. Without a default
+   they inherited nothing on desktop and the icon SVGs grew to fill their
+   container — a full-height badge and shield sitting across the hero. Anything
+   that is breakpoint-specific gets switched off here first and turned on inside
+   the media query, and every inline SVG is given an explicit size. */
+.cm-hero__stats{display:none}
+.cm-hero__dash{display:none}
+.cm-btn__ico{display:none}
+.cm-hstat__ico svg{width:1.3rem;height:1.3rem}
+.cm-btn__ico svg{width:1.15rem;height:1.15rem}
+
+/* Photo avatars in the rating row, at every width. */
+.cm-rating__face--photo{overflow:hidden;padding:0;background:#FFFFFF}
+.cm-rating__face--photo img{display:block;width:100%;height:100%;border-radius:999px;object-fit:cover}
+.cm-rating__face--more{background:var(--green);font-size:.7rem;letter-spacing:-.02em}
+
 /* ---- Hero, phone and tablet: the supplied design ----------------------------
    Scoped to <=1023px on purpose. The desktop hero is pixel-placed with absolute
    positions and its own chip rail, and the stat cards have nowhere to go in
@@ -296,7 +318,7 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-stars__row svg{width:1.05rem;height:1.05rem}
 
   /* Short accent rule under the heading, in place of the desc border. */
-  .cm-hero__dash{display:block;width:2.6rem;height:.28rem;margin:1.6rem 0 0;border-radius:999px;background:var(--lime)}
+  .cm-hero__dash{display:block;width:2.6rem;height:.28rem;margin:1.6rem 0 0;border-radius:999px;background:var(--lime);flex:none}
   .cm-hero__desc{max-width:none;margin-top:1.15rem;padding-left:0;border-left:0}
   .cm-hero__desc-line{display:block}
 
@@ -320,7 +342,6 @@ html:has(.cm-root){scroll-behavior:smooth}
   /* Buttons carry a leading icon; the secondary is a white card, not a fill. */
   .cm-hero__actions .cm-btn{justify-content:flex-start;gap:.6rem;border-radius:14px}
   .cm-btn__ico{display:grid;place-items:center;flex:none}
-  .cm-btn__ico svg{width:1.15rem;height:1.15rem}
   .cm-btn__label{flex:1;text-align:left}
   .cm-hero__actions .cm-arrow{width:1.15rem;height:1.15rem;flex:none}
   .cm-hero__button--secondary{background:#FFFFFF;border-color:rgb(20 47 134 / .12);color:var(--green);box-shadow:0 6px 18px -10px rgb(20 47 134 / .3)}
@@ -1204,9 +1225,12 @@ export default function HomePage() {
             >
               <span className="cm-rating__faces" aria-hidden="true">
                 {RATING.faces.map((f) => (
-                  <span key={f.label} className={`cm-rating__face cm-rating__face--${f.tone}`}>{f.label}</span>
+                  <span key={f.src} className="cm-rating__face cm-rating__face--photo">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={f.src} alt="" loading="lazy" decoding="async" />
+                  </span>
                 ))}
-                <span className="cm-rating__face cm-rating__face--more">+</span>
+                <span className="cm-rating__face cm-rating__face--more">4K+</span>
               </span>
               <span className="cm-rating__text">
                 <Stars value={RATING.value} />
