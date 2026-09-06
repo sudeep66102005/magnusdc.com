@@ -421,11 +421,11 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-services{position:relative;background:#FFFFFF;padding:5rem 1.25rem 4rem}
 @media(min-width:768px){.cm-services{padding-inline:2.5rem}}
 .cm-services__intro{display:flex;flex-direction:column;gap:1rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center;align-items:center}
-/* The 84rem cap was the dead space down both sides: on a 1920px screen it left
-   288px of white margin each side. The reference runs its grid to about 1698px
-   with a 36px gutter, so 106rem + 1.5rem lands two 836px cards with roughly
-   110px of margin — the same proportion. */
-.cm-svc-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;width:min(100%,106rem);margin-inline:auto}
+/* 106rem put two 836px cards on screen with ~110px of margin. 10% off that
+   breadth is 752px a card, which needs 752*2 + the 24px gutter = 95.5rem.
+   The margin on a 1920px screen goes to 196px as a consequence — the grid cap
+   is what centres the section, so narrower cards can only mean wider margins. */
+.cm-svc-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;width:min(100%,95.5rem);margin-inline:auto}
 @media(min-width:768px){.cm-svc-grid{grid-template-columns:1fr 1fr}}
 .cm-svc{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:26rem;overflow:hidden;border-radius:20px;background:#142F86}
 @media(min-width:768px){.cm-svc{min-height:32rem}}
