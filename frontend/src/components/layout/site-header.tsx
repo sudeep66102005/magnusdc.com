@@ -90,7 +90,8 @@ const headerCss = String.raw`/* header */
 @media(max-width:1023px){
   .cm-logo{width:clamp(10.5rem,42vw,13rem);height:4.25rem;padding:.25rem .85rem}
   .cm-logo__image{height:3.6rem}
-  .cm-burger{width:4.25rem;height:4.25rem}
+  /* A white disc, per the hero design, rather than a square glass plate. */
+  .cm-burger{width:3.5rem;height:3.5rem;border-radius:999px;background:#FFFFFF;box-shadow:0 8px 22px -12px rgb(20 47 134 / .45)}
   .cm-burger span{width:1.5rem}
   .cm-burger span+span{margin-top:.375rem}
   .cm-burger[aria-expanded="true"] span:nth-child(1){transform:translateY(.4375rem) rotate(45deg)}
