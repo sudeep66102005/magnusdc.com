@@ -257,19 +257,60 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-hero__trust span{height:1px;width:3.125rem;background:var(--green)}
 .cm-chips{display:flex;flex-wrap:wrap;gap:.25rem;margin:1.25rem 0 0;padding:0;list-style:none}
 .cm-chips li{border:1px solid var(--line);background:var(--glass-s);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:37px;padding:.75rem 1.25rem;font-size:.875rem;font-weight:400}
-@media(max-width:1023px){
-  .cm-hero__inner{width:100%}
-  .cm-hero__rule,.cm-hero__trust,.cm-chips{display:none}
-
-  .cm-hero__scene{
-    top:0;
-    right:-35%;
-    bottom:auto;
-    left:auto;
-    width:95%;
-    height:55rem;
-    opacity:.55;
+@media (max-width: 767px) {
+  .cm-hero {
+    min-height: auto;
+    padding: 1.25rem 1.5rem 0;
+    overflow: hidden;
   }
+
+  .cm-hero__inner {
+    min-height: auto;
+  }
+
+  .cm-hero__copy {
+    padding-top: 1rem;
+  }
+
+  .cm-rating {
+    margin-bottom: 1.75rem;
+  }
+
+  .cm-lead {
+    font-size: clamp(3.4rem, 15vw, 5rem);
+    line-height: .95;
+  }
+
+  .cm-lead__accent {
+    font-size: 1.15em;
+  }
+
+  .cm-hero__desc {
+    max-width: 20rem;
+    margin-top: 2.75rem;
+  }
+
+  .cm-hero__actions {
+    margin-top: 2rem;
+    gap: .75rem;
+  }
+
+  .cm-hero__actions .cm-btn {
+    flex: 1;
+    width: auto;
+    height: 3rem;
+  }
+
+  .cm-hero__scene {
+    top: 0;
+    right: -35%;
+    bottom: auto;
+    left: auto;
+    width: 95%;
+    height: 55rem;
+    opacity: .55;
+  }
+}
 }
 @media(min-width:768px) and (max-width:1023px){
   .cm-hero__scene{right:-2.5rem;left:-2.5rem}
