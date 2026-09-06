@@ -433,20 +433,29 @@ html:has(.cm-root){scroll-behavior:smooth}
    .cm-hero__scene and .cm-dna are not mentioned here — the DNA animation keeps
    its own geometry, untouched. */
 @media(min-width:1024px){
-  .cm-hero{background:linear-gradient(176deg,#F4F8FF 0%,#FBFDFF 46%,#FFFFFF 100%)}
   .cm-hero__rule,.cm-hero__trust,.cm-chips{display:none}
-  /* The hero was height:100lvh with the copy absolutely centred, so a ~589px
-     column sat in a 1080px box and left ~246px of white below it before the
-     next section. Height now follows the copy, which returns to normal flow.
-     .cm-hero__scene keeps its own rule — inset-block:0 still stretches the DNA
-     canvas over whatever height the hero ends up with. */
-  .cm-hero{height:auto;min-height:0;padding:9.5rem 2.5rem 4rem}
+  /* Full viewport height again, because the DNA is measured in it. The camera
+     is a 45deg perspective with a fixed FOV, so the helix always covers the
+     same fraction of the canvas height — cutting the hero to 805px rendered a
+     helix 25% smaller and clipped its lower turn. The height is back, and the
+     gap this was meant to close is handled where it actually came from: .cm-why
+     no longer stretches to the viewport either.
+     align-content centres the copy without absolute positioning, so z-index
+     below still applies. */
+  .cm-hero{height:auto;min-height:100lvh;padding:9.5rem 2.5rem 4rem;display:grid;align-content:center}
+  /* Flat white, not the gradient wash: the canvas clears to an opaque white
+     (setClearColor(bg,1)) and covers the right of the hero, so a gradient
+     behind it only shows as a visible seam down the canvas edge. */
+  .cm-hero{background:#FFFFFF}
   /* width:100% overrides .cm-shell's centred 90rem. The copy used to be pinned
      at left:2.5rem; in flow inside a centred shell it would start ~240px in on
      a 1920px screen, so the shell is opened up and the hero's own padding sets
      the left edge instead. */
   .cm-hero__inner{display:block;height:auto;min-height:0;width:100%}
-  .cm-hero__copy{position:static;top:auto;left:auto;transform:none;max-width:47rem;padding-top:0}
+  /* position:relative, never static. The canvas is opaque and positioned; a
+     static parent ignores z-index, which is what put the DNA on top of the
+     heading and the stat cards. */
+  .cm-hero__copy{position:relative;z-index:3;top:auto;left:auto;transform:none;max-width:47rem;padding-top:0}
 
   .cm-rating{gap:.8rem}
   .cm-rating__face{width:2.9rem;height:2.9rem;font-size:.95rem;box-shadow:0 3px 10px rgb(20 47 134 / .2)}
