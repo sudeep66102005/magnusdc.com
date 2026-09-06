@@ -442,7 +442,7 @@ html:has(.cm-root){scroll-behavior:smooth}
      no longer stretches to the viewport either.
      align-content centres the copy without absolute positioning, so z-index
      below still applies. */
-  .cm-hero{height:auto;min-height:100lvh;padding:9.5rem 2.5rem 4rem;display:grid;align-content:center}
+  .cm-hero{height:auto;min-height:100lvh;padding:0;display:grid}
   /* Flat white, not the gradient wash: the canvas clears to an opaque white
      (setClearColor(bg,1)) and covers the right of the hero, so a gradient
      behind it only shows as a visible seam down the canvas edge. */
@@ -451,7 +451,19 @@ html:has(.cm-root){scroll-behavior:smooth}
      at left:2.5rem; in flow inside a centred shell it would start ~240px in on
      a 1920px screen, so the shell is opened up and the hero's own padding sets
      the left edge instead. */
-  .cm-hero__inner{display:block;height:auto;min-height:0;width:100%}
+  /* This is the element the DNA canvas is positioned against — .cm-hero__inner
+     is the nearest positioned ancestor, not .cm-hero. Leaving it at height:auto
+     collapsed it to the copy's 589px, and .cm-hero__scene's inset-block:0 sized
+     the canvas to that: the small helix. min-height:100lvh here is what makes
+     the canvas viewport-tall, so the strand enters at the top and leaves at the
+     bottom the way it used to.
+     The hero's padding moves onto this element: an absolutely positioned child
+     resolves its insets against the padding box, so the canvas spans the whole
+     height instead of stopping short of it.
+     align-content centres the copy inside it; width:100% overrides .cm-shell's
+     centred 90rem so the 2.5rem padding sets the copy's left edge, where
+     left:2.5rem used to put it. */
+  .cm-hero__inner{position:relative;display:grid;align-content:center;width:100%;height:100%;min-height:100lvh;padding:9.5rem 2.5rem 4rem}
   /* position:relative, never static. The canvas is opaque and positioned; a
      static parent ignores z-index, which is what put the DNA on top of the
      heading and the stat cards. */
