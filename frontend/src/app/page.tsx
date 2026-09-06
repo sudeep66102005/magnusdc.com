@@ -429,14 +429,26 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(min-width:768px){.cm-svc-grid{grid-template-columns:1fr 1fr}}
 .cm-svc{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:26rem;overflow:hidden;border-radius:20px;background:#142F86}
 @media(min-width:768px){.cm-svc{min-height:32rem}}
-/* Length only — the breadth above is deliberately untouched.
-   Measured off the two screenshots (1024px captures of a 1920px screen, so
-   x1.875): the card renders 682x669 today and the reference is 831x761. The
-   682 stays, the height goes to 761px = 47.5rem, which is +92px of length.
-   It has to be a min-height and not an aspect-ratio: 669px is content driving
-   the card past the old 32rem floor, so a ratio of 443/406 would compute 625px
-   against 682px of width and make the card shorter instead of taller. */
-@media(min-width:1024px){.cm-svc{min-height:47.5rem}}
+/* Cards 20% smaller. The height carries the reduction — 47.5rem to 38rem, so
+   760px becomes 608px and the card's area drops to 0.8 of what it was. The
+   grid keeps its 106rem width on purpose: taking 20% off the breadth as well
+   would push about 170px of margin back down each side, which is the dead
+   space that was just closed.
+   The type and padding come down with the box. Left at desktop size inside a
+   shorter card the copy reads oversized, and Specialist Care's eight rows
+   would meet the card's own overflow:hidden. */
+@media(min-width:1024px){
+  .cm-svc{min-height:38rem}
+  .cm-svc__head{padding:1.6rem}
+  .cm-svc__title{font-size:2.4rem}
+  .cm-svc--wf .cm-svc__head{max-width:16rem}
+  .cm-svc__list{gap:.4rem;margin-top:.9rem}
+  .cm-svc__list li{font-size:.95rem}
+  .cm-svc__ico{width:1.55rem;height:1.55rem}
+  .cm-svc__ico svg{width:.95rem;height:.95rem}
+  .cm-svc__actions{gap:.6rem;padding:1.6rem}
+  .cm-svc__btn{height:2.4rem;padding:0 1rem;font-size:.82rem}
+}
 .cm-svc__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,0,0,1)}
 .cm-svc:hover .cm-svc__img{transform:scale(1.05)}
 .cm-svc--wf{justify-content:space-between}
