@@ -39,9 +39,18 @@ const HERO = {
   titleAccent: "Clarity",
   title: "in every diagnosis",
   description: "Advanced diagnostics. Expert specialists. Care that understands you.",
+  /* Three authored lines, as in the design. `description` above is kept whole
+     for anything that needs the sentence in one piece. */
+  descLines: ["Advanced diagnostics.", "Expert specialists.", "Care that understands you."],
+  stats: [
+    { value: "4K+", label: "Happy Patients", icon: "users" as const, tone: "sky" },
+    { value: "50+", label: "Expert Specialists", icon: "badge" as const, tone: "violet" },
+    { value: "200+", label: "Tests & Profiles", icon: "shield" as const, tone: "green" },
+    { value: "24/7", label: "Customer Support", icon: "clock" as const, tone: "amber" },
+  ],
   actions: [
-    { label: "Book a visit", href: `${BP}/patient-info/appointment-booking`, primary: true },
-    { label: "Our services", href: "#services", primary: false },
+    { label: "Book a visit", href: `${BP}/patient-info/appointment-booking`, primary: true, icon: "calendar" as const },
+    { label: "Our services", href: "#services", primary: false, icon: "stetho" as const },
   ],
   trustLine: "Radiologist-led care in Koramangala, Bengaluru",
   chips: ["Diagnostic Imaging", "Laboratory", "Health Check-ups", "Specialist Care", "Women's Imaging"],
@@ -65,8 +74,8 @@ const WHY = {
 };
 
 const RATING = {
-  value: 4.5,
-  label: "Based on 4K+ Reviews",
+  value: 5,
+  label: "Trusted by 4K+ customers",
   faces: [
     { label: "R", tone: "rose" },
     { label: "M", tone: "green" },
@@ -268,6 +277,55 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-hero__inner{width:100%}
   .cm-hero__rule,.cm-hero__trust,.cm-chips{display:none}
 }
+/* ---- Hero, phone and tablet: the supplied design ----------------------------
+   Scoped to <=1023px on purpose. The desktop hero is pixel-placed with absolute
+   positions and its own chip rail, and the stat cards have nowhere to go in
+   that composition, so they are phone and tablet only.
+   Nothing here touches .cm-hero__scene or .cm-dna — the DNA animation keeps its
+   own geometry and its own canvas. */
+@media(max-width:1023px){
+  /* Pale blue wash instead of flat white. */
+  .cm-hero{background:linear-gradient(176deg,#F4F8FF 0%,#FBFDFF 46%,#FFFFFF 100%)}
+
+  /* Rating row: gold stars, one grey line of copy. */
+  .cm-rating{gap:.7rem}
+  .cm-rating__face{width:2.5rem;height:2.5rem;font-size:.85rem;box-shadow:0 2px 8px rgb(20 47 134 / .18)}
+  .cm-rating__face+.cm-rating__face{margin-left:-.7rem}
+  .cm-rating__label{font-size:.9rem;font-weight:500;color:rgb(20 47 134 / .72)}
+  .cm-stars__row{color:#F5A623}
+  .cm-stars__row svg{width:1.05rem;height:1.05rem}
+
+  /* Short accent rule under the heading, in place of the desc border. */
+  .cm-hero__dash{display:block;width:2.6rem;height:.28rem;margin:1.6rem 0 0;border-radius:999px;background:var(--lime)}
+  .cm-hero__desc{max-width:none;margin-top:1.15rem;padding-left:0;border-left:0}
+  .cm-hero__desc-line{display:block}
+
+  /* Four stat cards. */
+  .cm-hero__stats{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin:1.9rem 0 0;padding:0}
+  .cm-hstat{display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:.85rem .35rem;border:1px solid rgb(20 47 134 / .1);border-radius:14px;background:#FFFFFF;box-shadow:0 6px 18px -10px rgb(20 47 134 / .28);text-align:center}
+  .cm-hstat__ico{display:grid;place-items:center;width:2.3rem;height:2.3rem;border-radius:11px}
+  .cm-hstat__ico svg{width:1.3rem;height:1.3rem}
+  .cm-hstat--sky .cm-hstat__ico{background:rgb(49 180 244 / .14);color:#1E86C7}
+  .cm-hstat--violet .cm-hstat__ico{background:rgb(115 83 155 / .14);color:#73539B}
+  .cm-hstat--green .cm-hstat__ico{background:rgb(90 166 59 / .14);color:#4E8F33}
+  .cm-hstat--amber .cm-hstat__ico{background:rgb(245 166 35 / .16);color:#D9880A}
+  .cm-hstat__value{margin:0;font-size:1.15rem;line-height:1.1;font-weight:700;color:var(--green)}
+  .cm-hstat__label{margin:0;font-size:.62rem;line-height:1.25;font-weight:400;color:rgb(20 47 134 / .62)}
+  /* Two by two once four across would crush the labels. */
+  @media(max-width:400px){
+    .cm-hero__stats{grid-template-columns:repeat(2,1fr);gap:.6rem}
+    .cm-hstat__label{font-size:.7rem}
+  }
+
+  /* Buttons carry a leading icon; the secondary is a white card, not a fill. */
+  .cm-hero__actions .cm-btn{justify-content:flex-start;gap:.6rem;border-radius:14px}
+  .cm-btn__ico{display:grid;place-items:center;flex:none}
+  .cm-btn__ico svg{width:1.15rem;height:1.15rem}
+  .cm-btn__label{flex:1;text-align:left}
+  .cm-hero__actions .cm-arrow{width:1.15rem;height:1.15rem;flex:none}
+  .cm-hero__button--secondary{background:#FFFFFF;border-color:rgb(20 47 134 / .12);color:var(--green);box-shadow:0 6px 18px -10px rgb(20 47 134 / .3)}
+  .cm-hero__button--secondary::before{background:linear-gradient(110deg,#FFFFFF 0%,rgb(49 180 244 / .16) 52%,#FFFFFF 100%)}
+}
 @media (max-width: 767px) {
   .cm-hero {
     min-height: auto;
@@ -304,15 +362,16 @@ html:has(.cm-root){scroll-behavior:smooth}
   }
 
   .cm-hero__actions {
-    margin-top: 1.75rem;
-    gap: .75rem;
+    margin-top: 1.6rem;
+    gap: .7rem;
   }
 
   .cm-hero__actions .cm-btn {
     flex: 1;
     width: auto;
-    height: 2.75rem;
-    font-size: .9rem;
+    height: 3.4rem;
+    padding: 0 1rem;
+    font-size: .95rem;
   }
 
   .cm-hero__scene {
@@ -1045,6 +1104,22 @@ function Arrow() {
   );
 }
 
+function HeroIcon({ name }: { name: "users" | "badge" | "shield" | "clock" | "calendar" | "stetho" }) {
+  const paths: Record<string, React.ReactNode> = {
+    users: <><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 6.5a2.8 2.8 0 0 1 0 5.4"/><path d="M17.5 19c0-2.2-.8-3.9-2.2-4.7"/></>,
+    badge: <><circle cx="12" cy="10" r="5.5"/><path d="m12 7.6.9 1.9 2 .3-1.5 1.4.4 2-1.8-1-1.8 1 .4-2L9.1 9.8l2-.3Z"/><path d="M8.6 15.4 7.5 21l4.5-2.2L16.5 21l-1.1-5.6"/></>,
+    shield: <><path d="M12 3.5l7 2.5v5.4c0 4.2-2.9 7.4-7 8.6-4.1-1.2-7-4.4-7-8.6V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></>,
+    clock: <><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></>,
+    calendar: <><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/></>,
+    stetho: <><path d="M6 4v5a4 4 0 0 0 8 0V4"/><path d="M10 13v3a4 4 0 0 0 8 0v-2"/><circle cx="18" cy="12" r="1.6"/></>,
+  };
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      {paths[name]}
+    </svg>
+  );
+}
+
 function SvcIcon({ name }: { name: string }) {
   const paths: Record<string, React.ReactNode> = {
     mri: <><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M9 6v12M15 6v12"/></>,
@@ -1144,11 +1219,26 @@ export default function HomePage() {
                 <span className="cm-lead__rest cm-reveal">{HERO.title}</span>
               </h1>
             </div>
-            <p className="cm-body cm-hero__desc cm-reveal">{HERO.description}</p>
+            <span className="cm-hero__dash" aria-hidden="true" data-rise />
+            <p className="cm-body cm-hero__desc cm-reveal">
+              {HERO.descLines.map((line) => (
+                <span key={line} className="cm-hero__desc-line">{line}</span>
+              ))}
+            </p>
+            <dl className="cm-hero__stats" data-rise>
+              {HERO.stats.map((s) => (
+                <div key={s.label} className={`cm-hstat cm-hstat--${s.tone}`}>
+                  <span className="cm-hstat__ico"><HeroIcon name={s.icon} /></span>
+                  <dd className="cm-hstat__value">{s.value}</dd>
+                  <dt className="cm-hstat__label">{s.label}</dt>
+                </div>
+              ))}
+            </dl>
             <div className="cm-hero__actions" data-rise>
               {HERO.actions.map((a) => (
                 <Link key={a.href} href={a.href} className={`cm-btn cm-btn--pill cm-hero__button ${a.primary ? "cm-hero__button--primary" : "cm-hero__button--secondary"}`}>
-                  <span>{a.label}</span>
+                  <span className="cm-btn__ico" aria-hidden="true"><HeroIcon name={a.icon} /></span>
+                  <span className="cm-btn__label">{a.label}</span>
                   <Arrow />
                 </Link>
               ))}
