@@ -101,8 +101,17 @@ const groups: Group[] = [
   },
 ];
 
-/** Flattened running order across all groups, then loops back to the start. */
-const reel = groups.flatMap((group, groupIndex) =>
+/**
+ * Two running orders, because the phone must never be shown a desktop crop.
+ *
+ * The mobile files are 1254x1254 and the desktop files 1600x900. Only a photo
+ * with its own mobile file enters the mobile reel — falling back to the desktop
+ * file would put a 16:9 image on a phone, which is exactly what this avoids.
+ * The building photo is currently the only one without a 1:1 version (it was
+ * delivered at 1600x900 despite its name), so it plays on desktop only until a
+ * square crop exists.
+ */
+const desktopReel = groups.flatMap((group, groupIndex) =>
   group.images.map((photo) => ({
     desktop: eventImg(photo.desktop),
     mobile: eventImg(photo.mobile ?? photo.desktop),
@@ -110,15 +119,43 @@ const reel = groups.flatMap((group, groupIndex) =>
   })),
 );
 
-const firstStepOfGroup = groups.map((_, groupIndex) => reel.findIndex((s) => s.groupIndex === groupIndex));
+const mobileReel = groups.flatMap((group, groupIndex) =>
+  group.images
+    .filter((photo) => Boolean(photo.mobile))
+    .map((photo) => ({
+      desktop: eventImg(photo.desktop),
+      mobile: eventImg(photo.mobile as string),
+      groupIndex,
+    })),
+);
 
 export function WhyMagnusSlideshow() {
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(true);
+  /* Which reel is on screen. Starts false so the server renders the desktop
+     order; the effect below corrects it before the first photo is swapped. */
+  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
   const frameRef = useRef<HTMLDivElement | null>(null);
 
-  const activeGroup = reel[step].groupIndex;
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 767px)");
+    const sync = () => setIsMobile(query.matches);
+    sync();
+    query.addEventListener("change", sync);
+    return () => query.removeEventListener("change", sync);
+  }, []);
+
+  const reel = isMobile ? mobileReel : desktopReel;
+  /* Modulo, not a raw index: the two reels differ in length, so a step that was
+     valid before a resize must stay in range after it. */
+  const index = reel.length ? step % reel.length : 0;
+  const activeGroup = reel.length ? reel[index].groupIndex : 0;
+  /* Tabs follow the reel, so a group with no photo at this width — the building
+     on a phone — does not offer a tab that can never light up. */
+  const visibleGroups = groups
+    .map((group, groupIndex) => ({ group, groupIndex }))
+    .filter(({ groupIndex }) => reel.some((shot) => shot.groupIndex === groupIndex));
 
   // Pause the loop while the section is off-screen.
   useEffect(() => {
@@ -136,7 +173,7 @@ export function WhyMagnusSlideshow() {
     if (typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timer = window.setTimeout(() => setStep((s) => (s + 1) % reel.length), SUB_MS);
     return () => window.clearTimeout(timer);
-  }, [step, playing]);
+  }, [step, playing, reel.length]);
 
   // Drift the photo with the scroll position. Writes a CSS variable straight to
   // the node so scrolling never triggers a React re-render.
@@ -175,21 +212,21 @@ export function WhyMagnusSlideshow() {
     <section id="why-magnus" className="cm-why-mag" aria-label="Inside Magnus" ref={sectionRef}>
       <div className="cm-why-mag__frame" ref={frameRef}>
         <div className="cm-why-mag__shots" aria-hidden="true">
-          {reel.map((shot, index) => (
+          {reel.map((shot, shotIndex) => (
             <picture
-              key={`${shot.groupIndex}-${index}-${shot.desktop}`}
-              className={`cm-why-mag__shot${index === step ? " is-on" : ""}`}
+              key={`${shot.groupIndex}-${shotIndex}-${shot.desktop}`}
+              className={`cm-why-mag__shot${shotIndex === index ? " is-on" : ""}`}
             >
               <source media="(min-width: 768px)" srcSet={shot.desktop} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={shot.mobile} alt="" loading={index === 0 ? "eager" : "lazy"} decoding="async" />
+              <img src={shot.mobile} alt="" loading={shotIndex === 0 ? "eager" : "lazy"} decoding="async" />
             </picture>
           ))}
         </div>
 
         <div className="cm-why-mag__body">
           <div className="cm-why-mag__copy" aria-live="polite">
-            {groups.map((group, groupIndex) => (
+            {visibleGroups.map(({ group, groupIndex }) => (
               <div
                 key={group.tab}
                 className={`cm-why-mag__pane${groupIndex === activeGroup ? " is-on" : ""}`}
@@ -207,14 +244,14 @@ export function WhyMagnusSlideshow() {
 
           <div className="cm-why-mag__foot">
             <div className="cm-why-mag__tabs" role="tablist" aria-label="Inside Magnus">
-              {groups.map((group, groupIndex) => (
+              {visibleGroups.map(({ group, groupIndex }) => (
                 <button
                   key={group.tab}
                   type="button"
                   role="tab"
                   className={`cm-why-mag__tab${groupIndex === activeGroup ? " is-on" : ""}`}
                   aria-selected={groupIndex === activeGroup}
-                  onClick={() => setStep(firstStepOfGroup[groupIndex])}
+                  onClick={() => setStep(reel.findIndex((shot) => shot.groupIndex === groupIndex))}
                 >
                   <span className="cm-why-mag__tab-label">{group.tab}</span>
                   <span className="cm-why-mag__rail" aria-hidden="true">
