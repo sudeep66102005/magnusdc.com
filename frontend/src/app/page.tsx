@@ -103,8 +103,8 @@ const SERVICE_CARDS = [
     desktop: svcImg("desktop imaging image.jpeg"),
     mobile: svcImg("mobile imaging image.jpeg"),
     items: [
-      { label: "MRI", icon: "mri" },
       { label: "CT", icon: "ct" },
+      { label: "MRI", icon: "mri" },
       { label: "Ultrasound", icon: "ultrasound" },
       { label: "Doppler", icon: "doppler" },
       { label: "X-Ray", icon: "xray" },
@@ -700,11 +700,6 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-svc__title-line{white-space:nowrap}
   /* Copy now reaches ~600px across a 752px card; the stock scrim is fully
      transparent by 526px. Carry the shading further right on this card only. */
-  .cm-svc--wf .cm-svc__scrim{background:linear-gradient(90deg,rgb(0 0 0 / .74) 0%,rgb(0 0 0 / .58) 40%,rgb(0 0 0 / .28) 66%,rgb(0 0 0 / 0) 86%)}
-  .cm-svc__list{gap:.4rem;margin-top:.9rem}
-  .cm-svc__list li{font-size:.95rem}
-  .cm-svc__ico{width:1.55rem;height:1.55rem}
-  .cm-svc__ico svg{width:.95rem;height:.95rem}
   .cm-svc__actions{gap:.6rem;padding:1.6rem}
   .cm-svc__btn{height:2.4rem;padding:0 1rem;font-size:.82rem}
 }
@@ -719,13 +714,10 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(max-width:767px){
   .cm-svc--wf .cm-svc__img{left:0;right:auto;width:125%;object-position:50% 40%!important}
   .cm-svc--wf .cm-svc__head{width:45%;max-width:none;padding-right:0}
-  .cm-svc--wf .cm-svc__list{gap:.45rem}
-  .cm-svc--wf .cm-svc__list li{font-size:.95rem}
 }
 /* Black gradient from the left edge only, fading out by 70% across. The copy
    sits in that shaded band so it can stay plain white, while the right side of
    the photo keeps its full brightness. No top or bottom gradient. */
-.cm-svc__scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgb(0 0 0 / .72) 0%,rgb(0 0 0 / .5) 28%,rgb(0 0 0 / .2) 50%,rgb(0 0 0 / 0) 70%)}
 .cm-svc__head{position:relative;z-index:2;padding:1.75rem}
 @media(min-width:768px){.cm-svc__head{padding:2rem}}
 .cm-svc__title{margin:0;font-size:2.375rem;line-height:1.05;font-weight:700;letter-spacing:-.02em;color:#FFFFFF}
@@ -734,14 +726,17 @@ html:has(.cm-root){scroll-behavior:smooth}
 /* At 3.6rem the heading runs past the point where the scrim has faded out, so
    it needs its own shadow to stay legible over the bright side of the photo. */
 .cm-svc__title{text-shadow:0 2px 18px rgb(0 0 0 / .45)}
+/* The modalities, one pipe separated line in place of the icon list. No scrim
+   behind it any more, so the shadow is what keeps it legible over a bright
+   photo. Larger on desktop, unchanged on phones. It wraps rather than clips:
+   "Cardiology | Neurology | ... | and more" is ~104 characters and cannot fit a
+   700px card on one line at a readable size. */
+.cm-svc__line{margin:1.1rem 0 0;max-width:34rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.9rem;font-weight:400;line-height:1.5;color:#FFFFFF;text-shadow:0 2px 14px rgb(0 0 0 / .5)}
+@media(min-width:768px){.cm-svc__line{max-width:40rem;font-size:1.15rem}}
+@media(min-width:1024px){.cm-svc__line{max-width:44rem;font-size:1.3rem;line-height:1.45}}
 /* One data-driven line per span, so "WOMEN'S & FETAL" / "MEDICINE" is a fixed
    break rather than a guess about where the text happens to wrap. */
 .cm-svc__title-line{display:block}
-.cm-svc__list{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;margin:1.1rem 0 0;padding:0;list-style:none;max-width:26rem}
-.cm-svc__list li{display:flex;align-items:center;gap:.55rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.0625rem;font-weight:400;line-height:1.2;color:#FFFFFF}
-.cm-svc__ico{display:grid;place-items:center;width:1.75rem;height:1.75rem;flex:none;border-radius:999px;background:rgb(255 255 255 / .18);color:#FFFFFF}
-.cm-svc__ico svg{width:1.05rem;height:1.05rem}
-@media(min-width:768px){.cm-svc__list li{font-size:1.125rem}.cm-svc__ico{width:1.9rem;height:1.9rem}.cm-svc__ico svg{width:1.15rem;height:1.15rem}}
 .cm-svc__actions{position:relative;z-index:2;display:flex;flex-direction:column;gap:.75rem;padding:1.75rem}
 @media(min-width:520px){.cm-svc__actions{flex-direction:row}}
 @media(min-width:768px){.cm-svc__actions{padding:2rem}}
@@ -953,8 +948,6 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-svc__title{font-size:2.625rem}
   .cm-svc--wf .cm-svc__title{font-size:2.4rem}
   .cm-svc--wf .cm-svc__head{width:62%}
-  .cm-svc__list li{font-size:.9375rem}
-  .cm-svc--wf .cm-svc__list li{font-size:.875rem}
   .cm-svc__btn{height:2.75rem;font-size:.875rem}
 
   /* ABOUT */
@@ -1313,38 +1306,6 @@ function HeroIcon({ name }: { name: "users" | "badge" | "shield" | "clock" | "ca
   );
 }
 
-function SvcIcon({ name }: { name: string }) {
-  const paths: Record<string, React.ReactNode> = {
-    mri: <><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M9 6v12M15 6v12"/></>,
-    ct: <><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></>,
-    ultrasound: <><path d="M4 14c3-6 13-6 16 0"/><path d="M8 17c2-3 6-3 8 0"/><circle cx="12" cy="6" r="1.4"/></>,
-    doppler: <><path d="M3 12h3l2-5 3 10 3-7 2 2h5"/></>,
-    xray: <><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M12 7v10M9 10h6M9 14h6"/></>,
-    dental: <><path d="M8 3c-2 0-3 2-3 5 0 5 1 13 3 13s2-5 4-5 2 5 4 5 3-8 3-13c0-3-1-5-3-5-2 0-2 1-4 1s-2-1-4-1Z"/></>,
-    baby: <><circle cx="12" cy="12" r="9"/><path d="M9 10h.01M15 10h.01"/><path d="M9 15c1.5 1.5 4.5 1.5 6 0"/></>,
-    ruler: <><rect x="2" y="8" width="20" height="8" rx="2"/><path d="M7 8v3M12 8v4M17 8v3"/></>,
-    search: <><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></>,
-    growth: <><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></>,
-    heart: <><path d="M12 20s-7-4.6-7-9.4A4 4 0 0 1 12 8a4 4 0 0 1 7 2.6C19 15.4 12 20 12 20Z"/></>,
-    tube: <><path d="M9 3h6M10 3v13a2 2 0 0 0 4 0V3"/><path d="M10 11h4"/></>,
-    microscope: <><path d="M9 4h4l1 8h-6l1-8Z"/><path d="M6 20h12M9 16c-2 1-3 2.5-3 4"/><path d="M15 12c3 1 4 4 3 8"/></>,
-    dna: <><path d="M7 3c0 6 10 6 10 12M17 3c0 6-10 6-10 12"/><path d="M8 8h8M8 15h8"/></>,
-    allergy: <><circle cx="12" cy="12" r="3"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3"/></>,
-    brain: <><path d="M9 5a3 3 0 0 0-3 3 3 3 0 0 0-1 5 3 3 0 0 0 2 5h2V5Z"/><path d="M15 5a3 3 0 0 1 3 3 3 3 0 0 1 1 5 3 3 0 0 1-2 5h-2V5Z"/></>,
-    bone: <><path d="M8 5a2.5 2.5 0 1 0-2 4l7 7a2.5 2.5 0 1 0 4 2 2.5 2.5 0 1 0-2-4l-7-7a2.5 2.5 0 1 0-0-2Z"/></>,
-    stomach: <><path d="M9 4v5c0 4 3 3 5 5s1 6-3 6-6-3-6-7"/><path d="M9 4h4"/></>,
-    kidney: <><path d="M10 4c4 0 7 3 7 8s-3 8-6 8-4-2-4-4 2-3 2-5-2-2-2-4 1-3 3-3Z"/></>,
-    ear: <><path d="M7 9a5 5 0 1 1 10 0c0 3-3 3-3 6a3 3 0 0 1-5 2"/></>,
-    stetho: <><path d="M6 4v5a4 4 0 0 0 8 0V4"/><path d="M10 13v3a4 4 0 0 0 8 0v-2"/><circle cx="18" cy="12" r="1.6"/></>,
-    more: <><circle cx="6" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="18" cy="12" r="1.6"/></>,
-  };
-  return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      {paths[name] ?? paths.more}
-    </svg>
-  );
-}
-
 function StatIcon({ name }: { name: "shield" | "scan" | "team" }) {
   if (name === "shield") {
     return (
@@ -1497,21 +1458,18 @@ export default function HomePage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img className="cm-svc__img" src={card.mobile} alt={card.title} loading="lazy" decoding="async" style={{ objectPosition: (card as { pos?: string }).pos ?? "50% 50%" }} />
               </picture>
-              <span className="cm-svc__scrim" aria-hidden="true" />
               <div className="cm-svc__head">
                 <h3 className="cm-svc__title">
                   {((card as { titleLines?: string[] }).titleLines ?? [card.title]).map((line) => (
                     <span key={line} className="cm-svc__title-line">{line}</span>
                   ))}
                 </h3>
-                <ul className="cm-svc__list">
-                  {card.items.map((it) => (
-                    <li key={it.label}>
-                      <span className="cm-svc__ico" aria-hidden="true"><SvcIcon name={it.icon} /></span>
-                      <span>{it.label}</span>
-                    </li>
-                  ))}
-                </ul>
+                {/* One horizontal line, pipe separated. The per-item icons and
+                    the vertical list are gone; `icon` stays in the data so the
+                    list can be restored without retyping it. */}
+                <p className="cm-svc__line">
+                  {card.items.map((it) => it.label).join(" | ")}
+                </p>
               </div>
               <div className="cm-svc__actions">
                 <Link href={card.href} className="cm-svc__btn cm-svc__btn--primary">
