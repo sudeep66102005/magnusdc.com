@@ -58,7 +58,14 @@ const HERO = {
 
 const WHY = {
   eyebrow: "Why Clarus Magnus",
-  title: "18 years of trust. A new era of healthcare.",
+  /* Split so the phone can set the two halves at different weights, as in the
+     design. Desktop renders them inline with one space between, which is byte
+     for byte what the single string produced. */
+  titleStrong: "18 years of trust.",
+  titleLight: "A new era of healthcare.",
+  /* Phone only — desktop has no paragraph here since it was removed. */
+  lede: "Advanced technology. Expert care. A healthier tomorrow for you and your loved ones.",
+  banner: encodeURI(asset("/assets/uploads/banners/second section of landing page why clarus magnus.jpeg")),
   stats: [
     { value: "18+", label: "Years of experience", icon: "shield" as const },
     { value: "3T", label: "Advanced MRI", icon: "scan" as const },
@@ -541,6 +548,54 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-why .cm-lead{width:100%}
 @media(min-width:1024px){.cm-why .cm-lead{width:39.25rem}.cm-why .cm-body{width:27.625rem}}
 .cm-why__desc{max-width:44rem;color:var(--subtle);margin:0}
+/* .cm-why__head replaces an inline style block that a media query could not
+   reach. Desktop values are identical to that inline style, so nothing moves. */
+.cm-why__head{display:flex;flex-direction:column;align-items:center;gap:1rem;width:100%}
+/* Phone-only pieces. Off at every width by default, switched on in the phone
+   block below, so desktop cannot inherit them by accident. */
+.cm-why__banner{display:none}
+.cm-why__lede{display:none}
+.cm-why__title-strong,.cm-why__title-light{font:inherit;letter-spacing:inherit}
+
+/* ---- WHY on a phone: the supplied design -----------------------------------
+   Left-aligned column with the square banner as a circle bleeding off the right
+   edge, then the lede, then the three stats as cards. The photo is 1254x1254, so
+   a round frame of equal width and height crops nothing but the corners.
+   Desktop keeps its centred composition — every rule here is inside the query. */
+@media(max-width:767px){
+  .cm-why{place-items:start;text-align:left;padding:3.25rem 1.25rem 3rem}
+  .cm-why__inner{position:relative;align-items:flex-start;gap:1.5rem;text-align:left}
+  .cm-why__head{align-items:flex-start;gap:.85rem;width:58%}
+
+  /* Dash before the eyebrow, as drawn. */
+  .cm-eyebrow{display:flex;align-items:center;gap:.6rem;font-size:.68rem;letter-spacing:.14em}
+  .cm-why__inner .cm-eyebrow::before{content:"";width:1.6rem;height:2px;border-radius:999px;background:var(--green);flex:none}
+
+  .cm-why .cm-lead{width:100%;text-wrap:normal}
+  .cm-why__title-strong{display:block;font-weight:700;font-size:2.05rem;line-height:1.02;letter-spacing:-.03em}
+  .cm-why__title-light{display:block;margin-top:.15rem;font-weight:400;font-size:1.6rem;line-height:1.08;letter-spacing:-.02em;color:rgb(20 47 134 / .88)}
+
+  .cm-why__lede{display:block;width:66%;margin:0;font-size:.875rem;line-height:1.55;font-weight:400;color:rgb(20 47 134 / .68)}
+
+  /* The circle. Square source, square frame, so only the corners are lost. */
+  .cm-why__banner{display:block;position:absolute;top:-1rem;right:-16%;width:64%;aspect-ratio:1/1;z-index:1;pointer-events:none}
+  .cm-why__banner img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
+  .cm-why__badge{position:absolute;bottom:6%;left:-14%;display:grid;place-content:center;width:6.1rem;height:6.1rem;border-radius:50%;background:#FFFFFF;box-shadow:0 10px 26px -14px rgb(20 47 134 / .45);font-family:var(--font-playfair),Georgia,serif;font-style:italic;font-size:.8rem;line-height:1.35;text-align:center;color:var(--green)}
+
+  /* Text sits above the photo where they overlap. */
+  .cm-why__head,.cm-why__lede,.cm-why__stats{position:relative;z-index:2}
+
+  /* Stats become cards. */
+  .cm-why__stats{grid-template-columns:repeat(3,1fr);gap:.55rem;margin-top:.5rem}
+  .cm-why__stat{gap:.6rem;padding:1rem .5rem 1.1rem;border-radius:16px;background:#FFFFFF;box-shadow:0 8px 22px -14px rgb(20 47 134 / .3)}
+  .cm-why__stat-icon{width:2.9rem;height:2.9rem}
+  .cm-why__stat-icon svg{width:1.45rem;height:1.45rem}
+  .cm-why__stat--t0 .cm-why__stat-icon{background:rgb(49 180 244 / .16);color:#1E6FA8}
+  .cm-why__stat--t1 .cm-why__stat-icon{background:rgb(115 83 155 / .14);color:#73539B}
+  .cm-why__stat--t2 .cm-why__stat-icon{background:rgb(90 166 59 / .14);color:#4E8F33}
+  .cm-why__stat dd{font-size:1.5rem;font-weight:700}
+  .cm-why__stat dt{font-size:.6rem;font-weight:500;line-height:1.3;letter-spacing:.06em;text-transform:uppercase;max-width:none;color:rgb(20 47 134 / .6)}
+}
 .cm-why__stats{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:1.5rem 2.5rem;margin:0}
 .cm-why__stat{display:flex;align-items:center;gap:.9rem;text-align:left}
 .cm-why__stat-icon{display:grid;place-items:center;width:3.75rem;height:3.75rem;flex:none;border-radius:999px;background:rgb(49 180 244 / .12);color:var(--green)}
@@ -1423,13 +1478,30 @@ export default function HomePage() {
       <section id="why" className="cm-section cm-why">
         <div className="cm-trail" aria-hidden="true" data-imgs={JSON.stringify(WHY.trail)} />
         <div className="cm-why__inner cm-shell">
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", width: "100%" }}>
+          {/* Was an inline style block, which a media query cannot override —
+              it is a class now so the phone can left-align it. */}
+          <div className="cm-why__head">
             <p className="cm-eyebrow" data-rise>{WHY.eyebrow}</p>
-            <h2 className="cm-lead cm-reveal">{WHY.title}</h2>
+            <h2 className="cm-lead cm-reveal">
+              <span className="cm-why__title-strong">{WHY.titleStrong}</span>{" "}
+              <span className="cm-why__title-light">{WHY.titleLight}</span>
+            </h2>
           </div>
+
+          {/* Phone only, both of these. */}
+          <div className="cm-why__banner">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={WHY.banner} alt="A Clarus Magnus doctor with a young patient" />
+            <span className="cm-why__badge" aria-hidden="true">
+              <span>Care</span>
+              <span>Beyond</span>
+              <span>Diagnosis</span>
+            </span>
+          </div>
+          <p className="cm-why__lede">{WHY.lede}</p>
           <dl className="cm-why__stats" data-rise>
-            {WHY.stats.map((s) => (
-              <div className="cm-why__stat" key={s.label}>
+            {WHY.stats.map((s, i) => (
+              <div className={`cm-why__stat cm-why__stat--t${i % 3}`} key={s.label}>
                 <span className="cm-why__stat-icon" aria-hidden="true"><StatIcon name={s.icon} /></span>
                 <div className="cm-why__stat-text">
                   <dd data-count={s.value}>{s.value}</dd>
