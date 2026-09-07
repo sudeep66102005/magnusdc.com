@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useSubmitContact } from "@/hooks/use-contact";
+import { DirectContactFallback } from "@/components/forms/direct-contact-fallback";
+import { isLeadBackendConfigured, mailtoFor } from "@/lib/forms/lead-delivery";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Please enter your name"),
@@ -24,6 +26,7 @@ export function ContactForm() {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -68,9 +71,13 @@ export function ContactForm() {
         {errors.message && <p className="text-xs text-destructive">{errors.message.message}</p>}
       </div>
 
-      <Button type="submit" size="lg" disabled={isPending} className="w-full">
-        {isPending ? "Sending..." : "Send Message"}
-      </Button>
+      {isLeadBackendConfigured ? (
+        <Button type="submit" size="lg" disabled={isPending} className="w-full">
+          {isPending ? "Sending..." : "Send Message"}
+        </Button>
+      ) : (
+        <DirectContactFallback heading="Messages are answered by phone, WhatsApp and email" />
+      )}
 
       {isSuccess && (
         <p className="text-sm font-medium text-primary">
@@ -78,9 +85,11 @@ export function ContactForm() {
         </p>
       )}
       {isError && (
-        <p className="text-sm font-medium text-destructive">
-          Something went wrong. Please try again or call us directly.
-        </p>
+        <DirectContactFallback
+          tone="error"
+          heading="That message did not reach us"
+          mailto={mailtoFor("contact", getValues())}
+        />
       )}
     </form>
   );

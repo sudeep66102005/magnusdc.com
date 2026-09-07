@@ -43,6 +43,19 @@ export type Doctor = {
  * profiles were supplied. Photographs are pending for everyone, so no entry
  * carries an `image` yet — each card renders a monogram tile until one is added.
  */
+/**
+ * URL slug for a consultant, e.g. "Dr. Chaathurya R." -> "dr-chaathurya-r".
+ * Derived from the name so no hand-maintained id can drift out of sync with the
+ * roster.
+ */
+export function doctorSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
 export const doctors: Doctor[] = [
   // Radiology
   {
@@ -326,3 +339,23 @@ export const doctorFilters: string[] = [
   "All",
   ...specialties.filter((s) => doctors.some((d) => d.specialty === s)),
 ];
+
+
+/** Lookup for the /doctors/[slug] route. */
+export function getDoctorBySlug(slug: string): Doctor | undefined {
+  return doctors.find((doctor) => doctorSlug(doctor.name) === slug);
+}
+
+/** Feeds generateStaticParams, so every consultant gets a page at build time. */
+export function getAllDoctorSlugs(): string[] {
+  return doctors.map((doctor) => doctorSlug(doctor.name));
+}
+
+/**
+ * Consultants in one department. Used by a doctor's profile to offer colleagues
+ * in the same specialty, and by the specialty pages to list their team — which
+ * is what turns the specialty pages from boilerplate into something specific.
+ */
+export function getDoctorsBySpecialty(specialty: string): Doctor[] {
+  return doctors.filter((doctor) => doctor.specialty === specialty);
+}

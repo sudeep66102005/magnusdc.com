@@ -15,6 +15,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useCreateAppointment } from "@/hooks/use-appointment";
+import { DirectContactFallback } from "@/components/forms/direct-contact-fallback";
+import { isLeadBackendConfigured, mailtoFor } from "@/lib/forms/lead-delivery";
 import { specialties } from "@/lib/constants/navigation";
 
 const appointmentSchema = z.object({
@@ -34,6 +36,7 @@ export function AppointmentForm() {
     register,
     handleSubmit,
     reset,
+    getValues,
     setValue,
     watch,
     formState: { errors },
@@ -133,9 +136,15 @@ export function AppointmentForm() {
         <Textarea id="notes" placeholder="Any symptoms or details to share" {...register("notes")} />
       </div>
 
-      <Button type="submit" size="lg" disabled={isPending} className="w-full">
-        {isPending ? "Booking..." : "Book Appointment"}
-      </Button>
+      {/* No submit button when nothing can receive the request — a button that
+          cannot deliver an appointment is worse than no button. */}
+      {isLeadBackendConfigured ? (
+        <Button type="submit" size="lg" disabled={isPending} className="w-full">
+          {isPending ? "Booking..." : "Book Appointment"}
+        </Button>
+      ) : (
+        <DirectContactFallback heading="Booking requests are taken by phone and WhatsApp" />
+      )}
 
       {isSuccess && (
         <p className="text-sm font-medium text-primary">
@@ -143,9 +152,11 @@ export function AppointmentForm() {
         </p>
       )}
       {isError && (
-        <p className="text-sm font-medium text-destructive">
-          Something went wrong. Please try again or call us directly.
-        </p>
+        <DirectContactFallback
+          tone="error"
+          heading="That request did not reach us"
+          mailto={mailtoFor("appointment", getValues())}
+        />
       )}
     </form>
   );

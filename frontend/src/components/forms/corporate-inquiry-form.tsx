@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useSubmitCorporateInquiry } from "@/hooks/use-corporate-inquiry";
+import { DirectContactFallback } from "@/components/forms/direct-contact-fallback";
+import { isLeadBackendConfigured, mailtoFor } from "@/lib/forms/lead-delivery";
 
 const corporateSchema = z.object({
   companyName: z.string().min(2, "Please enter your company name"),
@@ -25,6 +27,7 @@ export function CorporateInquiryForm() {
     register,
     handleSubmit,
     reset,
+    getValues,
     formState: { errors },
   } = useForm<CorporateFormValues>({
     resolver: zodResolver(corporateSchema),
@@ -87,9 +90,13 @@ export function CorporateInquiryForm() {
         )}
       </div>
 
-      <Button type="submit" size="lg" disabled={isPending} className="w-full">
-        {isPending ? "Submitting..." : "Request Consultation"}
-      </Button>
+      {isLeadBackendConfigured ? (
+        <Button type="submit" size="lg" disabled={isPending} className="w-full">
+          {isPending ? "Submitting..." : "Request Consultation"}
+        </Button>
+      ) : (
+        <DirectContactFallback heading="Corporate enquiries are taken by phone and email" />
+      )}
 
       {isSuccess && (
         <p className="text-sm font-medium text-primary">
@@ -97,9 +104,11 @@ export function CorporateInquiryForm() {
         </p>
       )}
       {isError && (
-        <p className="text-sm font-medium text-destructive">
-          Something went wrong. Please try again or call us directly.
-        </p>
+        <DirectContactFallback
+          tone="error"
+          heading="That enquiry did not reach us"
+          mailto={mailtoFor("corporate-inquiry", getValues())}
+        />
       )}
     </form>
   );

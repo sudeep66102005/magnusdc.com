@@ -41,6 +41,24 @@ jobs:
           cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
+      # next/link prepends basePath itself, so a manual ${BP} in an href applies
+      # it twice and produces /magnusdc.com/magnusdc.com/... — which 404s. That
+      # shipped once across the hero, the service cards and all 29 doctor cards,
+      # so it is now a build failure rather than something to notice in review.
+      # Asset URLs (img src, canvas textures) legitimately need ${BP}.
+      - name: Guard against doubled base path in links
+        working-directory: frontend
+        run: |
+          set -euo pipefail
+          # /assets paths are excluded: a raw <a> or <img> to a file in public/
+          # is not routed by next/link and does need the prefix.
+          if grep -rnE 'href(=\{|: )`\$\{(BP|basePath)\}' src --include='*.tsx' --include='*.ts' \
+             | grep -v '/assets'; then
+            echo "::error::Found \${BP} inside a route href. next/link adds basePath already — use a plain '/path'."
+            exit 1
+          fi
+          echo "ok       no manual base path in any route href"
+
       - name: Install dependencies
         working-directory: frontend
         run: npm ci

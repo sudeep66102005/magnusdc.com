@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { doctorFilters, doctors, type Doctor } from "@/lib/data/doctors";
+import { doctorFilters, doctors, doctorSlug, type Doctor } from "@/lib/data/doctors";
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -70,6 +70,8 @@ const css = String.raw`
    opacity. */
 .cm-doc__spec{margin:0 2.5rem .35rem 0;font-size:.8125rem;font-weight:300;line-height:1.35;color:#0F2461}
 .cm-doc__name{margin:0 0 .35rem;font-size:1.25rem;line-height:1.22;font-weight:700;letter-spacing:-.01em;color:#142F86}
+.cm-doc__name a{color:inherit;text-decoration:none}
+.cm-doc__name a:hover,.cm-doc__name a:focus-visible{text-decoration:underline;text-underline-offset:3px}
 /* Clamped to four lines so a long credential list cannot stretch the card and
    drag its whole grid row taller with it — card size has to stay fixed. */
 .cm-doc__qual{margin:0;font-size:.8125rem;font-weight:300;line-height:1.45;color:#0F2461;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
@@ -210,15 +212,20 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
         )}
       </div>
       <div className="cm-doc__body">
+        {/* Goes to the consultant's own page, not Contact Us. Every one of these
+            arrows used to land on /contact, which told a visitor nothing about
+            the doctor whose card they had just clicked. */}
         <Link
-          href={`${BP}/contact`}
+          href={doctor.href ?? `/doctors/${doctorSlug(doctor.name)}`}
           className="cm-doc__go"
-          aria-label={`Contact us about ${doctor.name}`}
+          aria-label={`View profile of ${doctor.name}`}
         >
           <Arrow />
         </Link>
         <p className="cm-doc__spec">{doctor.specialty}</p>
-        <h3 className="cm-doc__name">{doctor.name}</h3>
+        <h3 className="cm-doc__name">
+          <Link href={doctor.href ?? `/doctors/${doctorSlug(doctor.name)}`}>{doctor.name}</Link>
+        </h3>
         {doctor.keyQualification ? <p className="cm-doc__qual">{doctor.keyQualification}</p> : null}
         {badge ? (
           <span className={`cm-doc__badge cm-doc__badge--${badgeTint(doctor.specialty)}`}>
@@ -226,7 +233,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
             {badge}
           </span>
         ) : null}
-        <Link href={`${BP}/patient-info/appointment-booking`} className="cm-doc__btn">
+        <Link href="/patient-info/appointment-booking" className="cm-doc__btn">
           Book Now
         </Link>
       </div>
