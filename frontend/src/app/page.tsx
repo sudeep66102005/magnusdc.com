@@ -66,12 +66,15 @@ const WHY = {
   /* Phone only — desktop has no paragraph here since it was removed. */
   lede: "Advanced technology. Expert care. A healthier tomorrow for you and your loved ones.",
   banner: encodeURI(asset("/assets/uploads/banners/second section of landing page why clarus magnus.jpeg")),
+  /* Desktop only: the building, and the paragraph the design puts beside it. */
+  building: encodeURI(asset("/assets/uploads/events/font face building for landing page bith desktop and mobiel.jpeg")),
+  para: "Built on 18 years of healthcare experience, Clarus Magnus Health & Diagnostics represents a new chapter \u2014 bringing together advanced diagnostics, specialist-led care and a modern patient experience.",
+  script: "Better Health Brighter Tomorrows",
   stats: [
     { value: "18+", label: "Years of experience", icon: "shield" as const },
     { value: "3T", label: "Advanced MRI", icon: "scan" as const },
     { value: "20+", label: "Specialist consultants", icon: "team" as const },
   ],
-  trail: Array.from({ length: 8 }, (_, i) => asset(`/assets/dantora/why/0${i + 1}.png`)),
 };
 
 const tImg = (f: string) => encodeURI(`${BP}/assets/uploads/testimonials/${f}`);
@@ -543,7 +546,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 /* Height comes from the content, not from the viewport. min-height:100lvh with
    place-items:center meant a ~440px block centred in a 1080px box, so the
    section opened and closed with a ~320px band of white — the gap after the
-   hero. The floor is what the decorative .cm-trail cards need to travel in. */
+   hero. */
 .cm-why{min-height:34rem;display:grid;place-items:center;overflow:hidden;background:#FFFFFF;text-align:center;padding:4.5rem 1.25rem}
 .cm-why__inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:2rem;width:min(100% - 2.5rem,44.75rem)}
 .cm-why .cm-lead{width:100%}
@@ -556,6 +559,9 @@ html:has(.cm-root){scroll-behavior:smooth}
    block below, so desktop cannot inherit them by accident. */
 .cm-why__banner{display:none}
 .cm-why__lede{display:none}
+.cm-why__building{display:none}
+.cm-why__para{display:none}
+.cm-why__script{display:none}
 .cm-why__title-strong,.cm-why__title-light{font:inherit;letter-spacing:inherit}
 
 /* ---- WHY on a phone: the supplied design -----------------------------------
@@ -618,8 +624,42 @@ html:has(.cm-root){scroll-behavior:smooth}
 }
 .cm-why__actions{display:flex;gap:1rem}
 .cm-why__actions .cm-btn{width:11.25rem}
-.cm-trail{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
-.cm-trail__card{position:absolute;top:0;left:0;width:13.5rem;height:17rem;border-radius:24px;background-size:cover;background-position:center;will-change:transform,opacity;opacity:0}
+
+/* ---- WHY on desktop: the supplied design -----------------------------------
+   Two halves: the building photo fills the left, the copy sits on the right.
+   Everything is inside min-width:1024px, and the three elements involved are
+   display:none by default, so the phone layout is untouched.
+   No "Our team" / "How we work" buttons, by request.
+   The cursor-trail cards that used to fly across this section are gone. */
+@media(min-width:1024px){
+  .cm-why{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);place-items:stretch;align-items:center;gap:0;min-height:0;padding:0;text-align:left}
+  .cm-why__building{display:block;position:relative;min-height:34rem;height:100%;overflow:hidden}
+  .cm-why__building img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+
+  .cm-why__inner{width:100%;max-width:none;align-items:flex-start;gap:1.35rem;padding:4rem 3rem 4rem 3.25rem;text-align:left}
+  .cm-why__head{align-items:flex-start;width:100%;gap:.9rem}
+  .cm-why__inner .cm-eyebrow{font-size:.72rem;letter-spacing:.16em;color:rgb(20 47 134 / .58)}
+
+  .cm-why .cm-lead{width:100%;text-wrap:normal}
+  .cm-why__title-strong{display:block;font-weight:700;font-size:clamp(2.1rem,2.9vw,3rem);line-height:1.06;letter-spacing:-.025em;color:var(--green)}
+  /* Second half in sky blue, still bold — as drawn. */
+  .cm-why__title-light{display:block;font-weight:700;font-size:clamp(2.1rem,2.9vw,3rem);line-height:1.06;letter-spacing:-.025em;color:var(--lime)}
+  /* The short rule under the heading. */
+  .cm-why__head::after{content:"";width:3.25rem;height:3px;border-radius:999px;background:var(--lime);margin-top:.35rem}
+
+  .cm-why__para{display:block;max-width:33rem;margin:0;font-size:1rem;line-height:1.62;font-weight:400;color:rgb(20 47 134 / .7)}
+
+  /* Stat cards lie down: icon left, figure and label stacked to its right. */
+  .cm-why__stats{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:.7rem;width:auto;margin:.25rem 0 0}
+  .cm-why__stat{flex-direction:row;align-items:center;text-align:left;gap:.8rem;padding:.85rem 1.15rem;border-radius:14px;background:#FFFFFF;box-shadow:0 10px 26px -18px rgb(20 47 134 / .35)}
+  .cm-why__stat-icon{width:2.5rem;height:2.5rem}
+  .cm-why__stat-icon svg{width:1.25rem;height:1.25rem}
+  .cm-why__stat-text{align-items:flex-start;text-align:left}
+  .cm-why__stat dd{font-size:1.5rem;line-height:1.05;font-weight:700}
+  .cm-why__stat dt{font-size:.7rem;line-height:1.25;font-weight:400;max-width:7rem;color:rgb(20 47 134 / .6)}
+
+  .cm-why__script{display:block;align-self:flex-end;margin:.5rem 0 0;font-style:italic;font-size:1.3rem;line-height:1.3;color:#2C6FB8}
+}
 
 /* WHY MAGNUS SLIDESHOW */
 .cm-why-mag{position:relative;z-index:10;background:#FFFFFF;padding:0}
@@ -975,7 +1015,7 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-pre{display:none}
   .cm-svc__img{transition:none}
   .cm-about{margin-top:0}
-  .cm-hero__scene,.cm-trail{display:none}
+  .cm-hero__scene{display:none}
   .cm-testimonials__marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
   .cm-testimonials__track{animation:none;scroll-snap-type:x proximity}
   .cm-why-mag__shots{transform:none}
@@ -1249,18 +1289,6 @@ function initClarus(root){
     document.addEventListener('keydown',onDesktopKey); cleaners.push(()=>{document.removeEventListener('keydown',onDesktopKey);resetters.forEach(fn=>fn());});
   }
 
-  // cursor trail (why)
-  const trail=root.querySelector('.cm-trail'); const why=root.querySelector('.cm-why');
-  if(!reduce&&trail&&why){
-    const imgs=JSON.parse(trail.dataset.imgs||'[]'); const MAX_CARDS=5,MAX_PENDING=2; const pending=new Map(); let lastP=null,id=0;
-    const finish=card=>{ const timer=pending.get(card); if(timer!==undefined)clearTimeout(timer); pending.delete(card); card.remove(); };
-    const enforcePending=()=>{ while(pending.size>MAX_PENDING){ const oldest=pending.keys().next().value; if(!oldest)break; finish(oldest); } };
-    const fade=card=>{ if(pending.has(card))return; card.dataset.removing='true'; card.style.transition='transform .3s ease,opacity .18s'; card.style.opacity='0'; card.style.transform=card.style.transform.replace('scale(1)','scale(.4)'); pending.set(card,setTimeout(()=>finish(card),320)); enforcePending(); };
-    why.addEventListener('pointermove',ev=>{ if(ev.pointerType!=='mouse'||!imgs.length)return; const b=why.getBoundingClientRect(); const x=ev.clientX-b.left,y=ev.clientY-b.top; if(lastP&&Math.hypot(x-lastP.x,y-lastP.y)<90)return; lastP={x,y}; const i=id++; const card=document.createElement('span'); card.className='cm-trail__card'; card.style.backgroundImage='url('+imgs[i%imgs.length]+')'; const tilt=(Math.random()-0.5)*24; card.style.transform='translate3d('+x+'px,'+y+'px,0) translate(-50%,-50%) rotate('+tilt+'deg) scale(.4)'; card.style.opacity='0'; trail.appendChild(card); requestAnimationFrame(()=>{ if(!card.isConnected||pending.has(card))return; card.style.transition='transform .5s cubic-bezier(.2,0,0,1),opacity .18s'; card.style.transform='translate3d('+x+'px,'+y+'px,0) translate(-50%,-50%) rotate('+tilt+'deg) scale(1)'; card.style.opacity='1'; }); const active=[...trail.children].filter(c=>!pending.has(c)); if(active.length>MAX_CARDS)fade(active[0]); });
-    why.addEventListener('pointerleave',()=>{ lastP=null; [...trail.children].forEach(fade); });
-    cleaners.push(()=>{ [...pending.keys()].forEach(finish); });
-  }
-
   // about banner parallax
   const banner=root.querySelector('.cm-about__banner img'); const frame=root.querySelector('.cm-about__banner');
   if(banner&&frame&&!reduce){ banner.style.top='-25%'; banner.style.height='150%'; const sp2=spring(0); sub((now,dt)=>{ const r=frame.getBoundingClientRect(); const span=window.innerHeight+r.height; if(span<=0)return; const prog=Math.min(1,Math.max(0,(window.innerHeight-r.top)/span)); sp2.t=prog-0.5; const s=sp2.step(dt,180,40); banner.style.transform='translate3d(0,'+(s*25)+'%,0)'; }); }
@@ -1491,7 +1519,11 @@ export default function HomePage() {
 
       {/* WHY */}
       <section id="why" className="cm-section cm-why">
-        <div className="cm-trail" aria-hidden="true" data-imgs={JSON.stringify(WHY.trail)} />
+        {/* Desktop only: the building fills the left half. */}
+        <div className="cm-why__building">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={WHY.building} alt="The Clarus Magnus building in Koramangala" />
+        </div>
         <div className="cm-why__inner cm-shell">
           {/* Was an inline style block, which a media query cannot override —
               it is a class now so the phone can left-align it. */}
@@ -1514,6 +1546,8 @@ export default function HomePage() {
             </span>
           </div>
           <p className="cm-why__lede">{WHY.lede}</p>
+          {/* Desktop only. No "Our team" / "How we work" buttons, by request. */}
+          <p className="cm-why__para">{WHY.para}</p>
           <dl className="cm-why__stats" data-rise>
             {WHY.stats.map((s, i) => (
               <div className={`cm-why__stat cm-why__stat--t${i % 3}`} key={s.label}>
@@ -1525,6 +1559,7 @@ export default function HomePage() {
               </div>
             ))}
           </dl>
+          <p className="cm-why__script" aria-hidden="true">{WHY.script}</p>
         </div>
       </section>
 
