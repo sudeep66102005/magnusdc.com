@@ -823,8 +823,12 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-stat dd{font-size:2.5rem;line-height:1.05;font-weight:700;margin:0}
 .cm-stat dt{font-size:.875rem;font-weight:400}
 /* one font and one colour throughout; the three phrases differ only by dark italic */
-.cm-about__para{font-size:1.375rem;line-height:1.2;font-weight:400;color:var(--ink);margin:0}
-.cm-about__para .accent{font-family:inherit;font-style:italic;font-weight:700;color:#0A1633}
+/* Inter, the same face as the service card headings ("Advanced Imaging",
+   "Superbirth"). It inherited the body Lato before this. */
+.cm-about__para{margin:0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.375rem;font-style:normal;font-weight:400;line-height:1.35;letter-spacing:-.015em;color:var(--ink)}
+/* Highlighted words: sky blue and bold, no italic. Was italic and near-black
+   (#0A1633), which read as a different typeface mid-sentence. */
+.cm-about__para .accent{font-family:inherit;font-style:normal;font-weight:700;color:var(--lime)}
 .cm-about__right{display:flex;flex-direction:column;gap:2rem}
 .cm-about__actions{display:flex;flex-wrap:wrap;gap:1rem}
 @media(min-width:768px){.cm-about__banner{height:24rem}.cm-about__para{font-size:1.75rem}}
