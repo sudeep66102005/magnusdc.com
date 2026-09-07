@@ -174,7 +174,7 @@ export function WhyMagnusSlideshow() {
               ))}
             </div>
 
-            <Link href={`${BP}/patient-info/appointment-booking`} className="cm-why-mag__cta">
+            <Link href="/patient-info/appointment-booking" className="cm-why-mag__cta">
               Consult our Doctor
             </Link>
           </div>

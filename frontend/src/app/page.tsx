@@ -49,7 +49,7 @@ const HERO = {
     { value: "24/7", label: "Customer Support", icon: "clock" as const, tone: "amber" },
   ],
   actions: [
-    { label: "Book a visit", href: `${BP}/patient-info/appointment-booking`, primary: true, icon: "calendar" as const },
+    { label: "Book a visit", href: "/patient-info/appointment-booking", primary: true, icon: "calendar" as const },
     { label: "Our services", href: "#services", primary: false, icon: "stetho" as const },
   ],
   trustLine: "Radiologist-led care in Koramangala, Bengaluru",
@@ -99,7 +99,7 @@ const svcImg = (f: string) => encodeURI(`${BP}/assets/uploads/services/${f}`);
 const SERVICE_CARDS = [
   {
     title: "Imaging",
-    href: `${BP}/diagnostics`,
+    href: "/diagnostics",
     desktop: svcImg("desktop imaging image.jpeg"),
     mobile: svcImg("mobile imaging image.jpeg"),
     items: [
@@ -116,7 +116,7 @@ const SERVICE_CARDS = [
     /* Keeps "Women's & Fetal" whole on the first line; `title` above still
        carries the full string for the image alt text. */
     titleLines: ["Women\u2019s & Fetal", "Medicine"],
-    href: `${BP}/specialties`,
+    href: "/specialties",
     /* One photo at both sizes, by request — the <picture> below still emits a
        desktop <source>, it just points at the same file as the <img>. */
     desktop: svcImg("1.mobile image of Women's & Fetal Medicine.jpeg"),
@@ -132,7 +132,7 @@ const SERVICE_CARDS = [
   },
   {
     title: "Laboratory",
-    href: `${BP}/laboratory`,
+    href: "/laboratory",
     desktop: svcImg("desktop image of Laboratory.jpeg"),
     mobile: svcImg("mobile image of laboratory.jpeg"),
     items: [
@@ -144,7 +144,7 @@ const SERVICE_CARDS = [
   },
   {
     title: "Specialist Care",
-    href: `${BP}/specialties`,
+    href: "/specialties",
     desktop: svcImg("desktop image of Specialist Care.jpeg"),
     mobile: svcImg("mobile image of Specialist Care.jpeg"),
     items: [
@@ -180,7 +180,7 @@ const ABOUT = {
   ],
   actions: [
     { label: "Book a consultation", href: "#contact", primary: true },
-    { label: "Health packages", href: `${BP}/health-packages`, primary: false },
+    { label: "Health packages", href: "/health-packages", primary: false },
   ],
 };
 
@@ -1565,7 +1565,7 @@ export default function HomePage() {
                 </div>
                 <p className="cm-form__consent">
                   By submitting, you agree to our{" "}
-                  <Link href={`${BP}/privacy-policy`}>Privacy Policy</Link> and the processing of your personal data.
+                  <Link href="/privacy-policy">Privacy Policy</Link> and the processing of your personal data.
                 </p>
                 <button type="submit" className="cm-form__submit">
                   <span className="cm-form__submit-label">{CONTACT.submit}</span>
