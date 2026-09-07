@@ -12,11 +12,14 @@ export interface LabContent {
    * test a reader needs.
    */
   includes: string[];
+  /** Icon key for the tile on the listing card; mapped in the page component. */
+  icon: "flask" | "pipette" | "microscope" | "vial" | "dna" | "shield" | "home";
 }
 
 export const labCategories: LabContent[] = [
   {
     slug: "routine-pathology",
+    icon: "flask",
     image: "Routine Pathology.jpeg",
     includes: [
       "Complete blood count (CBC) and ESR",
@@ -32,6 +35,7 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "biochemistry",
+    icon: "pipette",
     image: "Biochemistry.jpeg",
     includes: [
       "Liver function tests (LFT)",
@@ -47,6 +51,7 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "microbiology",
+    icon: "microscope",
     image: "microbiology.jpeg",
     includes: [
       "Urine, blood and stool cultures",
@@ -62,6 +67,7 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "hormonal-testing",
+    icon: "vial",
     image: "Hormonal Testing.jpeg",
     includes: [
       "Thyroid profile (TSH, T3, T4)",
@@ -77,6 +83,7 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "genetic-molecular-diagnostics",
+    icon: "dna",
     image: "Genetic & Molecular Diagnostics.jpeg",
     includes: [
       "PCR testing for infectious agents",
@@ -92,6 +99,7 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "preventive-testing",
+    icon: "shield",
     image: "preventive testing.jpeg",
     includes: [
       "Whole-body and annual health check panels",
@@ -107,6 +115,7 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "home-sample-collection",
+    icon: "home",
     image: "home collection.jpeg",
     includes: [
       "Book by phone or WhatsApp and choose a slot",
