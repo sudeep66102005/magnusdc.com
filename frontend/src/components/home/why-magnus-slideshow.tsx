@@ -196,6 +196,39 @@ export function WhyMagnusSlideshow() {
               <img src={shot.mobile} alt="" loading={shotIndex === 0 ? "eager" : "lazy"} decoding="async" />
             </picture>
           ))}
+          {/* Phone only. The label sits on the photo, top left, and is the only
+              copy there — the description lines and the tab rail are hidden at
+              this width. aria-hidden because the same text is announced by the
+              heading in the copy pane below, which stays in the DOM. */}
+          <p className="cm-why-mag__label" aria-hidden="true">
+            {groups[activeGroup].tab}
+          </p>
+        </div>
+
+        {/* Phone only: position rail and step arrows, in place of the tab rail. */}
+        <div className="cm-why-mag__nav">
+          <span className="cm-why-mag__nav-rail" aria-hidden="true">
+            <span
+              className="cm-why-mag__nav-fill"
+              style={{ width: `${((index + 1) / reel.length) * 100}%` }}
+            />
+          </span>
+          <button
+            type="button"
+            className="cm-why-mag__nav-btn"
+            aria-label="Previous photo"
+            onClick={() => setStep((s) => (s - 1 + reel.length) % reel.length)}
+          >
+            <NavArrow direction="prev" />
+          </button>
+          <button
+            type="button"
+            className="cm-why-mag__nav-btn"
+            aria-label="Next photo"
+            onClick={() => setStep((s) => (s + 1) % reel.length)}
+          >
+            <NavArrow direction="next" />
+          </button>
         </div>
 
         <div className="cm-why-mag__body">
@@ -255,5 +288,21 @@ export function WhyMagnusSlideshow() {
         </div>
       </div>
     </section>
+  );
+}
+
+
+/** Step arrows for the phone rail. Inline so this file needs no icon import. */
+function NavArrow({ direction }: { direction: "prev" | "next" }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d={direction === "next" ? "M5 12h14M13 6l6 6-6 6" : "M19 12H5M11 18l-6-6 6-6"}
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }

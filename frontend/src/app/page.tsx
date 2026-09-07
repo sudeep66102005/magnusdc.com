@@ -596,11 +596,38 @@ html:has(.cm-root){scroll-behavior:smooth}
    square leaves no room to overlay a heading, a list, five tabs and a button.
    The frame is already #0B1533, so the white type keeps its contrast. */
 @media(max-width:767px){
-  .cm-why-mag__frame{min-height:0}
-  .cm-why-mag__shots{position:relative;inset:auto;aspect-ratio:1/1;width:100%;transform:none;will-change:auto}
+  /* A rounded card on a white page, per the reference: square photo, the slide
+     label on the photo at top left, a position rail with arrows beneath, then
+     the button. The description lines and the tab rail are hidden here — they
+     are desktop composition. Both stay in the DOM so the heading and list are
+     still announced to a screen reader. */
+  .cm-why-mag{padding:0 1rem 1.5rem}
+  .cm-why-mag__frame{min-height:0;background:transparent;border-radius:20px}
+  .cm-why-mag__shots{position:relative;inset:auto;aspect-ratio:1/1;width:100%;border-radius:20px;overflow:hidden;transform:none;will-change:auto}
   .cm-why-mag__shot{transform:none;transition:opacity .6s ease}
   .cm-why-mag__shot.is-on{transform:none}
-  .cm-why-mag__body{min-height:0;gap:1.75rem;padding:1.5rem 1.25rem 2rem}
+  .cm-why-mag__shot img{border-radius:20px}
+
+  .cm-why-mag__label{position:absolute;top:1.15rem;left:1.15rem;z-index:3;margin:0;max-width:calc(100% - 2.3rem);font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.01em;color:#FFFFFF;text-shadow:0 2px 14px rgb(8 16 38 / .55)}
+
+  .cm-why-mag__copy{display:none}
+  .cm-why-mag__tabs{display:none}
+  .cm-why-mag__body{min-height:0;gap:0;padding:1.25rem 0 0;background:transparent}
+  .cm-why-mag__foot{gap:0}
+
+  .cm-why-mag__nav{display:flex;align-items:center;gap:.75rem;padding:1rem .25rem 0}
+  .cm-why-mag__nav-rail{position:relative;flex:1;height:2px;border-radius:999px;background:rgb(20 47 134 / .16);overflow:hidden}
+  .cm-why-mag__nav-fill{position:absolute;inset:0 auto;left:0;height:100%;border-radius:999px;background:#142F86;transition:width .45s ease}
+  .cm-root .cm-why-mag__nav-btn{display:grid;place-items:center;width:2.25rem;height:2.25rem;flex:none;padding:0;border:0;border-radius:999px;background:transparent;color:#142F86;cursor:pointer}
+  .cm-root .cm-why-mag__nav-btn:active{background:rgb(20 47 134 / .08)}
+  .cm-why-mag__nav-btn svg{width:1.25rem;height:1.25rem}
+
+  .cm-why-mag__cta{align-self:stretch;justify-content:center;margin-top:1.25rem}
+}
+/* Desktop keeps the overlaid heading and the tab rail; the phone label and the
+   phone arrows do not exist there. */
+@media(min-width:768px){
+  .cm-why-mag__label,.cm-why-mag__nav{display:none}
 }
 @media(min-width:768px){.cm-why-mag__body{padding:2.75rem 2.5rem}}
 @media(min-width:1024px){.cm-why-mag__body{padding:3.25rem 3rem}}
