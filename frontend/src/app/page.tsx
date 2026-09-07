@@ -98,7 +98,7 @@ const svcImg = (f: string) => encodeURI(`${BP}/assets/uploads/services/${f}`);
 
 const SERVICE_CARDS = [
   {
-    title: "Imaging",
+    title: "Advanced Imaging",
     href: "/diagnostics",
     desktop: svcImg("desktop imaging image.jpeg"),
     mobile: svcImg("mobile imaging image.jpeg"),
@@ -112,10 +112,11 @@ const SERVICE_CARDS = [
     ],
   },
   {
-    title: "Women\u2019s & Fetal Medicine",
-    /* Keeps "Women's & Fetal" whole on the first line; `title` above still
-       carries the full string for the image alt text. */
-    titleLines: ["Women\u2019s & Fetal", "Medicine"],
+    title: "Superbirth",
+    /* Drives the .cm-svc--wf layout. It used to be inferred from the title
+       containing "Fetal", which the rename would have silently broken —
+       taking the narrow head, the image shift and the phone rules with it. */
+    variant: "wf",
     href: "/specialties",
     /* One photo at both sizes, by request — the <picture> below still emits a
        desktop <source>, it just points at the same file as the <img>. */
@@ -678,7 +679,10 @@ html:has(.cm-root){scroll-behavior:smooth}
    is what centres the section, so narrower cards can only mean wider margins. */
 .cm-svc-grid{display:grid;grid-template-columns:1fr;gap:1.5rem;width:min(100%,95.5rem);margin-inline:auto}
 @media(min-width:768px){.cm-svc-grid{grid-template-columns:1fr 1fr}}
-.cm-svc{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:26rem;overflow:hidden;border-radius:20px;background:#142F86}
+/* flex-start, not space-between: the heading and its line belong at the top of
+   the card. The buttons are pushed to the bottom by margin-top:auto below, so
+   the vertical gap lands between the two blocks rather than above the heading. */
+.cm-svc{position:relative;display:flex;flex-direction:column;justify-content:flex-start;min-height:26rem;overflow:hidden;border-radius:20px;background:#142F86}
 @media(min-width:768px){.cm-svc{min-height:32rem}}
 /* Cards 20% smaller. The height carries the reduction — 47.5rem to 38rem, so
    760px becomes 608px and the card's area drops to 0.8 of what it was. The
@@ -692,7 +696,6 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-svc{min-height:38rem}
   .cm-svc__head{padding:1.6rem}
   /* 2.4rem + 50% */
-  .cm-svc__title{font-size:3.6rem}
   /* "WOMEN'S & FETAL" is about 500px of uppercase Inter at 3.6rem, so the head
      cannot stay on the 52% / 16rem leash it wears at smaller sizes. 38rem of
      the 701px inside the card, and nowrap to hold the two lines as authored. */
@@ -705,11 +708,10 @@ html:has(.cm-root){scroll-behavior:smooth}
 }
 .cm-svc__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,0,0,1)}
 .cm-svc:hover .cm-svc__img{transform:scale(1.05)}
-.cm-svc--wf{justify-content:space-between}
+.cm-svc--wf{justify-content:flex-start}
 .cm-svc--wf .cm-svc__head{order:initial;width:52%;max-width:20rem;padding-right:0}
 .cm-svc--wf .cm-svc__actions{order:initial}
 @media(max-width:1023px){
-  .cm-svc--wf .cm-svc__title{font-size:3rem;line-height:1.02}
 }
 @media(max-width:767px){
   .cm-svc--wf .cm-svc__img{left:0;right:auto;width:125%;object-position:50% 40%!important}
@@ -720,9 +722,16 @@ html:has(.cm-root){scroll-behavior:smooth}
    the photo keeps its full brightness. No top or bottom gradient. */
 .cm-svc__head{position:relative;z-index:2;padding:1.75rem}
 @media(min-width:768px){.cm-svc__head{padding:2rem}}
-.cm-svc__title{margin:0;font-size:2.375rem;line-height:1.05;font-weight:700;letter-spacing:-.02em;color:#FFFFFF}
-@media(min-width:768px){.cm-svc__title{font-size:3rem}}
-.cm-svc__title{font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-weight:800;letter-spacing:-.03em}
+/* Inter Bold 700 — not 800, and never italic. 700 is now actually loaded (see
+   layout.tsx), so this is the real weight rather than a synthesised one. */
+.cm-svc__title{margin:0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:2rem;font-style:normal;font-weight:700;line-height:1.05;letter-spacing:-.025em;color:#FFFFFF}
+@media(min-width:768px){.cm-svc__title{font-size:2.25rem}}
+/* Declared after the >=768 rule on purpose. The service-card block further up
+   the sheet also carries a >=1024 title size, and at equal specificity the rule
+   that appears LAST wins — so a size set up there is silently overridden by the
+   768 rule below it. That is why the earlier 3.6rem never took effect on a
+   desktop. 40px, per the supplied spec. */
+@media(min-width:1024px){.cm-svc__title{font-size:2.5rem}}
 /* At 3.6rem the heading runs past the point where the scrim has faded out, so
    it needs its own shadow to stay legible over the bright side of the photo. */
 .cm-svc__title{text-shadow:0 2px 18px rgb(0 0 0 / .45)}
@@ -731,13 +740,13 @@ html:has(.cm-root){scroll-behavior:smooth}
    photo. Larger on desktop, unchanged on phones. It wraps rather than clips:
    "Cardiology | Neurology | ... | and more" is ~104 characters and cannot fit a
    700px card on one line at a readable size. */
-.cm-svc__line{margin:1.1rem 0 0;max-width:34rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.9rem;font-weight:400;line-height:1.5;color:#FFFFFF;text-shadow:0 2px 14px rgb(0 0 0 / .5)}
+.cm-svc__line{margin:1.1rem 0 0;max-width:34rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.9rem;font-weight:500;line-height:1.5;color:#FFFFFF;text-shadow:0 2px 14px rgb(0 0 0 / .5)}
 @media(min-width:768px){.cm-svc__line{max-width:40rem;font-size:1.15rem}}
 @media(min-width:1024px){.cm-svc__line{max-width:44rem;font-size:1.3rem;line-height:1.45}}
 /* One data-driven line per span, so "WOMEN'S & FETAL" / "MEDICINE" is a fixed
    break rather than a guess about where the text happens to wrap. */
 .cm-svc__title-line{display:block}
-.cm-svc__actions{position:relative;z-index:2;display:flex;flex-direction:column;gap:.75rem;padding:1.75rem}
+.cm-svc__actions{position:relative;z-index:2;margin-top:auto;display:flex;flex-direction:column;gap:.75rem;padding:1.75rem}
 @media(min-width:520px){.cm-svc__actions{flex-direction:row}}
 @media(min-width:768px){.cm-svc__actions{padding:2rem}}
 .cm-svc__btn{display:inline-flex;flex:1 1 0;min-width:0;align-items:center;justify-content:center;gap:.5rem;height:3rem;padding:0 1.25rem;border-radius:999px;font-size:.95rem;font-weight:700;white-space:nowrap;transition:background .2s,color .2s}
@@ -1452,7 +1461,7 @@ export default function HomePage() {
         </div>
         <div className="cm-svc-grid">
           {SERVICE_CARDS.map((card) => (
-            <article key={card.title} className={`cm-svc${card.title.includes("Fetal") ? " cm-svc--wf" : ""}`}>
+            <article key={card.title} className={`cm-svc${(card as { variant?: string }).variant === "wf" ? " cm-svc--wf" : ""}`}>
               <picture>
                 <source media="(min-width: 768px)" srcSet={card.desktop} />
                 {/* eslint-disable-next-line @next/next/no-img-element */}

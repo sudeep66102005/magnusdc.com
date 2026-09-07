@@ -18,7 +18,11 @@ const lato = Lato({
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "600", "800"],
+  /* 700 and 500 are here because the card headings ask for Inter Bold 700 and
+     their supporting line for Medium 500. Without the file, a browser fakes the
+     weight from the nearest one it has — which is exactly the "not quite Inter
+     Bold" look the spec warns against. */
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
