@@ -58,7 +58,7 @@ export default function DiagnosticsPage() {
           <span className="absolute inset-0 bg-gradient-to-r from-[#EFF6FF] via-[#EFF6FF]/72 to-transparent sm:via-[#EFF6FF]/35 lg:via-transparent" />
         </div>
 
-        <div className="relative mx-auto max-w-7xl px-4 pb-10 pt-8 sm:px-6 lg:px-8 lg:pb-14 lg:pt-10">
+        <div className="relative mx-auto w-full px-4 pb-10 pt-8 sm:px-6 lg:px-10 lg:pb-14 lg:pt-10">
           <nav aria-label="Breadcrumb" className="hidden sm:block">
             <ol className="flex items-center gap-1.5 text-xs text-[#142F86]/60">
               <li>
@@ -117,7 +117,7 @@ export default function DiagnosticsPage() {
       </section>
 
       {/* ---- HELP BAR ------------------------------------------------------- */}
-      <section className="mx-auto mb-14 max-w-7xl px-4 sm:px-6 lg:mb-20 lg:px-8">
+      <section className="mx-auto mb-14 w-full px-4 sm:px-6 lg:mb-20 lg:px-10">
         <div className="flex flex-col gap-5 rounded-2xl bg-white p-5 shadow-[0_12px_36px_-24px_rgb(20_47_134/0.45)] ring-1 ring-[#142F86]/10 lg:flex-row lg:items-center lg:justify-between lg:gap-8 lg:p-6">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6 lg:flex-1 lg:gap-8">
             <HelpItem
