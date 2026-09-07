@@ -31,6 +31,12 @@ export interface DiagnosticContent {
       encoding are applied at the point of use, as elsewhere in the app. */
   image: string;
   categories: DiagnosticCategory[];
+  /**
+   * What the test is commonly ordered for. Deliberately descriptive of the
+   * service rather than advisory — the detail page is general information, not
+   * a recommendation that a reader needs this test.
+   */
+  usedFor: string[];
 }
 
 export const diagnostics: DiagnosticContent[] = [
@@ -39,6 +45,13 @@ export const diagnostics: DiagnosticContent[] = [
     name: "MRI (3T MRI)",
     image: "mri image.webp",
     categories: ["Imaging", "Neuro", "Musculoskeletal"],
+    usedFor: [
+      "Brain and spine imaging, including stroke and seizure workup",
+      "Joints, ligaments and sports injuries",
+      "Abdominal and pelvic organ assessment",
+      "Tumour detection, staging and follow-up",
+      "Problems not resolved by X-ray or ultrasound",
+    ],
     summary:
       "High-resolution 3-Tesla magnetic resonance imaging for detailed soft-tissue diagnostics.",
     details:
@@ -51,6 +64,13 @@ export const diagnostics: DiagnosticContent[] = [
     name: "CT Scan",
     image: "ct scan ].jpg",
     categories: ["Imaging", "Neuro"],
+    usedFor: [
+      "Trauma and acute injury assessment",
+      "Chest and abdominal evaluation",
+      "Kidney and urinary tract stones",
+      "Cancer detection and staging",
+      "CT angiography of blood vessels",
+    ],
     summary:
       "Fast, detailed cross-sectional imaging for trauma, cancer, and internal organ evaluation.",
     details:
@@ -63,6 +83,13 @@ export const diagnostics: DiagnosticContent[] = [
     name: "Ultrasound",
     image: "ultrasound.jpeg",
     categories: ["Imaging", "Women & Child"],
+    usedFor: [
+      "Abdominal and pelvic organ assessment",
+      "Obstetric and gynaecological scans",
+      "Thyroid, neck and breast evaluation",
+      "Soft-tissue lumps and swellings",
+      "Guidance for biopsies and injections",
+    ],
     summary:
       "Real-time imaging for abdominal, pelvic, obstetric, and soft-tissue assessment.",
     details:
@@ -73,6 +100,13 @@ export const diagnostics: DiagnosticContent[] = [
     name: "Doppler",
     image: "doppler final.jpeg",
     categories: ["Imaging", "Cardiac"],
+    usedFor: [
+      "Suspected deep vein thrombosis",
+      "Varicose veins and venous insufficiency",
+      "Peripheral arterial disease and leg pain on walking",
+      "Carotid assessment after stroke or TIA",
+      "Dialysis access and graft surveillance",
+    ],
     summary:
       "Vascular flow studies to assess blood circulation and detect clots or blockages.",
     details:
@@ -83,6 +117,13 @@ export const diagnostics: DiagnosticContent[] = [
     name: "X-ray",
     image: "x ray image.webp",
     categories: ["Imaging", "Musculoskeletal"],
+    usedFor: [
+      "Suspected fractures and bone injury",
+      "Chest imaging for cough, fever and breathlessness",
+      "Spine and joint assessment",
+      "Abdominal X-ray for obstruction or stones",
+      "Pre-operative and pre-employment screening",
+    ],
     summary:
       "Quick digital radiography for bones, chest, and general diagnostic screening.",
     details:
@@ -95,6 +136,13 @@ export const diagnostics: DiagnosticContent[] = [
        repo for the homepage service card. */
     image: "desktop image of Women's & Fetal Medicine.jpeg",
     categories: ["Women & Child", "Imaging"],
+    usedFor: [
+      "Early pregnancy confirmation and dating",
+      "NT/NB scan in the first trimester",
+      "Anomaly scan in the second trimester",
+      "Growth scans and Doppler studies",
+      "Fetal echocardiography",
+    ],
     summary: "Comprehensive prenatal imaging including anomaly and growth scans.",
     details:
       "Specialized obstetric ultrasound and fetal medicine services support safe pregnancy monitoring at every trimester.",
@@ -104,6 +152,13 @@ export const diagnostics: DiagnosticContent[] = [
     name: "Fibroscan",
     image: "fibroscan.jpeg",
     categories: ["Liver Care"],
+    usedFor: [
+      "Fatty liver detection and grading",
+      "Staging liver fibrosis without a biopsy",
+      "Monitoring hepatitis B and C",
+      "Alcohol-related liver disease assessment",
+      "Tracking response to treatment over time",
+    ],
     summary:
       "Non-invasive liver stiffness and fat assessment for liver health screening.",
     details:
@@ -114,6 +169,13 @@ export const diagnostics: DiagnosticContent[] = [
     name: "Dental Imaging — OPG & CBCT",
     image: "dental image.jpeg",
     categories: ["Dental", "Imaging"],
+    usedFor: [
+      "Dental implant planning",
+      "Impacted and wisdom teeth assessment",
+      "Orthodontic evaluation",
+      "Jaw joint and jaw pathology",
+      "Root canal and oral surgery planning",
+    ],
     summary:
       "Digital panoramic and three-dimensional dental imaging for precise diagnosis and treatment planning.",
     details:
@@ -126,6 +188,13 @@ export const diagnostics: DiagnosticContent[] = [
     name: "Advanced Procedures (EEG, ENMG, etc.)",
     image: "advanced procedures eeg enmg etc.jpeg",
     categories: ["Neuro", "Interventional"],
+    usedFor: [
+      "Seizures and blackouts (EEG)",
+      "Numbness, tingling and suspected neuropathy (ENMG)",
+      "Carpal tunnel and nerve entrapment",
+      "Muscle weakness and wasting",
+      "Assessment after nerve injury",
+    ],
     summary:
       "Specialized neuro-diagnostic testing including EEG and nerve conduction studies.",
     details:
