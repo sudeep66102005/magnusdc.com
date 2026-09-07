@@ -90,8 +90,9 @@ const RATING = {
 
 const SERVICES_INTRO = {
   eyebrow: "Our Services",
-  description:
-    "From a routine health check to advanced imaging and molecular testing — five directions covering prevention, diagnosis and long-term care.",
+  /* From the phone design. `description` used to sit here and was never
+     rendered — it went when the long heading was removed. */
+  sub: "Comprehensive care at every stage of life",
 };
 
 const svcImg = (f: string) => encodeURI(`${BP}/assets/uploads/services/${f}`);
@@ -721,6 +722,16 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-services{position:relative;background:#FFFFFF;padding:3.5rem 1.25rem 4rem}
 @media(min-width:768px){.cm-services{padding-inline:2.5rem}}
 .cm-services__intro{display:flex;flex-direction:column;gap:1rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center;align-items:center}
+/* Subtitle is phone-only, so desktop keeps exactly the label it has now. */
+.cm-services__sub{display:none}
+@media(max-width:767px){
+  /* The design shows a dash, then OUR SERVICES larger than a normal eyebrow,
+     then the subtitle. */
+  .cm-services__intro{gap:.6rem;margin-bottom:1.75rem}
+  .cm-services__intro::before{content:"";width:2rem;height:2px;border-radius:999px;background:var(--lime)}
+  .cm-services__eyebrow{font-size:1.3rem;letter-spacing:.04em;line-height:1.15}
+  .cm-services__sub{display:block;margin:0;font-size:.9rem;line-height:1.45;font-weight:400;color:rgb(20 47 134 / .68)}
+}
 /* 106rem put two 836px cards on screen with ~110px of margin. 10% off that
    breadth is 752px a card, which needs 752*2 + the 24px gutter = 95.5rem.
    The margin on a 1920px screen goes to 196px as a consequence — the grid cap
@@ -1520,7 +1531,12 @@ export default function HomePage() {
       {/* SERVICES */}
       <section id="services" className="cm-services">
         <div className="cm-services__intro">
-          <p className="cm-eyebrow" data-rise>{SERVICES_INTRO.eyebrow}</p>
+          {/* An h2, not a p. Removing "Everything your diagnosis needs..." left
+              this section with no heading at all, so the cards sat under a
+              paragraph — a gap in the document outline for search engines and
+              screen reader navigation. Same class, so it looks unchanged. */}
+          <h2 className="cm-eyebrow cm-services__eyebrow" data-rise>{SERVICES_INTRO.eyebrow}</h2>
+          <p className="cm-services__sub">{SERVICES_INTRO.sub}</p>
         </div>
         <div className="cm-svc-grid">
           {SERVICE_CARDS.map((card) => (
