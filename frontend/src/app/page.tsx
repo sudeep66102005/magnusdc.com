@@ -605,7 +605,12 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-why-mag__list{gap:.5rem}
 }
 .cm-why-mag__foot{position:relative;display:flex;flex-direction:column}
-.cm-why-mag__tabs{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+/* Was a hardcoded 1fr 1fr, which was fine for two tabs and breaks at five: the
+   third would wrap to a second row and the progress rails would stop lining up.
+   auto-fit lets the rail take as many columns as fit and fall to two rows on a
+   narrow phone by itself. */
+.cm-why-mag__tabs{display:grid;grid-template-columns:repeat(auto-fit,minmax(6.5rem,1fr));gap:1rem 1.25rem}
+@media(min-width:768px){.cm-why-mag__tabs{gap:1.25rem 1.5rem}}
 .cm-root .cm-why-mag__tab{display:flex;flex-direction:column;gap:.5rem;padding:0;border:0;background:none;text-align:left;cursor:pointer;color:rgb(255 255 255 / .82);transition:color .25s}
 .cm-why-mag__tab.is-on,.cm-why-mag__tab:hover,.cm-why-mag__tab:focus-visible{color:#FFFFFF}
 .cm-why-mag__tab-label{font-size:.8125rem;font-weight:500;letter-spacing:.01em;text-shadow:0 1px 10px rgb(8 16 38 / .55)}
