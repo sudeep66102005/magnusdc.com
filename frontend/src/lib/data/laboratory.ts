@@ -3,11 +3,31 @@ export interface LabContent {
   name: string;
   summary: string;
   details: string;
+  /** File name only, inside /assets/uploads/laboratory. Base path and URI
+      encoding are applied at the point of use. */
+  image: string;
+  /**
+   * What the category covers — panels for a testing department, service steps
+   * for home collection. Descriptive of what we offer, not advice about which
+   * test a reader needs.
+   */
+  includes: string[];
+  /** Icon key for the tile on the listing card; mapped in the page component. */
+  icon: "flask" | "pipette" | "microscope" | "vial" | "dna" | "shield" | "home";
 }
 
 export const labCategories: LabContent[] = [
   {
     slug: "routine-pathology",
+    icon: "flask",
+    image: "Routine Pathology.jpeg",
+    includes: [
+      "Complete blood count (CBC) and ESR",
+      "Peripheral smear examination",
+      "Urine routine and microscopy",
+      "Stool routine examination",
+      "Blood grouping and cross-matching",
+    ],
     name: "Routine Pathology",
     summary: "Complete blood counts, urine, and stool analysis for everyday health checks.",
     details:
@@ -15,6 +35,15 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "biochemistry",
+    icon: "pipette",
+    image: "Biochemistry.jpeg",
+    includes: [
+      "Liver function tests (LFT)",
+      "Kidney function tests (RFT) and electrolytes",
+      "Lipid profile",
+      "Blood glucose and HbA1c",
+      "Cardiac and pancreatic enzymes",
+    ],
     name: "Biochemistry",
     summary: "Blood chemistry panels including liver, kidney, lipid, and glucose profiles.",
     details:
@@ -22,6 +51,15 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "microbiology",
+    icon: "microscope",
+    image: "microbiology.jpeg",
+    includes: [
+      "Urine, blood and stool cultures",
+      "Wound, throat and sputum cultures",
+      "Antibiotic sensitivity testing",
+      "Fungal studies (KOH mount and culture)",
+      "Tuberculosis testing",
+    ],
     name: "Microbiology",
     summary: "Culture and sensitivity testing to identify infections and guide treatment.",
     details:
@@ -29,6 +67,15 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "hormonal-testing",
+    icon: "vial",
+    image: "Hormonal Testing.jpeg",
+    includes: [
+      "Thyroid profile (TSH, T3, T4)",
+      "Reproductive hormones (FSH, LH, prolactin, oestradiol, testosterone)",
+      "Fertility and PCOS panels",
+      "Cortisol and adrenal studies",
+      "Vitamin D, B12 and bone metabolism markers",
+    ],
     name: "Hormonal Testing",
     summary: "Thyroid, reproductive, and metabolic hormone panels.",
     details:
@@ -36,6 +83,15 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "genetic-molecular-diagnostics",
+    icon: "dna",
+    image: "Genetic & Molecular Diagnostics.jpeg",
+    includes: [
+      "PCR testing for infectious agents",
+      "Viral load quantification",
+      "HPV and other molecular screening",
+      "Hereditary condition screening",
+      "Molecular markers supporting oncology care",
+    ],
     name: "Genetic & Molecular Diagnostics",
     summary: "PCR-based and genetic screening for infectious and hereditary conditions.",
     details:
@@ -43,6 +99,15 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "preventive-testing",
+    icon: "shield",
+    image: "preventive testing.jpeg",
+    includes: [
+      "Whole-body and annual health check panels",
+      "Diabetes and metabolic risk screening",
+      "Cardiac risk assessment",
+      "Thyroid and anaemia screening",
+      "Age- and gender-specific screening panels",
+    ],
     name: "Preventive Testing",
     summary: "Screening panels designed for early detection and risk assessment.",
     details:
@@ -50,6 +115,15 @@ export const labCategories: LabContent[] = [
   },
   {
     slug: "home-sample-collection",
+    icon: "home",
+    image: "home collection.jpeg",
+    includes: [
+      "Book by phone or WhatsApp and choose a slot",
+      "A trained phlebotomist visits your home",
+      "Samples transported under controlled conditions",
+      "Processed in the same laboratory as walk-in samples",
+      "Reports shared digitally once released",
+    ],
     name: "Home Sample Collection",
     summary: "Convenient at-home phlebotomy service with reports delivered digitally.",
     details:
