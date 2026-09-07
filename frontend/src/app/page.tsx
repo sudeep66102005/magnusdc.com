@@ -700,7 +700,6 @@ html:has(.cm-root){scroll-behavior:smooth}
      cannot stay on the 52% / 16rem leash it wears at smaller sizes. 38rem of
      the 701px inside the card, and nowrap to hold the two lines as authored. */
   .cm-svc--wf .cm-svc__head{width:auto;max-width:38rem}
-  .cm-svc__title-line{white-space:nowrap}
   /* Copy now reaches ~600px across a 752px card; the stock scrim is fully
      transparent by 526px. Carry the shading further right on this card only. */
   .cm-svc__actions{gap:.6rem;padding:1.6rem}
@@ -731,7 +730,10 @@ html:has(.cm-root){scroll-behavior:smooth}
    that appears LAST wins — so a size set up there is silently overridden by the
    768 rule below it. That is why the earlier 3.6rem never took effect on a
    desktop. 40px, per the supplied spec. */
-@media(min-width:1024px){.cm-svc__title{font-size:2.5rem}}
+/* Doubled: 2.5rem -> 5rem at the top end. clamp, not a flat 5rem, because a
+   card is ~460px wide at 1024px and 80px type would be clipped there — this
+   reaches the full 80px once the grid caps and scales down below that. */
+@media(min-width:1024px){.cm-svc__title{font-size:clamp(2.75rem,4.6vw,5rem)}}
 /* At 3.6rem the heading runs past the point where the scrim has faded out, so
    it needs its own shadow to stay legible over the bright side of the photo. */
 .cm-svc__title{text-shadow:0 2px 18px rgb(0 0 0 / .45)}
