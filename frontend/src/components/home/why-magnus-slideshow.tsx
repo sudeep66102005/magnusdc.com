@@ -102,16 +102,14 @@ const groups: Group[] = [
 ];
 
 /**
- * Two running orders, because the phone must never be shown a desktop crop.
+ * One running order at both sizes — every slide plays on a phone too.
  *
- * The mobile files are 1254x1254 and the desktop files 1600x900. Only a photo
- * with its own mobile file enters the mobile reel — falling back to the desktop
- * file would put a 16:9 image on a phone, which is exactly what this avoids.
- * The building photo is currently the only one without a 1:1 version (it was
- * delivered at 1600x900 despite its name), so it plays on desktop only until a
- * square crop exists.
+ * The mobile files are 1254x1254 and the phone frame is a 1:1 box, so a square
+ * file fills it exactly with nothing cropped away. The building photo has no
+ * square version (delivered 1600x900 despite its name), so it is centre-cropped
+ * into that box; that is accepted rather than dropping the slide.
  */
-const desktopReel = groups.flatMap((group, groupIndex) =>
+const reel = groups.flatMap((group, groupIndex) =>
   group.images.map((photo) => ({
     desktop: eventImg(photo.desktop),
     mobile: eventImg(photo.mobile ?? photo.desktop),
@@ -119,43 +117,19 @@ const desktopReel = groups.flatMap((group, groupIndex) =>
   })),
 );
 
-const mobileReel = groups.flatMap((group, groupIndex) =>
-  group.images
-    .filter((photo) => Boolean(photo.mobile))
-    .map((photo) => ({
-      desktop: eventImg(photo.desktop),
-      mobile: eventImg(photo.mobile as string),
-      groupIndex,
-    })),
+const firstStepOfGroup = groups.map((_, groupIndex) =>
+  reel.findIndex((shot) => shot.groupIndex === groupIndex),
 );
 
 export function WhyMagnusSlideshow() {
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(true);
-  /* Which reel is on screen. Starts false so the server renders the desktop
-     order; the effect below corrects it before the first photo is swapped. */
-  const [isMobile, setIsMobile] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
   const frameRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    const query = window.matchMedia("(max-width: 767px)");
-    const sync = () => setIsMobile(query.matches);
-    sync();
-    query.addEventListener("change", sync);
-    return () => query.removeEventListener("change", sync);
-  }, []);
-
-  const reel = isMobile ? mobileReel : desktopReel;
-  /* Modulo, not a raw index: the two reels differ in length, so a step that was
-     valid before a resize must stay in range after it. */
-  const index = reel.length ? step % reel.length : 0;
-  const activeGroup = reel.length ? reel[index].groupIndex : 0;
-  /* Tabs follow the reel, so a group with no photo at this width — the building
-     on a phone — does not offer a tab that can never light up. */
-  const visibleGroups = groups
-    .map((group, groupIndex) => ({ group, groupIndex }))
-    .filter(({ groupIndex }) => reel.some((shot) => shot.groupIndex === groupIndex));
+  const index = step % reel.length;
+  const activeGroup = reel[index].groupIndex;
+  const visibleGroups = groups.map((group, groupIndex) => ({ group, groupIndex }));
 
   // Pause the loop while the section is off-screen.
   useEffect(() => {
@@ -251,7 +225,7 @@ export function WhyMagnusSlideshow() {
                   role="tab"
                   className={`cm-why-mag__tab${groupIndex === activeGroup ? " is-on" : ""}`}
                   aria-selected={groupIndex === activeGroup}
-                  onClick={() => setStep(reel.findIndex((shot) => shot.groupIndex === groupIndex))}
+                  onClick={() => setStep(firstStepOfGroup[groupIndex])}
                 >
                   <span className="cm-why-mag__tab-label">{group.tab}</span>
                   <span className="cm-why-mag__rail" aria-hidden="true">
