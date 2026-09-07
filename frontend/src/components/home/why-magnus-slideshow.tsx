@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const hospImg = (f: string) => encodeURI(`${BP}/assets/uploads/hospital/${f}`);
+/* Photos now come from uploads/events, which is where the shoot was delivered.
+   The four earlier uploads/hospital files are no longer referenced anywhere. */
+const eventImg = (f: string) => encodeURI(`${BP}/assets/uploads/events/${f}`);
 
 /** Time each individual photo stays on screen. */
 const SUB_MS = 3600;
@@ -17,32 +19,93 @@ const PARALLAX_PX = 46;
  * `mobile` and the desktop file is used at every width.
  *
  * To give a slide its own mobile photo: drop the file into
- * `frontend/public/assets/uploads/hospital/` and name it here, e.g.
- *   { desktop: "lobby 1.jpeg", mobile: "mobile lobby 1.jpeg" }
+ * `frontend/public/assets/uploads/events/` and name it here, e.g.
+ *   { desktop: "lobby for desktop.jpeg", mobile: "lobby for mobiel view.jpeg" }
  * Portrait crops work best — these slides are full-screen, so a 16:9 photo
  * loses most of its width on a tall phone.
  */
 type Photo = { desktop: string; mobile?: string };
 type Group = { tab: string; images: Photo[]; lines: string[] };
 
+/**
+ * Every photo here has a desktop and a mobile file, shot for the crop each one
+ * needs — the exception is the building, delivered as a single file named for
+ * use at both sizes. File names are reproduced exactly as uploaded, including
+ * the double spaces in two of them, because that is what is on disk.
+ */
 const groups: Group[] = [
   {
+    tab: "Our Centre",
+    images: [
+      { desktop: "font face building for landing page bith desktop and mobiel.jpeg" },
+    ],
+    lines: [
+      "Koramangala, 4th Block.",
+      "Imaging, lab and consulting under one roof.",
+      "Parking and step-free entry.",
+    ],
+  },
+  {
     tab: "Our Lobby",
-    images: [{ desktop: "lobby 1.jpeg" }, { desktop: "lobby 2.jpeg" }],
-    lines: ["Zero queues.", "Instant digital flows.", "Comfortable lounge.", "Naturally lit open space."],
+    images: [
+      { desktop: "lobby for desktop.jpeg", mobile: "lobby for mobiel view.jpeg" },
+      { desktop: "lobby2 for desktop.jpeg", mobile: "lobby2  for mobiel view.jpeg" },
+    ],
+    lines: [
+      "Zero queues.",
+      "Instant digital flows.",
+      "Comfortable lounge.",
+      "Naturally lit open space.",
+    ],
   },
   {
     tab: "OPD",
-    images: [{ desktop: "opd 1.jpeg" }, { desktop: "opd 2.jpeg" }],
-    lines: ["Easy access on single floor.", "Smart navigation built for you.", "State of the art electric beds."],
+    images: [
+      { desktop: "opd 1 for desktop view.jpeg", mobile: "opd 1 for mobiel view.jpeg" },
+      { desktop: "opd 2 for desktop view.jpeg", mobile: "opd 2 for mobiel view.jpeg" },
+    ],
+    lines: [
+      "Easy access on single floor.",
+      "Smart navigation built for you.",
+      "State of the art electric beds.",
+    ],
+  },
+  {
+    tab: "Imaging",
+    images: [
+      {
+        desktop: "mri for landing page desktop view.jpeg",
+        mobile: "mri for landing page  mobile view.jpeg",
+      },
+      {
+        desktop: "machine operating human destop view.jpeg",
+        mobile: "machine operating human mobile view.jpeg",
+      },
+    ],
+    lines: [
+      "3T MRI and multi-slice CT.",
+      "Run by trained radiographers.",
+      "MRI and CT available 24/7.",
+    ],
+  },
+  {
+    tab: "Laboratory",
+    images: [
+      { desktop: "laboratory destop view.jpeg", mobile: "laboratory mobile view.jpeg" },
+    ],
+    lines: [
+      "Samples processed in-house.",
+      "Routine panels to molecular testing.",
+      "Reports released digitally.",
+    ],
   },
 ];
 
-/** Flattened running order: lobby 1, lobby 2, opd 1, opd 2, then loop. */
+/** Flattened running order across all groups, then loops back to the start. */
 const reel = groups.flatMap((group, groupIndex) =>
   group.images.map((photo) => ({
-    desktop: hospImg(photo.desktop),
-    mobile: hospImg(photo.mobile ?? photo.desktop),
+    desktop: eventImg(photo.desktop),
+    mobile: eventImg(photo.mobile ?? photo.desktop),
     groupIndex,
   })),
 );
