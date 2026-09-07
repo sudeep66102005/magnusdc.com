@@ -64,7 +64,7 @@ const css = String.raw`
 
 /* Right details column. */
 .cm-doc__body{position:relative;flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:flex-start;padding:1.5rem 1.25rem 1.25rem}
-/* Specialty and qualification lines: Lato Light at a dark navy. Lato 300 is
+/* Specialty and qualification lines: Inter Light at a dark navy. Inter 300 is
    loaded in layout.tsx, so this is a real light weight rather than a browser
    synthesising one. Darker than before too — these were washed out at 60%
    opacity. */
