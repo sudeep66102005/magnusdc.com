@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Lato, Playfair_Display, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -8,13 +8,6 @@ import { GlobalWidgets } from "@/components/layout/global-widgets";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { siteConfig } from "@/lib/constants/site-config";
 
-const lato = Lato({
-  variable: "--font-lato",
-  subsets: ["latin"],
-  weight: ["300", "400", "700"],
-  display: "swap",
-});
-
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -22,15 +15,10 @@ const inter = Inter({
      their supporting line for Medium 500. Without the file, a browser fakes the
      weight from the nearest one it has — which is exactly the "not quite Inter
      Bold" look the spec warns against. */
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-});
-
-const playfairDisplay = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin"],
-  weight: ["600", "700"],
-  style: ["italic"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  /* italic too: the decorative accents ("Clarity", the script lines) are
+     italic, and without the file the browser would slant Inter itself. */
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -64,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${lato.variable} ${playfairDisplay.variable} ${inter.variable} h-full antialiased`}>
+    <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <head>
         <script
           dangerouslySetInnerHTML={{

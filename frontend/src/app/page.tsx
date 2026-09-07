@@ -90,8 +90,9 @@ const RATING = {
 
 const SERVICES_INTRO = {
   eyebrow: "Our Services",
-  description:
-    "From a routine health check to advanced imaging and molecular testing — five directions covering prevention, diagnosis and long-term care.",
+  /* From the phone design. `description` used to sit here and was never
+     rendered — it went when the long heading was removed. */
+  sub: "Comprehensive care at every stage of life",
 };
 
 const svcImg = (f: string) => encodeURI(`${BP}/assets/uploads/services/${f}`);
@@ -199,7 +200,7 @@ body:has(.cm-root) > header.sticky{display:none!important}
 html:has(.cm-root){scroll-behavior:smooth}
 
 .cm-root{--green:#142F86;--green-deep:#DA1C29;--lime:#31B4F4;--lime-b:rgb(49 180 244 / .82);--mint:#FFFFFF;--mint-deep:#FFFFFF;--ink:#142F86;--muted:rgb(20 47 134 / .55);--subtle:rgb(20 47 134 / .72);--line:rgb(20 47 134 / .16);--glass:#FFFFFF;--glass-s:#FFFFFF;--glass-strong:#FFFFFF;
-  position:relative;isolation:isolate;background:#FFFFFF;color:var(--ink);font-family:var(--font-lato),Arial,Helvetica,system-ui,sans-serif;font-weight:400;line-height:1.2;-webkit-font-smoothing:antialiased;overflow-x:clip}
+  position:relative;isolation:isolate;background:#FFFFFF;color:var(--ink);var(--font-inter),system-ui,-apple-system,sans-serif;font-weight:400;line-height:1.2;-webkit-font-smoothing:antialiased;overflow-x:clip}
 .cm-root *{box-sizing:border-box}
 .cm-root a:not(.cm-btn):not(.cm-nav__contact):not(.cm-svc__btn){color:inherit;text-decoration:none}
 .cm-root button,.cm-root input,.cm-root textarea{font:inherit;color:inherit}
@@ -208,7 +209,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(max-width:1023px){.cm-shell{width:100%}}
 .cm-eyebrow{font-size:.875rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--green);margin:0}
 .cm-lead{font-size:clamp(2.25rem,5.4vw,3.75rem);line-height:1.05;font-weight:700;letter-spacing:-.01em;margin:0}
-.cm-lead__accent{display:block;font-size:1.25em;font-family:var(--font-playfair),Georgia,serif;font-style:italic;font-weight:700;background:linear-gradient(120deg,var(--green),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cm-lead__accent{display:block;font-size:1.25em;var(--font-inter),system-ui,-apple-system,sans-serif;font-style:italic;font-weight:700;background:linear-gradient(120deg,var(--green),var(--lime));-webkit-background-clip:text;background-clip:text;color:transparent}
 .cm-lead__rest{display:block}
 .cm-body{font-size:1rem;line-height:1.35;font-weight:400;margin:0}
 
@@ -580,7 +581,7 @@ html:has(.cm-root){scroll-behavior:smooth}
   /* The circle. Square source, square frame, so only the corners are lost. */
   .cm-why__banner{display:block;position:absolute;top:-1rem;right:-16%;width:64%;aspect-ratio:1/1;z-index:1;pointer-events:none}
   .cm-why__banner img{display:block;width:100%;height:100%;border-radius:50%;object-fit:cover}
-  .cm-why__badge{position:absolute;bottom:6%;left:-14%;display:grid;place-content:center;width:6.1rem;height:6.1rem;border-radius:50%;background:#FFFFFF;box-shadow:0 10px 26px -14px rgb(20 47 134 / .45);font-family:var(--font-playfair),Georgia,serif;font-style:italic;font-size:.8rem;line-height:1.35;text-align:center;color:var(--green)}
+  .cm-why__badge{position:absolute;bottom:6%;left:-14%;display:grid;place-content:center;width:6.1rem;height:6.1rem;border-radius:50%;background:#FFFFFF;box-shadow:0 10px 26px -14px rgb(20 47 134 / .45);var(--font-inter),system-ui,-apple-system,sans-serif;font-style:italic;font-size:.8rem;line-height:1.35;text-align:center;color:var(--green)}
 
   /* Text sits above the photo where they overlap. */
   .cm-why__head,.cm-why__lede,.cm-why__stats{position:relative;z-index:2}
@@ -657,7 +658,7 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-why-mag__shot.is-on{transform:none}
   .cm-why-mag__shot img{border-radius:20px}
 
-  .cm-why-mag__label{position:absolute;top:1.15rem;left:1.15rem;z-index:3;margin:0;max-width:calc(100% - 2.3rem);font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.01em;color:#FFFFFF;text-shadow:0 2px 14px rgb(8 16 38 / .55)}
+  .cm-why-mag__label{position:absolute;top:1.15rem;left:1.15rem;z-index:3;margin:0;max-width:calc(100% - 2.3rem);var(--font-inter),system-ui,-apple-system,sans-serif;font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.01em;color:#FFFFFF;text-shadow:0 2px 14px rgb(8 16 38 / .55)}
 
   .cm-why-mag__copy{display:none}
   .cm-why-mag__tabs{display:none}
@@ -684,7 +685,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-why-mag__pane{animation:cmWhyMagIn .7s cubic-bezier(.2,0,0,1) both}
 @keyframes cmWhyMagIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 /* heading and description share one font, size and line height; only the weight differs */
-.cm-why-mag__title,.cm-why-mag__list li{font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.375rem;line-height:1.3;letter-spacing:-.01em;color:#FFFFFF;text-shadow:0 1px 12px rgb(8 16 38 / .58)}
+.cm-why-mag__title,.cm-why-mag__list li{var(--font-inter),system-ui,-apple-system,sans-serif;font-size:1.375rem;line-height:1.3;letter-spacing:-.01em;color:#FFFFFF;text-shadow:0 1px 12px rgb(8 16 38 / .58)}
 .cm-why-mag__title{margin:0 0 1.35rem;font-weight:700}
 .cm-why-mag__list{display:flex;flex-direction:column;gap:.35rem;margin:0;padding:0;list-style:none}
 .cm-why-mag__list li{font-weight:400}
@@ -721,6 +722,16 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-services{position:relative;background:#FFFFFF;padding:3.5rem 1.25rem 4rem}
 @media(min-width:768px){.cm-services{padding-inline:2.5rem}}
 .cm-services__intro{display:flex;flex-direction:column;gap:1rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center;align-items:center}
+/* Subtitle is phone-only, so desktop keeps exactly the label it has now. */
+.cm-services__sub{display:none}
+@media(max-width:767px){
+  /* The design shows a dash, then OUR SERVICES larger than a normal eyebrow,
+     then the subtitle. */
+  .cm-services__intro{gap:.6rem;margin-bottom:1.75rem}
+  .cm-services__intro::before{content:"";width:2rem;height:2px;border-radius:999px;background:var(--lime)}
+  .cm-services__eyebrow{font-size:1.3rem;letter-spacing:.04em;line-height:1.15}
+  .cm-services__sub{display:block;margin:0;font-size:.9rem;line-height:1.45;font-weight:400;color:rgb(20 47 134 / .68)}
+}
 /* 106rem put two 836px cards on screen with ~110px of margin. 10% off that
    breadth is 752px a card, which needs 752*2 + the 24px gutter = 95.5rem.
    The margin on a 1920px screen goes to 196px as a consequence — the grid cap
@@ -771,7 +782,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(min-width:768px){.cm-svc__head{padding:2rem}}
 /* Inter Bold 700 — not 800, and never italic. 700 is now actually loaded (see
    layout.tsx), so this is the real weight rather than a synthesised one. */
-.cm-svc__title{margin:0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:2rem;font-style:normal;font-weight:700;line-height:1.05;letter-spacing:-.025em;color:#FFFFFF}
+.cm-svc__title{margin:0;var(--font-inter),system-ui,-apple-system,sans-serif;font-size:2rem;font-style:normal;font-weight:700;line-height:1.05;letter-spacing:-.025em;color:#FFFFFF}
 @media(min-width:768px){.cm-svc__title{font-size:2.25rem}}
 /* Declared after the >=768 rule on purpose. The service-card block further up
    the sheet also carries a >=1024 title size, and at equal specificity the rule
@@ -791,7 +802,7 @@ html:has(.cm-root){scroll-behavior:smooth}
    photo. Larger on desktop, unchanged on phones. It wraps rather than clips:
    "Cardiology | Neurology | ... | and more" is ~104 characters and cannot fit a
    700px card on one line at a readable size. */
-.cm-svc__line{margin:1.1rem 0 0;max-width:34rem;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:.9rem;font-weight:500;line-height:1.5;color:#FFFFFF;text-shadow:0 2px 14px rgb(0 0 0 / .5)}
+.cm-svc__line{margin:1.1rem 0 0;max-width:34rem;var(--font-inter),system-ui,-apple-system,sans-serif;font-size:.9rem;font-weight:500;line-height:1.5;color:#FFFFFF;text-shadow:0 2px 14px rgb(0 0 0 / .5)}
 @media(min-width:768px){.cm-svc__line{max-width:40rem;font-size:1.15rem}}
 @media(min-width:1024px){.cm-svc__line{max-width:44rem;font-size:1.3rem;line-height:1.45}}
 /* One data-driven line per span, so "WOMEN'S & FETAL" / "MEDICINE" is a fixed
@@ -824,8 +835,8 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-stat dt{font-size:.875rem;font-weight:400}
 /* one font and one colour throughout; the three phrases differ only by dark italic */
 /* Inter, the same face as the service card headings ("Advanced Imaging",
-   "Superbirth"). It inherited the body Lato before this. */
-.cm-about__para{margin:0;font-family:var(--font-inter),var(--font-lato),system-ui,sans-serif;font-size:1.375rem;font-style:normal;font-weight:400;line-height:1.35;letter-spacing:-.015em;color:var(--ink)}
+   "Superbirth"). The whole site is on Inter now. */
+.cm-about__para{margin:0;var(--font-inter),system-ui,-apple-system,sans-serif;font-size:1.375rem;font-style:normal;font-weight:400;line-height:1.35;letter-spacing:-.015em;color:var(--ink)}
 /* Highlighted words: sky blue and bold, no italic. Was italic and near-black
    (#0A1633), which read as a different typeface mid-sentence. */
 .cm-about__para .accent{font-family:inherit;font-style:normal;font-weight:700;color:var(--lime)}
@@ -1520,7 +1531,12 @@ export default function HomePage() {
       {/* SERVICES */}
       <section id="services" className="cm-services">
         <div className="cm-services__intro">
-          <p className="cm-eyebrow" data-rise>{SERVICES_INTRO.eyebrow}</p>
+          {/* An h2, not a p. Removing "Everything your diagnosis needs..." left
+              this section with no heading at all, so the cards sat under a
+              paragraph — a gap in the document outline for search engines and
+              screen reader navigation. Same class, so it looks unchanged. */}
+          <h2 className="cm-eyebrow cm-services__eyebrow" data-rise>{SERVICES_INTRO.eyebrow}</h2>
+          <p className="cm-services__sub">{SERVICES_INTRO.sub}</p>
         </div>
         <div className="cm-svc-grid">
           {SERVICE_CARDS.map((card) => (

@@ -95,7 +95,7 @@ export default function LaboratoryPage() {
           <p
             aria-hidden="true"
             className="absolute right-10 top-16 hidden text-2xl italic leading-tight text-[#2C6FB8] lg:block"
-            style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+            style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
           >
             Better
             <span className="block pl-5">Insights</span>

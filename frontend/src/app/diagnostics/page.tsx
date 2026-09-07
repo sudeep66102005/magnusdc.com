@@ -85,7 +85,7 @@ export default function DiagnosticsPage() {
           <p
             aria-hidden="true"
             className="absolute right-8 top-16 hidden text-2xl italic leading-tight text-[#2C6FB8] lg:block"
-            style={{ fontFamily: "var(--font-playfair), Georgia, serif" }}
+            style={{ fontFamily: "var(--font-inter), system-ui, sans-serif" }}
           >
             Seeing
             <span className="block pl-6">Health</span>
