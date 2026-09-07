@@ -584,6 +584,24 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-why-mag__shot.is-on{opacity:1;transform:scale(1)}
 
 .cm-why-mag__body{position:relative;z-index:2;display:flex;flex-direction:column;justify-content:space-between;gap:2.5rem;min-height:100lvh;padding:2rem 1.25rem}
+/* ---- Phone: show the 1:1 photo as 1:1 -------------------------------------
+   The photos supplied for mobile are 1254x1254. They were being poured into a
+   100lvh frame with object-fit:cover, so a tall viewport kept a vertical band
+   from the middle and threw the rest away — the square never appeared as a
+   square. Three things caused it and all three are undone here:
+     - the frame was viewport-tall            -> the photo area is now 1:1
+     - .cm-why-mag__shots overscanned -12%    -> inset:0, no bleed
+     - .cm-why-mag__shot scaled 1.05 -> 1     -> no zoom at all
+   The copy moves below the photo instead of sitting on top of it, because a
+   square leaves no room to overlay a heading, a list, five tabs and a button.
+   The frame is already #0B1533, so the white type keeps its contrast. */
+@media(max-width:767px){
+  .cm-why-mag__frame{min-height:0}
+  .cm-why-mag__shots{position:relative;inset:auto;aspect-ratio:1/1;width:100%;transform:none;will-change:auto}
+  .cm-why-mag__shot{transform:none;transition:opacity .6s ease}
+  .cm-why-mag__shot.is-on{transform:none}
+  .cm-why-mag__body{min-height:0;gap:1.75rem;padding:1.5rem 1.25rem 2rem}
+}
 @media(min-width:768px){.cm-why-mag__body{padding:2.75rem 2.5rem}}
 @media(min-width:1024px){.cm-why-mag__body{padding:3.25rem 3rem}}
 .cm-why-mag__copy{position:relative;max-width:38rem}
