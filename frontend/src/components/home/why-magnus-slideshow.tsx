@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 /* Photos now come from uploads/events, which is where the shoot was delivered.
@@ -280,10 +279,6 @@ export function WhyMagnusSlideshow() {
                 </button>
               ))}
             </div>
-
-            <Link href="/patient-info/appointment-booking" className="cm-why-mag__cta">
-              Consult our Doctor
-            </Link>
           </div>
         </div>
       </div>

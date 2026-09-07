@@ -59,16 +59,10 @@ const HERO = {
 const WHY = {
   eyebrow: "Why Clarus Magnus",
   title: "18 years of trust. A new era of healthcare.",
-  description:
-    "Built on 18 years of healthcare experience, Clarus Magnus Health & Diagnostics represents a new chapter—bringing together advanced diagnostics, specialist-led care and a modern patient experience.",
   stats: [
     { value: "18+", label: "Years of experience", icon: "shield" as const },
     { value: "3T", label: "Advanced MRI", icon: "scan" as const },
     { value: "20+", label: "Specialist consultants", icon: "team" as const },
-  ],
-  actions: [
-    { label: "Our team", href: "#team", primary: true },
-    { label: "How we work", href: "#about", primary: false },
   ],
   trail: Array.from({ length: 8 }, (_, i) => asset(`/assets/dantora/why/0${i + 1}.png`)),
 };
@@ -89,7 +83,6 @@ const RATING = {
 
 const SERVICES_INTRO = {
   eyebrow: "Our Services",
-  title: "Everything your diagnosis needs, under one roof",
   description:
     "From a routine health check to advanced imaging and molecular testing — five directions covering prevention, diagnosis and long-term care.",
 };
@@ -1434,7 +1427,6 @@ export default function HomePage() {
             <p className="cm-eyebrow" data-rise>{WHY.eyebrow}</p>
             <h2 className="cm-lead cm-reveal">{WHY.title}</h2>
           </div>
-          <p className="cm-body cm-why__desc cm-reveal">{WHY.description}</p>
           <dl className="cm-why__stats" data-rise>
             {WHY.stats.map((s) => (
               <div className="cm-why__stat" key={s.label}>
@@ -1446,13 +1438,6 @@ export default function HomePage() {
               </div>
             ))}
           </dl>
-          <div className="cm-why__actions">
-            {WHY.actions.map((a) => (
-              <Link key={a.href} href={a.href} className={`cm-btn ${a.primary ? "cm-btn--primary" : "cm-btn--secondary"}`}>
-                {a.label}
-              </Link>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -1460,7 +1445,6 @@ export default function HomePage() {
       <section id="services" className="cm-services">
         <div className="cm-services__intro">
           <p className="cm-eyebrow" data-rise>{SERVICES_INTRO.eyebrow}</p>
-          <h2 className="cm-lead cm-services__title cm-reveal">{SERVICES_INTRO.title}</h2>
         </div>
         <div className="cm-svc-grid">
           {SERVICE_CARDS.map((card) => (
