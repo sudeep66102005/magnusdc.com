@@ -730,10 +730,11 @@ html:has(.cm-root){scroll-behavior:smooth}
    that appears LAST wins — so a size set up there is silently overridden by the
    768 rule below it. That is why the earlier 3.6rem never took effect on a
    desktop. 40px, per the supplied spec. */
-/* Doubled: 2.5rem -> 5rem at the top end. clamp, not a flat 5rem, because a
-   card is ~460px wide at 1024px and 80px type would be clipped there — this
-   reaches the full 80px once the grid caps and scales down below that. */
-@media(min-width:1024px){.cm-svc__title{font-size:clamp(2.75rem,4.6vw,5rem)}}
+/* 60px at the top end — 80px was too heavy. clamp rather than a flat 3.75rem
+   because a card is only ~460px wide at 1024px: this reaches 60px once the grid
+   caps and eases down to 40px on a narrow desktop, so the heading stays on one
+   line at every width. */
+@media(min-width:1024px){.cm-svc__title{font-size:clamp(2.5rem,3.6vw,3.75rem)}}
 /* At 3.6rem the heading runs past the point where the scrim has faded out, so
    it needs its own shadow to stay legible over the bright side of the photo. */
 .cm-svc__title{text-shadow:0 2px 18px rgb(0 0 0 / .45)}
