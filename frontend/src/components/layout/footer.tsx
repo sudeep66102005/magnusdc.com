@@ -139,13 +139,19 @@ export function Footer() {
       <div className="bg-[#0A2662]">
         <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-8 md:grid-cols-2 lg:grid-cols-[1.25fr_0.7fr_0.7fr_1fr]">
           <div>
-            <div className="relative h-[66px] w-[235px] overflow-hidden rounded-xl bg-white px-3">
+            {/* No white plate behind the logo. The source PNG is navy on
+                transparent, which would all but vanish on this navy, so it is
+                rendered as a white mono mark: brightness-0 makes every opaque
+                pixel black, invert turns it white, transparency is preserved.
+                Drop a reversed/white logo file into /assets/logo and this can
+                use it directly, with the red dot and sky tagline intact. */}
+            <div className="relative h-[58px] w-[210px]">
               <Image
                 src={`${basePath}/assets/logo/clarus-magnus-logo.png`}
                 alt="Clarus Magnus Health and Diagnostics"
                 fill
-                sizes="235px"
-                className="object-contain p-2"
+                sizes="210px"
+                className="object-contain object-left brightness-0 invert"
               />
             </div>
             <p className="mt-6 max-w-sm text-sm leading-7 text-white/70">
