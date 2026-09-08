@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -139,21 +138,32 @@ export function Footer() {
       <div className="bg-[#0A2662]">
         <div className="mx-auto grid max-w-7xl gap-12 px-5 py-16 sm:px-8 md:grid-cols-2 lg:grid-cols-[1.25fr_0.7fr_0.7fr_1fr]">
           <div>
-            {/* No white plate behind the logo. The source PNG is navy on
-                transparent, which would all but vanish on this navy, so it is
-                rendered as a white mono mark: brightness-0 makes every opaque
-                pixel black, invert turns it white, transparency is preserved.
-                Drop a reversed/white logo file into /assets/logo and this can
-                use it directly, with the red dot and sky tagline intact. */}
-            <div className="relative h-[58px] w-[210px]">
-              <Image
-                src={`${basePath}/assets/logo/clarus-magnus-logo.png`}
-                alt="Clarus Magnus Health and Diagnostics"
-                fill
-                sizes="210px"
-                className="object-contain object-left brightness-0 invert"
-              />
-            </div>
+            {/* The logo is painted, not filtered.
+                The source PNG is a navy wordmark on a transparent background
+                (verified: RGBA, alpha 0 across the top row), so on this navy it
+                disappears. The previous attempt used Tailwind's
+                `brightness-0 invert`, which depends on how Tailwind composes
+                several filter utilities into one `filter` property — and it was
+                not taking effect, leaving navy on navy.
+                A mask has no such dependency: the PNG's opaque pixels become a
+                stencil and `background-color` paints them, so the colour is
+                whatever is set here regardless of the source colours. #E6F2FF is
+                a light tone off the brand sky rather than a stark white. */}
+            <span
+              role="img"
+              aria-label="Clarus Magnus Health and Diagnostics"
+              className="block h-[58px] w-[210px] bg-[#E6F2FF]"
+              style={{
+                maskImage: `url(${basePath}/assets/logo/clarus-magnus-logo.png)`,
+                WebkitMaskImage: `url(${basePath}/assets/logo/clarus-magnus-logo.png)`,
+                maskRepeat: "no-repeat",
+                WebkitMaskRepeat: "no-repeat",
+                maskPosition: "left center",
+                WebkitMaskPosition: "left center",
+                maskSize: "contain",
+                WebkitMaskSize: "contain",
+              }}
+            />
             <p className="mt-6 max-w-sm text-sm leading-7 text-white/70">
               Radiologist-led advanced diagnostics, laboratory services and
               multispecialty care—delivered with precision and compassion in
