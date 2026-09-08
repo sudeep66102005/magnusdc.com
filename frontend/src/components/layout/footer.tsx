@@ -149,21 +149,23 @@ export function Footer() {
                 stencil and `background-color` paints them, so the colour is
                 whatever is set here regardless of the source colours. #E6F2FF is
                 a light tone off the brand sky rather than a stark white. */}
-            <span
-              role="img"
-              aria-label="Clarus Magnus Health and Diagnostics"
-              className="block h-[58px] w-[210px] bg-[#E6F2FF]"
-              style={{
-                maskImage: `url(${basePath}/assets/logo/clarus-magnus-logo.png)`,
-                WebkitMaskImage: `url(${basePath}/assets/logo/clarus-magnus-logo.png)`,
-                maskRepeat: "no-repeat",
-                WebkitMaskRepeat: "no-repeat",
-                maskPosition: "left center",
-                WebkitMaskPosition: "left center",
-                maskSize: "contain",
-                WebkitMaskSize: "contain",
-              }}
-            />
+            {/* The logo sits on a light tinted plate — #E4EEFA, a light tone of
+                the brand navy rather than a plain white box.
+                Two cleverer attempts failed before this and are not worth
+                repeating: a Tailwind `brightness-0 invert` filter, which depends
+                on how several filter utilities compose and did not apply; and a
+                CSS mask painting the artwork a flat colour, which did not render
+                either. Both left the navy wordmark invisible on the navy.
+                A plain image on a tinted plate has nothing to fail, and it keeps
+                the real artwork: navy wordmark, red dot, sky tagline. */}
+            <div className="relative h-[62px] w-[220px] overflow-hidden rounded-2xl bg-[#E4EEFA]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={`${basePath}/assets/logo/clarus-magnus-logo.png`}
+                alt="Clarus Magnus Health and Diagnostics"
+                className="absolute inset-0 size-full object-contain p-2.5"
+              />
+            </div>
             <p className="mt-6 max-w-sm text-sm leading-7 text-white/70">
               Radiologist-led advanced diagnostics, laboratory services and
               multispecialty care—delivered with precision and compassion in
