@@ -16,6 +16,11 @@ import { getAllDoctorSlugs } from "@/lib/data/doctors";
  * diagnostic, doctor or specialty appears here without anyone remembering to
  * add it.
  */
+/* Required under `output: "export"`. Without it the build fails with
+   'export const dynamic = "force-static" not configured on route /sitemap.xml',
+   because Next treats a sitemap route as dynamic by default. */
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = siteConfig.url.replace(/\/$/, "");
   const now = new Date();
