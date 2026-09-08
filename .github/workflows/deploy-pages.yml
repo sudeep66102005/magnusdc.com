@@ -50,10 +50,12 @@ jobs:
         working-directory: frontend
         run: |
           set -euo pipefail
-          # /assets paths are excluded: a raw <a> or <img> to a file in public/
-          # is not routed by next/link and does need the prefix.
+          # Static files in public/ are excluded: a raw <a> or <img> pointing at
+          # one is not routed by next/link and does need the prefix. That covers
+          # /assets, and any path ending in a file extension — /sitemap.xml, a
+          # PDF, an image. Route hrefs have no extension, so they are still caught.
           if grep -rnE 'href(=\{|: )`\$\{(BP|basePath)\}' src --include='*.tsx' --include='*.ts' \
-             | grep -v '/assets'; then
+             | grep -vE '/assets|\.(xml|pdf|png|jpe?g|svg|webp|ico|txt|json)'; then
             echo "::error::Found \${BP} inside a route href. next/link adds basePath already — use a plain '/path'."
             exit 1
           fi
