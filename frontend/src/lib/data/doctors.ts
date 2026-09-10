@@ -62,6 +62,9 @@ export const doctors: Doctor[] = [
     name: "Dr. Chaathurya R.",
     title: "Consultant Radiologist",
     specialty: "Radiology",
+    /* Path is relative to /assets/ — the `photo()` helpers in the card and the
+       profile page prepend the base path and URI-encode the space. */
+    image: "uploads/doctors/dr chaaturya.jpeg",
     // All seven of her credentials on the card by request. The ACFRG acronym is
     // left unexpanded here purely for width — spelled out in `degrees` below.
     keyQualification:
