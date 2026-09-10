@@ -31,6 +31,13 @@ export type Doctor = {
    */
   image?: string;
   /**
+   * CSS object-position for the photo crop. Only needed when the source is not
+   * a portrait that the default 50% 15% handles correctly — e.g. a landscape
+   * photo where the default would clip the subject horizontally.
+   * Default applied in components: "50% 15%"
+   */
+  imagePosition?: string;
+  /**
    * Optional per-doctor link. Currently unused by the card: the corner arrow
    * goes to Contact Us and the button to appointment booking. Kept for a
    * future per-doctor profile page.
@@ -269,6 +276,10 @@ export const doctors: Doctor[] = [
   // Neurosurgery
   {
     name: "Dr. Ajay Hegde",
+    image: "uploads/doctors/dr ajay hedge.jpeg",
+    /* Landscape 921x659. Height fits the square frame exactly — no vertical crop.
+       Horizontal: 131px clipped each side, face centred at 50%. */
+    imagePosition: "50% 50%",
     title: "Senior Consultant Neurosurgeon & Neuro-Spine Surgeon",
     specialty: "Neurosurgery",
     keyQualification: "MCh (Neurosurgery)",
