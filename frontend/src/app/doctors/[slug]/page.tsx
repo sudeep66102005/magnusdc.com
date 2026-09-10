@@ -79,12 +79,13 @@ export default async function DoctorProfilePage({ params }: DoctorPageProps) {
                 /* Portraits are taller than wide (hers is 1045x1505) and this
                    frame is square, so the crop is biased upward — the same
                    50% 15% the listing card uses. Centre-cropping would push the
-                   face high in the frame. */
+                   face high in the frame. The imagePosition override lets a
+                   landscape photo (e.g. Dr. Ajay Hegde 921x659) use 50% 50%. */
                 <img
                   src={photo(doctor.image)}
                   alt={doctor.name}
                   className="size-full object-cover"
-                  style={{ objectPosition: "50% 15%" }}
+                  style={{ objectPosition: doctor.imagePosition ?? "50% 15%" }}
                 />
               ) : (
                 <span className="grid size-full place-items-center text-3xl font-black text-[#142F86]/35">

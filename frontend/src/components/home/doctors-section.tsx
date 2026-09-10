@@ -58,7 +58,9 @@ const css = String.raw`
 /* Left image panel. Fixed share of the card so every row lines up, and ready
    for a real portrait: the img fills it edge to edge with no layout change. */
 .cm-doc__photo{position:relative;flex:0 0 38%;align-self:stretch;overflow:hidden;background:linear-gradient(160deg,rgb(49 180 244 / .16),rgb(20 47 134 / .09))}
-.cm-doc__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 15%;transition:transform .4s ease}
+/* object-position is set per-doctor via inline style (defaulting to 50% 15%) so
+   landscape photos can override it without an extra CSS rule. */
+.cm-doc__photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
 .cm-doc:hover .cm-doc__photo img{transform:scale(1.04)}
 .cm-doc__monogram{position:absolute;inset:0;display:grid;place-items:center;font-size:2rem;font-weight:700;letter-spacing:.02em;color:rgb(20 47 134 / .4)}
 
@@ -202,9 +204,13 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
   return (
     <article className="cm-doc">
       <div className="cm-doc__photo">
+        {/* 50% 15% default: biased upward so a portrait sits face-first in the
+            square frame. imagePosition overrides this per-doctor — landscape
+            sources (e.g. Dr. Ajay Hegde 921x659) set "50% 50%". */}
         {doctor.image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={photo(doctor.image)} alt={doctor.name} loading="lazy" decoding="async" />
+          <img src={photo(doctor.image)} alt={doctor.name} loading="lazy" decoding="async"
+            style={{ objectPosition: doctor.imagePosition ?? "50% 15%" }} />
         ) : (
           <span className="cm-doc__monogram" aria-hidden="true">
             {monogram(doctor.name)}
