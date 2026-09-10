@@ -76,10 +76,15 @@ export default async function DoctorProfilePage({ params }: DoctorPageProps) {
             <div className="size-28 flex-none overflow-hidden rounded-2xl bg-white ring-1 ring-[#142F86]/12 sm:size-36">
               {doctor.image ? (
                 // eslint-disable-next-line @next/next/no-img-element
+                /* Portraits are taller than wide (hers is 1045x1505) and this
+                   frame is square, so the crop is biased upward — the same
+                   50% 15% the listing card uses. Centre-cropping would push the
+                   face high in the frame. */
                 <img
                   src={photo(doctor.image)}
                   alt={doctor.name}
                   className="size-full object-cover"
+                  style={{ objectPosition: "50% 15%" }}
                 />
               ) : (
                 <span className="grid size-full place-items-center text-3xl font-black text-[#142F86]/35">
