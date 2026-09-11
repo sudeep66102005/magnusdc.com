@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, CalendarDays, GraduationCap, Stethoscope } from "lucide-react";
 import { Section } from "@/components/shared/section";
+import { DoctorAvatar } from "@/components/shared/doctor-avatar";
 import { siteConfig } from "@/lib/constants/site-config";
 import {
   doctorSlug,
@@ -184,12 +185,15 @@ export default async function DoctorProfilePage({ params }: DoctorPageProps) {
                   <Link
                     key={colleague.name}
                     href={`/doctors/${doctorSlug(colleague.name)}`}
-                    className="group rounded-xl bg-white p-4 ring-1 ring-[#142F86]/10 transition hover:ring-[#31B4F4]"
+                    className="group flex items-start gap-3.5 rounded-xl bg-white p-4 ring-1 ring-[#142F86]/10 transition hover:ring-[#31B4F4]"
                   >
-                    <p className="text-sm font-bold text-[#142F86] group-hover:underline">
-                      {colleague.name}
-                    </p>
-                    <p className="mt-1 text-xs text-[#142F86]/65">{colleague.title}</p>
+                    <DoctorAvatar doctor={colleague} className="size-12" />
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-bold text-[#142F86] group-hover:underline">
+                        {colleague.name}
+                      </span>
+                      <span className="mt-1 block text-xs text-[#142F86]/65">{colleague.title}</span>
+                    </span>
                   </Link>
                 ))}
               </div>
