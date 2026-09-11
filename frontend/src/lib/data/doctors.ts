@@ -149,6 +149,10 @@ export const doctors: Doctor[] = [
   },
   {
     name: "Dr. Rajaram K. G.",
+    image: "uploads/doctors/dr rajaram orthopedic magnus.jpeg",
+    // Landscape source (1536x1024): the face already sits centred, so the
+    // default upward bias would crop the top of the head.
+    imagePosition: "50% 50%",
     title: "Senior Consultant Orthopaedic Surgeon",
     specialty: "Orthopedics",
     keyQualification: "MS (Orthopaedics)",
@@ -157,6 +161,7 @@ export const doctors: Doctor[] = [
   },
   {
     name: "Dr. Nischay Kenjige",
+    image: "uploads/doctors/dr nischay k k orthopedic magnus.jpg",
     title: "Consultant Orthopaedic Surgeon",
     specialty: "Orthopedics",
     keyQualification: "FRCS (Trauma & Orthopaedics)",
@@ -167,6 +172,7 @@ export const doctors: Doctor[] = [
   // Gynecology & Obstetrics
   {
     name: "Dr. Soumya Mahesh Koregol",
+    image: "uploads/doctors/dr sowmya obstetrician magnus.jpeg",
     title: "Consultant Obstetrician, Gynaecologist & Infertility Specialist",
     specialty: "Gynecology & Obstetrics",
     keyQualification: "MS (Obstetrics & Gynaecology)",
@@ -194,6 +200,7 @@ export const doctors: Doctor[] = [
   },
   {
     name: "Dr. Smitha Chandra",
+    image: "uploads/doctors/dr smitha ENT magnus.jpeg",
     title: "Senior ENT, Head & Neck Surgeon",
     specialty: "ENT",
     keyQualification: "MS (ENT)",
@@ -239,6 +246,7 @@ export const doctors: Doctor[] = [
   },
   {
     name: "Dr. Mir Zeeshan Ali",
+    image: "uploads/doctors/dr zeeshan ali surgeon magnus.jpeg",
     title: "Senior Consultant General Surgeon & Proctologist",
     specialty: "General Surgery",
     keyQualification: "MS (General Surgery)",
@@ -352,6 +360,7 @@ export const doctors: Doctor[] = [
     // profile, so `degrees`/`keyQualification` are deliberately left unset
     // rather than guessed.
     name: "Dr. Jasmeet Sunil",
+    image: "uploads/doctors/dr jasmeet physiotherapist magnus.jpeg",
     title: "Consultant Physiotherapist",
     specialty: "Physiotherapy",
     experience: "Clinical experience since 2002",
