@@ -84,6 +84,7 @@ export const doctors: Doctor[] = [
   // Physician / Internal Medicine
   {
     name: "Dr. Ravishankar N.",
+    image: "uploads/doctors/dr ravishankar physician magnus updaed.jpeg",
     title: "Senior Consultant Physician",
     specialty: "Physician / Internal Medicine",
     keyQualification: "MBBS, DPH",
@@ -128,6 +129,8 @@ export const doctors: Doctor[] = [
   },
   {
     name: "Dr. M. Sudhakar Rao",
+    image: "uploads/doctors/dr sudhakar rao cardiologist magnus.jpg",
+    imagePosition: "50% 50%",
     title: "Senior Consultant Cardiologist & Interventional Cardiologist",
     specialty: "Cardiology",
     keyQualification: "DM (Cardiology), FACC",
@@ -199,6 +202,7 @@ export const doctors: Doctor[] = [
   },
   {
     name: "Dr. Joshi Anto Tommi J",
+    image: "uploads/doctors/dr joshi ENT magnus.JPG",
     title: "Consultant ENT Surgeon",
     specialty: "ENT",
     keyQualification: "MS (ENT)",
@@ -255,6 +259,8 @@ export const doctors: Doctor[] = [
   // Surgical Gastroenterology
   {
     name: "Dr. Govind Nandakumar",
+    image: "uploads/doctors/dr govind nandkumar gastrosurgeon magnus.jpg",
+    imagePosition: "50% 50%",
     title: "Senior Consultant Surgical Gastroenterologist",
     specialty: "Surgical Gastroenterology",
     keyQualification: "FACS",
@@ -289,6 +295,8 @@ export const doctors: Doctor[] = [
   },
   {
     name: "Dr. Veeresha U. Mathad",
+    image: "uploads/doctors/dr veeresha u mathad neurosurgeon magnus.jpg",
+    imagePosition: "50% 50%",
     title: "Senior Consultant Neuro & Spine Surgeon",
     specialty: "Neurosurgery",
     keyQualification: "MCh (Neurosurgery)",
@@ -300,6 +308,8 @@ export const doctors: Doctor[] = [
   // Nephrology
   {
     name: "Dr. Ravindra Mukkunda",
+    image: "uploads/doctors/dr ravindra mukkunda nephrologist magnus.jpg",
+    imagePosition: "50% 50%",
     title: "Senior Consultant Nephrologist & Renal Transplant Physician",
     specialty: "Nephrology",
     keyQualification: "MRCP (UK) Nephrology",
@@ -309,6 +319,8 @@ export const doctors: Doctor[] = [
   },
   {
     name: "Dr. Krishna Kumar K",
+    image: "uploads/doctors/dr krishna kumar k nephrologist magnus.jpg",
+    imagePosition: "50% 50%",
     title: "Consultant Nephrologist & Renal Transplant Physician",
     specialty: "Nephrology",
     keyQualification: "DrNB (Nephrology)",
@@ -316,6 +328,8 @@ export const doctors: Doctor[] = [
   },
   {
     name: "Dr. Mitesh Makwana",
+    image: "uploads/doctors/dr mithesh makwana nephologist magnus.jpg",
+    imagePosition: "50% 50%",
     title: "Consultant Nephrologist & Critical Care Nephrologist",
     specialty: "Nephrology",
     keyQualification: "DrNB (Nephrology)",
