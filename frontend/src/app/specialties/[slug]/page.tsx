@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, CalendarDays, Check, Stethoscope } from "lucide-react";
 import { PageHero } from "@/components/shared/page-hero";
 import { Section } from "@/components/shared/section";
+import { DoctorAvatar } from "@/components/shared/doctor-avatar";
 import { siteConfig } from "@/lib/constants/site-config";
 import { getAllSpecialtySlugs, getSpecialtyBySlug } from "@/lib/data/specialties";
 import { doctorSlug, getDoctorsBySpecialty } from "@/lib/data/doctors";
@@ -94,9 +95,10 @@ export default async function SpecialtyDetailPage({ params }: SpecialtyPageProps
                   <Link
                     key={doctor.name}
                     href={`/doctors/${doctorSlug(doctor.name)}`}
-                    className="group flex items-start justify-between gap-4 rounded-xl bg-white p-4 ring-1 ring-[#142F86]/10 transition hover:ring-[#31B4F4]"
+                    className="group flex items-start gap-4 rounded-xl bg-white p-4 ring-1 ring-[#142F86]/10 transition hover:ring-[#31B4F4]"
                   >
-                    <span className="min-w-0">
+                    <DoctorAvatar doctor={doctor} className="size-14" />
+                    <span className="min-w-0 flex-1">
                       <span className="block text-sm font-bold text-[#142F86] group-hover:underline">
                         {doctor.name}
                       </span>
