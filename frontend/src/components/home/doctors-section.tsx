@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { doctorFilters, doctors, doctorSlug, type Doctor } from "@/lib/data/doctors";
+import { doctorFilters, doctorsPhotoFirst, doctorSlug, type Doctor } from "@/lib/data/doctors";
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
@@ -300,7 +300,14 @@ export function DoctorsSection({
     rail.scrollBy({ left: (dir === "prev" ? -1 : 1) * rail.clientWidth * 0.8, behavior: "smooth" });
   };
 
-  const matching = active === "All" ? doctors : doctors.filter((d) => d.specialty === active);
+  // doctorsPhotoFirst, not doctors: photographed consultants lead and the
+  // monogram placeholders trail. Filtering a pre-sorted list keeps that true
+  // inside every specialty chip too, and makes the homepage's limited slice show
+  // real faces rather than whichever six happen to be listed first.
+  const matching =
+    active === "All"
+      ? doctorsPhotoFirst
+      : doctorsPhotoFirst.filter((d) => d.specialty === active);
   const shown = limit ? matching.slice(0, limit) : matching;
   const showMore = Boolean(moreHref) && matching.length > shown.length;
 

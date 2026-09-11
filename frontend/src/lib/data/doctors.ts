@@ -47,8 +47,11 @@ export type Doctor = {
 
 /**
  * The Clarus Magnus consultant roster, grouped by department in the order the
- * profiles were supplied. Photographs are pending for everyone, so no entry
- * carries an `image` yet — each card renders a monogram tile until one is added.
+ * profiles were supplied. Entries without an `image` render a monogram tile, so
+ * a consultant can be listed before their photograph exists.
+ *
+ * This is the source-of-truth order. For display order see `doctorsPhotoFirst`,
+ * which floats the photographed consultants to the top.
  */
 /**
  * URL slug for a consultant, e.g. "Dr. Chaathurya R." -> "dr-chaathurya-r".
@@ -368,6 +371,22 @@ export const doctors: Doctor[] = [
 ];
 
 /**
+ * The roster as it is *displayed*: consultants whose photograph has arrived come
+ * first, the monogram placeholders trail behind.
+ *
+ * The `doctors` array above stays grouped by department, because that is what
+ * makes it maintainable — a new profile gets filed under its heading. The
+ * display order is derived from it instead, so adding an `image` is all it takes
+ * to move someone up; nobody has to hand-shuffle records to keep photos on top.
+ *
+ * The sort is stable (guaranteed since ES2019), so within each of the two groups
+ * the original department grouping is preserved.
+ */
+export const doctorsPhotoFirst: Doctor[] = [...doctors].sort(
+  (a, b) => Number(Boolean(b.image)) - Number(Boolean(a.image)),
+);
+
+/**
  * Filter chips, in the order they appear. Only specialties that actually have a
  * doctor are listed, so the rail never offers a filter that returns nothing.
  * Ordered by `navigation.ts` so the site stays consistent.
@@ -392,7 +411,10 @@ export function getAllDoctorSlugs(): string[] {
  * Consultants in one department. Used by a doctor's profile to offer colleagues
  * in the same specialty, and by the specialty pages to list their team — which
  * is what turns the specialty pages from boilerplate into something specific.
+ *
+ * Drawn from `doctorsPhotoFirst`, so these lists lead with photographed
+ * consultants just like the main listing does.
  */
 export function getDoctorsBySpecialty(specialty: string): Doctor[] {
-  return doctors.filter((doctor) => doctor.specialty === specialty);
+  return doctorsPhotoFirst.filter((doctor) => doctor.specialty === specialty);
 }
