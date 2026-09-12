@@ -698,7 +698,14 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-why-mag__label{position:absolute;top:1.15rem;left:1.15rem;z-index:3;margin:0;max-width:calc(100% - 2.3rem);font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-size:1.5rem;font-weight:600;line-height:1.15;letter-spacing:-.01em;color:#FFFFFF;text-shadow:0 2px 14px rgb(8 16 38 / .55)}
 
   .cm-why-mag__copy{display:none}
-  .cm-why-mag__tabs{display:none}
+  /* Two class names, not one, purely to win the cascade. The base
+     .cm-why-mag__tabs{display:grid} further down this sheet is top level, so it
+     applies at every width, and it sits after this rule. Both would be (0,1,0) —
+     media queries add no specificity — so the later grid won and these labels
+     rendered on phones after all, in white on a white background. That is the
+     faint ghost text under the arrows. The extra class makes this (0,2,0) so
+     source order stops mattering. */
+  .cm-why-mag .cm-why-mag__tabs{display:none}
   .cm-why-mag__body{min-height:0;gap:0;padding:1.25rem 0 0;background:transparent}
   .cm-why-mag__foot{gap:0}
 
