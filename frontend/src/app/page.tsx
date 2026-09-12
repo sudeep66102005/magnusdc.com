@@ -66,8 +66,11 @@ const WHY = {
   /* Phone only — desktop has no paragraph here since it was removed. */
   lede: "Advanced technology. Expert care. A healthier tomorrow for you and your loved ones.",
   banner: encodeURI(asset("/assets/uploads/banners/second section of landing page why clarus magnus.jpeg")),
-  /* Desktop only: the building, and the paragraph the design puts beside it. */
+  /* No longer rendered: the left half of WHY now holds the photo loop, whose
+     own first slide is this same photograph. Kept so putting the single static
+     image back is a one-line change. */
   building: encodeURI(asset("/assets/uploads/events/magnus clinic front view of the building.jpeg")),
+  /* Desktop only: the paragraph the design puts beside the left half. */
   para: "Built on 18 years of healthcare experience, Clarus Magnus Health & Diagnostics represents a new chapter \u2014 bringing together advanced diagnostics, specialist-led care and a modern patient experience.",
   script: "Better Health Brighter Tomorrows",
   stats: [
@@ -739,6 +742,31 @@ html:has(.cm-root){scroll-behavior:smooth}
 }
 @media(min-width:768px){.cm-why-mag__body{padding:2.75rem 2.5rem}}
 @media(min-width:1024px){.cm-why-mag__body{padding:3.25rem 3rem}}
+
+/* ---- The loop, embedded in the WHY building slot (desktop only) ------------
+   Everything here is inside min-width:1024px, so phones and tablets are
+   untouched: they keep the standalone band exactly as it was.
+
+   The loop appears once at every width. Below 1024px the embedded copy is
+   invisible because its parent .cm-why__building is display:none; from 1024px
+   up the standalone band is the one hidden.
+
+   All three overrides below beat the base rules on specificity, not on source
+   order, so they hold wherever these rules end up in the sheet. */
+@media(min-width:1024px){
+  .cm-why-mag--section{display:none}
+
+  .cm-why-mag--embed{position:absolute;inset:0;z-index:1;padding:0;background:transparent}
+  /* The base frame is a viewport-tall band; here it fills the grid cell. */
+  .cm-why-mag--embed .cm-why-mag__frame{width:100%;height:100%;min-height:0}
+  /* Pinned to the foot of the photo rather than stretched to the full height,
+     so the labels sit at the bottom and nothing reserves space above them. */
+  .cm-why-mag--embed .cm-why-mag__body{position:absolute;inset:auto 0 0;min-height:0;gap:0;padding:0 2rem 1.5rem}
+  /* Narrower track than the full-width band: this column is only half the
+     viewport, and at 1024px the 6.5rem minimum would wrap five labels onto two
+     rows. auto-fit rather than a hard count so adding a group cannot break it. */
+  .cm-why-mag--embed .cm-why-mag__tabs{grid-template-columns:repeat(auto-fit,minmax(4rem,1fr));gap:.6rem .85rem}
+}
 .cm-why-mag__copy{position:relative;max-width:38rem}
 .cm-why-mag__pane{animation:cmWhyMagIn .7s cubic-bezier(.2,0,0,1) both}
 @keyframes cmWhyMagIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -1544,10 +1572,13 @@ export default function HomePage() {
 
       {/* WHY */}
       <section id="why" className="cm-section cm-why">
-        {/* Desktop only: the building fills the left half. */}
+        {/* Desktop only: the photo loop fills the left half, where the single
+            building shot used to sit. That photograph is still the first slide
+            of the loop, so this half opens on the same image it showed before.
+            This div is display:none below 1024px, so the loop cannot appear on
+            phones or tablets — they keep the standalone band further down. */}
         <div className="cm-why__building">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={WHY.building} alt="The Clarus Magnus building in Koramangala" />
+          <WhyMagnusSlideshow variant="embedded" />
         </div>
         <div className="cm-why__inner cm-shell">
           {/* Was an inline style block, which a media query cannot override —
