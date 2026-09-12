@@ -894,13 +894,21 @@ html:has(.cm-root){scroll-behavior:smooth}
 /* one font and one colour throughout; the three phrases differ only by dark italic */
 /* Inter, the same face as the service card headings ("Advanced Imaging",
    "Superbirth"). The whole site is on Inter now. */
-.cm-about__para{margin:0;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-size:1.375rem;font-style:normal;font-weight:400;line-height:1.35;letter-spacing:-.015em;color:var(--ink)}
-/* Highlighted words: sky blue and bold, no italic. Was italic and near-black
-   (#0A1633), which read as a different typeface mid-sentence. */
-.cm-about__para .accent{font-family:inherit;font-style:normal;font-weight:700;color:var(--lime)}
+/* Body copy, to spec: Inter 400 at 17px with 1.55 leading, #142F86 throughout.
+   One size at every breakpoint — the 768px and 1024px steps that took this to
+   28px and 36px are gone, as is the phone step, so nothing overrides it.
+   letter-spacing is normal rather than the old -.015em: negative tracking is a
+   display-type device that suited the previous 36px setting, but at 17px it
+   works against legibility. */
+.cm-about__para{margin:0;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-size:1.0625rem;font-style:normal;font-weight:400;line-height:1.55;letter-spacing:normal;color:#142F86}
+/* The three highlighted fragments now match the surrounding sentence, since the
+   spec calls for one weight and one colour across the whole paragraph. The
+   accent:true flags stay in the ABOUT data and the spans are still emitted, so
+   restoring emphasis later is a change to this one rule. */
+.cm-about__para .accent{font-family:inherit;font-style:inherit;font-weight:inherit;color:inherit}
 .cm-about__right{display:flex;flex-direction:column;gap:2rem}
 .cm-about__actions{display:flex;flex-wrap:wrap;gap:1rem}
-@media(min-width:768px){.cm-about__banner{height:24rem}.cm-about__para{font-size:1.75rem}}
+@media(min-width:768px){.cm-about__banner{height:24rem}}
 @media(min-width:1024px){
   .cm-about{height:71.5rem;padding:0}
   .cm-about__banner{position:absolute;top:2.5rem;left:2.5rem;width:85rem;height:31.25rem}
@@ -911,7 +919,6 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-stat dd{font-size:3.75rem}
   .cm-stat dt{font-size:1rem}
   .cm-about__right{display:flex;flex-direction:column;gap:8.375rem;width:49.3125rem}
-  .cm-about__para{font-size:2.25rem}
   .cm-about__actions .cm-btn:first-child{width:15rem}
   .cm-about__actions .cm-btn:last-child{width:11.25rem}
 }
@@ -1085,7 +1092,6 @@ html:has(.cm-root){scroll-behavior:smooth}
 
   /* ABOUT */
   .cm-about{padding:3.5rem 1.25rem}
-  .cm-about__para{font-size:1.0625rem;line-height:1.35}
   .cm-stat dd{font-size:1.75rem}
   .cm-stat dt{font-size:.78rem}
 
