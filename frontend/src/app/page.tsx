@@ -1634,7 +1634,9 @@ export default function HomePage() {
           heading is needed here because this section sits between others and
           would otherwise be unlabelled; /doctors passes none, since there the
           whole page is already the roster. */}
-      <DoctorsSection title="Our Doctors" limit={6} moreHref={`${BP}/doctors`} />
+      {/* moreHref is handed to next/link, which prepends the base path itself —
+          passing ${BP} here produced /magnusdc.com/magnusdc.com/doctors. */}
+      <DoctorsSection title="Our Doctors" limit={6} moreHref="/doctors" />
 
       <TestimonialsSection />
 

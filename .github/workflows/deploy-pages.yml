@@ -54,7 +54,11 @@ jobs:
           # one is not routed by next/link and does need the prefix. That covers
           # /assets, and any path ending in a file extension — /sitemap.xml, a
           # PDF, an image. Route hrefs have no extension, so they are still caught.
-          if grep -rnE 'href(=\{|: )`\$\{(BP|basePath)\}' src --include='*.tsx' --include='*.ts' \
+          # Matches any prop whose name ends in href, case-insensitively: the
+          # first version of this check was anchored to a literal lowercase
+          # "href" and so walked straight past moreHref={`${BP}/doctors`}, which
+          # shipped a doubled path on the homepage's "View All Specialists" link.
+          if grep -rnE '[A-Za-z]*[Hh]ref(=\{|: )`\$\{(BP|basePath)\}' src --include='*.tsx' --include='*.ts' \
              | grep -vE '/assets|\.(xml|pdf|png|jpe?g|svg|webp|ico|txt|json)'; then
             echo "::error::Found \${BP} inside a route href. next/link adds basePath already — use a plain '/path'."
             exit 1
