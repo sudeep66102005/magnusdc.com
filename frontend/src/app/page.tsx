@@ -164,7 +164,15 @@ const SERVICE_CARDS = [
 
 const ABOUT = {
   eyebrow: "About the clinic",
-  banner: asset("/assets/dantora/about/banner.png"),
+  /* Was dantora/about/banner.png — a 2720x1813 PNG weighing 3.60 MB, left over
+     from the theme this project started from, for a decorative band no taller
+     than 500px. A photograph has no business being a PNG at that size.
+
+     This replaces it with our own lobby photograph at 172 KB. The homepage
+     already fetches that file for the "Our Lobby" slide, so serving it here
+     costs no additional bytes at all — the browser has it cached by the time
+     this band scrolls into view. */
+  banner: asset("/assets/uploads/events/lobby%20for%20desktop.jpeg"),
   stats: [
     { value: "18+", label: "Years of trusted care" },
     { value: "3T", label: "Advanced MRI" },
