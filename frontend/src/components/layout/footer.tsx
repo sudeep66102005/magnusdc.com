@@ -149,7 +149,14 @@ export function Footer() {
                 stencil and `background-color` paints them, so the colour is
                 whatever is set here regardless of the source colours. #E6F2FF is
                 a light tone off the brand sky rather than a stark white. */}
-            {/* The logo sits on a light tinted plate — #E4EEFA, a light tone of
+            {/* The monochrome logo, as asked for the closing section of every
+                page. It stays on the light plate rather than going straight onto
+                the navy: the artwork is solid black, so on a #142F86 background
+                it would sit at roughly 1.3:1 and vanish — the same trap the
+                navy-on-navy attempts fell into. Black on #E4EEFA is about 16:1.
+                A white-on-navy treatment would need a white version of the file,
+                or an invert filter of the kind that already failed here twice. */}
+            {/* The plate is a light tone of
                 the brand navy rather than a plain white box.
                 Two cleverer attempts failed before this and are not worth
                 repeating: a Tailwind `brightness-0 invert` filter, which depends
@@ -161,7 +168,7 @@ export function Footer() {
             <div className="relative h-[62px] w-[220px] overflow-hidden rounded-2xl bg-[#E4EEFA]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`${basePath}/assets/logo/clarus-magnus-logo.png`}
+                src={`${basePath}/assets/logo/clarus-magnus-logo-mono.png`}
                 alt="Clarus Magnus Health and Diagnostics"
                 className="absolute inset-0 size-full object-contain p-2.5"
               />
