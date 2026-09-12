@@ -123,10 +123,11 @@ const headerCss = String.raw`/* header */
    earlier width increases kept being absorbed and why the size only became
    predictable once this was set.
 
-   The pill returns to 6.5rem, the height it was before any of this, since a 68px
-   image has no use for a 136px bar. That also lets the body padding-top and the
-   homepage hero padding go back to their original values below. */
-@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{flex:none;width:12rem;height:6.5rem;padding-inline:.5rem;padding-block:0}.cm-logo__image{height:4.25rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
+   Then up 10% again: 4.7rem, so 184x75px. The pill stays 6.5rem — the height it
+   was before any of this — because a 75px image sits inside a 104px bar with room
+   to spare. Nothing downstream moves: the body padding-top and the homepage hero
+   padding both keep their original values. */
+@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{flex:none;width:13rem;height:6.5rem;padding-inline:.5rem;padding-block:0}.cm-logo__image{height:4.7rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
 /* The nav is a non-wrapping flex row, so it has a hard width budget. Adding the
    Second Opinion heading made ten items, which is tight at exactly 1280px where
    the desktop nav first appears. Tightening the type and padding across
@@ -137,9 +138,9 @@ const headerCss = String.raw`/* header */
    applies in this band, because ten nowrap labels is two more than the eight this
    header was originally laid out for. */
 @media(min-width:1280px) and (max-width:1535px){.cm-nav__link{padding-inline:.35rem;font-size:.84rem}}
-/* 13rem, comfortably clear of the 167px the halved artwork occupies. */
-@media(min-width:1536px){.cm-logo{width:13rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
-@media(min-width:1920px){.cm-logo{width:14rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}.cm-nav__contact{font-size:1.25rem;padding:0 .5rem 0 1.75rem}.cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}.cm-nav__contact .cm-arrow{width:1.25rem;height:1.25rem}}
+/* 14rem, comfortably clear of the 184px the artwork now occupies. */
+@media(min-width:1536px){.cm-logo{width:14rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
+@media(min-width:1920px){.cm-logo{width:15rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}.cm-nav__contact{font-size:1.25rem;padding:0 .5rem 0 1.75rem}.cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}.cm-nav__contact .cm-arrow{width:1.25rem;height:1.25rem}}
 @media(max-width:1023px){
   .cm-logo{width:clamp(10.5rem,42vw,13rem);height:4.25rem;padding:.25rem .85rem}
   .cm-logo__image{height:3.6rem}
