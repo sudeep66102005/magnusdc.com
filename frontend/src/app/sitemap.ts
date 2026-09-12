@@ -34,7 +34,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/laboratory",
     "/specialties",
     "/health-packages",
-    "/services",
     "/medical-library",
     "/patient-info",
     "/patient-info/appointment-booking",

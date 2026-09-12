@@ -71,14 +71,14 @@ const groups: Group[] = [
   },
   {
     tab: "Imaging",
+    /* One photo only, by request: the uploaded "default mri" pair is the sole
+       imaging image. The two pairs that were here before — "mri for landing
+       page" and "machine operating human" — are gone. The former two files were
+       deleted; the latter two are still on disk but no longer referenced. */
     images: [
       {
-        desktop: "mri for landing page desktop view.jpeg",
-        mobile: "mri for landing page  mobile view.jpeg",
-      },
-      {
-        desktop: "machine operating human destop view.jpeg",
-        mobile: "machine operating human mobile view.jpeg",
+        desktop: "default mri images for desktop view.jpeg",
+        mobile: "default mri images for mobile view.jpeg",
       },
     ],
     lines: [
