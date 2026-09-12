@@ -132,13 +132,37 @@ const headerCss = String.raw`/* header */
    The logo pill is now 80px wider than it was, which it takes from the same row
    as ten nav items. The 1280-1439px nav sizing tightens a little further to
    compensate. */
-@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{width:22rem;height:8.5rem;padding-inline:.5rem;padding-block:0}.cm-logo__image{height:8.5rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
+/* flex:none is the important part here.
+
+   .cm-logo sits in .cm-header__left, a flex row it shares with the nav, and it
+   had no shrink guard — so it inherited flex-shrink:1 and gave up width whenever
+   the row ran short. The nav cannot give any back: .cm-nav__link is
+   white-space:nowrap, so its width is fixed by its labels. The logo was the only
+   thing in that row that could yield, and it did.
+
+   That is why adding the Second Opinion heading made the logo visibly smaller,
+   and why raising width from 14rem through 22rem kept being partly absorbed —
+   the width was never the binding constraint, the shrink was. flex:none makes
+   the declared width hold. */
+@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{flex:none;width:22rem;height:8.5rem;padding-inline:.5rem;padding-block:0}.cm-logo__image{height:8.5rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
 /* The nav is a non-wrapping flex row, so it has a hard width budget. Adding the
    Second Opinion heading made ten items, which is tight at exactly 1280px where
    the desktop nav first appears. Tightening the type and padding across
    1280-1439px buys back more room than the new item costs; from 1536px up the
    rule below restores the larger size, where there is space for it. */
-@media(min-width:1280px) and (max-width:1439px){.cm-nav__link{padding-inline:.22rem;font-size:.76rem}}
+/* Now that the logo no longer yields, the nav has to fit in whatever is left,
+   and at 1280px there is not much: the 7.5rem left indent and 2.5rem right
+   padding take 160px before anything is placed, leaving about 1120px for the
+   logo, ten nowrap labels and the Contact pill.
+
+   So the full-size logo applies from 1536px, and this band gets 19rem — 288px of
+   content, a 288x117px logo. Still larger than the 255x104px it was, without
+   asking the row for width it does not have.
+
+   To get the full 22rem here as well, the nav needs one fewer top-level heading:
+   folding Second Opinion back into the Diagnostics menu returns roughly 130px,
+   which covers the difference. That is a content decision, not a layout one. */
+@media(min-width:1280px) and (max-width:1535px){.cm-logo{width:19rem}.cm-nav__link{padding-inline:.22rem;font-size:.76rem}}
 /* 23rem here, and 24rem at 1920px below. Both need to clear the 334px the
    artwork now occupies — the old 20rem at 1920px would have clamped it. */
 @media(min-width:1536px){.cm-logo{width:23rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
