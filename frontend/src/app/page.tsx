@@ -43,9 +43,13 @@ const HERO = {
      for anything that needs the sentence in one piece. */
   descLines: ["Advanced diagnostics.", "Expert specialists.", "Care that understands you."],
   stats: [
-    { value: "4K+", label: "Happy Patients", icon: "users" as const, tone: "sky" },
+    /* "10L+" rather than "10 Lakh+": these four cards are a fixed 4-across grid,
+       which leaves about 69px per figure on a 360px phone. "10 Lakh+" needs
+       roughly 88px and would wrap, taking all four cards taller with it. The
+       abbreviation also matches the "4K+" convention this replaces. */
+    { value: "10L+", label: "Patients Served", icon: "users" as const, tone: "sky" },
     { value: "50+", label: "Expert Specialists", icon: "badge" as const, tone: "violet" },
-    { value: "200+", label: "Tests & Profiles", icon: "shield" as const, tone: "green" },
+    { value: "1000+", label: "Tests & Profiles", icon: "shield" as const, tone: "green" },
     { value: "24/7", label: "Customer Support", icon: "clock" as const, tone: "amber" },
   ],
   actions: [
@@ -80,20 +84,6 @@ const WHY = {
   ],
 };
 
-const tImg = (f: string) => encodeURI(`${BP}/assets/uploads/testimonials/${f}`);
-
-const RATING = {
-  value: 5,
-  label: "Trusted by 4K+ customers",
-  /* Decorative: the row is aria-hidden and the rating is announced by Stars,
-     so these carry empty alt text rather than invented patient names. */
-  faces: [
-    { src: tImg("images one].jpeg") },
-    { src: tImg("testimonial 2.jpeg") },
-    { src: tImg("testimonila 3.jpeg") },
-  ],
-};
-
 const SERVICES_INTRO = {
   eyebrow: "Our Services",
   /* From the phone design. `description` used to sit here and was never
@@ -119,10 +109,14 @@ const SERVICE_CARDS = [
     ],
   },
   {
-    title: "Superbirth",
-    /* Drives the .cm-svc--wf layout. It used to be inferred from the title
-       containing "Fetal", which the rename would have silently broken —
-       taking the narrow head, the image shift and the phone rules with it. */
+    title: "Women\u2019s & Fetal Medicine",
+    /* Keeps "Women's & Fetal" whole on the first line; `title` above is still
+       the single-string name used for the key and anywhere else. */
+    titleLines: ["Women\u2019s & Fetal", "Medicine"],
+    /* Drives the .cm-svc--wf layout. Kept as an explicit flag rather than going
+       back to inferring it from the title containing "Fetal" — that inference is
+       what a rename silently broke before, taking the narrow head, the image
+       shift and the phone rules with it. */
     variant: "wf",
     href: "/specialties",
     /* One photo at both sizes, by request — the <picture> below still emits a
@@ -232,8 +226,8 @@ html:has(.cm-root){scroll-behavior:smooth}
       negative margins cancel the layout effect. */
 .cm-lead__accent{display:block;width:fit-content;font-size:1.25em;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-style:italic;font-weight:800;letter-spacing:-.005em;padding:.1em .14em .13em 0;margin-top:-.1em;margin-bottom:-.13em;background:linear-gradient(90deg,#31B4F4 0%,#142F86 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 /* "in every diagnosis" carries the same type treatment as the service card
-   headings (.cm-svc__title, i.e. the "Advanced Imaging"/"Superbirth" look):
-   Inter 700 upright, tight -.025em tracking, 1.05 leading. */
+   headings (.cm-svc__title, i.e. the "Advanced Imaging" look): Inter 700
+   upright, tight -.025em tracking, 1.05 leading. */
 .cm-lead__rest{display:block;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-style:normal;font-weight:700;line-height:1.05;letter-spacing:-.025em}
 .cm-body{font-size:1rem;line-height:1.35;font-weight:400;margin:0}
 
@@ -272,23 +266,6 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-hero__copy{position:relative;z-index:3;display:flex;flex-direction:column;gap:0;max-width:44.75rem;padding-top:2.5rem}
 .cm-hero__head{display:flex;flex-direction:column;gap:0}
 
-/* rating badge */
-.cm-rating{display:inline-flex;align-items:center;gap:.85rem;align-self:flex-start;margin:0 0 1.35rem;text-decoration:none!important}
-.cm-rating__faces{display:inline-flex;align-items:center}
-.cm-rating__face{display:grid;place-items:center;width:2.1rem;height:2.1rem;border-radius:999px;border:2px solid #FFFFFF;color:#FFFFFF;font-size:.8rem;font-weight:700;line-height:1}
-.cm-rating__face+.cm-rating__face{margin-left:-.65rem}
-.cm-rating__face--rose{background:#C15367}
-.cm-rating__face--green{background:#5AA63B}
-.cm-rating__face--blue{background:#3158A6}
-.cm-rating__face--more{background:#1AA0A8}
-.cm-rating__text{display:inline-flex;flex-direction:column;gap:.18rem}
-.cm-rating__label{font-size:.9rem;font-weight:600;color:var(--ink)}
-.cm-stars{position:relative;display:inline-block;line-height:0}
-.cm-stars__row{display:inline-flex;gap:.06rem;color:#F58220}
-.cm-stars__row svg{width:.95rem;height:.95rem;flex:none;fill:transparent;stroke:currentColor;stroke-width:1.6}
-.cm-stars__row--on{position:absolute;inset:0 auto 0 0;overflow:hidden;white-space:nowrap}
-.cm-stars__row--on svg{fill:currentColor}
-@media(min-width:1024px){.cm-rating{margin-bottom:1.6rem}.cm-rating__label{font-size:.95rem}}
 .cm-hero__desc{max-width:18rem;margin-top:4.25rem;color:var(--subtle);border-left:2px solid var(--lime);padding-left:1rem}
 .cm-hero__actions{display:flex;flex-direction:row;flex-wrap:nowrap;gap:.75rem;position:relative;z-index:3;margin-top:4rem}
 .cm-hero__actions .cm-btn{flex:0 1 10.5rem;width:auto;height:2.875rem;padding:0 .85rem;font-size:.95rem}
@@ -320,11 +297,6 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-hstat__ico svg{width:1.3rem;height:1.3rem}
 .cm-btn__ico svg{width:1.15rem;height:1.15rem}
 
-/* Photo avatars in the rating row, at every width. */
-.cm-rating__face--photo{overflow:hidden;padding:0;background:#FFFFFF}
-.cm-rating__face--photo img{display:block;width:100%;height:100%;border-radius:999px;object-fit:cover}
-.cm-rating__face--more{background:var(--green);font-size:.7rem;letter-spacing:-.02em}
-
 /* ---- Hero, phone and tablet: the supplied design ----------------------------
    Scoped to <=1023px on purpose. The desktop hero is pixel-placed with absolute
    positions and its own chip rail, and the stat cards have nowhere to go in
@@ -338,13 +310,6 @@ html:has(.cm-root){scroll-behavior:smooth}
      behind it can only show as a seam along the canvas boundary. */
   .cm-hero{background:#FFFFFF}
 
-  /* Rating row: gold stars, one grey line of copy. */
-  .cm-rating{gap:.7rem}
-  .cm-rating__face{width:2.5rem;height:2.5rem;font-size:.85rem;box-shadow:0 2px 8px rgb(20 47 134 / .18)}
-  .cm-rating__face+.cm-rating__face{margin-left:-.7rem}
-  .cm-rating__label{font-size:.9rem;font-weight:500;color:rgb(20 47 134 / .72)}
-  .cm-stars__row{color:#F5A623}
-  .cm-stars__row svg{width:1.05rem;height:1.05rem}
 
   /* Short accent rule under the heading, in place of the desc border. */
   .cm-hero__dash{display:block;width:2.6rem;height:.28rem;margin:1.6rem 0 0;border-radius:999px;background:var(--lime);flex:none}
@@ -399,10 +364,6 @@ html:has(.cm-root){scroll-behavior:smooth}
 
   .cm-hero__copy {
     padding-top: 0;
-  }
-
-  .cm-rating {
-    margin-bottom: 1.25rem;
   }
 
   .cm-lead {
@@ -529,13 +490,6 @@ html:has(.cm-root){scroll-behavior:smooth}
      heading and the stat cards. */
   .cm-hero__copy{position:relative;z-index:3;top:auto;left:auto;transform:none;max-width:47rem;padding-top:0}
 
-  .cm-rating{gap:.8rem}
-  .cm-rating__face{width:2.9rem;height:2.9rem;font-size:.95rem;box-shadow:0 3px 10px rgb(20 47 134 / .2)}
-  .cm-rating__face+.cm-rating__face{margin-left:-.8rem}
-  .cm-rating__face--more{font-size:.8rem}
-  .cm-rating__label{font-size:1rem;font-weight:500;color:rgb(20 47 134 / .72)}
-  .cm-stars__row{color:#F5A623}
-  .cm-stars__row svg{width:1.15rem;height:1.15rem}
 
   .cm-hero__dash{display:block;width:3.2rem;height:.3rem;margin:2rem 0 0;border-radius:999px;background:var(--lime);flex:none}
   .cm-hero__desc{margin-top:1.5rem;padding-left:0;border-left:0}
@@ -810,12 +764,20 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-services__intro{display:flex;flex-direction:column;gap:1rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center;align-items:center}
 /* Subtitle is phone-only, so desktop keeps exactly the label it has now. */
 .cm-services__sub{display:none}
+/* Sized to match the "Our Doctors" heading — the same clamp as .cm-team__title
+   in doctors-section.tsx. Kept in sync by hand: that heading lives in another
+   component with its own stylesheet, so there is no shared token to point at.
+   Still an eyebrow in every other respect, so it stays uppercase; only the size
+   was asked for. */
+.cm-services__eyebrow{font-size:clamp(2rem,5vw,3.25rem);line-height:1.06}
 @media(max-width:767px){
   /* The design shows a dash, then OUR SERVICES larger than a normal eyebrow,
      then the subtitle. */
   .cm-services__intro{gap:.6rem;margin-bottom:1.75rem}
   .cm-services__intro::before{content:"";width:2rem;height:2px;border-radius:999px;background:var(--lime)}
-  .cm-services__eyebrow{font-size:1.3rem;letter-spacing:.04em;line-height:1.15}
+  /* Size comes from the base rule now, so it matches "Our Doctors" here too.
+     Only the wider tracking is phone-specific. */
+  .cm-services__eyebrow{letter-spacing:.04em}
   .cm-services__sub{display:block;margin:0;font-size:.9rem;line-height:1.45;font-weight:400;color:rgb(20 47 134 / .68)}
 }
 /* 106rem put two 836px cards on screen with ~110px of margin. 10% off that
@@ -921,7 +883,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-stat dt{font-size:.875rem;font-weight:400}
 /* one font and one colour throughout; the three phrases differ only by dark italic */
 /* Inter, the same face as the service card headings ("Advanced Imaging",
-   "Superbirth"). The whole site is on Inter now. */
+   "Women's & Fetal Medicine"). The whole site is on Inter now. */
 /* Bold throughout. 700 is a real loaded weight (see layout.tsx), not a weight
    the browser fakes by smearing 400, so the strokes stay clean at the 2.25rem
    desktop size. The .accent spans inherit weight, so the whole paragraph is one
@@ -1417,27 +1379,6 @@ if(!window.__cmBoot){
 } else { window.__cmBoot.boot(); }
 `;
 
-const STAR_PATH =
-  "m12 2.7 2.82 5.72 6.31.92-4.56 4.44 1.08 6.29L12 17.1l-5.65 2.97 1.08-6.29-4.56-4.44 6.31-.92L12 2.7Z";
-
-function Stars({ value }: { value: number }) {
-  const pct = `${Math.max(0, Math.min(5, value)) * 20}%`;
-  return (
-    <span className="cm-stars" role="img" aria-label={`${value} out of 5 stars`}>
-      <span className="cm-stars__row" aria-hidden="true">
-        {Array.from({ length: 5 }, (_, i) => (
-          <svg key={i} viewBox="0 0 24 24" focusable="false"><path d={STAR_PATH} /></svg>
-        ))}
-      </span>
-      <span className="cm-stars__row cm-stars__row--on" style={{ width: pct }} aria-hidden="true">
-        {Array.from({ length: 5 }, (_, i) => (
-          <svg key={i} viewBox="0 0 24 24" focusable="false"><path d={STAR_PATH} /></svg>
-        ))}
-      </span>
-    </span>
-  );
-}
-
 function Arrow() {
   return (
     <svg className="cm-arrow" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -1505,27 +1446,6 @@ export default function HomePage() {
       <section id="hero" className="cm-section cm-panel cm-round-b cm-hero">
         <div className="cm-hero__inner cm-shell">
           <div className="cm-hero__copy">
-            <a
-              className="cm-rating"
-              href={siteConfig.googleReviews.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-rise
-            >
-              <span className="cm-rating__faces" aria-hidden="true">
-                {RATING.faces.map((f) => (
-                  <span key={f.src} className="cm-rating__face cm-rating__face--photo">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={f.src} alt="" loading="lazy" decoding="async" />
-                  </span>
-                ))}
-                <span className="cm-rating__face cm-rating__face--more">4K+</span>
-              </span>
-              <span className="cm-rating__text">
-                <Stars value={RATING.value} />
-                <span className="cm-rating__label">{RATING.label}</span>
-              </span>
-            </a>
             <div className="cm-hero__head">
               <h1 className="cm-lead">
                 <span className="cm-lead__accent" data-rise>{HERO.titleAccent}</span>
