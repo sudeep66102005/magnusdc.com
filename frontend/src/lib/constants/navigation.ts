@@ -86,6 +86,10 @@ export const mainNav: NavItem[] = [
         label: "Advanced Procedures (EEG, ENMG, etc.)",
         href: "/diagnostics/advanced-procedures",
       },
+      {
+        label: "Radiology Second Opinion",
+        href: "/diagnostics/radiology-second-opinion",
+      },
     ],
   },
   {
