@@ -894,7 +894,11 @@ html:has(.cm-root){scroll-behavior:smooth}
 /* one font and one colour throughout; the three phrases differ only by dark italic */
 /* Inter, the same face as the service card headings ("Advanced Imaging",
    "Superbirth"). The whole site is on Inter now. */
-.cm-about__para{margin:0;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-size:1.375rem;font-style:normal;font-weight:400;line-height:1.35;letter-spacing:-.015em;color:var(--ink)}
+/* Bold throughout. 700 is a real loaded weight (see layout.tsx), not a weight
+   the browser fakes by smearing 400, so the strokes stay clean at the 2.25rem
+   desktop size. The .accent spans inherit weight, so the whole paragraph is one
+   uniform thickness. */
+.cm-about__para{margin:0;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-size:1.375rem;font-style:normal;font-weight:700;line-height:1.35;letter-spacing:-.015em;color:var(--ink)}
 /* No emphasis: "Koramangala", "Imaging, laboratory" and "right specialist" read
    at the same size, weight and colour as the sentence around them. Everything
    inherits, so the fragments are indistinguishable from plain text.
