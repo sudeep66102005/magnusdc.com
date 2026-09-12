@@ -895,9 +895,12 @@ html:has(.cm-root){scroll-behavior:smooth}
 /* Inter, the same face as the service card headings ("Advanced Imaging",
    "Superbirth"). The whole site is on Inter now. */
 .cm-about__para{margin:0;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-size:1.375rem;font-style:normal;font-weight:400;line-height:1.35;letter-spacing:-.015em;color:var(--ink)}
-/* Highlighted words: sky blue and bold, no italic. Was italic and near-black
-   (#0A1633), which read as a different typeface mid-sentence. */
-.cm-about__para .accent{font-family:inherit;font-style:normal;font-weight:700;color:var(--lime)}
+/* No emphasis: "Koramangala", "Imaging, laboratory" and "right specialist" read
+   at the same size, weight and colour as the sentence around them. Everything
+   inherits, so the fragments are indistinguishable from plain text.
+   The accent:true flags stay in the ABOUT data and the spans are still emitted,
+   so restoring emphasis is a change to this one rule and nothing else. */
+.cm-about__para .accent{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;letter-spacing:inherit;color:inherit}
 .cm-about__right{display:flex;flex-direction:column;gap:2rem}
 .cm-about__actions{display:flex;flex-wrap:wrap;gap:1rem}
 @media(min-width:768px){.cm-about__banner{height:24rem}.cm-about__para{font-size:1.75rem}}
