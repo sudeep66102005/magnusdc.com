@@ -16,5 +16,5 @@ export const metadata: Metadata = {
  * site header is fixed and would otherwise sit over the filter.
  */
 export default function DoctorsPage() {
-  return <DoctorsSection showFilter firstOnPage />;
+  return <DoctorsSection showSearch showFilter firstOnPage />;
 }
