@@ -34,6 +34,32 @@ const css = String.raw`
 .cm-team__head{display:flex;flex-direction:column;align-items:center;gap:.85rem;max-width:56rem;margin:0 auto 2.5rem;text-align:center}
 .cm-team__title{margin:0;font-size:clamp(2rem,5vw,3.25rem);line-height:1.06;font-weight:700;letter-spacing:-.01em;color:#142F86}
 
+/* Search field, above the filter rail. Same 84rem width as the rail and the
+   card grid, so all three share an edge. */
+.cm-docsearch{width:min(100%,84rem);margin:0 auto .9rem}
+.cm-docsearch__field{display:flex;align-items:center;gap:.65rem;height:3.25rem;padding:0 1rem;border:1px solid rgb(20 47 134 / .14);border-radius:999px;background:#FFFFFF;cursor:text;transition:border-color .18s,box-shadow .18s}
+/* :focus-within, not :focus — the focus lands on the input inside the label. */
+.cm-docsearch__field:hover{border-color:#31B4F4}
+.cm-docsearch__field:focus-within{border-color:#31B4F4;box-shadow:0 0 0 3px rgb(49 180 244 / .18)}
+.cm-docsearch__icon{flex:none;display:grid;place-items:center;color:rgb(20 47 134 / .55)}
+.cm-docsearch__icon svg{width:1.15rem;height:1.15rem}
+/* font:inherit so the field is not left in the browser default face; appearance
+   and the WebKit decorations are cleared because the clear button here is our
+   own, and Safari would otherwise draw a second one beside it. */
+.cm-docsearch__input{flex:1;min-width:0;height:100%;padding:0;border:0;outline:none;background:none;font:inherit;font-size:1rem;color:#142F86;-webkit-appearance:none;appearance:none}
+.cm-docsearch__input::placeholder{color:rgb(20 47 134 / .45)}
+.cm-docsearch__input::-webkit-search-cancel-button,.cm-docsearch__input::-webkit-search-decoration{-webkit-appearance:none;appearance:none}
+.cm-docsearch__clear{flex:none;display:grid;place-items:center;width:1.9rem;height:1.9rem;padding:0;border:0;border-radius:999px;background:rgb(20 47 134 / .07);color:#142F86;font:inherit;cursor:pointer;transition:background .18s}
+.cm-docsearch__clear:hover{background:rgb(20 47 134 / .14)}
+.cm-docsearch__clear svg{width:1rem;height:1rem}
+.cm-docsearch__count{min-height:1.25rem;margin:.55rem 0 0;padding-left:1rem;font-size:.85rem;font-weight:500;color:rgb(20 47 134 / .6)}
+
+/* Shown in place of the grid when nothing matches. */
+.cm-docs__empty{width:min(100%,84rem);margin-inline:auto;padding:3rem 1.25rem;border:1px dashed rgb(20 47 134 / .18);border-radius:14px;text-align:center}
+.cm-docs__empty-lead{margin:0;font-size:1.05rem;line-height:1.5;color:#142F86}
+.cm-docs__empty-lead strong{font-weight:700}
+.cm-docs__empty-acts{display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;margin-top:1.15rem}
+
 /* Filter rail. It scrolls horizontally and the chevrons nudge it; each chevron
    hides itself once the rail reaches that edge. */
 .cm-docfilter{position:relative;display:flex;align-items:center;gap:.5rem;width:min(100%,84rem);margin:0 auto 1.75rem}
@@ -140,6 +166,28 @@ function Arrow() {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
       <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.7" />
+      <path d="m16 16 4.5 4.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+      <path
+        d="M6 6l12 12M18 6L6 18"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -254,6 +302,12 @@ type DoctorsSectionProps = {
   limit?: number;
   /** Specialty filter rail. Pointless over a capped subset, so it defaults off. */
   showFilter?: boolean;
+  /**
+   * Search field above the filter rail. Separate from `showFilter` because the
+   * two are independent: searching a capped subset would be misleading, so this
+   * is only set on the full /doctors listing.
+   */
+  showSearch?: boolean;
   /** Renders a "view more" link when set and the list is capped. */
   moreHref?: string;
   moreLabel?: string;
@@ -268,11 +322,13 @@ export function DoctorsSection({
   title,
   limit,
   showFilter = false,
+  showSearch = false,
   moreHref,
   moreLabel = "View All Specialists",
   firstOnPage = false,
 }: DoctorsSectionProps) {
   const [active, setActive] = useState("All");
+  const [query, setQuery] = useState("");
   const railRef = useRef<HTMLDivElement | null>(null);
   const [atStart, setAtStart] = useState(true);
   const [atEnd, setAtEnd] = useState(true);
@@ -300,14 +356,48 @@ export function DoctorsSection({
     rail.scrollBy({ left: (dir === "prev" ? -1 : 1) * rail.clientWidth * 0.8, behavior: "smooth" });
   };
 
+  /* Split on whitespace and require every term to match, so "ortho ken" finds
+     Dr. Nischay Kenjige and word order does not matter. Matching runs over the
+     name, specialty, title and both qualification fields, which is why typing
+     "FRCS" or "nephrology" works as well as a name.
+
+     Terms match at word starts rather than anywhere in the string. A plain
+     substring test made short queries useless: "ent" pulled in nine consultants
+     by matching "Consultant" and "Interventional" instead of the ENT department.
+     A prefix still matches, so "ortho" finds both "Orthopedics" and
+     "Orthopaedic Surgeon" despite the different spellings. */
+  const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+  const matchesQuery = (doctor: Doctor) => {
+    if (terms.length === 0) return true;
+    const haystack = [
+      doctor.name,
+      doctor.specialty,
+      doctor.title,
+      doctor.keyQualification ?? "",
+      doctor.degrees ?? "",
+    ]
+      .join(" ")
+      .toLowerCase();
+    return terms.every((term) => {
+      // Escaped: the term is whatever was typed, and "(" or "+" would otherwise
+      // be read as regex syntax and throw.
+      const escaped = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      /* The word-start anchor only applies when the term opens with a word
+         character. "\b" cannot sit between a space and a bracket, so anchoring
+         "(ent)" would never match "MS (ENT)" — such a term falls back to a plain
+         substring test. */
+      const pattern = /^\w/.test(term) ? `\\b${escaped}` : escaped;
+      return new RegExp(pattern).test(haystack);
+    });
+  };
+
   // doctorsPhotoFirst, not doctors: photographed consultants lead and the
   // monogram placeholders trail. Filtering a pre-sorted list keeps that true
   // inside every specialty chip too, and makes the homepage's limited slice show
   // real faces rather than whichever six happen to be listed first.
-  const matching =
-    active === "All"
-      ? doctorsPhotoFirst
-      : doctorsPhotoFirst.filter((d) => d.specialty === active);
+  const matching = doctorsPhotoFirst
+    .filter((d) => active === "All" || d.specialty === active)
+    .filter(matchesQuery);
   const shown = limit ? matching.slice(0, limit) : matching;
   const showMore = Boolean(moreHref) && matching.length > shown.length;
 
@@ -318,6 +408,42 @@ export function DoctorsSection({
       {title ? (
         <div className="cm-team__head">
           <h2 className="cm-team__title">{title}</h2>
+        </div>
+      ) : null}
+
+      {showSearch ? (
+        <div className="cm-docsearch">
+          {/* A label wrapping the input, so the icon and clear button are inside
+              the hit area and tapping anywhere on the field focuses it. */}
+          <label className="cm-docsearch__field">
+            <span className="cm-docsearch__icon" aria-hidden="true"><SearchIcon /></span>
+            <input
+              type="search"
+              className="cm-docsearch__input"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search by name, specialty or qualification"
+              aria-label="Search doctors by name, specialty or qualification"
+              autoComplete="off"
+            />
+            {query ? (
+              <button
+                type="button"
+                className="cm-docsearch__clear"
+                onClick={() => setQuery("")}
+                aria-label="Clear search"
+              >
+                <CloseIcon />
+              </button>
+            ) : null}
+          </label>
+          {/* Always in the DOM, empty until a search runs: a live region has to
+              exist before it changes for the update to be announced. */}
+          <p className="cm-docsearch__count" role="status" aria-live="polite">
+            {terms.length > 0
+              ? `${matching.length} ${matching.length === 1 ? "doctor" : "doctors"} found`
+              : ""}
+          </p>
         </div>
       ) : null}
 
@@ -367,11 +493,34 @@ export function DoctorsSection({
         </div>
       ) : null}
 
-      <div className="cm-docs">
-        {shown.map((doctor) => (
-          <DoctorCard key={`${doctor.name}-${doctor.specialty}`} doctor={doctor} />
-        ))}
-      </div>
+      {/* Guarded on terms too: without a query an empty list is not a failed
+          search, and the copy below would read oddly with a blank term. */}
+      {shown.length === 0 && terms.length > 0 ? (
+        <div className="cm-docs__empty">
+          <p className="cm-docs__empty-lead">
+            No doctors match <strong>{query}</strong>
+            {active === "All" ? "" : ` in ${active}`}.
+          </p>
+          <div className="cm-docs__empty-acts">
+            <button type="button" className="cm-docchip" onClick={() => setQuery("")}>
+              Clear search
+            </button>
+            {/* Offered only when a chip is narrowing the results as well, since
+                that is the other reason a search can come back empty. */}
+            {active === "All" ? null : (
+              <button type="button" className="cm-docchip" onClick={() => setActive("All")}>
+                Search all specialties
+              </button>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="cm-docs">
+          {shown.map((doctor) => (
+            <DoctorCard key={`${doctor.name}-${doctor.specialty}`} doctor={doctor} />
+          ))}
+        </div>
+      )}
 
       {showMore && moreHref ? (
         <div className="cm-team__more-wrap">
