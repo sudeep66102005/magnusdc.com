@@ -57,6 +57,20 @@ const headerCss = String.raw`/* header */
 .cm-nav__item[data-escape-closed="true"] .cm-nav__dropdown{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(.4rem)}
 .cm-nav__item[data-escape-closed="true"] .cm-nav__chevron{transform:none}
 .cm-nav__dropdown ul{display:block;margin:0;padding:.45rem 0;list-style:none}
+/* Menus with more than eight entries lay out in two columns.
+
+   In one column, each entry is 3.5rem tall, so the Diagnostics menu's eleven
+   entries measured 630px — against a window of min(65vh, 36rem), which is only
+   499px on a 768px-tall screen. Entries ten and eleven therefore began below the
+   fold and could be reached only by scrolling inside the menu, which is why
+   Radiology Second Opinion looked as though it were missing from the header.
+   Two columns bring it to six rows, roughly 350-435px, so nothing is hidden.
+
+   Safe to widen: the desktop nav only renders from 1280px up, and max-width
+   still clamps the panel to the viewport. */
+.cm-nav__dropdown--wide{width:44rem}
+.cm-nav__dropdown--wide ul{display:grid;grid-template-columns:1fr 1fr}
+.cm-nav__dropdown--wide li:nth-child(odd) a{border-right:1px solid rgb(20 47 134 / .08)}
 .cm-nav__dropdown a{display:flex;align-items:center;justify-content:space-between;gap:1.25rem;min-height:3.5rem;padding:.85rem 1.25rem;border-bottom:1px solid rgb(20 47 134 / .08);color:#142F86;font-size:1rem;font-weight:700;line-height:1.35;transition:background .15s,color .15s}
 .cm-nav__dropdown li:last-child a{border-bottom:0}
 .cm-nav__dropdown a:hover,.cm-nav__dropdown a:focus-visible{background:rgb(49 180 244 / .1);color:#DA1C29}
@@ -173,7 +187,12 @@ export function SiteHeader() {
                       <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </Link>
-                  <div className="cm-nav__dropdown">
+                  {/* Long menus go two-column — see the --wide rule for why. */}
+                  <div
+                    className={`cm-nav__dropdown${
+                      item.children.length > 8 ? " cm-nav__dropdown--wide" : ""
+                    }`}
+                  >
                     <ul>
                       {item.children.map((child) => (
                         <li key={`${item.label}-${child.href}-${child.label}`}>
