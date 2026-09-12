@@ -27,9 +27,19 @@ export interface DiagnosticContent {
   summary: string;
   details: string;
   preparation?: string;
-  /** File name only, inside /assets/uploads/services. The base path and URI
-      encoding are applied at the point of use, as elsewhere in the app. */
+  /** A bare file name resolves inside /assets/uploads/services. A value
+      containing a slash is taken as relative to /assets/uploads instead, so an
+      image can be shared with another section rather than copied into this
+      folder. The base path and URI encoding are applied at the point of use, as
+      elsewhere in the app. */
   image: string;
+  /**
+   * Optional wide crop for the detail page hero, which is a landscape box
+   * (about 544x288) while the listing card is near-square (176x192). One file
+   * cannot serve both without losing about half of it to the crop, so an entry
+   * that has a separate wide version names it here. Falls back to `image`.
+   */
+  imageWide?: string;
   categories: DiagnosticCategory[];
   /**
    * What the test is commonly ordered for. Deliberately descriptive of the
@@ -43,7 +53,12 @@ export const diagnostics: DiagnosticContent[] = [
   {
     slug: "mri",
     name: "MRI (3T MRI)",
-    image: "mri image.webp",
+    /* The uploaded "default mri" pair, shared with the homepage loop rather than
+       duplicated into uploads/services. The square file goes to the near-square
+       listing card and the 16:9 one to the wide detail hero, which is what the
+       two files were delivered for. */
+    image: "events/default mri images for mobile view.jpeg",
+    imageWide: "events/default mri images for desktop view.jpeg",
     categories: ["Imaging", "Neuro", "Musculoskeletal"],
     usedFor: [
       "Brain and spine imaging, including stroke and seizure workup",
