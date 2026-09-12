@@ -65,6 +65,15 @@ jobs:
           fi
           echo "ok       no manual base path in any route href"
 
+      # The guard above catches a link with the wrong prefix. This catches a link
+      # to a route that is not there at all — which is how four links were left
+      # pointing at /services after that page was deleted. Routes are derived
+      # from the app directory and the same data files that feed
+      # generateStaticParams, so new pages need no change to the check.
+      - name: Check every internal link resolves to a real route
+        working-directory: frontend
+        run: python3 scripts/check-links.py
+
       - name: Install dependencies
         working-directory: frontend
         run: npm ci
