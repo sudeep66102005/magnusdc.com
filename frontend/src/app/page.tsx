@@ -894,13 +894,14 @@ html:has(.cm-root){scroll-behavior:smooth}
 /* one font and one colour throughout; the three phrases differ only by dark italic */
 /* Inter, the same face as the service card headings ("Advanced Imaging",
    "Superbirth"). The whole site is on Inter now. */
-/* Body copy, to spec: Inter 400 at 17px with 1.55 leading, #142F86 throughout.
-   One size at every breakpoint — the 768px and 1024px steps that took this to
-   28px and 36px are gone, as is the phone step, so nothing overrides it.
-   letter-spacing is normal rather than the old -.015em: negative tracking is a
-   display-type device that suited the previous 36px setting, but at 17px it
-   works against legibility. */
-.cm-about__para{margin:0;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-size:1.0625rem;font-style:normal;font-weight:400;line-height:1.55;letter-spacing:normal;color:#142F86}
+/* Inter 400, #142F86, 1.55 leading. Size is 3.1875rem — 3x the 1.0625rem this
+   was, as asked. At 51px in the 49.3125rem desktop column the paragraph runs to
+   8 lines, which is why .cm-about below had to grow: that section is a
+   fixed-height block with absolutely positioned children, so it does not expand
+   on its own and the text would have spilled onto the section beneath.
+   Phones get a capped fluid size instead (see the max-width:767px block) — a
+   literal 51px there wraps to 24 lines and stands about 1900px tall. */
+.cm-about__para{margin:0;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-size:3.1875rem;font-style:normal;font-weight:400;line-height:1.55;letter-spacing:normal;color:#142F86}
 /* The three highlighted fragments now match the surrounding sentence, since the
    spec calls for one weight and one colour across the whole paragraph. The
    accent:true flags stay in the ABOUT data and the spans are still emitted, so
@@ -910,7 +911,12 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-about__actions{display:flex;flex-wrap:wrap;gap:1rem}
 @media(min-width:768px){.cm-about__banner{height:24rem}}
 @media(min-width:1024px){
-  .cm-about{height:71.5rem;padding:0}
+  /* 92rem, up from 71.5rem. The children here are absolutely positioned, so
+     this height is the layout — it cannot be auto. The right column now
+     measures ~814px (8 lines of paragraph + the 8.375rem gap + the button row)
+     starting at top:37.75rem, which reaches 1418px; 92rem leaves ~54px under
+     it. Revisit if the paragraph text or this font size changes. */
+  .cm-about{height:92rem;padding:0}
   .cm-about__banner{position:absolute;top:2.5rem;left:2.5rem;width:85rem;height:31.25rem}
   .cm-about__content{position:absolute;top:37.75rem;left:2.375rem;width:85.125rem;margin:0;flex-direction:row;align-items:center;justify-content:space-between;gap:0}
   .cm-about__left{display:flex;flex-direction:column;gap:5.5rem;width:28rem}
@@ -1092,6 +1098,11 @@ html:has(.cm-root){scroll-behavior:smooth}
 
   /* ABOUT */
   .cm-about{padding:3.5rem 1.25rem}
+  /* The desktop 3x size is 51px, which on a 320px-wide phone column wraps to 24
+     lines — nearly two screens of one paragraph. This scales with the viewport
+     instead: ~24px on a 360px phone, up to 34px approaching the tablet
+     breakpoint. Swap in 3.1875rem here if the literal size is wanted. */
+  .cm-about__para{font-size:clamp(1.5rem,6.5vw,2.125rem)}
   .cm-stat dd{font-size:1.75rem}
   .cm-stat dt{font-size:.78rem}
 
