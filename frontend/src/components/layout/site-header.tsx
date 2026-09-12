@@ -103,6 +103,12 @@ const headerCss = String.raw`/* header */
 .cm-mobile .cm-nav__contact{width:100%;height:4.5rem;justify-content:space-between;padding:0 .35rem 0 1.5rem;font-size:1.25rem}
 .cm-mobile .cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}
 @media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{width:14rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
+/* The nav is a non-wrapping flex row, so it has a hard width budget. Adding the
+   Second Opinion heading made ten items, which is tight at exactly 1280px where
+   the desktop nav first appears. Tightening the type and padding across
+   1280-1439px buys back more room than the new item costs; from 1536px up the
+   rule below restores the larger size, where there is space for it. */
+@media(min-width:1280px) and (max-width:1439px){.cm-nav__link{padding-inline:.3rem;font-size:.8rem}}
 @media(min-width:1536px){.cm-logo{width:15rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
 @media(min-width:1920px){.cm-logo{width:20rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}.cm-nav__contact{font-size:1.25rem;padding:0 .5rem 0 1.75rem}.cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}.cm-nav__contact .cm-arrow{width:1.25rem;height:1.25rem}}
 @media(max-width:1023px){
