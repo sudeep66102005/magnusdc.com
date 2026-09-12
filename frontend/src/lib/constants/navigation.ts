@@ -93,6 +93,13 @@ export const mainNav: NavItem[] = [
     ],
   },
   {
+    /* Its own top-level heading, as asked, as well as staying in the Diagnostics
+       menu above. No children, so it renders as a plain link with a single-entry
+       menu — the same way About Us already behaves. */
+    label: "Second Opinion",
+    href: "/diagnostics/radiology-second-opinion",
+  },
+  {
     label: "Laboratory",
     href: "/laboratory",
     children: [
