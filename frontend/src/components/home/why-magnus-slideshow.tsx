@@ -28,15 +28,15 @@ type Group = { tab: string; images: Photo[]; lines: string[] };
 
 /**
  * Every photo here has a desktop and a mobile file, shot for the crop each one
- * needs — the exception is the building, delivered as a single file named for
- * use at both sizes. File names are reproduced exactly as uploaded, including
- * the double spaces in two of them, because that is what is on disk.
+ * needs — the exception is the building, a single 16:9 file used at both sizes.
+ * File names are reproduced exactly as uploaded, including the double spaces in
+ * two of them, because that is what is on disk.
  */
 const groups: Group[] = [
   {
     tab: "Our Centre",
     images: [
-      { desktop: "font face building for landing page bith desktop and mobiel.jpeg" },
+      { desktop: "magnus clinic front view of the building.jpeg" },
     ],
     lines: [
       "Koramangala, 4th Block.",
