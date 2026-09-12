@@ -67,7 +67,7 @@ const WHY = {
   lede: "Advanced technology. Expert care. A healthier tomorrow for you and your loved ones.",
   banner: encodeURI(asset("/assets/uploads/banners/second section of landing page why clarus magnus.jpeg")),
   /* Desktop only: the building, and the paragraph the design puts beside it. */
-  building: encodeURI(asset("/assets/uploads/events/font face building for landing page bith desktop and mobiel.jpeg")),
+  building: encodeURI(asset("/assets/uploads/events/magnus clinic front view of the building.jpeg")),
   para: "Built on 18 years of healthcare experience, Clarus Magnus Health & Diagnostics represents a new chapter \u2014 bringing together advanced diagnostics, specialist-led care and a modern patient experience.",
   script: "Better Health Brighter Tomorrows",
   stats: [
