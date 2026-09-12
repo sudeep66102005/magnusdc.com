@@ -37,7 +37,9 @@ const TABS = [
   { icon: Home, label: "Home", href: "/" },
   { icon: ClipboardList, label: "Diagnostics", href: "/diagnostics", active: true },
   { icon: CalendarDays, label: "Appointments", href: "/patient-info/appointment-booking" },
-  { icon: ChevronRight, label: "More", href: "/services" },
+  /* Was /services, which no longer exists. Specialties is the broadest page
+     left, so it is the closest fit for a "More" tab. */
+  { icon: ChevronRight, label: "More", href: "/specialties" },
 ];
 
 export default function DiagnosticsPage() {

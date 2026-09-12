@@ -41,9 +41,14 @@ export const mainNav: NavItem[] = [
   },
   {
     label: "Services",
-    href: "/services",
+    /* There is no services landing page — it was removed, along with the
+       "All Services" entry that pointed at it. This has to be the href of one
+       of the children below: site-header.tsx prepends a "<label> Overview" item
+       whenever no child matches the parent href, which would put back exactly
+       the kind of catch-all entry that is not wanted, aimed at a dead route.
+       Imaging is the match, so no Overview item is generated. */
+    href: "/diagnostics",
     children: [
-      { label: "All Services", href: "/services" },
       { label: "Imaging", href: "/diagnostics" },
       { label: "Laboratory", href: "/laboratory" },
       { label: "Specialist Care", href: "/specialties" },
