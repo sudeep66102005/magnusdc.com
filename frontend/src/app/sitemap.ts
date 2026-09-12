@@ -31,6 +31,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/doctors",
     "/diagnostics",
+    /* Its own route rather than an entry in the diagnostics data, so it is not
+       picked up by getAllDiagnosticSlugs below and has to be listed here. */
+    "/diagnostics/radiology-second-opinion",
     "/laboratory",
     "/specialties",
     "/health-packages",
