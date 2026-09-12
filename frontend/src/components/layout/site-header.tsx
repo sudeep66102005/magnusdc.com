@@ -113,60 +113,33 @@ const headerCss = String.raw`/* header */
 
    Only the desktop breakpoints change. The phone and tablet sizing below is
    untouched. */
-/* Logo up 30%: 255x104px to 334x136px.
+/* Logo halved: 334x136px down to 167x68px.
 
-   104px was the ceiling while the logo pill was 6.5rem, because that is what set
-   the bar height. So the pill itself grows to 8.5rem — 136px — and the image
-   with it. 136px tall means 334px wide at this 2.453 ratio, so the box needs
-   350px; 22rem gives 352px, 336px of it inside the padding.
+   flex:none stays, and it is the reason any of these numbers mean anything.
+   .cm-logo shares a flex row with the nav and had no shrink guard, so it
+   inherited flex-shrink:1 and surrendered width whenever the row ran short. The
+   nav cannot give any back — .cm-nav__link is white-space:nowrap, so its width
+   is fixed by its labels. The logo was the only item able to yield, which is why
+   earlier width increases kept being absorbed and why the size only became
+   predictable once this was set.
 
-   The nav pill stays 6.5rem. .cm-header__row centres them, so the shorter nav
-   sits mid-height against the taller logo rather than stretching to match, which
-   would have made the whole bar 136px of glass.
-
-   Two knock-on effects, both handled below: the bar's bottom edge moves from
-   120px to 152px, so the body padding-top that holds page content clear of the
-   fixed header rises to 10rem for these widths, and the homepage hero — which
-   opts out of that rule and sets its own top padding — gains the same 32px.
-
-   The logo pill is now 80px wider than it was, which it takes from the same row
-   as ten nav items. The 1280-1439px nav sizing tightens a little further to
-   compensate. */
-/* flex:none is the important part here.
-
-   .cm-logo sits in .cm-header__left, a flex row it shares with the nav, and it
-   had no shrink guard — so it inherited flex-shrink:1 and gave up width whenever
-   the row ran short. The nav cannot give any back: .cm-nav__link is
-   white-space:nowrap, so its width is fixed by its labels. The logo was the only
-   thing in that row that could yield, and it did.
-
-   That is why adding the Second Opinion heading made the logo visibly smaller,
-   and why raising width from 14rem through 22rem kept being partly absorbed —
-   the width was never the binding constraint, the shrink was. flex:none makes
-   the declared width hold. */
-@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{flex:none;width:22rem;height:8.5rem;padding-inline:.5rem;padding-block:0}.cm-logo__image{height:8.5rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
+   The pill returns to 6.5rem, the height it was before any of this, since a 68px
+   image has no use for a 136px bar. That also lets the body padding-top and the
+   homepage hero padding go back to their original values below. */
+@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{flex:none;width:12rem;height:6.5rem;padding-inline:.5rem;padding-block:0}.cm-logo__image{height:4.25rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
 /* The nav is a non-wrapping flex row, so it has a hard width budget. Adding the
    Second Opinion heading made ten items, which is tight at exactly 1280px where
    the desktop nav first appears. Tightening the type and padding across
    1280-1439px buys back more room than the new item costs; from 1536px up the
    rule below restores the larger size, where there is space for it. */
-/* Now that the logo no longer yields, the nav has to fit in whatever is left,
-   and at 1280px there is not much: the 7.5rem left indent and 2.5rem right
-   padding take 160px before anything is placed, leaving about 1120px for the
-   logo, ten nowrap labels and the Contact pill.
-
-   So the full-size logo applies from 1536px, and this band gets 19rem — 288px of
-   content, a 288x117px logo. Still larger than the 255x104px it was, without
-   asking the row for width it does not have.
-
-   To get the full 22rem here as well, the nav needs one fewer top-level heading:
-   folding Second Opinion back into the Diagnostics menu returns roughly 130px,
-   which covers the difference. That is a content decision, not a layout one. */
-@media(min-width:1280px) and (max-width:1535px){.cm-logo{width:19rem}.cm-nav__link{padding-inline:.22rem;font-size:.76rem}}
-/* 23rem here, and 24rem at 1920px below. Both need to clear the 334px the
-   artwork now occupies — the old 20rem at 1920px would have clamped it. */
-@media(min-width:1536px){.cm-logo{width:23rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
-@media(min-width:1920px){.cm-logo{width:24rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}.cm-nav__contact{font-size:1.25rem;padding:0 .5rem 0 1.75rem}.cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}.cm-nav__contact .cm-arrow{width:1.25rem;height:1.25rem}}
+/* The logo pill is 12rem now rather than 22rem, so it returns 160px to the row
+   and the nav no longer needs squeezing to .76rem. A mild tightening still
+   applies in this band, because ten nowrap labels is two more than the eight this
+   header was originally laid out for. */
+@media(min-width:1280px) and (max-width:1535px){.cm-nav__link{padding-inline:.35rem;font-size:.84rem}}
+/* 13rem, comfortably clear of the 167px the halved artwork occupies. */
+@media(min-width:1536px){.cm-logo{width:13rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
+@media(min-width:1920px){.cm-logo{width:14rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}.cm-nav__contact{font-size:1.25rem;padding:0 .5rem 0 1.75rem}.cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}.cm-nav__contact .cm-arrow{width:1.25rem;height:1.25rem}}
 @media(max-width:1023px){
   .cm-logo{width:clamp(10.5rem,42vw,13rem);height:4.25rem;padding:.25rem .85rem}
   .cm-logo__image{height:3.6rem}
@@ -184,12 +157,6 @@ const headerCss = String.raw`/* header */
 .cm-header a{text-decoration:none}
 body:not(:has(.cm-root)){padding-top:5.75rem}
 @media(min-width:1024px){body:not(:has(.cm-root)){padding-top:8rem}}
-/* From 1280px the logo pill is 8.5rem rather than 6.5rem, so the bar's bottom
-   edge sits at 152px instead of 120px. This keeps the same 8px of clearance
-   under it that 8rem gave before. Scoped to 1280px, not 1024px, because the
-   taller pill only applies from there — at 1024-1279px the bar is still 104px
-   and 8rem is still right. */
-@media(min-width:1280px){body:not(:has(.cm-root)){padding-top:10rem}}
 body:has(.cm-root) > header.sticky,body > header.sticky{display:none!important}
 `;
 
