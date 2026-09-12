@@ -102,14 +102,27 @@ const headerCss = String.raw`/* header */
 .cm-mobile__item--contact{border-bottom:0}
 .cm-mobile .cm-nav__contact{width:100%;height:4.5rem;justify-content:space-between;padding:0 .35rem 0 1.5rem;font-size:1.25rem}
 .cm-mobile .cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}
-@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{width:14rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
+/* The logo box gets 16rem and slimmer side padding, up from 14rem and 1.25rem.
+
+   .cm-logo__image asks for height:6rem — 96px — but it also carries
+   max-width:100%, and at this aspect ratio (1126/459 = 2.453) the artwork needs
+   236px of width to stand 96px tall. A 14rem box less 1.25rem of padding each
+   side left only 184px, so object-fit:contain quietly scaled it down to 75px:
+   22% shorter than its own CSS asked for, on every screen between 1280 and
+   1536px. 16rem less .5rem padding gives 240px, which clears the 236px it needs.
+
+   Only the desktop breakpoints change. The phone and tablet sizing below is
+   untouched. */
+@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{width:16rem;padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
 /* The nav is a non-wrapping flex row, so it has a hard width budget. Adding the
    Second Opinion heading made ten items, which is tight at exactly 1280px where
    the desktop nav first appears. Tightening the type and padding across
    1280-1439px buys back more room than the new item costs; from 1536px up the
    rule below restores the larger size, where there is space for it. */
 @media(min-width:1280px) and (max-width:1439px){.cm-nav__link{padding-inline:.3rem;font-size:.8rem}}
-@media(min-width:1536px){.cm-logo{width:15rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
+/* 17rem, up from 15rem: 15rem left the logo 15% short of its 6rem height here
+   too, and there is more room to give at this width than at 1280px. */
+@media(min-width:1536px){.cm-logo{width:17rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
 @media(min-width:1920px){.cm-logo{width:20rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}.cm-nav__contact{font-size:1.25rem;padding:0 .5rem 0 1.75rem}.cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}.cm-nav__contact .cm-arrow{width:1.25rem;height:1.25rem}}
 @media(max-width:1023px){
   .cm-logo{width:clamp(10.5rem,42vw,13rem);height:4.25rem;padding:.25rem .85rem}
