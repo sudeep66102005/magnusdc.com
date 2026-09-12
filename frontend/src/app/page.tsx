@@ -539,6 +539,15 @@ html:has(.cm-root){scroll-behavior:smooth}
   .cm-hero__button--secondary::before{background:linear-gradient(110deg,#FFFFFF 0%,rgb(49 180 244 / .16) 52%,#FFFFFF 100%)}
 }
 
+/* From 1280px the header logo pill is 8.5rem rather than 6.5rem, so the fixed
+   bar's bottom edge sits at 152px instead of 120px. The hero sets its own top
+   padding — it is the one page that opts out of the body padding-top in
+   site-header.tsx — so it needs the extra 2rem here, otherwise the copy column
+   would begin level with the bar instead of the 32px below it that it had. */
+@media(min-width:1280px){
+  .cm-hero__inner{padding-top:11.5rem}
+}
+
 /* WHY */
 /* Height comes from the content, not from the viewport. min-height:100lvh with
    place-items:center meant a ~440px block centred in a 1080px box, so the
