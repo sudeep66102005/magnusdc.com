@@ -9,7 +9,11 @@ import { diagnostics, getAllDiagnosticSlugs, getDiagnosticBySlug } from "@/lib/d
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 /* Asset URL, so the base path is applied by hand. Route hrefs below must not
    carry it — next/link adds it. */
-const img = (file: string) => encodeURI(`${BP}/assets/uploads/services/${file}`);
+/* Same rule as the listing: a bare name resolves inside uploads/services, and a
+   name containing a slash is relative to uploads/, so an image can be shared
+   with another section instead of being copied here. */
+const img = (file: string) =>
+  encodeURI(`${BP}/assets/uploads/${file.includes("/") ? file : `services/${file}`}`);
 
 interface DiagnosticPageProps {
   params: Promise<{ slug: string }>;
@@ -81,9 +85,11 @@ export default async function DiagnosticDetailPage({ params }: DiagnosticPagePro
               </div>
             </div>
 
+            {/* This box is landscape, so it takes the wide crop when the entry
+                has one. Everything else falls back to the single image. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={img(item.image)}
+              src={img(item.imageWide ?? item.image)}
               alt={item.name}
               className="h-56 w-full flex-none rounded-3xl object-cover shadow-[0_18px_44px_-24px_rgb(20_47_134/0.5)] sm:h-64 lg:h-72 lg:w-[34rem]"
             />

@@ -3,10 +3,16 @@ import { ArrowRight } from "lucide-react";
 import { diagnostics } from "@/lib/data/diagnostics";
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const UPLOADS = "/assets/uploads/services";
+const UPLOADS = "/assets/uploads";
 /* Asset URL, so the base path is applied by hand here — unlike the hrefs below,
-   which go through next/link and must not carry it. */
-const img = (file: string) => encodeURI(`${BP}${UPLOADS}/${file}`);
+   which go through next/link and must not carry it.
+
+   A bare file name resolves inside uploads/services, which is where all of these
+   images used to live. A name containing a slash is taken as relative to
+   uploads/ instead, so an entry can point at an image another section already
+   ships rather than duplicating the bytes into this folder. */
+const img = (file: string) =>
+  encodeURI(`${BP}${UPLOADS}/${file.includes("/") ? file : `services/${file}`}`);
 
 /**
  * The nine diagnostic services.
