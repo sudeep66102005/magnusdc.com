@@ -120,7 +120,23 @@ const firstStepOfGroup = groups.map((_, groupIndex) =>
   reel.findIndex((shot) => shot.groupIndex === groupIndex),
 );
 
-export function WhyMagnusSlideshow() {
+/**
+ * "section" is the standalone band this started as, with the copy pane and the
+ * phone reel. "embedded" is the desktop-only version that fills the building
+ * slot in the WHY section: the photo loop plus the tab labels along the bottom,
+ * and no descriptive copy at all.
+ *
+ * Both are rendered into the page and one is hidden per breakpoint, rather than
+ * picking between them in JS — a static export has no viewport width at build
+ * time, so a JS choice would mean a hydration mismatch or a flash of the wrong
+ * one. The hidden copy costs nothing worth avoiding: its IntersectionObserver
+ * never fires while it is display:none, so its timer stays parked, and both
+ * variants point at the same image URLs so the browser fetches each once.
+ */
+type Variant = "section" | "embedded";
+
+export function WhyMagnusSlideshow({ variant = "section" }: { variant?: Variant }) {
+  const embedded = variant === "embedded";
   const [step, setStep] = useState(0);
   const [playing, setPlaying] = useState(true);
   const sectionRef = useRef<HTMLElement | null>(null);
@@ -182,7 +198,14 @@ export function WhyMagnusSlideshow() {
   }, []);
 
   return (
-    <section id="why-magnus" className="cm-why-mag" aria-label="Inside Magnus" ref={sectionRef}>
+    <section
+      /* Only the standalone one takes the id — two elements sharing it would be
+         invalid, and nothing links to this anchor. */
+      id={embedded ? undefined : "why-magnus"}
+      className={`cm-why-mag ${embedded ? "cm-why-mag--embed" : "cm-why-mag--section"}`}
+      aria-label="Inside Magnus"
+      ref={sectionRef}
+    >
       <div className="cm-why-mag__frame" ref={frameRef}>
         <div className="cm-why-mag__shots" aria-hidden="true">
           {reel.map((shot, shotIndex) => (
@@ -198,13 +221,18 @@ export function WhyMagnusSlideshow() {
           {/* Phone only. The label sits on the photo, top left, and is the only
               copy there — the description lines and the tab rail are hidden at
               this width. aria-hidden because the same text is announced by the
-              heading in the copy pane below, which stays in the DOM. */}
-          <p className="cm-why-mag__label" aria-hidden="true">
-            {groups[activeGroup].tab}
-          </p>
+              heading in the copy pane below, which stays in the DOM.
+              The embedded variant is desktop-only, so it has no use for it. */}
+          {embedded ? null : (
+            <p className="cm-why-mag__label" aria-hidden="true">
+              {groups[activeGroup].tab}
+            </p>
+          )}
         </div>
 
-        {/* Phone only: position rail and step arrows, in place of the tab rail. */}
+        {/* Phone only: position rail and step arrows, in place of the tab rail.
+            Omitted when embedded, for the same reason as the label. */}
+        {embedded ? null : (
         <div className="cm-why-mag__nav">
           <span className="cm-why-mag__nav-rail" aria-hidden="true">
             <span
@@ -229,8 +257,15 @@ export function WhyMagnusSlideshow() {
             <NavArrow direction="next" />
           </button>
         </div>
+        )}
 
         <div className="cm-why-mag__body">
+          {/* The descriptive copy is left out of the embedded variant entirely
+              rather than hidden with CSS: those panes carry an h2 each and an
+              aria-live region, so keeping them would put a second set of
+              headings in the outline and have a hidden region announcing slide
+              changes. The tab labels below name each view on their own. */}
+          {embedded ? null : (
           <div className="cm-why-mag__copy" aria-live="polite">
             {visibleGroups.map(({ group, groupIndex }) => (
               <div
@@ -247,6 +282,7 @@ export function WhyMagnusSlideshow() {
               </div>
             ))}
           </div>
+          )}
 
           <div className="cm-why-mag__foot">
             <div className="cm-why-mag__tabs" role="tablist" aria-label="Inside Magnus">
