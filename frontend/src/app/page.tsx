@@ -212,14 +212,22 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(max-width:1023px){.cm-shell{width:100%}}
 .cm-eyebrow{font-size:.875rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--green);margin:0}
 .cm-lead{font-size:clamp(2.25rem,5.4vw,3.75rem);line-height:1.05;font-weight:700;letter-spacing:-.01em;margin:0}
-/* "Clarity". Italic bold Inter, painted with a two-colour sky-to-navy gradient
-   (#31B4F4 -> #142F86). The sky is held to 18% before the transition starts, so
-   the bright end reads as a colour rather than as a single blended midpoint.
-   -webkit-text-fill-color is the reliable partner to background-clip:text on
-   iOS Safari; color:transparent stays as the fallback for anything older.
-   drop-shadow, not text-shadow: the glyphs are transparent, so only a filter
-   can throw a shadow from the painted gradient. */
-.cm-lead__accent{display:block;font-size:1.25em;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-style:italic;font-weight:700;letter-spacing:-.02em;background:linear-gradient(100deg,#31B4F4 0%,#31B4F4 18%,#142F86 92%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 8px 22px rgb(49 180 244 / .26))}
+/* "Clarity", italic Inter painted with a left-to-right #31B4F4 -> #142F86 ramp.
+   Two things here are load-bearing, both consequences of background-clip:text —
+   the gradient is a *background*, so it is sized and positioned by the element's
+   box, not by the glyphs.
+
+   1. width:fit-content. As a plain display:block the span filled the 44.75rem
+      hero column, so the ~273px word only sampled the first 38% of a 716px
+      gradient and petered out at #2990D6 — the navy end was being painted onto
+      empty space to the right of the word. Shrinking the box to the text is
+      what makes both stated colours actually appear.
+   2. The padding/negative-margin pair. Inter's glyphs span ~1.21em but the line
+      box is 1.05em, so the paint box fell ~.08em short at each end and the
+      italic descender of the "y" lost its fill. The padding grows the paint box
+      to cover the glyphs (including the italic overhang on the right) and the
+      negative margins cancel the layout effect. */
+.cm-lead__accent{display:block;width:fit-content;font-size:1.25em;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-style:italic;font-weight:800;letter-spacing:-.005em;padding:.1em .14em .13em 0;margin-top:-.1em;margin-bottom:-.13em;background:linear-gradient(90deg,#31B4F4 0%,#142F86 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
 /* "in every diagnosis" carries the same type treatment as the service card
    headings (.cm-svc__title, i.e. the "Advanced Imaging"/"Superbirth" look):
    Inter 700 upright, tight -.025em tracking, 1.05 leading. */
