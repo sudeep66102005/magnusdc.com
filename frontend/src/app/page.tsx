@@ -91,14 +91,28 @@ const SERVICES_INTRO = {
   sub: "Comprehensive care at every stage of life",
 };
 
-const svcImg = (f: string) => encodeURI(`${BP}/assets/uploads/services/${f}`);
+/* A bare file name resolves inside uploads/services, where the service card art
+   lives. A name containing a slash is taken as relative to uploads/ instead, so
+   a card can point at an image another section already ships rather than having
+   a copy of it in this folder. Same rule as the diagnostics resolvers. */
+const svcImg = (f: string) =>
+  encodeURI(`${BP}/assets/uploads/${f.includes("/") ? f : `services/${f}`}`);
 
 const SERVICE_CARDS = [
   {
     title: "Advanced Imaging",
     href: "/diagnostics",
-    desktop: svcImg("desktop imaging image.jpeg"),
-    mobile: svcImg("mobile imaging image.jpeg"),
+    /* The MRI pair uploaded for this, shared with the loop further down rather
+       than duplicated into uploads/services.
+
+       Kept as a desktop/mobile pair rather than using the square file at both
+       sizes, because the loop already fetches exactly these two files for its
+       Imaging slide — so this card costs no additional bytes at either width.
+       The trade is the desktop crop: the 16:9 file loses 30% of its width in
+       this 752x608 box, where the square one would lose 19% of its height but
+       need a fresh 287 KB download on desktop. */
+    desktop: svcImg("events/default mri images for desktop view.jpeg"),
+    mobile: svcImg("events/default mri images for mobile view.jpeg"),
     items: [
       { label: "CT", icon: "ct" },
       { label: "MRI", icon: "mri" },
