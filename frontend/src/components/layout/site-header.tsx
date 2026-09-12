@@ -113,16 +113,27 @@ const headerCss = String.raw`/* header */
 
    Only the desktop breakpoints change. The phone and tablet sizing below is
    untouched. */
-@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{width:16rem;padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
+/* Logo a step longer again: 6.5rem tall instead of 6rem, which is as tall as it
+   can go without growing the bar itself — .cm-logo and .cm-nav are both 6.5rem,
+   so that is the bar height, and the .3rem of block padding was the only thing
+   keeping the artwork below it. Dropping that padding to zero gives the image
+   the full 104px, and 104px tall means 255px wide at this 2.453 ratio, so the
+   box goes to 17rem to clear it.
+
+   96px -> 104px tall, 236px -> 255px wide: about 8% longer.
+
+   Going beyond this means making the header bar taller, which also means
+   revisiting the body padding-top below that holds content clear of it. */
+@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{width:17rem;padding-inline:.5rem;padding-block:0}.cm-logo__image{height:6.5rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
 /* The nav is a non-wrapping flex row, so it has a hard width budget. Adding the
    Second Opinion heading made ten items, which is tight at exactly 1280px where
    the desktop nav first appears. Tightening the type and padding across
    1280-1439px buys back more room than the new item costs; from 1536px up the
    rule below restores the larger size, where there is space for it. */
 @media(min-width:1280px) and (max-width:1439px){.cm-nav__link{padding-inline:.3rem;font-size:.8rem}}
-/* 17rem, up from 15rem: 15rem left the logo 15% short of its 6rem height here
-   too, and there is more room to give at this width than at 1280px. */
-@media(min-width:1536px){.cm-logo{width:17rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
+/* 18rem here, a little more room than the 17rem at 1280px — the artwork needs
+   255px and this leaves 272px, so nothing clamps it even with wider padding. */
+@media(min-width:1536px){.cm-logo{width:18rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
 @media(min-width:1920px){.cm-logo{width:20rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}.cm-nav__contact{font-size:1.25rem;padding:0 .5rem 0 1.75rem}.cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}.cm-nav__contact .cm-arrow{width:1.25rem;height:1.25rem}}
 @media(max-width:1023px){
   .cm-logo{width:clamp(10.5rem,42vw,13rem);height:4.25rem;padding:.25rem .85rem}
