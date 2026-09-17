@@ -15,6 +15,10 @@ export default function AppointmentBookingPage() {
         eyebrow="Patient Info"
         title="Book Your Appointment"
         description="Fill in your details and our team will confirm your appointment shortly."
+        image={{
+          src: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&q=80",
+          alt: "Friendly medical receptionist ready to assist with appointment booking",
+        }}
       />
       <Section>
         <div className="mx-auto max-w-xl">

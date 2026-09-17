@@ -15,8 +15,6 @@ import { PageHero } from "@/components/shared/page-hero";
 import { siteConfig } from "@/lib/constants/site-config";
 
 export const metadata: Metadata = {
-  /* `absolute` because the root layout appends "| Clarus Magnus" to every title
-     via its template — a plain string would have produced the suffix twice. */
   title: { absolute: "Radiology Second Opinion | Clarus Magnus" },
   description:
     "Expert review of your MRI, CT, ultrasound and X-ray by experienced radiologists at Clarus Magnus, Koramangala.",
@@ -43,44 +41,24 @@ const studiesReviewed = [
     icon: ScanLine,
     modality: "MRI",
     studies: [
-      "Brain",
-      "Spine",
-      "Knee",
-      "Shoulder",
-      "Hip",
-      "Ankle",
-      "Wrist",
-      "Abdomen",
-      "Pelvis",
-      "Prostate",
-      "Whole Body MRI",
+      "Brain", "Spine", "Knee", "Shoulder", "Hip", "Ankle",
+      "Wrist", "Abdomen", "Pelvis", "Prostate", "Whole Body MRI",
     ],
   },
   {
     icon: ScanLine,
     modality: "CT Scan",
     studies: [
-      "Brain",
-      "Chest",
-      "Abdomen",
-      "Spine",
-      "CT Angiography",
-      "Trauma Imaging",
-      "HRCT Chest",
+      "Brain", "Chest", "Abdomen", "Spine",
+      "CT Angiography", "Trauma Imaging", "HRCT Chest",
     ],
   },
   {
     icon: Stethoscope,
     modality: "Ultrasound",
     studies: [
-      "Abdomen",
-      "Pelvis",
-      "Thyroid",
-      "Breast",
-      "Scrotum",
-      "Soft Tissue",
-      "Pregnancy Ultrasound",
-      "Fetal Medicine Studies",
+      "Abdomen", "Pelvis", "Thyroid", "Breast", "Scrotum",
+      "Soft Tissue", "Pregnancy Ultrasound", "Fetal Medicine Studies",
     ],
   },
   {
@@ -91,15 +69,9 @@ const studiesReviewed = [
 ];
 
 const expertise = [
-  "Musculoskeletal Imaging",
-  "Neuroimaging",
-  "Body Imaging",
-  "Women’s Imaging",
-  "Fetal Medicine",
-  "Emergency Radiology",
-  "Oncologic Imaging",
-  "Chest Imaging",
-  "Abdominal Imaging",
+  "Musculoskeletal Imaging", "Neuroimaging", "Body Imaging",
+  "Women's Imaging", "Fetal Medicine", "Emergency Radiology",
+  "Oncologic Imaging", "Chest Imaging", "Abdominal Imaging",
 ];
 
 const whySeek = [
@@ -130,7 +102,7 @@ const whyChooseUs = [
   {
     icon: ShieldCheck,
     title: "Subspecialty Expertise",
-    body: "Musculoskeletal imaging, neuroimaging, body imaging, fetal medicine, women’s imaging and emergency radiology are each covered by radiologists working in that area.",
+    body: "Musculoskeletal imaging, neuroimaging, body imaging, fetal medicine, women's imaging and emergency radiology are each covered by radiologists working in that area.",
   },
   {
     icon: Stethoscope,
@@ -149,14 +121,9 @@ const whatToProvide = [
   "The original radiology report, if available",
   "Relevant medical records",
   "Previous imaging studies for comparison, if available",
-  "Your treating doctor’s clinical notes, if available",
+  "Your treating doctor's clinical notes, if available",
 ];
 
-/* Answers are composed from the brief for this page and stay strictly within
-   it — no turnaround times, statistics or pricing are stated anywhere, because
-   none were supplied. Replace with the wording from
-   website_content_revised.docx when it is to hand; the structure will not need
-   to change. */
 const faqs = [
   {
     q: "Do I need to repeat my scan?",
@@ -182,7 +149,6 @@ const relatedTests = [
   { name: "Ultrasound", href: "/diagnostics/ultrasound" },
 ];
 
-/** Section heading, sized once so every block below matches. */
 function H2({ children }: { children: React.ReactNode }) {
   return (
     <h2 className="text-2xl font-bold leading-tight tracking-[-0.03em] text-[#142F86] sm:text-3xl">
@@ -191,7 +157,6 @@ function H2({ children }: { children: React.ReactNode }) {
   );
 }
 
-/** Bulleted item with the site's sky-blue tick. */
 function Tick({ children }: { children: React.ReactNode }) {
   return (
     <li className="flex items-start gap-3">
@@ -208,7 +173,15 @@ function Tick({ children }: { children: React.ReactNode }) {
 export default function RadiologySecondOpinionPage() {
   return (
     <>
-      <PageHero eyebrow="Diagnostics" title="Radiology Second Opinion" description={SUBHEAD} />
+      <PageHero
+        eyebrow="Diagnostics"
+        title="Radiology Second Opinion"
+        description={SUBHEAD}
+        image={{
+          src: "https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=800&q=80",
+          alt: "Radiologist reviewing MRI scans on a lightboard",
+        }}
+      />
 
       {/* ---- INTRO ------------------------------------------------------ */}
       <section className="bg-white py-14 lg:py-20">
@@ -231,7 +204,7 @@ export default function RadiologySecondOpinionPage() {
             <p>
               Reviews are carried out with subspecialty coverage across
               musculoskeletal imaging, neuroimaging, body imaging, fetal medicine,
-              women’s imaging and emergency radiology.
+              women's imaging and emergency radiology.
             </p>
           </div>
         </div>
@@ -249,9 +222,7 @@ export default function RadiologySecondOpinionPage() {
             <Tick>A reassessment of all the images, not only the conclusions drawn from them</Tick>
             <Tick>A review of the original report, where one is available</Tick>
             <Tick>Correlation with your clinical history</Tick>
-            <Tick>
-              Identification of additional or overlooked findings, where applicable
-            </Tick>
+            <Tick>Identification of additional or overlooked findings, where applicable</Tick>
             <Tick>Preparation of a comprehensive second opinion report</Tick>
           </ul>
           <p className="mt-7 rounded-2xl bg-white p-5 text-sm leading-6 text-[#142F86]/75 ring-1 ring-[#142F86]/10 sm:p-6 sm:text-base sm:leading-7">
@@ -268,9 +239,7 @@ export default function RadiologySecondOpinionPage() {
         <div className="mx-auto max-w-4xl px-5 sm:px-8">
           <H2>When Should You Consider a Second Opinion?</H2>
           <ul className="mt-6 grid gap-3.5 sm:grid-cols-2">
-            {whenToConsider.map((item) => (
-              <Tick key={item}>{item}</Tick>
-            ))}
+            {whenToConsider.map((item) => (<Tick key={item}>{item}</Tick>))}
           </ul>
         </div>
       </section>
@@ -281,10 +250,7 @@ export default function RadiologySecondOpinionPage() {
           <H2>Imaging Studies We Review</H2>
           <div className="mt-8 grid gap-5 md:grid-cols-2">
             {studiesReviewed.map(({ icon: Icon, modality, studies }) => (
-              <div
-                key={modality}
-                className="rounded-[1.5rem] bg-white p-6 shadow-[0_18px_48px_-38px_rgba(20,47,134,0.8)] sm:p-7"
-              >
+              <div key={modality} className="rounded-[1.5rem] bg-white p-6 shadow-[0_18px_48px_-38px_rgba(20,47,134,0.8)] sm:p-7">
                 <div className="flex items-center gap-3">
                   <span className="flex size-10 flex-none items-center justify-center rounded-full bg-[#31B4F4]/12 text-[#142F86]">
                     <Icon className="size-5" />
@@ -293,12 +259,7 @@ export default function RadiologySecondOpinionPage() {
                 </div>
                 <ul className="mt-5 flex flex-wrap gap-2">
                   {studies.map((s) => (
-                    <li
-                      key={s}
-                      className="rounded-full bg-[#31B4F4]/10 px-3 py-1.5 text-xs font-medium text-[#142F86]"
-                    >
-                      {s}
-                    </li>
+                    <li key={s} className="rounded-full bg-[#31B4F4]/10 px-3 py-1.5 text-xs font-medium text-[#142F86]">{s}</li>
                   ))}
                 </ul>
               </div>
@@ -313,17 +274,13 @@ export default function RadiologySecondOpinionPage() {
           <div>
             <H2>Our Areas of Expertise</H2>
             <ul className="mt-6 space-y-3.5">
-              {expertise.map((item) => (
-                <Tick key={item}>{item}</Tick>
-              ))}
+              {expertise.map((item) => (<Tick key={item}>{item}</Tick>))}
             </ul>
           </div>
           <div>
             <H2>Why Seek a Second Opinion?</H2>
             <ul className="mt-6 space-y-3.5">
-              {whySeek.map((item) => (
-                <Tick key={item}>{item}</Tick>
-              ))}
+              {whySeek.map((item) => (<Tick key={item}>{item}</Tick>))}
             </ul>
           </div>
         </div>
@@ -335,10 +292,7 @@ export default function RadiologySecondOpinionPage() {
           <H2>Why Choose Clarus Magnus?</H2>
           <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {whyChooseUs.map(({ icon: Icon, title, body }) => (
-              <div
-                key={title}
-                className="rounded-[1.5rem] bg-white p-6 shadow-[0_18px_48px_-38px_rgba(20,47,134,0.8)]"
-              >
+              <div key={title} className="rounded-[1.5rem] bg-white p-6 shadow-[0_18px_48px_-38px_rgba(20,47,134,0.8)]">
                 <span className="flex size-11 items-center justify-center rounded-full bg-[#31B4F4]/12 text-[#142F86]">
                   <Icon className="size-5" />
                 </span>
@@ -354,17 +308,12 @@ export default function RadiologySecondOpinionPage() {
       <section className="bg-white py-14 lg:py-20">
         <div className="mx-auto max-w-4xl px-5 sm:px-8">
           <H2>How to Request a Second Opinion</H2>
-          <p className="mt-5 text-base leading-7 text-[#142F86]/75 sm:text-lg sm:leading-8">
-            Please bring, or send, the following:
-          </p>
+          <p className="mt-5 text-base leading-7 text-[#142F86]/75 sm:text-lg sm:leading-8">Please bring, or send, the following:</p>
           <ul className="mt-6 space-y-3.5">
-            {whatToProvide.map((item) => (
-              <Tick key={item}>{item}</Tick>
-            ))}
+            {whatToProvide.map((item) => (<Tick key={item}>{item}</Tick>))}
           </ul>
           <p className="mt-7 rounded-2xl bg-[#31B4F4]/8 p-5 text-sm leading-6 text-[#142F86]/75 sm:p-6 sm:text-base sm:leading-7">
-            Our team will review the information you provide and advise you on the
-            expected turnaround time.
+            Our team will review the information you provide and advise you on the expected turnaround time.
           </p>
         </div>
       </section>
@@ -373,27 +322,16 @@ export default function RadiologySecondOpinionPage() {
       <section className="bg-[#31B4F4]/8 py-14 lg:py-20">
         <div className="mx-auto max-w-4xl px-5 sm:px-8">
           <H2>Frequently asked questions</H2>
-          {/* Native details/summary rather than the ui/accordion component: that
-              component has no "use client" directive and is used nowhere in the
-              site, so pulling it into this server page risked the build. A
-              disclosure element needs no JavaScript, keeps every answer in the
-              server-rendered HTML where search engines can read it, and is
-              keyboard accessible on its own. */}
           <div className="mt-7 divide-y divide-[#142F86]/12 overflow-hidden rounded-[1.5rem] bg-white ring-1 ring-[#142F86]/10">
             {faqs.map(({ q, a }) => (
               <details key={q} className="group px-6 py-5 sm:px-7">
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-left text-base font-bold text-[#142F86] [&::-webkit-details-marker]:hidden">
                   {q}
-                  <span
-                    aria-hidden="true"
-                    className="mt-0.5 flex size-6 flex-none items-center justify-center rounded-full bg-[#31B4F4]/12 text-[#142F86] transition group-open:rotate-45"
-                  >
+                  <span aria-hidden="true" className="mt-0.5 flex size-6 flex-none items-center justify-center rounded-full bg-[#31B4F4]/12 text-[#142F86] transition group-open:rotate-45">
                     <span className="text-lg leading-none">+</span>
                   </span>
                 </summary>
-                <p className="mt-3.5 max-w-3xl text-sm leading-6 text-[#142F86]/75 sm:text-base sm:leading-7">
-                  {a}
-                </p>
+                <p className="mt-3.5 max-w-3xl text-sm leading-6 text-[#142F86]/75 sm:text-base sm:leading-7">{a}</p>
               </details>
             ))}
           </div>
@@ -404,54 +342,32 @@ export default function RadiologySecondOpinionPage() {
       <section className="bg-white py-14 lg:py-20">
         <div className="mx-auto max-w-4xl px-5 sm:px-8">
           <div className="rounded-[1.75rem] bg-[#142F86] p-8 text-white sm:p-10">
-            <h2 className="text-2xl font-bold leading-tight tracking-[-0.03em] sm:text-3xl">
-              Book Your Second Opinion
-            </h2>
+            <h2 className="text-2xl font-bold leading-tight tracking-[-0.03em] sm:text-3xl">Book Your Second Opinion</h2>
             <p className="mt-4 max-w-2xl text-sm leading-6 text-white/75 sm:text-base sm:leading-7">
-              An expert, unbiased review of your imaging — so you can move forward
-              with clarity and confidence about what comes next.
+              An expert, unbiased review of your imaging — so you can move forward with clarity and confidence about what comes next.
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <Link
-                href="/patient-info/appointment-booking"
-                className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-[#142F86] transition hover:bg-[#31B4F4] hover:text-white"
-              >
-                Book Now
-                <ArrowRight className="size-4" />
+              <Link href="/patient-info/appointment-booking" className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-bold text-[#142F86] transition hover:bg-[#31B4F4] hover:text-white">
+                Book Now <ArrowRight className="size-4" />
               </Link>
-              <a
-                href={siteConfig.phone.href}
-                className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-white ring-1 ring-white/35 transition hover:ring-white"
-              >
-                <Phone className="size-4" />
-                {siteConfig.phone.display}
+              <a href={siteConfig.phone.href} className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-bold text-white ring-1 ring-white/35 transition hover:ring-white">
+                <Phone className="size-4" /> {siteConfig.phone.display}
               </a>
             </div>
           </div>
-
           <div className="mt-10">
             <h2 className="text-xl font-bold text-[#142F86]">Related tests</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
               {relatedTests.map((test) => (
-                <Link
-                  key={test.href}
-                  href={test.href}
-                  className="group flex items-start justify-between gap-3 rounded-xl bg-white p-4 ring-1 ring-[#142F86]/10 transition hover:ring-[#31B4F4]"
-                >
-                  <span className="text-sm font-bold text-[#142F86] group-hover:underline">
-                    {test.name}
-                  </span>
+                <Link key={test.href} href={test.href} className="group flex items-start justify-between gap-3 rounded-xl bg-white p-4 ring-1 ring-[#142F86]/10 transition hover:ring-[#31B4F4]">
+                  <span className="text-sm font-bold text-[#142F86] group-hover:underline">{test.name}</span>
                   <ArrowRight className="mt-0.5 size-4 flex-none text-[#142F86]/40 transition group-hover:text-[#142F86]" />
                 </Link>
               ))}
             </div>
           </div>
-
           <p className="mt-10 text-xs leading-relaxed text-[#142F86]/55">
-            This page describes a service we offer. It is general information, not
-            medical advice, and it is not a recommendation that you need this test —
-            your doctor decides which investigation is appropriate for your
-            symptoms.
+            This page describes a service we offer. It is general information, not medical advice, and it is not a recommendation that you need this test — your doctor decides which investigation is appropriate for your symptoms.
           </p>
         </div>
       </section>
