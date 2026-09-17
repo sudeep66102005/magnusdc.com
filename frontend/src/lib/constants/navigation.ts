@@ -41,12 +41,6 @@ export const mainNav: NavItem[] = [
   },
   {
     label: "Services",
-    /* There is no services landing page — it was removed, along with the
-       "All Services" entry that pointed at it. This has to be the href of one
-       of the children below: site-header.tsx prepends a "<label> Overview" item
-       whenever no child matches the parent href, which would put back exactly
-       the kind of catch-all entry that is not wanted, aimed at a dead route.
-       Imaging is the match, so no Overview item is generated. */
     href: "/diagnostics",
     children: [
       { label: "Imaging", href: "/diagnostics" },
@@ -93,9 +87,6 @@ export const mainNav: NavItem[] = [
     ],
   },
   {
-    /* Its own top-level heading, as asked, as well as staying in the Diagnostics
-       menu above. No children, so it renders as a plain link with a single-entry
-       menu — the same way About Us already behaves. */
     label: "Second Opinion",
     href: "/diagnostics/radiology-second-opinion",
   },
@@ -126,7 +117,7 @@ export const mainNav: NavItem[] = [
       { label: "Routine Health Packages", href: "/health-packages/checkup" },
       { label: "Diabetic Profiles", href: "/health-packages/diabetic" },
       { label: "Cardiac Packages", href: "/health-packages/cardiac" },
-      { label: "Women’s Health Packages", href: "/health-packages/womens-health" },
+      { label: "Women's Health Packages", href: "/health-packages/womens-health" },
       { label: "Reproductive Health", href: "/health-packages/reproductive-health" },
       { label: "Specialised Profiles", href: "/health-packages/specialised" },
       { label: "Corporate Health Packages", href: "/health-packages/corporate-health" },
@@ -139,14 +130,6 @@ export const mainNav: NavItem[] = [
     children: [
       { label: "Employee Health Checkups", href: "/for-corporates/employee-health-checkups" },
       { label: "Diagnostic Partnerships", href: "/for-corporates/diagnostic-partnerships" },
-    ],
-  },
-  {
-    label: "Patient Info",
-    href: "/patient-info",
-    children: [
-      { label: "Appointment Booking", href: "/patient-info/appointment-booking" },
-      { label: "Patient Support", href: "/patient-info/patient-support" },
     ],
   },
   {
@@ -188,7 +171,6 @@ export const footerNav = {
     { label: "About Us", href: "/about" },
     { label: "Services", href: "/diagnostics" },
     { label: "Locations", href: "/contact" },
-    { label: "Patient Info", href: "/patient-info" },
     { label: "Contact Us", href: "/contact" },
     { label: "Privacy Policy", href: "/privacy-policy" },
     { label: "Terms & Conditions", href: "/terms-and-conditions" },
