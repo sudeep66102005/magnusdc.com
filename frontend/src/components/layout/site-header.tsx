@@ -27,9 +27,6 @@ function Arrow() {
 const headerCss = String.raw`/* header */
 .cm-header{position:fixed;inset-inline:0;top:1rem;z-index:60;padding-inline:1rem;pointer-events:none}
 @media(min-width:768px){.cm-header{padding-inline:2.5rem}}
-/* Left only, matching .cm-hero__inner's 7.5rem so the logo lines up with the
-   copy below it. The right stays at 2.5rem — raising it would pull Contact Us
-   left, which is the opposite of shifting the page right. */
 @media(min-width:1024px){.cm-header{padding-left:7.5rem}}
 .cm-header__row{display:flex;align-items:center;justify-content:space-between;gap:.75rem}
 .cm-header__left{display:flex;min-width:0;align-items:center;gap:.75rem}
@@ -51,17 +48,6 @@ const headerCss = String.raw`/* header */
 .cm-nav__item[data-escape-closed="true"] .cm-nav__dropdown{opacity:0;visibility:hidden;pointer-events:none;transform:translateY(.4rem)}
 .cm-nav__item[data-escape-closed="true"] .cm-nav__chevron{transform:none}
 .cm-nav__dropdown ul{display:block;margin:0;padding:.45rem 0;list-style:none}
-/* Menus with more than eight entries lay out in two columns.
-
-   In one column, each entry is 3.5rem tall, so the Diagnostics menu's eleven
-   entries measured 630px — against a window of min(65vh, 36rem), which is only
-   499px on a 768px-tall screen. Entries ten and eleven therefore began below the
-   fold and could be reached only by scrolling inside the menu, which is why
-   Radiology Second Opinion looked as though it were missing from the header.
-   Two columns bring it to six rows, roughly 350-435px, so nothing is hidden.
-
-   Safe to widen: the desktop nav only renders from 1280px up, and max-width
-   still clamps the panel to the viewport. */
 .cm-nav__dropdown--wide{width:44rem}
 .cm-nav__dropdown--wide ul{display:grid;grid-template-columns:1fr 1fr}
 .cm-nav__dropdown--wide li:nth-child(odd) a{border-right:1px solid rgb(20 47 134 / .08)}
@@ -96,49 +82,16 @@ const headerCss = String.raw`/* header */
 .cm-mobile__item--contact{border-bottom:0}
 .cm-mobile .cm-nav__contact{width:100%;height:4.5rem;justify-content:space-between;padding:0 .35rem 0 1.5rem;font-size:1.25rem}
 .cm-mobile .cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}
-/* The logo box gets 16rem and slimmer side padding, up from 14rem and 1.25rem.
-
-   .cm-logo__image asks for height:6rem — 96px — but it also carries
-   max-width:100%, and at this aspect ratio (1126/459 = 2.453) the artwork needs
-   236px of width to stand 96px tall. A 14rem box less 1.25rem of padding each
-   side left only 184px, so object-fit:contain quietly scaled it down to 75px:
-   22% shorter than its own CSS asked for, on every screen between 1280 and
-   1536px. 16rem less .5rem padding gives 240px, which clears the 236px it needs.
-
-   Only the desktop breakpoints change. The phone and tablet sizing below is
-   untouched. */
-/* Logo halved: 334x136px down to 167x68px.
-
-   flex:none stays, and it is the reason any of these numbers mean anything.
-   .cm-logo shares a flex row with the nav and had no shrink guard, so it
-   inherited flex-shrink:1 and surrendered width whenever the row ran short. The
-   nav cannot give any back — .cm-nav__link is white-space:nowrap, so its width
-   is fixed by its labels. The logo was the only item able to yield, which is why
-   earlier width increases kept being absorbed and why the size only became
-   predictable once this was set.
-
-   Then up 10% again: 4.7rem, so 184x75px. The pill stays 6.5rem — the height it
-   was before any of this — because a 75px image sits inside a 104px bar with room
-   to spare. Nothing downstream moves: the body padding-top and the homepage hero
-   padding both keep their original values. */
-@media(min-width:1280px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{flex:none;width:13rem;height:6.5rem;padding-inline:.5rem;padding-block:0}.cm-logo__image{height:4.7rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
-/* The nav is a non-wrapping flex row, so it has a hard width budget. Adding the
-   Second Opinion heading made ten items, which is tight at exactly 1280px where
-   the desktop nav first appears. Tightening the type and padding across
-   1280-1439px buys back more room than the new item costs; from 1536px up the
-   rule below restores the larger size, where there is space for it. */
-/* The logo pill is 12rem now rather than 22rem, so it returns 160px to the row
-   and the nav no longer needs squeezing to .76rem. A mild tightening still
-   applies in this band, because ten nowrap labels is two more than the eight this
-   header was originally laid out for. */
-@media(min-width:1280px) and (max-width:1535px){.cm-nav__link{padding-inline:.35rem;font-size:.84rem}}
-/* 14rem, comfortably clear of the 184px the artwork now occupies. */
+/* Desktop nav at 1440px+.
+   At 1366px (100% zoom on typical laptops) the burger menu shows instead,
+   so Contact Us can never be clipped out of frame. */
+@media(min-width:1440px){.cm-nav{display:flex}.cm-burger{display:none}.cm-mobile{display:none}.cm-logo{flex:none;width:13rem;height:6.5rem;padding-inline:.5rem;padding-block:0}.cm-logo__image{height:4.7rem}.cm-nav__link{padding-inline:.5rem;font-size:.9rem}}
+@media(min-width:1440px) and (max-width:1535px){.cm-nav__link{padding-inline:.3rem;font-size:.82rem}}
 @media(min-width:1536px){.cm-logo{width:14rem}.cm-nav{padding-inline:.55rem}.cm-nav__link{padding-inline:.55rem;font-size:1rem}}
 @media(min-width:1920px){.cm-logo{width:15rem}.cm-nav{padding-inline:.5rem}.cm-nav__link{padding-inline:.5rem;font-size:1.4rem}.cm-nav__contact{font-size:1.25rem;padding:0 .5rem 0 1.75rem}.cm-nav__contact .cm-disc{width:3.5rem;height:3.5rem}.cm-nav__contact .cm-arrow{width:1.25rem;height:1.25rem}}
-@media(max-width:1023px){
+@media(max-width:1439px){
   .cm-logo{width:clamp(10.5rem,42vw,13rem);height:4.25rem;padding:.25rem .85rem}
   .cm-logo__image{height:3.6rem}
-  /* A white disc, per the hero design, rather than a square glass plate. */
   .cm-burger{width:3.5rem;height:3.5rem;border-radius:999px;background:#FFFFFF;box-shadow:0 8px 22px -12px rgb(20 47 134 / .45)}
   .cm-burger span{width:1.5rem}
   .cm-burger span+span{margin-top:.375rem}
@@ -217,12 +170,7 @@ export function SiteHeader() {
                       <path d="M2.5 4.5 6 8l3.5-3.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </Link>
-                  {/* Long menus go two-column — see the --wide rule for why. */}
-                  <div
-                    className={`cm-nav__dropdown${
-                      item.children.length > 8 ? " cm-nav__dropdown--wide" : ""
-                    }`}
-                  >
+                  <div className={`cm-nav__dropdown${item.children.length > 8 ? " cm-nav__dropdown--wide" : ""}`}>
                     <ul>
                       {item.children.map((child) => (
                         <li key={`${item.label}-${child.href}-${child.label}`}>
