@@ -13,12 +13,6 @@ const HEADER_NAV = mainNav.map((item) => {
   const children = src.some((c) => c.href === item.href)
     ? src
     : [{ label: `${item.label} Overview`, href: item.href }, ...src];
-  if (item.label === "Doctors" || item.label === "Diagnostics") {
-    children.push({ label: "Book Appointment", href: "/patient-info/appointment-booking" });
-  }
-  if (item.label === "Laboratory") {
-    children.push({ label: "Book Test", href: "/patient-info/appointment-booking" });
-  }
   return { ...item, children };
 });
 
