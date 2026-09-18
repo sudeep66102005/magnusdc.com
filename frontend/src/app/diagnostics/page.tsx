@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const heroImage = encodeURI(
-  `${BP}/assets/uploads/services/landing image of the imaging page.jpeg`,
+  `${BP}/assets/uploads/services/_landing image of the imaging page updated`,
 );
 
 const TRUST = [
@@ -31,24 +31,16 @@ const TRUST = [
   { icon: Clock, line1: "Quick & Accurate", line2: "Reports" },
 ];
 
-/* App-style tab bar from the phone mockup. Phone only, and scoped to this page
-   rather than the root layout. */
 const TABS = [
   { icon: Home, label: "Home", href: "/" },
   { icon: ClipboardList, label: "Diagnostics", href: "/diagnostics", active: true },
   { icon: CalendarDays, label: "Appointments", href: "/patient-info/appointment-booking" },
-  /* Was /services, which no longer exists. Specialties is the broadest page
-     left, so it is the closest fit for a "More" tab. */
   { icon: ChevronRight, label: "More", href: "/specialties" },
 ];
 
 export default function DiagnosticsPage() {
   return (
     <>
-      {/* ---- HERO ------------------------------------------------------------
-          The photo bleeds off the right on desktop and sits behind the copy on a
-          phone, as in the two mockups. A left-weighted scrim keeps the heading
-          legible over it at every width. */}
       <section className="relative isolate overflow-hidden bg-gradient-to-b from-[#EFF6FF] via-[#F7FBFF] to-white">
         <div className="pointer-events-none absolute inset-y-0 right-0 w-full sm:w-[68%] lg:w-[58%]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -82,8 +74,6 @@ export default function DiagnosticsPage() {
             Accurate. Advanced. Always by your side.
           </p>
 
-          {/* Script line, top right on desktop only — there is no room for it
-              beside the heading on a phone. */}
           <p
             aria-hidden="true"
             className="absolute right-8 top-16 hidden text-2xl italic leading-tight text-[#2C6FB8] lg:block"
@@ -113,12 +103,10 @@ export default function DiagnosticsPage() {
         </div>
       </section>
 
-      {/* ---- FILTERS + CARDS ------------------------------------------------ */}
       <section className="relative z-10 -mt-4 bg-white pb-12 lg:pb-16">
         <DiagnosticsExplorer />
       </section>
 
-      {/* ---- HELP BAR ------------------------------------------------------- */}
       <section className="mx-auto mb-14 w-full px-4 sm:px-6 lg:mb-20 lg:px-10">
         <div className="flex flex-col gap-5 rounded-2xl bg-white p-5 shadow-[0_12px_36px_-24px_rgb(20_47_134/0.45)] ring-1 ring-[#142F86]/10 lg:flex-row lg:items-center lg:justify-between lg:gap-8 lg:p-6">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-6 lg:flex-1 lg:gap-8">
@@ -127,8 +115,6 @@ export default function DiagnosticsPage() {
               title="Need Help Choosing a Test?"
               sub="Our team is here to guide you."
             />
-            {/* The mockup shows a placeholder number; this uses the real one
-                from siteConfig, which is a { display, href } pair. */}
             <HelpItem
               icon={Phone}
               title="Call Us"
@@ -154,13 +140,7 @@ export default function DiagnosticsPage() {
         </div>
       </section>
 
-      {/* ---- PHONE TAB BAR --------------------------------------------------
-          Fixed, phone only. The floating call and WhatsApp widgets already sit
-          bottom right, so the bar is given a matching height allowance below in
-          the spacer to keep the help bar clear of it. */}
       <div className="h-16 md:hidden" aria-hidden="true" />
-      {/* env() goes through an inline style rather than an arbitrary Tailwind
-          value, so it cannot depend on how the JIT parses the parentheses. */}
       <nav
         aria-label="Quick navigation"
         style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
