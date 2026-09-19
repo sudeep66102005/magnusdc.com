@@ -219,7 +219,7 @@ const CONTACT = {
 };
 
 const css = String.raw`
-body:has(.cm-root) > header.sticky{display:none!important}
+body:has(.cm-root) \3e  header.sticky{display:none!important}
 html:has(.cm-root){scroll-behavior:smooth}
 
 .cm-root{--green:#142F86;--green-deep:#DA1C29;--lime:#31B4F4;--lime-b:rgb(49 180 244 / .82);--mint:#FFFFFF;--mint-deep:#FFFFFF;--ink:#142F86;--muted:rgb(20 47 134 / .55);--subtle:rgb(20 47 134 / .72);--line:rgb(20 47 134 / .16);--glass:#FFFFFF;--glass-s:#FFFFFF;--glass-strong:#FFFFFF;
@@ -232,7 +232,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 @media(max-width:1023px){.cm-shell{width:100%}}
 .cm-eyebrow{font-size:.875rem;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--green);margin:0}
 .cm-lead{font-size:clamp(2.25rem,5.4vw,3.75rem);line-height:1.05;font-weight:700;letter-spacing:-.01em;margin:0}
-/* "Clarity", italic Inter painted with a left-to-right #31B4F4 -> #142F86 ramp.
+/* "Clarity", italic Inter painted with a left-to-right #31B4F4 -\3e  #142F86 ramp.
    Two things here are load-bearing, both consequences of background-clip:text —
    the gradient is a *background*, so it is sized and positioned by the element's
    box, not by the glyphs.
@@ -261,7 +261,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-btn--pill .cm-arrow{width:1.1rem;height:1.1rem}
 .cm-hero__button{position:relative;isolation:isolate;overflow:hidden;border-color:transparent;transition:color .9s ease,transform .3s}
 .cm-hero__button::before{content:"";position:absolute;inset:0;z-index:0;transform:translateX(-105%);transition:transform 1s cubic-bezier(.22,1,.36,1)}
-.cm-hero__button>span,.cm-hero__button>.cm-arrow{position:relative;z-index:1}
+.cm-hero__button\3e span,.cm-hero__button\3e .cm-arrow{position:relative;z-index:1}
 .cm-hero__button:hover::before,.cm-hero__button:focus-visible::before{transform:translateX(0)}
 .cm-hero__button--primary{background:#142F86;color:#FFFFFF}
 .cm-hero__button--primary::before{background:linear-gradient(110deg,#142F86 0%,#31B4F4 52%,#142F86 100%)}
@@ -301,7 +301,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-chips{display:flex;flex-wrap:wrap;gap:.25rem;margin:1.25rem 0 0;padding:0;list-style:none}
 .cm-chips li{border:1px solid var(--line);background:var(--glass-s);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:37px;padding:.75rem 1.25rem;font-size:.875rem;font-weight:400}
 /* Tablet and phone: the rule, the trust line and the chip list belong to the
-   desktop composition only. They are absolutely positioned at >=1024px, so on
+   desktop composition only. They are absolutely positioned at \3e =1024px, so on
    narrow screens they would stack under the buttons and push the fold. */
 @media(max-width:1023px){
   .cm-hero__inner{width:100%}
@@ -504,7 +504,7 @@ html:has(.cm-root){scroll-behavior:smooth}
      ended at 1500px and left ~420px of white against the right edge of a 1920px
      screen — the band marked in the screenshot. Pinning it to the right edge
      instead lets it span whatever is left beside the copy, which re-centres the
-     strand in that space: centre 930px -> 1140px at 1920px wide.
+     strand in that space: centre 930px -\3e  1140px at 1920px wide.
      Width is the only thing changing. The helix is sized by canvas *height*
      (fixed 45deg vertical FOV), so it neither grows nor shrinks here. */
   .cm-hero__scene{left:22.5rem;right:0;width:auto}
@@ -665,7 +665,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-why-mag__shots{position:absolute;inset:-12% 0;transform:translate3d(0,var(--cm-par,0),0);will-change:transform}
 /* Real picture/img rather than a background, so each slide can serve a separate
    mobile file. Descendant selector, not a child one: this stylesheet is injected
-   as a text child of <style>, where a literal > is HTML-escaped and would kill
+   as a text child of <style\3e , where a literal \3e  is HTML-escaped and would kill
    the rule. */
 .cm-why-mag__shot{position:absolute;inset:0;display:block;opacity:0;transform:scale(1.05);transition:opacity 1.1s ease,transform 7s ease-out}
 .cm-why-mag__shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
@@ -677,9 +677,9 @@ html:has(.cm-root){scroll-behavior:smooth}
    100lvh frame with object-fit:cover, so a tall viewport kept a vertical band
    from the middle and threw the rest away — the square never appeared as a
    square. Three things caused it and all three are undone here:
-     - the frame was viewport-tall            -> the photo area is now 1:1
-     - .cm-why-mag__shots overscanned -12%    -> inset:0, no bleed
-     - .cm-why-mag__shot scaled 1.05 -> 1     -> no zoom at all
+     - the frame was viewport-tall            -\3e  the photo area is now 1:1
+     - .cm-why-mag__shots overscanned -12%    -\3e  inset:0, no bleed
+     - .cm-why-mag__shot scaled 1.05 -\3e  1     -\3e  no zoom at all
    The copy moves below the photo instead of sitting on top of it, because a
    square leaves no room to overlay a heading, a list, five tabs and a button.
    The frame is already #0B1533, so the white type keeps its contrast. */
@@ -862,8 +862,8 @@ html:has(.cm-root){scroll-behavior:smooth}
    layout.tsx), so this is the real weight rather than a synthesised one. */
 .cm-svc__title{margin:0;font-family:var(--font-inter),system-ui,-apple-system,sans-serif;font-size:2rem;font-style:normal;font-weight:700;line-height:1.05;letter-spacing:-.025em;color:#FFFFFF}
 @media(min-width:768px){.cm-svc__title{font-size:2.25rem}}
-/* Declared after the >=768 rule on purpose. The service-card block further up
-   the sheet also carries a >=1024 title size, and at equal specificity the rule
+/* Declared after the \3e =768 rule on purpose. The service-card block further up
+   the sheet also carries a \3e =1024 title size, and at equal specificity the rule
    that appears LAST wins — so a size set up there is silently overridden by the
    768 rule below it. That is why the earlier 3.6rem never took effect on a
    desktop. 40px, per the supplied spec. */
