@@ -1095,7 +1095,8 @@ html:has(.cm-root){scroll-behavior:smooth}
   object-fit:contain;
   animation:none;
 }
-.cm-pre__ghost{
+.cm-pre__ghost,
+.cm-pre__mark[data-preloader-layer="ghost"]{
   opacity:.1;
   filter:grayscale(1);
 }
@@ -1581,7 +1582,8 @@ export default function HomePage() {
           <div className="cm-pre__brand">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              className="cm-pre__mark cm-pre__ghost"
+              className="cm-pre__mark"
+              data-preloader-layer="ghost"
               src={asset("/assets/logo/clarus-magnus-logo.png")}
               alt=""
             />
