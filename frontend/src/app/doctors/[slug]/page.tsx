@@ -1,1 +1,231 @@
-aW1wb3J0IHR5cGUgeyBNZXRhZGF0YSB9IGZyb20gIm5leHQiOwppbXBvcnQgeyBub3RGb3VuZCB9IGZyb20gIm5leHQvbmF2aWdhdGlvbiI7CmltcG9ydCBMaW5rIGZyb20gIm5leHQvbGluayI7CmltcG9ydCB7IEFycm93TGVmdCwgQXJyb3dSaWdodCwgQ2FsZW5kYXJEYXlzLCBHcmFkdWF0aW9uQ2FwLCBTdGV0aG9zY29wZSB9IGZyb20gImx1Y2lkZS1yZWFjdCI7CmltcG9ydCB7IFNlY3Rpb24gfSBmcm9tICJAL2NvbXBvbmVudHMvc2hhcmVkL3NlY3Rpb24iOwppbXBvcnQgeyBEb2N0b3JBdmF0YXIgfSBmcm9tICJAL2NvbXBvbmVudHMvc2hhcmVkL2RvY3Rvci1hdmF0YXIiOwppbXBvcnQgeyBzaXRlQ29uZmlnIH0gZnJvbSAiQC9saWIvY29uc3RhbnRzL3NpdGUtY29uZmlnIjsKaW1wb3J0IHsKICBkb2N0b3JTbHVnLAogIGdldEFsbERvY3RvclNsdWdzLAogIGdldERvY3RvckJ5U2x1ZywKICBnZXREb2N0b3JzQnlTcGVjaWFsdHksCn0gZnJvbSAiQC9saWIvZGF0YS9kb2N0b3JzIjsKaW1wb3J0IHsgc3BlY2lhbHR5U2x1Z0ZvciB9IGZyb20gIkAvbGliL2RhdGEvc3BlY2lhbHRpZXMiOwoKY29uc3QgQlAgPSBwcm9jZXNzLmVudi5ORVhUX1BVQkxJQ19CQVNFX1BBVEggPz8gIiI7CmNvbnN0IHBob3RvID0gKHA6IHN0cmluZykgPT4gZW5jb2RlVVJJKGAke0JQfS9hc3NldHMvJHtwfWApOwoKaW50ZXJmYWNlIERvY3RvclBhZ2VQcm9wcyB7CiAgcGFyYW1zOiBQcm9taXNlPHsgc2x1Zzogc3RyaW5nIH0+Owp9CgpleHBvcnQgZnVuY3Rpb24gZ2VuZXJhdGVTdGF0aWNQYXJhbXMoKSB7CiAgcmV0dXJuIGdldEFsbERvY3RvclNsdWdzKCkubWFwKChzbHVnKSA9PiAoeyBzbHVnIH0pKTsKfQoKZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGdlbmVyYXRlTWV0YWRhdGEoeyBwYXJhbXMgfTogRG9jdG9yUGFnZVByb3BzKTogUHJvbWlzZTxNZXRhZGF0YT4gewogIGNvbnN0IHsgc2x1ZyB9ID0gYXdhaXQgcGFyYW1zOwogIGNvbnN0IGRvY3RvciA9IGdldERvY3RvckJ5U2x1ZyhzbHVnKTsKICBpZiAoIWRvY3RvcikgcmV0dXJuIHt9OwogIGNvbnN0IGNyZWRlbnRpYWxzID0gZG9jdG9yLmtleVF1YWxpZmljYXRpb24gPyBgICR7ZG9jdG9yLmtleVF1YWxpZmljYXRpb259LmAgOiAiIjsKICByZXR1cm4gewogICAgdGl0bGU6IGRvY3Rvci5uYW1lLAogICAgZGVzY3JpcHRpb246IGAke2RvY3Rvci5uYW1lfSwgJHtkb2N0b3IudGl0bGV9IGF0ICR7c2l0ZUNvbmZpZy5zaG9ydE5hbWV9LCBLb3JhbWFuZ2FsYS4ke2NyZWRlbnRpYWxzfSBCb29rIGFuIGFwcG9pbnRtZW50LmAsCiAgfTsKfQoKZnVuY3Rpb24gbW9ub2dyYW0obmFtZTogc3RyaW5nKTogc3RyaW5nIHsKICByZXR1cm4gbmFtZQogICAgLnJlcGxhY2UoL15EclwuP1xzKi9pLCAiIikKICAgIC5zcGxpdCgvXHMrLykKICAgIC5zbGljZSgwLCAyKQogICAgLm1hcCgocGFydCkgPT4gcGFydFswXSA/PyAiIikKICAgIC5qb2luKCIiKQogICAgLnRvVXBwZXJDYXNlKCk7Cn0KCmV4cG9ydCBkZWZhdWx0IGFzeW5jIGZ1bmN0aW9uIERvY3RvclByb2ZpbGVQYWdlKHsgcGFyYW1zIH06IERvY3RvclBhZ2VQcm9wcykgewogIGNvbnN0IHsgc2x1ZyB9ID0gYXdhaXQgcGFyYW1zOwogIGNvbnN0IGRvY3RvciA9IGdldERvY3RvckJ5U2x1ZyhzbHVnKTsKCiAgaWYgKCFkb2N0b3IpIHsKICAgIG5vdEZvdW5kKCk7CiAgfQoKICBjb25zdCBjb2xsZWFndWVzID0gZ2V0RG9jdG9yc0J5U3BlY2lhbHR5KGRvY3Rvci5zcGVjaWFsdHkpLmZpbHRlcigKICAgIChpdGVtKSA9PiBpdGVtLm5hbWUgIT09IGRvY3Rvci5uYW1lLAogICk7CiAgY29uc3Qgc3BlY2lhbHR5SHJlZiA9IGAvc3BlY2lhbHRpZXMvJHtzcGVjaWFsdHlTbHVnRm9yKGRvY3Rvci5zcGVjaWFsdHkpfWA7CgogIHJldHVybiAoCiAgICA8PgogICAgICA8c2VjdGlvbiBjbGFzc05hbWU9ImJvcmRlci1iIGJvcmRlci1bIzE0MkY4Nl0vMTIgYmctWyMzMUI0RjRdLzggcGItMTIgcHQtMjggbGc6cGItMTYgbGc6cHQtMzYiPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJteC1hdXRvIG1heC13LTV4bCBweC01IHNtOnB4LTgiPgogICAgICAgICAgPExpbmsKICAgICAgICAgICAgaHJlZj0iL2RvY3RvcnMiCiAgICAgICAgICAgIGNsYXNzTmFtZT0iaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIGdhcC0xLjUgdGV4dC14cyBmb250LWJvbGQgdGV4dC1bIzE0MkY4Nl0vNzAgdHJhbnNpdGlvbiBob3Zlcjp0ZXh0LVsjMTQyRjg2XSIKICAgICAgICAgID4KICAgICAgICAgICAgPEFycm93TGVmdCBjbGFzc05hbWU9InNpemUtMy41IiAvPgogICAgICAgICAgICBBbGwgZG9jdG9ycwogICAgICAgICAgPC9MaW5rPgoKICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJtdC02IGZsZXggZmxleC1jb2wgZ2FwLTYgc206ZmxleC1yb3cgc206aXRlbXMtc3RhcnQgc206Z2FwLTgiPgogICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ic2l6ZS0yOCBmbGV4LW5vbmUgb3ZlcmZsb3ctaGlkZGVuIHJvdW5kZWQtMnhsIGJnLXdoaXRlIHJpbmctMSByaW5nLVsjMTQyRjg2XS8xMiBzbTpzaXplLTM2Ij4KICAgICAgICAgICAgICB7ZG9jdG9yLmltYWdlID8gKAogICAgICAgICAgICAgICAgLy8gZXNsaW50LWRpc2FibGUtbmV4dC1saW5lIEBuZXh0L25leHQvbm8taW1nLWVsZW1lbnQKICAgICAgICAgICAgICAgIDxpbWcKICAgICAgICAgICAgICAgICAgc3JjPXtwaG90byhkb2N0b3IuaW1hZ2UpfQogICAgICAgICAgICAgICAgICBhbHQ9e2RvY3Rvci5uYW1lfQogICAgICAgICAgICAgICAgICBjbGFzc05hbWU9InNpemUtZnVsbCBvYmplY3QtY292ZXIiCiAgICAgICAgICAgICAgICAgIHN0eWxlPXt7IG9iamVjdFBvc2l0aW9uOiBkb2N0b3IuaW1hZ2VQb3NpdGlvbiA/PyAiNTAlIDE1JSIgfX0KICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgKSA6ICgKICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0iZ3JpZCBzaXplLWZ1bGwgcGxhY2UtaXRlbXMtY2VudGVyIHRleHQtM3hsIGZvbnQtYmxhY2sgdGV4dC1bIzE0MkY4Nl0vMzUiPgogICAgICAgICAgICAgICAgICB7bW9ub2dyYW0oZG9jdG9yLm5hbWUpfQogICAgICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgICAgICl9CiAgICAgICAgICAgIDwvZGl2PgoKICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9Im1pbi13LTAgZmxleC0xIj4KICAgICAgICAgICAgICA8TGluawogICAgICAgICAgICAgICAgaHJlZj17c3BlY2lhbHR5SHJlZn0KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC14cyBmb250LWJsYWNrIHVwcGVyY2FzZSB0cmFja2luZy1bMC4xOGVtXSB0ZXh0LVsjREExQzI5XSBob3Zlcjp1bmRlcmxpbmUiCiAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAge2RvY3Rvci5zcGVjaWFsdHl9CiAgICAgICAgICAgICAgPC9MaW5rPgogICAgICAgICAgICAgIDxoMSBjbGFzc05hbWU9Im10LTIgdGV4dC0zeGwgZm9udC1ibGFjayBsZWFkaW5nLXRpZ2h0IHRyYWNraW5nLVstMC4wM2VtXSB0ZXh0LVsjMTQyRjg2XSBzbTp0ZXh0LTR4bCI+CiAgICAgICAgICAgICAgICB7ZG9jdG9yLm5hbWV9CiAgICAgICAgICAgICAgPC9oMT4KICAgICAgICAgICAgICA8cCBjbGFzc05hbWU9Im10LTIgdGV4dC1iYXNlIHRleHQtWyMxNDJGODZdLzc1Ij57ZG9jdG9yLnRpdGxlfTwvcD4KICAgICAgICAgICAgICB7ZG9jdG9yLmV4cGVyaWVuY2UgJiYgKAogICAgICAgICAgICAgICAgPHAgY2xhc3NOYW1lPSJtdC0zIGlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBnYXAtMiByb3VuZGVkLWZ1bGwgYmctd2hpdGUgcHgtMy41IHB5LTEuNSB0ZXh0LXhzIGZvbnQtYm9sZCB0ZXh0LVsjMTQyRjg2XSByaW5nLTEgcmluZy1bIzE0MkY4Nl0vMTIiPgogICAgICAgICAgICAgICAgICA8U3RldGhvc2NvcGUgY2xhc3NOYW1lPSJzaXplLTMuNSIgLz4KICAgICAgICAgICAgICAgICAge2RvY3Rvci5leHBlcmllbmNlfQogICAgICAgICAgICAgICAgPC9wPgogICAgICAgICAgICAgICl9CgogICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJtdC02IGZsZXggZmxleC13cmFwIGdhcC0zIj4KICAgICAgICAgICAgICAgIDxMaW5rCiAgICAgICAgICAgICAgICAgIGhyZWY9Ii9wYXRpZW50LWluZm8vYXBwb2ludG1lbnQtYm9va2luZyIKICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTIgcm91bmRlZC1mdWxsIGJnLVsjMTQyRjg2XSBweC01IHB5LTMgdGV4dC1zbSBmb250LWJvbGQgdGV4dC13aGl0ZSB0cmFuc2l0aW9uIGhvdmVyOmJnLVsjMzFCNEY0XSBob3Zlcjp0ZXh0LVsjMTQyRjg2XSIKICAgICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgICAgPENhbGVuZGFyRGF5cyBjbGFzc05hbWU9InNpemUtNCIgLz4KICAgICAgICAgICAgICAgICAgQm9vayBhbiBhcHBvaW50bWVudAogICAgICAgICAgICAgICAgPC9MaW5rPgogICAgICAgICAgICAgICAgPGEKICAgICAgICAgICAgICAgICAgaHJlZj17c2l0ZUNvbmZpZy5waG9uZS5ocmVmfQogICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBnYXAtMiByb3VuZGVkLWZ1bGwgYmctd2hpdGUgcHgtNSBweS0zIHRleHQtc20gZm9udC1ib2xkIHRleHQtWyMxNDJGODZdIHJpbmctMSByaW5nLVsjMTQyRjg2XS8xNSB0cmFuc2l0aW9uIGhvdmVyOnJpbmctWyMzMUI0RjRdIgogICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICBDYWxsIHtzaXRlQ29uZmlnLnBob25lLmRpc3BsYXl9CiAgICAgICAgICAgICAgICA8L2E+CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgPC9kaXY+CiAgICAgICAgPC9kaXY+CiAgICAgIDwvc2VjdGlvbj4KCiAgICAgIDxTZWN0aW9uIGNsYXNzTmFtZT0icHktMTIgbGc6cHktMTYiPgogICAgICAgIDxkaXYgY2xhc3NOYW1lPSJteC1hdXRvIG1heC13LTV4bCBzcGFjZS15LTEwIj4KICAgICAgICAgIHtkb2N0b3IuZGVncmVlcyAmJiAoCiAgICAgICAgICAgIDxkaXY+CiAgICAgICAgICAgICAgPGgyIGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTIgdGV4dC1sZyBmb250LWJvbGQgdGV4dC1bIzE0MkY4Nl0iPgogICAgICAgICAgICAgICAgPEdyYWR1YXRpb25DYXAgY2xhc3NOYW1lPSJzaXplLTUiIC8+CiAgICAgICAgICAgICAgICBRdWFsaWZpY2F0aW9ucwogICAgICAgICAgICAgIDwvaDI+CiAgICAgICAgICAgICAgPHVsIGNsYXNzTmFtZT0ibXQtMyBzcGFjZS15LTIgdGV4dC1zbSBsZWFkaW5nLXJlbGF4ZWQgdGV4dC1bIzE0MkY4Nl0vODAiPgogICAgICAgICAgICAgICAge2RvY3Rvci5kZWdyZWVzLnNwbGl0KCI7IikubWFwKChjcmVkZW50aWFsKSA9PiAoCiAgICAgICAgICAgICAgICAgIDxsaSBrZXk9e2NyZWRlbnRpYWx9IGNsYXNzTmFtZT0iZmxleCBnYXAtMi41Ij4KICAgICAgICAgICAgICAgICAgICA8c3BhbiBhcmlhLWhpZGRlbj0idHJ1ZSIgY2xhc3NOYW1lPSJtdC0yIHNpemUtMS41IGZsZXgtbm9uZSByb3VuZGVkLWZ1bGwgYmctWyMzMUI0RjRdIiAvPgogICAgICAgICAgICAgICAgICAgIHtjcmVkZW50aWFsLnRyaW0oKX0KICAgICAgICAgICAgICAgICAgPC9saT4KICAgICAgICAgICAgICAgICkpfQogICAgICAgICAgICAgIDwvdWw+CiAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgKX0KCiAgICAgICAgICB7ZG9jdG9yLmNvbmRpdGlvbnNUcmVhdGVkICYmIGRvY3Rvci5jb25kaXRpb25zVHJlYXRlZC5sZW5ndGggPiAwICYmICgKICAgICAgICAgICAgPGRpdj4KICAgICAgICAgICAgICA8aDIgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMiB0ZXh0LWxnIGZvbnQtYm9sZCB0ZXh0LVsjMTQyRjg2XSI+CiAgICAgICAgICAgICAgICA8U3RldGhvc2NvcGUgY2xhc3NOYW1lPSJzaXplLTUiIC8+CiAgICAgICAgICAgICAgICBDb25kaXRpb25zICZhbXA7IFNlcnZpY2VzCiAgICAgICAgICAgICAgPC9oMj4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ibXQtMyBmbGV4IGZsZXgtd3JhcCBnYXAtMiI+CiAgICAgICAgICAgICAgICB7ZG9jdG9yLmNvbmRpdGlvbnNUcmVhdGVkLm1hcCgoY29uZGl0aW9uKSA9PiAoCiAgICAgICAgICAgICAgICAgIDxzcGFuCiAgICAgICAgICAgICAgICAgICAga2V5PXtjb25kaXRpb259CiAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJyb3VuZGVkLWZ1bGwgYmctWyMzMUI0RjRdLzEyIHB4LTMuNSBweS0xLjUgdGV4dC1zbSBmb250LW1lZGl1bSB0ZXh0LVsjMTQyRjg2XS84NSByaW5nLTEgcmluZy1bIzE0MkY4Nl0vOCIKICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgIHtjb25kaXRpb259CiAgICAgICAgICAgICAgICAgIDwvc3Bhbj4KICAgICAgICAgICAgICAgICkpfQogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICl9CgogICAgICAgICAgPGRpdiBjbGFzc05hbWU9InJvdW5kZWQtMnhsIGJnLVsjMzFCNEY0XS84IHAtNSBzbTpwLTYiPgogICAgICAgICAgICA8aDIgY2xhc3NOYW1lPSJ0ZXh0LWxnIGZvbnQtYm9sZCB0ZXh0LVsjMTQyRjg2XSI+CiAgICAgICAgICAgICAgQ29uc3VsdGluZyBhdCB7c2l0ZUNvbmZpZy5zaG9ydE5hbWV9CiAgICAgICAgICAgIDwvaDI+CiAgICAgICAgICAgIDxwIGNsYXNzTmFtZT0ibXQtMiB0ZXh0LXNtIGxlYWRpbmctcmVsYXhlZCB0ZXh0LVsjMTQyRjg2XS83OCI+CiAgICAgICAgICAgICAge2RvY3Rvci5uYW1lfSBjb25zdWx0cyBhdCBvdXIge3NpdGVDb25maWcuYWRkcmVzcy5saW5lMi5yZXBsYWNlKCIjNTM0L0EsICIsICIiKX17IiAifQogICAgICAgICAgICAgIGNlbnRyZSwgd2hlcmUgaW1hZ2luZywgbGFib3JhdG9yeSBhbmQgY29uc3VsdGluZyByb29tcyBzaXQgdG9nZXRoZXIKICAgICAgICAgICAgICDigJQgc28gYSBzY2FuIG9yIHRlc3Qgb3JkZXJlZCBkdXJpbmcgeW91ciBjb25zdWx0YXRpb24gY2FuIHVzdWFsbHkgYmUKICAgICAgICAgICAgICBkb25lIHRoZSBzYW1lIHZpc2l0LCBhbmQgdGhlIHJlcG9ydCByZWFjaGVzIHlvdXIgY29uc3VsdGFudAogICAgICAgICAgICAgIGRpcmVjdGx5LiBBcHBvaW50bWVudCB0aW1lcyB2YXJ5IGJ5IGRlcGFydG1lbnQ7IG91ciB0ZWFtIHdpbGwKICAgICAgICAgICAgICBjb25maXJtIHRoZSBuZXh0IGF2YWlsYWJsZSBzbG90IHdoZW4geW91IHJlcXVlc3Qgb25lLgogICAgICAgICAgICA8L3A+CiAgICAgICAgICAgIDxMaW5rCiAgICAgICAgICAgICAgaHJlZj17c3BlY2lhbHR5SHJlZn0KICAgICAgICAgICAgICBjbGFzc05hbWU9Im10LTQgaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIGdhcC0xLjUgdGV4dC1zbSBmb250LWJvbGQgdGV4dC1bIzE0MkY4Nl0gaG92ZXI6dW5kZXJsaW5lIgogICAgICAgICAgICA+CiAgICAgICAgICAgICAgTW9yZSBhYm91dCB7ZG9jdG9yLnNwZWNpYWx0eX0KICAgICAgICAgICAgICA8QXJyb3dSaWdodCBjbGFzc05hbWU9InNpemUtNCIgLz4KICAgICAgICAgICAgPC9MaW5rPgogICAgICAgICAgPC9kaXY+CgogICAgICAgICAge2NvbGxlYWd1ZXMubGVuZ3RoID4gMCAmJiAoCiAgICAgICAgICAgIDxkaXY+CiAgICAgICAgICAgICAgPGgyIGNsYXNzTmFtZT0idGV4dC1sZyBmb250LWJvbGQgdGV4dC1bIzE0MkY4Nl0iPgogICAgICAgICAgICAgICAgT3RoZXIgY29uc3VsdGFudHMgaW4ge2RvY3Rvci5zcGVjaWFsdHl9CiAgICAgICAgICAgICAgPC9oMj4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0ibXQtNCBncmlkIGdhcC0zIHNtOmdyaWQtY29scy0yIGxnOmdyaWQtY29scy0zIj4KICAgICAgICAgICAgICAgIHtjb2xsZWFndWVzLm1hcCgoY29sbGVhZ3VlKSA9PiAoCiAgICAgICAgICAgICAgICAgIDxMaW5rCiAgICAgICAgICAgICAgICAgICAga2V5PXtjb2xsZWFndWUubmFtZX0KICAgICAgICAgICAgICAgICAgICBocmVmPXtgL2RvY3RvcnMvJHtkb2N0b3JTbHVnKGNvbGxlYWd1ZS5uYW1lKX1gfQogICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0iZ3JvdXAgZmxleCBpdGVtcy1zdGFydCBnYXAtMy41IHJvdW5kZWQteGwgYmctd2hpdGUgcC00IHJpbmctMSByaW5nLVsjMTQyRjg2XS8xMCB0cmFuc2l0aW9uIGhvdmVyOnJpbmctWyMzMUI0RjRdIgogICAgICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICAgICAgPERvY3RvckF2YXRhciBkb2N0b3I9e2NvbGxlYWd1ZX0gY2xhc3NOYW1lPSJzaXplLTEyIiAvPgogICAgICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0ibWluLXctMCBmbGV4LTEiPgogICAgICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJibG9jayB0ZXh0LXNtIGZvbnQtYm9sZCB0ZXh0LVsjMTQyRjg2XSBncm91cC1ob3Zlcjp1bmRlcmxpbmUiPgogICAgICAgICAgICAgICAgICAgICAgICB7Y29sbGVhZ3VlLm5hbWV9CiAgICAgICAgICAgICAgICAgICAgICA8L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9Im10LTEgYmxvY2sgdGV4dC14cyB0ZXh0LVsjMTQyRjg2XS82NSI+e2NvbGxlYWd1ZS50aXRsZX08L3NwYW4+CiAgICAgICAgICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgICAgICAgICA8L0xpbms+CiAgICAgICAgICAgICAgICApKX0KICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICApfQogICAgICAgIDwvZGl2PgogICAgICA8L1NlY3Rpb24+CiAgICA8Lz4KICApOwp9Cg==
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import {
+  ArrowLeft,
+  ArrowRight,
+  CalendarDays,
+  GraduationCap,
+  Stethoscope,
+} from "lucide-react";
+import { Section } from "@/components/shared/section";
+import { DoctorAvatar } from "@/components/shared/doctor-avatar";
+import { siteConfig } from "@/lib/constants/site-config";
+import {
+  doctorSlug,
+  getAllDoctorSlugs,
+  getDoctorBySlug,
+  getDoctorsBySpecialty,
+} from "@/lib/data/doctors";
+import { specialtySlugFor } from "@/lib/data/specialties";
+
+const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const photo = (p: string) => encodeURI(`${BP}/assets/${p}`);
+
+interface DoctorPageProps {
+  params: Promise<{ slug: string }>;
+}
+
+export function generateStaticParams() {
+  return getAllDoctorSlugs().map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: DoctorPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const doctor = getDoctorBySlug(slug);
+  if (!doctor) return {};
+  const credentials = doctor.keyQualification
+    ? ` ${doctor.keyQualification}.`
+    : "";
+  return {
+    title: doctor.name,
+    description: `${doctor.name}, ${doctor.title} at ${siteConfig.shortName}, Koramangala.${credentials} Book an appointment.`,
+  };
+}
+
+function monogram(name: string): string {
+  return name
+    .replace(/^Dr\.?\s*/i, "")
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0] ?? "")
+    .join("")
+    .toUpperCase();
+}
+
+export default async function DoctorProfilePage({ params }: DoctorPageProps) {
+  const { slug } = await params;
+  const doctor = getDoctorBySlug(slug);
+
+  if (!doctor) {
+    notFound();
+  }
+
+  const colleagues = getDoctorsBySpecialty(doctor.specialty).filter(
+    (item) => item.name !== doctor.name,
+  );
+  const specialtyHref = `/specialties/${specialtySlugFor(doctor.specialty)}`;
+
+  return (
+    <>
+      <section className="border-b border-[#142F86]/12 bg-[#31B4F4]/8 pb-12 pt-28 lg:pb-16 lg:pt-36">
+        <div className="mx-auto max-w-5xl px-5 sm:px-8">
+          <Link
+            href="/doctors"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#142F86]/70 transition hover:text-[#142F86]"
+          >
+            <ArrowLeft className="size-3.5" />
+            All doctors
+          </Link>
+
+          <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
+            <div className="size-28 flex-none overflow-hidden rounded-2xl bg-white ring-1 ring-[#142F86]/12 sm:size-36">
+              {doctor.image ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={photo(doctor.image)}
+                  alt={doctor.name}
+                  className="size-full object-cover"
+                  style={{ objectPosition: doctor.imagePosition ?? "50% 15%" }}
+                />
+              ) : (
+                <span className="grid size-full place-items-center text-3xl font-black text-[#142F86]/35">
+                  {monogram(doctor.name)}
+                </span>
+              )}
+            </div>
+
+            <div className="min-w-0 flex-1">
+              <Link
+                href={specialtyHref}
+                className="text-xs font-black uppercase tracking-[0.18em] text-[#DA1C29] hover:underline"
+              >
+                {doctor.specialty}
+              </Link>
+              <h1 className="mt-2 text-3xl font-black leading-tight tracking-[-0.03em] text-[#142F86] sm:text-4xl">
+                {doctor.name}
+              </h1>
+              <p className="mt-2 text-base text-[#142F86]/75">{doctor.title}</p>
+              {doctor.experience && (
+                <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-xs font-bold text-[#142F86] ring-1 ring-[#142F86]/12">
+                  <Stethoscope className="size-3.5" />
+                  {doctor.experience}
+                </p>
+              )}
+
+              <div className="mt-6 flex flex-wrap gap-3">
+                <Link
+                  href="/patient-info/appointment-booking"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#142F86] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#31B4F4] hover:text-[#142F86]"
+                >
+                  <CalendarDays className="size-4" />
+                  Book an appointment
+                </Link>
+                <a
+                  href={siteConfig.phone.href}
+                  className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-[#142F86] ring-1 ring-[#142F86]/15 transition hover:ring-[#31B4F4]"
+                >
+                  Call {siteConfig.phone.display}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Section className="py-12 lg:py-16">
+        <div className="mx-auto max-w-5xl space-y-10">
+          {doctor.degrees && (
+            <div>
+              <h2 className="flex items-center gap-2 text-lg font-bold text-[#142F86]">
+                <GraduationCap className="size-5" />
+                Qualifications
+              </h2>
+              <ul className="mt-3 space-y-2 text-sm leading-relaxed text-[#142F86]/80">
+                {doctor.degrees.split(";").map((credential) => (
+                  <li key={credential} className="flex gap-2.5">
+                    <span
+                      aria-hidden="true"
+                      className="mt-2 size-1.5 flex-none rounded-full bg-[#31B4F4]"
+                    />
+                    {credential.trim()}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {doctor.conditionsTreated && doctor.conditionsTreated.length > 0 && (
+            <div>
+              <h2 className="flex items-center gap-2 text-lg font-bold text-[#142F86]">
+                <Stethoscope className="size-5" />
+                Conditions &amp; Services
+              </h2>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {doctor.conditionsTreated.map((condition) => (
+                  <span
+                    key={condition}
+                    className="rounded-full bg-[#31B4F4]/12 px-3.5 py-1.5 text-sm font-medium text-[#142F86]/85 ring-1 ring-[#142F86]/8"
+                  >
+                    {condition}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="rounded-2xl bg-[#31B4F4]/8 p-5 sm:p-6">
+            <h2 className="text-lg font-bold text-[#142F86]">
+              Consulting at {siteConfig.shortName}
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-[#142F86]/78">
+              {doctor.name} consults at our{" "}
+              {siteConfig.address.line2.replace("#534/A, ", "")} centre, where
+              imaging, laboratory and consulting rooms sit together — so a scan
+              or test ordered during your consultation can usually be done the
+              same visit, and the report reaches your consultant directly.
+              Appointment times vary by department; our team will confirm the
+              next available slot when you request one.
+            </p>
+            <Link
+              href={specialtyHref}
+              className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-[#142F86] hover:underline"
+            >
+              More about {doctor.specialty}
+              <ArrowRight className="size-4" />
+            </Link>
+          </div>
+
+          {colleagues.length > 0 && (
+            <div>
+              <h2 className="text-lg font-bold text-[#142F86]">
+                Other consultants in {doctor.specialty}
+              </h2>
+              <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                {colleagues.map((colleague) => (
+                  <Link
+                    key={colleague.name}
+                    href={`/doctors/${doctorSlug(colleague.name)}`}
+                    className="group flex items-start gap-3.5 rounded-xl bg-white p-4 ring-1 ring-[#142F86]/10 transition hover:ring-[#31B4F4]"
+                  >
+                    <DoctorAvatar doctor={colleague} className="size-12" />
+                    <span className="min-w-0 flex-1">
+                      <span className="block text-sm font-bold text-[#142F86] group-hover:underline">
+                        {colleague.name}
+                      </span>
+                      <span className="mt-1 block text-xs text-[#142F86]/65">
+                        {colleague.title}
+                      </span>
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </Section>
+    </>
+  );
+}
