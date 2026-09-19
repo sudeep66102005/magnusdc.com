@@ -1044,14 +1044,115 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-root [data-rise]{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,0,0,1)}
 .cm-root.is-ready [data-rise].in{opacity:1;transform:none}
 
-/* preloader */
-.cm-pre{position:fixed;inset:0;z-index:90;display:grid;place-items:center;background:#FFFFFF;color:#142F86;transition:transform .9s cubic-bezier(.76,0,.24,1),visibility 0s .9s;animation:cmPreFail .01s 1.25s forwards}
-.cm-root.is-ready .cm-pre{transform:translateY(-100%);visibility:hidden}
-/* Brand logo, not a spinning glyph — a wordmark must stay upright, so it
-   breathes instead of rotating. */
-.cm-pre__mark{display:block;width:auto;height:auto;max-width:min(17rem,62vw);max-height:5rem;object-fit:contain;animation:cmPreBreathe 1.5s ease-in-out infinite}
-@keyframes cmPreBreathe{0%,100%{opacity:.5;transform:scale(.97)}50%{opacity:1;transform:scale(1)}}
-@keyframes cmPreFail{to{visibility:hidden;pointer-events:none;transform:translateY(-100%)}}
+/* Intro: precision scan and logo reveal */
+.cm-pre{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:radial-gradient(ellipse at center,#fff 30%,#f0f5fa 100%);
+  transition:opacity .65s ease,visibility .65s;
+  animation:cmIntroSafety .01s 2.5s forwards;
+}
+.cm-root.is-ready .cm-pre{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+.cm-pre__frame{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:min(420px,82vw);
+  height:250px;
+}
+.cm-pre__corner{
+  position:absolute;
+  width:18px;
+  height:18px;
+  border-color:#b9c8df;
+  border-style:solid;
+  animation:cmIntroCorners 1.7s ease both;
+}
+.cm-pre__corner--tl{top:0;left:0;border-width:1px 0 0 1px}
+.cm-pre__corner--tr{top:0;right:0;border-width:1px 1px 0 0}
+.cm-pre__corner--bl{bottom:0;left:0;border-width:0 0 1px 1px}
+.cm-pre__corner--br{bottom:0;right:0;border-width:0 1px 1px 0}
+
+.cm-pre__brand{
+  position:relative;
+  width:min(280px,70vw);
+  transform:translateY(-8px);
+}
+.cm-pre__mark{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:none;
+  max-height:none;
+  object-fit:contain;
+  animation:none;
+}
+.cm-pre__ghost{
+  opacity:.1;
+  filter:grayscale(1);
+}
+.cm-pre__color{
+  position:absolute;
+  inset:0;
+  clip-path:inset(0 100% 0 0);
+  animation:cmIntroReveal .9s cubic-bezier(.3,0,.2,1) .2s both;
+}
+.cm-pre__scan{
+  position:absolute;
+  top:-24px;
+  bottom:-24px;
+  width:1px;
+  background:linear-gradient(
+    transparent,#31b4f4 25%,#31b4f4 75%,transparent
+  );
+  box-shadow:0 0 17px 2px #31b4f425;
+  animation:cmIntroScan 1s cubic-bezier(.3,0,.2,1) .15s both;
+}
+.cm-pre__caption{
+  position:absolute;
+  bottom:38px;
+  left:0;
+  right:0;
+  margin:0;
+  text-align:center;
+  font-size:10px;
+  letter-spacing:.25em;
+  text-transform:uppercase;
+  color:#67768e;
+  animation:cmIntroCaption .5s ease .72s both;
+}
+@keyframes cmIntroReveal{
+  to{clip-path:inset(0 0 0 0)}
+}
+@keyframes cmIntroScan{
+  0%{left:0;opacity:0}
+  15%,85%{opacity:1}
+  100%{left:100%;opacity:0}
+}
+@keyframes cmIntroCorners{
+  0%{opacity:0}
+  25%,70%{opacity:1}
+  100%{opacity:0}
+}
+@keyframes cmIntroCaption{
+  from{opacity:0;transform:translateY(5px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes cmIntroSafety{
+  to{opacity:0;visibility:hidden;pointer-events:none}
+}
+@media(max-width:600px){
+  .cm-pre__frame{height:220px}
+  .cm-pre__brand{width:min(240px,70vw)}
+}
 
 @media(prefers-reduced-motion:reduce){
   html:has(.cm-root){scroll-behavior:auto}
@@ -1346,10 +1447,15 @@ function initClarus(root){
   const form=root.querySelector('.cm-form form');
   if(form){ form.addEventListener('submit',e=>{ e.preventDefault(); const fd=new FormData(form); const name=(fd.get('name')||'').toString().trim(); const phone=(fd.get('phone')||'').toString().trim(); const msg=(fd.get('message')||'').toString().trim(); const text='Callback request from the Clarus Magnus website.'+(name?'\nName: '+name:'')+(phone?'\nPhone: '+phone:'')+(msg?'\nMessage: '+msg:''); const url=${JSON.stringify(siteConfig.whatsapp.href)}+'?text='+encodeURIComponent(text); window.location.assign(url); }); }
 
-  // preloader: visual minimum only; never wait on page, font, import, or WebGL readiness
-  const reveal=()=>root.classList.add('is-ready');
-  const revealTimer=setTimeout(reveal,450); const revealFallback=setTimeout(reveal,1100);
-  cleaners.push(()=>{clearTimeout(revealTimer);clearTimeout(revealFallback);});
+  // Intro timing: let the precision scan complete, with a hard safety fallback.
+  const reveal = () => root.classList.add('is-ready');
+  const revealTimer = setTimeout(reveal, reduce ? 0 : 1450);
+  const revealFallback = setTimeout(reveal, 2200);
+
+  cleaners.push(() => {
+    clearTimeout(revealTimer);
+    clearTimeout(revealFallback);
+  });
 
   // DNA scenes
   if(reduce)return;
@@ -1466,8 +1572,32 @@ export default function HomePage() {
       <style>{css}</style>
 
       <div className="cm-pre" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="cm-pre__mark" src={asset("/assets/logo/clarus-magnus-logo.png")} alt="" />
+        <div className="cm-pre__frame">
+          <span className="cm-pre__corner cm-pre__corner--tl" />
+          <span className="cm-pre__corner cm-pre__corner--tr" />
+          <span className="cm-pre__corner cm-pre__corner--bl" />
+          <span className="cm-pre__corner cm-pre__corner--br" />
+
+          <div className="cm-pre__brand">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="cm-pre__mark cm-pre__ghost"
+              src={asset("/assets/logo/clarus-magnus-logo.png")}
+              alt=""
+            />
+
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="cm-pre__mark cm-pre__color"
+              src={asset("/assets/logo/clarus-magnus-logo.png")}
+              alt=""
+            />
+
+            <span className="cm-pre__scan" />
+          </div>
+
+          <p className="cm-pre__caption">Precision. Clarity. Care.</p>
+        </div>
       </div>
 
 
