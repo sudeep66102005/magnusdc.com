@@ -111,6 +111,146 @@ const headerCss = String.raw`/* header */
   .cm-mobile{top:5.1rem;max-height:calc(100vh - 6.4rem)}
 }
 @media(max-width:359px){.cm-logo{width:9.5rem;height:3.8rem;padding-inline:.7rem}.cm-logo__image{height:3.2rem}.cm-burger{width:3.8rem;height:3.8rem}.cm-mobile{top:4.6rem;max-height:calc(100vh - 5.9rem)}}
+@media(max-width:767px){
+  .cm-header:has(.mobile-menu-panel[data-open="true"]) .cm-burger{
+    opacity:0;
+    pointer-events:none;
+  }
+  .cm-header:has(.mobile-menu-panel[data-open="true"]) .cm-header__left>.cm-logo{
+    visibility:hidden;
+  }
+  .mobile-menu-backdrop{
+    position:fixed;
+    inset:0;
+    z-index:90;
+    background:#FFFFFF;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .2s,visibility .2s;
+  }
+  .cm-header:has(.mobile-menu-panel[data-open="true"]) .mobile-menu-backdrop{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
+  .mobile-menu-panel{
+    position:fixed;
+    inset:12px 12px auto;
+    width:auto;
+    height:calc(100dvh - 80px);
+    max-height:none;
+    z-index:100;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    background:#FFFFFF;
+    border-radius:12px;
+    box-shadow:0 8px 30px rgb(0 0 0 / 15%);
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+    transform:translateY(.55rem);
+  }
+  .mobile-menu-panel[data-open="true"]{transform:none}
+  .mobile-menu-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:16px;
+    flex-shrink:0;
+    background:#FFFFFF;
+  }
+  .mobile-menu-brand{
+    display:flex;
+    align-items:center;
+    min-height:48px;
+  }
+  .mobile-menu-logo{
+    display:block;
+    width:auto;
+    height:48px;
+    max-width:180px;
+    object-fit:contain;
+    object-position:left center;
+  }
+  .mobile-menu-close{
+    display:grid;
+    place-items:center;
+    width:44px;
+    height:44px;
+    flex:none;
+    border:0;
+    border-radius:999px;
+    background:#F5F5F5;
+    color:#142F86;
+    font-size:32px;
+    font-weight:400;
+    line-height:1;
+    cursor:pointer;
+  }
+  .mobile-menu-close:focus-visible{
+    outline:2px solid #31B4F4;
+    outline-offset:2px;
+  }
+  .mobile-menu-links{
+    flex:1;
+    min-height:0;
+    overflow-y:auto;
+    padding:24px 16px;
+    background:#FFFFFF;
+  }
+  .mobile-menu-links .cm-mobile__list,
+  .mobile-menu-links .cm-mobile__children{
+    padding:0;
+  }
+  .mobile-menu-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    min-height:48px;
+    border-bottom:1px solid #DDDDDD;
+    font-size:18px;
+    font-weight:500;
+  }
+  .mobile-menu-row:last-child{border-bottom:0}
+  .mobile-menu-row summary,
+  .mobile-menu-row>a{
+    width:100%;
+    min-height:48px;
+    color:#142F86;
+    font-size:18px;
+    font-weight:500;
+  }
+  .mobile-menu-row summary{padding:0}
+  .mobile-menu-row .cm-mobile__children{
+    margin-bottom:8px;
+    padding-left:12px;
+    border-left:2px solid rgb(49 180 244 / 35%);
+  }
+  .mobile-menu-row .cm-mobile__children a{
+    min-height:44px;
+    padding:10px 8px;
+    font-size:16px;
+    font-weight:500;
+  }
+  .mobile-menu-bottom{
+    flex-shrink:0;
+    padding:12px;
+    background:#F5F5F5;
+  }
+  .mobile-menu-action{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:48px;
+    width:100%;
+    border-radius:8px;
+    background:#142F86;
+    color:#FFFFFF;
+    font-size:16px;
+    font-weight:700;
+  }
+}
 @media(prefers-reduced-motion:reduce){.cm-nav__dropdown,.cm-nav__chevron,.cm-mobile{transition:none}}
 .cm-header,.cm-header *{box-sizing:border-box}
 .cm-header a{text-decoration:none}
@@ -123,7 +263,9 @@ export function SiteHeader() {
   useEffect(() => {
     const burger = document.querySelector<HTMLButtonElement>(".cm-burger");
     const menu = document.querySelector<HTMLElement>(".cm-mobile");
-    if (!burger || !menu) return;
+    const closeButton =
+      document.querySelector<HTMLButtonElement>(".mobile-menu-close");
+    if (!burger || !menu || !closeButton) return;
     const toggle = (v?: boolean) => {
       const open = v !== undefined ? v : menu.dataset.open !== "true";
       menu.dataset.open = open ? "true" : "false";
@@ -135,6 +277,7 @@ export function SiteHeader() {
           .forEach((d) => d.removeAttribute("open"));
     };
     const onBurger = () => toggle();
+    const onClose = () => toggle(false);
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && menu.dataset.open === "true") {
         toggle(false);
@@ -144,10 +287,12 @@ export function SiteHeader() {
     const links = Array.from(menu.querySelectorAll("a"));
     const close = () => toggle(false);
     burger.addEventListener("click", onBurger);
+    closeButton.addEventListener("click", onClose);
     document.addEventListener("keydown", onKey);
     links.forEach((a) => a.addEventListener("click", close));
     return () => {
       burger.removeEventListener("click", onBurger);
+      closeButton.removeEventListener("click", onClose);
       document.removeEventListener("keydown", onKey);
       links.forEach((a) => a.removeEventListener("click", close));
     };
@@ -248,68 +393,108 @@ export function SiteHeader() {
             <span />
             <span />
           </button>
+          <div className="mobile-menu-backdrop" aria-hidden="true" />
           <nav
             id="cm-mobile-menu"
             aria-label="Mobile navigation"
-            className="cm-glass cm-mobile"
+            className="cm-glass cm-mobile mobile-menu-panel"
             data-open="false"
           >
-            <ul className="cm-mobile__list">
-              {HEADER_NAV.map((item) =>
-                item.label === "Contact Us" ? (
-                  <li
-                    className="cm-mobile__item cm-mobile__item--contact"
-                    key={item.href}
-                  >
-                    <Link href={item.href} className="cm-nav__contact">
-                      <span>Contact Us</span>
-                      <span className="cm-disc">
-                        <Arrow />
-                      </span>
-                    </Link>
-                  </li>
-                ) : (
-                  <li className="cm-mobile__item" key={item.href}>
-                    <details>
-                      <summary>
+            <div className="mobile-menu-top">
+              <a
+                href="#hero"
+                className="mobile-menu-brand"
+                aria-label="Clarus Magnus Health and Diagnostics home"
+              >
+                <Image
+                  src={asset("/assets/logo/clarus-magnus-logo.png")}
+                  alt="Clarus Magnus Health and Diagnostics"
+                  width={1126}
+                  height={459}
+                  priority
+                  className="mobile-menu-logo"
+                />
+              </a>
+              <button
+                type="button"
+                className="mobile-menu-close"
+                aria-label="Close menu"
+              >
+                ×
+              </button>
+            </div>
+            <div className="mobile-menu-links">
+              <ul className="cm-mobile__list">
+                {HEADER_NAV.map((item) =>
+                  item.label === "Contact Us" ? (
+                    <li
+                      className="cm-mobile__item mobile-menu-row mobile-menu-row--contact"
+                      key={item.href}
+                    >
+                      <Link href={item.href}>
                         <span>{item.label}</span>
-                        <svg
-                          className="cm-nav__chevron"
-                          viewBox="0 0 12 12"
-                          fill="none"
+                        <span
+                          className="cm-nav__dropdown-arrow"
                           aria-hidden="true"
                         >
-                          <path
-                            d="M2.5 4.5 6 8l3.5-3.5"
-                            stroke="currentColor"
-                            strokeWidth="1.4"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </summary>
-                      <ul className="cm-mobile__children">
-                        {item.children.map((child) => (
-                          <li
-                            key={`${item.label}-${child.href}-${child.label}`}
+                          ›
+                        </span>
+                      </Link>
+                    </li>
+                  ) : (
+                    <li
+                      className="cm-mobile__item mobile-menu-row"
+                      key={item.href}
+                    >
+                      <details>
+                        <summary>
+                          <span>{item.label}</span>
+                          <svg
+                            className="cm-nav__chevron"
+                            viewBox="0 0 12 12"
+                            fill="none"
+                            aria-hidden="true"
                           >
-                            <Link href={child.href}>
-                              <span>{child.label}</span>
-                              <span
-                                className="cm-nav__dropdown-arrow"
-                                aria-hidden="true"
-                              >
-                                ›
-                              </span>
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </details>
-                  </li>
-                ),
-              )}
-            </ul>
+                            <path
+                              d="M2.5 4.5 6 8l3.5-3.5"
+                              stroke="currentColor"
+                              strokeWidth="1.4"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                        </summary>
+                        <ul className="cm-mobile__children">
+                          {item.children.map((child) => (
+                            <li
+                              key={`${item.label}-${child.href}-${child.label}`}
+                            >
+                              <Link href={child.href}>
+                                <span>{child.label}</span>
+                                <span
+                                  className="cm-nav__dropdown-arrow"
+                                  aria-hidden="true"
+                                >
+                                  ›
+                                </span>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </details>
+                    </li>
+                  ),
+                )}
+              </ul>
+            </div>
+            <div className="mobile-menu-bottom">
+              <Link
+                href="/patient-info/appointment-booking"
+                className="mobile-menu-action"
+              >
+                Book Appointment
+              </Link>
+            </div>
           </nav>
         </div>
       </header>
