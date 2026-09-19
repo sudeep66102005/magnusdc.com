@@ -6,7 +6,10 @@ import { PageHero } from "@/components/shared/page-hero";
 import { Section } from "@/components/shared/section";
 import { DoctorAvatar } from "@/components/shared/doctor-avatar";
 import { siteConfig } from "@/lib/constants/site-config";
-import { getAllSpecialtySlugs, getSpecialtyBySlug } from "@/lib/data/specialties";
+import {
+  getAllSpecialtySlugs,
+  getSpecialtyBySlug,
+} from "@/lib/data/specialties";
 import { doctorSlug, getDoctorsBySpecialty } from "@/lib/data/doctors";
 
 interface SpecialtyPageProps {
@@ -29,7 +32,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function SpecialtyDetailPage({ params }: SpecialtyPageProps) {
+export default async function SpecialtyDetailPage({
+  params,
+}: SpecialtyPageProps) {
   const { slug } = await params;
   const specialty = getSpecialtyBySlug(slug);
 
@@ -48,20 +53,32 @@ export default async function SpecialtyDetailPage({ params }: SpecialtyPageProps
         eyebrow="Specialty"
         title={specialty.name}
         description={specialty.summary}
+        image={specialty.image}
       />
       <Section>
         <div className="mx-auto max-w-4xl space-y-12">
-          <p className="text-lg leading-8 text-[#142F86]/80">{specialty.overview}</p>
+          <p className="text-lg leading-8 text-[#142F86]/80">
+            {specialty.overview}
+          </p>
 
-          {(specialty.conditions.length > 0 || specialty.services.length > 0) && (
+          {(specialty.conditions.length > 0 ||
+            specialty.services.length > 0) && (
             <div className="grid gap-6 md:grid-cols-2">
               {specialty.conditions.length > 0 && (
                 <div className="rounded-2xl bg-white p-5 ring-1 ring-[#142F86]/10 sm:p-6">
-                  <h2 className="text-lg font-bold text-[#142F86]">Conditions we see</h2>
+                  <h2 className="text-lg font-bold text-[#142F86]">
+                    Conditions we see
+                  </h2>
                   <ul className="mt-4 space-y-2.5">
                     {specialty.conditions.map((condition) => (
-                      <li key={condition} className="flex gap-2.5 text-sm leading-relaxed text-[#142F86]/80">
-                        <Check className="mt-0.5 size-4 flex-none text-[#31B4F4]" aria-hidden="true" />
+                      <li
+                        key={condition}
+                        className="flex gap-2.5 text-sm leading-relaxed text-[#142F86]/80"
+                      >
+                        <Check
+                          className="mt-0.5 size-4 flex-none text-[#31B4F4]"
+                          aria-hidden="true"
+                        />
                         {condition}
                       </li>
                     ))}
@@ -71,11 +88,19 @@ export default async function SpecialtyDetailPage({ params }: SpecialtyPageProps
 
               {specialty.services.length > 0 && (
                 <div className="rounded-2xl bg-[#31B4F4]/8 p-5 sm:p-6">
-                  <h2 className="text-lg font-bold text-[#142F86]">What we offer</h2>
+                  <h2 className="text-lg font-bold text-[#142F86]">
+                    What we offer
+                  </h2>
                   <ul className="mt-4 space-y-2.5">
                     {specialty.services.map((service) => (
-                      <li key={service} className="flex gap-2.5 text-sm leading-relaxed text-[#142F86]/80">
-                        <Stethoscope className="mt-0.5 size-4 flex-none text-[#142F86]" aria-hidden="true" />
+                      <li
+                        key={service}
+                        className="flex gap-2.5 text-sm leading-relaxed text-[#142F86]/80"
+                      >
+                        <Stethoscope
+                          className="mt-0.5 size-4 flex-none text-[#142F86]"
+                          aria-hidden="true"
+                        />
                         {service}
                       </li>
                     ))}
@@ -102,7 +127,9 @@ export default async function SpecialtyDetailPage({ params }: SpecialtyPageProps
                       <span className="block text-sm font-bold text-[#142F86] group-hover:underline">
                         {doctor.name}
                       </span>
-                      <span className="mt-1 block text-xs text-[#142F86]/65">{doctor.title}</span>
+                      <span className="mt-1 block text-xs text-[#142F86]/65">
+                        {doctor.title}
+                      </span>
                       {doctor.experience && (
                         <span className="mt-1.5 block text-xs font-semibold text-[#142F86]/55">
                           {doctor.experience}
@@ -121,10 +148,12 @@ export default async function SpecialtyDetailPage({ params }: SpecialtyPageProps
 
           <div className="flex flex-col gap-4 rounded-2xl bg-[#142F86] p-6 text-white sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-lg font-bold">Book a {specialty.name.toLowerCase()} consultation</p>
+              <p className="text-lg font-bold">
+                Book a {specialty.name.toLowerCase()} consultation
+              </p>
               <p className="mt-1 text-sm text-white/75">
-                Our team will confirm the next available slot, and tell you if any
-                preparation is needed.
+                Our team will confirm the next available slot, and tell you if
+                any preparation is needed.
               </p>
             </div>
             <div className="flex flex-none flex-wrap gap-2">
@@ -146,8 +175,8 @@ export default async function SpecialtyDetailPage({ params }: SpecialtyPageProps
 
           <p className="text-xs leading-relaxed text-[#142F86]/55">
             The information on this page describes the services this department
-            offers. It is general information, not medical advice, and it is not a
-            substitute for consulting a clinician about your own symptoms.
+            offers. It is general information, not medical advice, and it is not
+            a substitute for consulting a clinician about your own symptoms.
           </p>
         </div>
       </Section>

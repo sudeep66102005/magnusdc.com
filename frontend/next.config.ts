@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
   assetPrefix: repoBasePath ? `${repoBasePath}/` : undefined,
   images: {
     unoptimized: true,
+    remotePatterns: [{ protocol: "https", hostname: "images.unsplash.com" }],
   },
 };
 

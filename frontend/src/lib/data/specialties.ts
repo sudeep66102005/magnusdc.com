@@ -11,6 +11,8 @@ export interface SpecialtyContent {
   conditions: string[];
   /** Tests, procedures and services the department offers here. */
   services: string[];
+  /** Clean, text-free visual used in the specialty page hero. */
+  image: { src: string; alt: string };
 }
 
 export function toSlug(name: string): string {
@@ -37,7 +39,12 @@ export function specialtySlugFor(name: string): string {
  */
 const CONTENT: Record<
   string,
-  { summary: string; overview: string; conditions: string[]; services: string[] }
+  {
+    summary: string;
+    overview: string;
+    conditions: string[];
+    services: string[];
+  }
 > = {
   "Physician / Internal Medicine": {
     summary:
@@ -319,7 +326,8 @@ const CONTENT: Record<
     ],
   },
   Dermatology: {
-    summary: "Skin, hair and nail conditions — acne, eczema, hair loss and pigmentation.",
+    summary:
+      "Skin, hair and nail conditions — acne, eczema, hair loss and pigmentation.",
     overview:
       "Dermatology covers medical skin disease as well as hair and nail problems. Many chronic skin conditions have an internal cause, and having laboratory testing in the same building makes it straightforward to check for the thyroid, iron or hormonal issues behind them.",
     conditions: [
@@ -397,7 +405,8 @@ const CONTENT: Record<
     ],
   },
   Pulmonology: {
-    summary: "Lungs and breathing — asthma, COPD, chronic cough, TB and sleep apnoea.",
+    summary:
+      "Lungs and breathing — asthma, COPD, chronic cough, TB and sleep apnoea.",
     overview:
       "Pulmonology deals with the airways and lungs. Chest X-ray and CT, and the laboratory work needed for infection and allergy, are all available here, which matters when a persistent cough needs a cause rather than another course of antibiotics.",
     conditions: [
@@ -476,10 +485,117 @@ const CONTENT: Record<
   },
 };
 
+const DEFAULT_SPECIALTY_IMAGE =
+  "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=85";
+
+/**
+ * Hero visuals are intentionally clean editorial images: no text overlays,
+ * hospital signage, watermarks, or company branding inside the image itself.
+ * The image is paired with the page title and copy in the layout, not baked in.
+ */
+const SPECIALTY_IMAGES: Record<string, { src: string; alt: string }> = {
+  "Physician / Internal Medicine": {
+    src: DEFAULT_SPECIALTY_IMAGE,
+    alt: "Stethoscope resting beside a medical consultation workspace",
+  },
+  Orthopedics: {
+    src: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1200&q=85",
+    alt: "Bright modern surgical theatre prepared for patient care",
+  },
+  Cardiology: {
+    src: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=1200&q=85",
+    alt: "Anatomical heart model used for cardiac education",
+  },
+  Radiology: {
+    src: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1200&q=85",
+    alt: "Clean clinical imaging and procedure room",
+  },
+  Physiotherapy: {
+    src: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=1200&q=85",
+    alt: "Stethoscope and clinical workspace representing coordinated care",
+  },
+  "Gynecology & Obstetrics": {
+    src: "/assets/uploads/services/desktop%20image%20of%20Women's%20%26%20Fetal%20Medicine.jpeg",
+    alt: "Pregnant woman in a calm consultation setting",
+  },
+  Neurology: {
+    src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=1200&q=85",
+    alt: "Brain model representing neurological care",
+  },
+  "General Surgery": {
+    src: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1200&q=85",
+    alt: "Bright modern surgical theatre prepared for patient care",
+  },
+  Neurosurgery: {
+    src: "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=1200&q=85",
+    alt: "Brain model representing neurosurgical care",
+  },
+  "Vascular Surgery": {
+    src: "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=1200&q=85",
+    alt: "Anatomical heart model representing circulation and vascular care",
+  },
+  "Medical Gastroenterology": {
+    src: DEFAULT_SPECIALTY_IMAGE,
+    alt: "Stethoscope resting beside a medical consultation workspace",
+  },
+  "Surgical Gastroenterology": {
+    src: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1200&q=85",
+    alt: "Bright modern surgical theatre prepared for patient care",
+  },
+  ENT: {
+    src: DEFAULT_SPECIALTY_IMAGE,
+    alt: "Stethoscope resting beside a medical consultation workspace",
+  },
+  Diabetology: {
+    src: DEFAULT_SPECIALTY_IMAGE,
+    alt: "Stethoscope resting beside a medical consultation workspace",
+  },
+  Dermatology: {
+    src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=85",
+    alt: "Portrait representing personal skin and wellness care",
+  },
+  Urology: {
+    src: DEFAULT_SPECIALTY_IMAGE,
+    alt: "Stethoscope resting beside a medical consultation workspace",
+  },
+  Nephrology: {
+    src: DEFAULT_SPECIALTY_IMAGE,
+    alt: "Stethoscope resting beside a medical consultation workspace",
+  },
+  Oncology: {
+    src: "https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&w=1200&q=85",
+    alt: "Bright modern clinical room prepared for patient care",
+  },
+  Pulmonology: {
+    src: DEFAULT_SPECIALTY_IMAGE,
+    alt: "Stethoscope resting beside a medical consultation workspace",
+  },
+  Pediatrics: {
+    src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=85",
+    alt: "Warm portrait representing compassionate family healthcare",
+  },
+  Endocrinology: {
+    src: DEFAULT_SPECIALTY_IMAGE,
+    alt: "Stethoscope resting beside a medical consultation workspace",
+  },
+  Homoeopathy: {
+    src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1200&q=85",
+    alt: "Portrait representing personal wellness care",
+  },
+};
+
 function buildSpecialty(name: string): SpecialtyContent {
   const content = CONTENT[name];
   if (content) {
-    return { slug: toSlug(name), name, ...content };
+    return {
+      slug: toSlug(name),
+      name,
+      ...content,
+      image: SPECIALTY_IMAGES[name] ?? {
+        src: DEFAULT_SPECIALTY_IMAGE,
+        alt: `${name} care`,
+      },
+    };
   }
   /* A specialty added to navigation.ts without content lands here. The page
      still builds, but it says only what is verifiably true rather than dressing
@@ -491,10 +607,15 @@ function buildSpecialty(name: string): SpecialtyContent {
     overview: `Our ${name.toLowerCase()} consultants see patients at our Koramangala centre, with imaging and laboratory services in the same building. Call us to ask what this department covers and to find the next available appointment.`,
     conditions: [],
     services: [],
+    image: SPECIALTY_IMAGES[name] ?? {
+      src: DEFAULT_SPECIALTY_IMAGE,
+      alt: `${name} care`,
+    },
   };
 }
 
-export const specialtyList: SpecialtyContent[] = specialties.map(buildSpecialty);
+export const specialtyList: SpecialtyContent[] =
+  specialties.map(buildSpecialty);
 
 export function getSpecialtyBySlug(slug: string): SpecialtyContent | undefined {
   return specialtyList.find((item) => item.slug === slug);
