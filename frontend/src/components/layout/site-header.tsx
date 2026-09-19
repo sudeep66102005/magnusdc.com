@@ -113,8 +113,13 @@ const headerCss = String.raw`/* header */
 @media(max-width:359px){.cm-logo{width:9.5rem;height:3.8rem;padding-inline:.7rem}.cm-logo__image{height:3.2rem}.cm-burger{width:3.8rem;height:3.8rem}.cm-mobile{top:4.6rem;max-height:calc(100vh - 5.9rem)}}
 @media(max-width:767px){
   .cm-header:has(.mobile-menu-panel[data-open="true"]) .cm-burger{
-    opacity:0;
-    pointer-events:none;
+    position:fixed;
+    top:28px;
+    right:28px;
+    z-index:110;
+    opacity:1;
+    pointer-events:auto;
+    background:#F5F5F5;
   }
   .cm-header:has(.mobile-menu-panel[data-open="true"]) .cm-header__left>.cm-logo{
     visibility:hidden;
@@ -138,7 +143,7 @@ const headerCss = String.raw`/* header */
     position:fixed;
     inset:12px 12px auto;
     width:auto;
-    height:calc(100dvh - 80px);
+    height:calc(100dvh - 24px);
     max-height:none;
     z-index:100;
     display:flex;
@@ -155,7 +160,7 @@ const headerCss = String.raw`/* header */
   .mobile-menu-top{
     display:flex;
     align-items:center;
-    justify-content:space-between;
+    justify-content:flex-start;
     padding:16px;
     flex-shrink:0;
     background:#FFFFFF;
@@ -172,25 +177,6 @@ const headerCss = String.raw`/* header */
     max-width:180px;
     object-fit:contain;
     object-position:left center;
-  }
-  .mobile-menu-close{
-    display:grid;
-    place-items:center;
-    width:44px;
-    height:44px;
-    flex:none;
-    border:0;
-    border-radius:999px;
-    background:#F5F5F5;
-    color:#142F86;
-    font-size:32px;
-    font-weight:400;
-    line-height:1;
-    cursor:pointer;
-  }
-  .mobile-menu-close:focus-visible{
-    outline:2px solid #31B4F4;
-    outline-offset:2px;
   }
   .mobile-menu-links{
     flex:1;
@@ -263,9 +249,7 @@ export function SiteHeader() {
   useEffect(() => {
     const burger = document.querySelector<HTMLButtonElement>(".cm-burger");
     const menu = document.querySelector<HTMLElement>(".cm-mobile");
-    const closeButton =
-      document.querySelector<HTMLButtonElement>(".mobile-menu-close");
-    if (!burger || !menu || !closeButton) return;
+    if (!burger || !menu) return;
     const toggle = (v?: boolean) => {
       const open = v !== undefined ? v : menu.dataset.open !== "true";
       menu.dataset.open = open ? "true" : "false";
@@ -277,7 +261,6 @@ export function SiteHeader() {
           .forEach((d) => d.removeAttribute("open"));
     };
     const onBurger = () => toggle();
-    const onClose = () => toggle(false);
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && menu.dataset.open === "true") {
         toggle(false);
@@ -287,12 +270,10 @@ export function SiteHeader() {
     const links = Array.from(menu.querySelectorAll("a"));
     const close = () => toggle(false);
     burger.addEventListener("click", onBurger);
-    closeButton.addEventListener("click", onClose);
     document.addEventListener("keydown", onKey);
     links.forEach((a) => a.addEventListener("click", close));
     return () => {
       burger.removeEventListener("click", onBurger);
-      closeButton.removeEventListener("click", onClose);
       document.removeEventListener("keydown", onKey);
       links.forEach((a) => a.removeEventListener("click", close));
     };
@@ -415,13 +396,6 @@ export function SiteHeader() {
                   className="mobile-menu-logo"
                 />
               </a>
-              <button
-                type="button"
-                className="mobile-menu-close"
-                aria-label="Close menu"
-              >
-                ×
-              </button>
             </div>
             <div className="mobile-menu-links">
               <ul className="cm-mobile__list">
@@ -488,11 +462,8 @@ export function SiteHeader() {
               </ul>
             </div>
             <div className="mobile-menu-bottom">
-              <Link
-                href="/patient-info/appointment-booking"
-                className="mobile-menu-action"
-              >
-                Book Appointment
+              <Link href="/contact" className="mobile-menu-action">
+                Contact Now
               </Link>
             </div>
           </nav>
