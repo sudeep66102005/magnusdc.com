@@ -8,8 +8,7 @@ import { GlobalWidgets } from "@/components/layout/global-widgets";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { siteConfig } from "@/lib/constants/site-config";
 
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const socialImage = `${siteConfig.url}${basePath}/assets/logo/clarus-magnus-logo.png`;
+const socialImage = `${siteConfig.url}/assets/logo/clarus-magnus-logo.png`;
 
 const inter = Inter({
   variable: "--font-inter",
