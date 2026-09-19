@@ -6,6 +6,7 @@ import { mainNav } from "@/lib/constants/navigation";
 import { TestimonialsSection } from "@/components/home/testimonials-section";
 import { WhyMagnusSlideshow } from "@/components/home/why-magnus-slideshow";
 import { DoctorsSection } from "@/components/home/doctors-section";
+import { IntroOverlay } from "@/components/home/intro-overlay";
 
 const BP = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 /** Short commit of the deployed build, so the live page can be identified. */
@@ -1038,9 +1039,8 @@ html:has(.cm-root){scroll-behavior:smooth}
 }
 
 /* reveals */
-.cm-root .cm-reveal .cm-word{display:inline-block;overflow:hidden;vertical-align:top}
-.cm-root .cm-reveal .cm-word>span{display:inline-block;transform:translateY(110%);transition:transform .8s cubic-bezier(.2,0,0,1);transition-delay:calc(var(--w,0)*40ms)}
-.cm-root.is-ready .cm-reveal.in .cm-word>span{transform:translateY(0)}
+.cm-root .cm-reveal{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,0,0,1)}
+.cm-root.is-ready .cm-reveal{opacity:1;transform:none}
 .cm-root [data-rise]{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,0,0,1)}
 .cm-root.is-ready [data-rise].in{opacity:1;transform:none}
 
@@ -1054,7 +1054,6 @@ html:has(.cm-root){scroll-behavior:smooth}
   overflow:hidden;
   background:radial-gradient(ellipse at center,#fff 30%,#f0f5fa 100%);
   transition:opacity .65s ease,visibility .65s;
-  animation:cmIntroSafety .01s 2.5s forwards;
 }
 .cm-root.is-ready .cm-pre{
   opacity:0;
@@ -1147,9 +1146,6 @@ html:has(.cm-root){scroll-behavior:smooth}
   from{opacity:0;transform:translateY(5px)}
   to{opacity:1;transform:translateY(0)}
 }
-@keyframes cmIntroSafety{
-  to{opacity:0;visibility:hidden;pointer-events:none}
-}
 @media(max-width:600px){
   .cm-pre__frame{height:220px}
   .cm-pre__brand{width:min(240px,70vw)}
@@ -1157,7 +1153,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 
 @media(prefers-reduced-motion:reduce){
   html:has(.cm-root){scroll-behavior:auto}
-  .cm-root .cm-reveal .cm-word>span,.cm-root [data-rise]{transition:none!important;transform:none!important;opacity:1!important}
+  .cm-root .cm-reveal,.cm-root [data-rise]{transition:none!important;transform:none!important;opacity:1!important}
   .cm-pre{display:none}
   .cm-svc__img{transition:none}
   .cm-about{margin-top:0}
@@ -1397,16 +1393,14 @@ function initClarus(root){
 
   // shared ticker
   const subs=new Set(); let last=performance.now(), rafId=0; const cleaners=[];
-  const tick=now=>{ if(!root.isConnected){cleaners.forEach(f=>f());subs.clear();window.__cmBoot&&window.__cmBoot.watch&&window.__cmBoot.watch();return;} const dt=Math.min(.05,Math.max(0,(now-last)/1000)); last=now; if(!document.hidden) subs.forEach(f=>f(now,dt)); rafId=requestAnimationFrame(tick); };
+  const tick=now=>{ if(!root.isConnected){cleaners.forEach(f=>f());subs.clear();return;} const dt=Math.min(.05,Math.max(0,(now-last)/1000)); last=now; if(!document.hidden) subs.forEach(f=>f(now,dt)); rafId=requestAnimationFrame(tick); };
   rafId=requestAnimationFrame(tick); cleaners.push(()=>cancelAnimationFrame(rafId));
   const sub=f=>{subs.add(f);return()=>subs.delete(f);};
   function spring(v){return {v:v,t:v,vel:0,step(dt,k,d){const a=(this.t-this.v)*k-this.vel*d;this.vel+=a*dt;this.v+=this.vel*dt;return this.v;}};}
 
-  // reveals: split words
-  const reveals=[...root.querySelectorAll('.cm-reveal')];
-  if(!reduce) reveals.forEach(el=>{ let wi=0; const walk=document.createTreeWalker(el,NodeFilter.SHOW_TEXT); const nodes=[]; while(walk.nextNode())nodes.push(walk.currentNode); nodes.forEach(n=>{ if(!(n.nodeValue||'').trim())return; const frag=document.createDocumentFragment(); (n.nodeValue||'').split(/(\s+)/).forEach(w=>{ if(/^\s+$/.test(w)){frag.appendChild(document.createTextNode(w));return;} const o=document.createElement('span'); o.className='cm-word'; o.style.setProperty('--w',String(wi++)); const inner=document.createElement('span'); inner.textContent=w; o.appendChild(inner); frag.appendChild(o); }); n.replaceWith(frag); }); });
+  // Reveal whole React-rendered blocks; never rewrite their text nodes.
   const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); }),{threshold:.18});
-  reveals.forEach(el=>io.observe(el)); root.querySelectorAll('[data-rise]').forEach(el=>io.observe(el)); cleaners.push(()=>io.disconnect());
+  root.querySelectorAll('[data-rise]').forEach(el=>io.observe(el)); cleaners.push(()=>io.disconnect());
 
   // mobile menu
   const burger=root.querySelector('.cm-burger'); const menu=root.querySelector('.cm-mobile');
@@ -1439,24 +1433,11 @@ function initClarus(root){
   const banner=root.querySelector('.cm-about__banner img'); const frame=root.querySelector('.cm-about__banner');
   if(banner&&frame&&!reduce){ banner.style.top='-25%'; banner.style.height='150%'; const sp2=spring(0); sub((now,dt)=>{ const r=frame.getBoundingClientRect(); const span=window.innerHeight+r.height; if(span<=0)return; const prog=Math.min(1,Math.max(0,(window.innerHeight-r.top)/span)); sp2.t=prog-0.5; const s=sp2.step(dt,180,40); banner.style.transform='translate3d(0,'+(s*25)+'%,0)'; }); }
 
-  // stat counters
-  root.querySelectorAll('[data-count]').forEach(el=>{ const full=el.dataset.count||''; const m=/^(\D*)(\d+)(\D*)$/.exec(full); if(!m||reduce){el.textContent=full;return;} const pre=m[1],target=+m[2],suf=m[3]; let done=false; const o=new IntersectionObserver(([e])=>{ if(!e.isIntersecting){done=false;el.textContent=pre+'0'+suf;return;} if(done)return; done=true; const start=performance.now(); const run=now=>{ const p=Math.min(1,(now-start)/1400); el.textContent=pre+Math.round(target*(1-Math.pow(1-p,3)))+suf; if(p<1)requestAnimationFrame(run); }; requestAnimationFrame(run); },{threshold:.3}); o.observe(el); cleaners.push(()=>o.disconnect()); });
-
   // team drag rail removed with the doctor card grid
 
   // contact form -> WhatsApp
   const form=root.querySelector('.cm-form form');
   if(form){ form.addEventListener('submit',e=>{ e.preventDefault(); const fd=new FormData(form); const name=(fd.get('name')||'').toString().trim(); const phone=(fd.get('phone')||'').toString().trim(); const msg=(fd.get('message')||'').toString().trim(); const text='Callback request from the Clarus Magnus website.'+(name?'\nName: '+name:'')+(phone?'\nPhone: '+phone:'')+(msg?'\nMessage: '+msg:''); const url=${JSON.stringify(siteConfig.whatsapp.href)}+'?text='+encodeURIComponent(text); window.location.assign(url); }); }
-
-  // Intro timing: let the precision scan complete, with a hard safety fallback.
-  const reveal = () => root.classList.add('is-ready');
-  const revealTimer = setTimeout(reveal, reduce ? 0 : 1450);
-  const revealFallback = setTimeout(reveal, 2200);
-
-  cleaners.push(() => {
-    clearTimeout(revealTimer);
-    clearTimeout(revealFallback);
-  });
 
   // DNA scenes
   if(reduce)return;
@@ -1507,12 +1488,8 @@ function initClarus(root){
 
   })();
 }
-if(!window.__cmBoot){
-  const state={boot:null,watch:null,mo:null};
-  const boot=()=>{ const r=document.querySelector('.cm-root'); if(!r)return false; if(state.mo){state.mo.disconnect();state.mo=null;} initClarus(r); return true; };
-  const watch=()=>{ if(boot()||state.mo)return; state.mo=new MutationObserver(boot); state.mo.observe(document.documentElement,{childList:true,subtree:true}); };
-  state.boot=boot; state.watch=watch; window.__cmBoot=state; watch();
-} else { window.__cmBoot.boot(); }
+const root=document.querySelector('.cm-root');
+if(root)initClarus(root);
 `;
 
 function Arrow() {
@@ -1572,35 +1549,7 @@ export default function HomePage() {
     <div className="cm-root" data-build={BUILD}>
       <style>{css}</style>
 
-      <div className="cm-pre" aria-hidden="true">
-        <div className="cm-pre__frame">
-          <span className="cm-pre__corner cm-pre__corner--tl" />
-          <span className="cm-pre__corner cm-pre__corner--tr" />
-          <span className="cm-pre__corner cm-pre__corner--bl" />
-          <span className="cm-pre__corner cm-pre__corner--br" />
-
-          <div className="cm-pre__brand">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className="cm-pre__mark"
-              data-preloader-layer="ghost"
-              src={asset("/assets/logo/clarus-magnus-logo.png")}
-              alt=""
-            />
-
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              className="cm-pre__mark cm-pre__color"
-              src={asset("/assets/logo/clarus-magnus-logo.png")}
-              alt=""
-            />
-
-            <span className="cm-pre__scan" />
-          </div>
-
-          <p className="cm-pre__caption">Precision. Clarity. Care.</p>
-        </div>
-      </div>
+      <IntroOverlay assetSrc={asset("/assets/logo/clarus-magnus-logo.png")} />
 
 
       {/* HERO */}
