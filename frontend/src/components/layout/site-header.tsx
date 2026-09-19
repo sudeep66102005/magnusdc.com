@@ -40,7 +40,7 @@ function Arrow() {
 const headerCss = String.raw`/* header */
 .cm-header{position:fixed;inset-inline:0;top:1rem;z-index:60;padding-inline:1rem;pointer-events:none}
 @media(min-width:768px){.cm-header{padding-inline:2.5rem}}
-@media(min-width:1024px){.cm-header{padding-left:7.5rem}}
+@media(min-width:1024px){.cm-header{padding-inline:2.5rem}}
 .cm-header__row{display:flex;align-items:center;justify-content:space-between;gap:.75rem}
 .cm-header__left{display:flex;min-width:0;align-items:center;gap:.75rem}
 .cm-glass{pointer-events:auto;border-radius:12px;background:var(--glass);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
