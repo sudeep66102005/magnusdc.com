@@ -16,13 +16,16 @@ import { siteConfig } from "@/lib/constants/site-config";
 export function DirectContactFallback({
   heading,
   mailto,
+  whatsapp,
   tone = "notice",
 }: {
   heading: string;
   mailto?: string;
+  whatsapp?: string;
   tone?: "notice" | "error";
 }) {
-  const border = tone === "error" ? "border-[#DA1C29]/35" : "border-[#142F86]/15";
+  const border =
+    tone === "error" ? "border-[#DA1C29]/35" : "border-[#142F86]/15";
   const bg = tone === "error" ? "bg-[#DA1C29]/6" : "bg-[#31B4F4]/8";
 
   return (
@@ -41,13 +44,13 @@ export function DirectContactFallback({
           {siteConfig.phone.display}
         </a>
         <a
-          href={siteConfig.whatsapp.href}
+          href={whatsapp ?? siteConfig.whatsapp.href}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-xs font-bold text-[#142F86] ring-1 ring-[#142F86]/15 transition hover:ring-[#31B4F4]"
         >
           <MessageCircle className="size-3.5" />
-          WhatsApp
+          {whatsapp ? "WhatsApp these details" : "WhatsApp"}
         </a>
         <a
           href={mailto ?? `mailto:${siteConfig.email}`}

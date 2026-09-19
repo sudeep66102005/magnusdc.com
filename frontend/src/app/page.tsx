@@ -212,9 +212,9 @@ const CONTACT = {
   eyebrow: "Get in touch",
   title: "Not sure which scan or specialist you need? Ask us.",
   description:
-    "Leave your details and our care team will call you back to help you choose the right scan, package or doctor — and a time that suits you.",
-  formTitle: "Request a call back",
-  submit: "Send Request",
+    "Leave your details. We’ll open WhatsApp with your request filled in; press Send in WhatsApp to deliver it to our care team.",
+  formTitle: "Continue in WhatsApp",
+  submit: "Continue in WhatsApp",
 };
 
 const css = String.raw`
@@ -1344,7 +1344,7 @@ function initClarus(root){
 
   // contact form -> WhatsApp
   const form=root.querySelector('.cm-form form');
-  if(form){ form.addEventListener('submit',e=>{ e.preventDefault(); const fd=new FormData(form); const name=(fd.get('name')||'').toString().trim(); const phone=(fd.get('phone')||'').toString().trim(); const msg=(fd.get('message')||'').toString().trim(); const text='Callback request from the Clarus Magnus website.'+(name?'\nName: '+name:'')+(phone?'\nPhone: '+phone:'')+(msg?'\nMessage: '+msg:''); const url=${JSON.stringify(siteConfig.whatsapp.href)}+'?text='+encodeURIComponent(text); window.open(url,'_blank','noopener'); }); }
+  if(form){ form.addEventListener('submit',e=>{ e.preventDefault(); const fd=new FormData(form); const name=(fd.get('name')||'').toString().trim(); const phone=(fd.get('phone')||'').toString().trim(); const msg=(fd.get('message')||'').toString().trim(); const text='Callback request from the Clarus Magnus website.'+(name?'\nName: '+name:'')+(phone?'\nPhone: '+phone:'')+(msg?'\nMessage: '+msg:''); const url=${JSON.stringify(siteConfig.whatsapp.href)}+'?text='+encodeURIComponent(text); window.location.assign(url); }); }
 
   // preloader: visual minimum only; never wait on page, font, import, or WebGL readiness
   const reveal=()=>root.classList.add('is-ready');

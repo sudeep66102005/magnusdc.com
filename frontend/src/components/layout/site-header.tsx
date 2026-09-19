@@ -285,8 +285,8 @@ export function SiteHeader() {
       <header className="cm-header">
         <div className="cm-header__row">
           <div className="cm-header__left">
-            <a
-              href="#hero"
+            <Link
+              href="/#hero"
               className="cm-glass cm-logo"
               aria-label="Clarus Magnus Health and Diagnostics home"
             >
@@ -298,7 +298,7 @@ export function SiteHeader() {
                 priority
                 className="cm-logo__image"
               />
-            </a>
+            </Link>
             <nav aria-label="Primary navigation" className="cm-glass cm-nav">
               <ul>
                 {HEADER_NAV.map((item) =>
@@ -382,8 +382,8 @@ export function SiteHeader() {
             data-open="false"
           >
             <div className="mobile-menu-top">
-              <a
-                href="#hero"
+              <Link
+                href="/#hero"
                 className="mobile-menu-brand"
                 aria-label="Clarus Magnus Health and Diagnostics home"
               >
@@ -395,7 +395,7 @@ export function SiteHeader() {
                   priority
                   className="mobile-menu-logo"
                 />
-              </a>
+              </Link>
             </div>
             <div className="mobile-menu-links">
               <ul className="cm-mobile__list">

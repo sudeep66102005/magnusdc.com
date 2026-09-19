@@ -1,9 +1,14 @@
+const configuredSiteUrl = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.magnusdc.com"
+).replace(/\/$/, "");
+
 export const siteConfig = {
   name: "Clarus Magnus Health & Diagnostics",
   shortName: "Clarus Magnus",
   description:
     "Radiologist-led advanced diagnostics, laboratory services and multispecialty care in Koramangala, Bengaluru—delivered with precision, transparency and compassion.",
-  url: "https://www.magnusdc.com",
+  url: configuredSiteUrl,
+  isPreview: configuredSiteUrl.includes(".github.io"),
   phone: {
     display: "080 4291 9999",
     href: "tel:+918042919999",

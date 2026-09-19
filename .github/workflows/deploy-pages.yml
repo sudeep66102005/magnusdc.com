@@ -86,6 +86,11 @@ jobs:
           # Point the built site at your deployed backend API.
           # Update this once the backend is hosted (e.g. Railway/Render).
           NEXT_PUBLIC_API_URL: ${{ vars.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api' }}
+          # Optional static form handler (Formspree, Basin or an approved JSON endpoint).
+          NEXT_PUBLIC_FORM_ENDPOINT: ${{ vars.NEXT_PUBLIC_FORM_ENDPOINT || '' }}
+          # Canonical site origin. Keep the GitHub Pages preview noindex; set the
+          # repository variable to the final production domain when launching.
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || format('https://{0}.github.io/{1}', github.repository_owner, github.event.repository.name) }}
           # Stamped onto <div class="cm-root" data-build="..."> so the live page
           # can be matched to the commit it was built from.
           NEXT_PUBLIC_BUILD: ${{ github.sha }}

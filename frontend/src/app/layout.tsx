@@ -8,6 +8,9 @@ import { GlobalWidgets } from "@/components/layout/global-widgets";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { siteConfig } from "@/lib/constants/site-config";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const socialImage = `${siteConfig.url}${basePath}/assets/logo/clarus-magnus-logo.png`;
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -29,6 +32,42 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
+  alternates: { canonical: "./" },
+  robots: siteConfig.isPreview
+    ? { index: false, follow: false }
+    : { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    title: `${siteConfig.name} | Advanced Diagnostics in Koramangala`,
+    description: siteConfig.description,
+    images: [{ url: socialImage, alt: siteConfig.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.name} | Advanced Diagnostics in Koramangala`,
+    description: siteConfig.description,
+    images: [socialImage],
+  },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "MedicalClinic",
+  name: siteConfig.name,
+  url: siteConfig.url,
+  telephone: siteConfig.phone.href.replace(/^tel:/, ""),
+  email: siteConfig.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: siteConfig.address.line2,
+    addressLocality: siteConfig.address.city,
+    addressRegion: siteConfig.address.state,
+    postalCode: siteConfig.address.zip,
+    addressCountry: "IN",
+  },
+  hasMap: siteConfig.address.mapsHref,
+  sameAs: Object.values(siteConfig.social),
 };
 
 /* Must be its own export: Next ignores `viewport` and `themeColor` when they
@@ -54,6 +93,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} h-full antialiased`}>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html:

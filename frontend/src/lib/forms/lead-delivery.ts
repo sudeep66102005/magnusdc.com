@@ -59,7 +59,10 @@ export async function submitLead(
   if (leadBackend === "form-endpoint") {
     const response = await fetch(FORM_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
       body: JSON.stringify({
         ...payload,
         _form: kind,
@@ -84,7 +87,10 @@ export async function submitLead(
 }
 
 /** Prefilled mailto so a visitor's typing is never wasted on a failure. */
-export function mailtoFor(kind: LeadKind, payload: Record<string, unknown>): string {
+export function mailtoFor(
+  kind: LeadKind,
+  payload: Record<string, unknown>,
+): string {
   const subjects: Record<LeadKind, string> = {
     contact: "Website enquiry",
     appointment: "Appointment request",
@@ -97,4 +103,22 @@ export function mailtoFor(kind: LeadKind, payload: Record<string, unknown>): str
   return `mailto:${siteConfig.email}?subject=${encodeURIComponent(
     subjects[kind],
   )}&body=${encodeURIComponent(body)}`;
+}
+
+/** Prefilled WhatsApp message so fallback submissions keep the visitor's details. */
+export function whatsappFor(
+  kind: LeadKind,
+  payload: Record<string, unknown>,
+): string {
+  const subjects: Record<LeadKind, string> = {
+    contact: "Website enquiry",
+    appointment: "Appointment request",
+    "corporate-inquiry": "Corporate health enquiry",
+  };
+  const body = Object.entries(payload)
+    .filter(([, value]) => value !== undefined && value !== "")
+    .map(([key, value]) => `${key}: ${String(value)}`)
+    .join("\n");
+  const text = [subjects[kind], body].filter(Boolean).join("\n\n");
+  return `${siteConfig.whatsapp.href}?text=${encodeURIComponent(text)}`;
 }

@@ -4,6 +4,7 @@ import { getAllDiagnosticSlugs } from "@/lib/data/diagnostics";
 import { getAllLabSlugs } from "@/lib/data/laboratory";
 import { getAllSpecialtySlugs } from "@/lib/data/specialties";
 import { getAllDoctorSlugs } from "@/lib/data/doctors";
+import { packageCategoryDetails } from "@/lib/data/health-packages";
 
 /**
  * Generates /sitemap.xml at build time.
@@ -53,6 +54,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...getAllLabSlugs().map((slug) => `/laboratory/${slug}`),
     ...getAllSpecialtySlugs().map((slug) => `/specialties/${slug}`),
     ...getAllDoctorSlugs().map((slug) => `/doctors/${slug}`),
+    ...Object.keys(packageCategoryDetails).map(
+      (category) => `/health-packages/${category}`,
+    ),
   ];
 
   return [...staticPaths, ...dynamicPaths].map((path) => ({
