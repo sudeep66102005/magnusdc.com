@@ -8,7 +8,9 @@ import { GlobalWidgets } from "@/components/layout/global-widgets";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { siteConfig } from "@/lib/constants/site-config";
 
-const socialImage = `${siteConfig.url}/assets/logo/clarus-magnus-logo.png`;
+const socialImage = `${siteConfig.url}/assets/logo/${encodeURIComponent(
+  "logo for the title of the website on top.jpeg",
+)}`;
 
 const inter = Inter({
   variable: "--font-inter",
@@ -32,6 +34,11 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
   alternates: { canonical: "./" },
+  icons: {
+    icon: [{ url: socialImage, type: "image/jpeg" }],
+    shortcut: socialImage,
+    apple: socialImage,
+  },
   robots: siteConfig.isPreview
     ? { index: false, follow: false }
     : { index: true, follow: true },
@@ -40,7 +47,13 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: `${siteConfig.name} | Advanced Diagnostics in Koramangala`,
     description: siteConfig.description,
-    images: [{ url: socialImage, alt: siteConfig.name }],
+    images: [
+      {
+        url: socialImage,
+        type: "image/jpeg",
+        alt: siteConfig.name,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
