@@ -321,7 +321,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-btn__ico svg{width:1.15rem;height:1.15rem}
 
 /* ---- Hero, phone and tablet: the supplied design ----------------------------
-   Scoped to <=1023px on purpose. The desktop hero is pixel-placed with absolute
+   Scoped to \3c =1023px on purpose. The desktop hero is pixel-placed with absolute
    positions and its own chip rail, and the stat cards have nowhere to go in
    that composition, so they are phone and tablet only.
    Nothing here touches .cm-hero__scene or .cm-dna — the DNA animation keeps its
@@ -665,7 +665,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-why-mag__shots{position:absolute;inset:-12% 0;transform:translate3d(0,var(--cm-par,0),0);will-change:transform}
 /* Real picture/img rather than a background, so each slide can serve a separate
    mobile file. Descendant selector, not a child one: this stylesheet is injected
-   as a text child of <style\3e , where a literal \3e  is HTML-escaped and would kill
+   as a text child of \3c style\3e , where a literal \3e  is HTML-escaped and would kill
    the rule. */
 .cm-why-mag__shot{position:absolute;inset:0;display:block;opacity:0;transform:scale(1.05);transition:opacity 1.1s ease,transform 7s ease-out}
 .cm-why-mag__shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
