@@ -47,11 +47,11 @@ const headerCss = String.raw`/* header */
 .cm-logo{display:flex;align-items:center;justify-content:flex-start;width:clamp(14rem,22vw,20rem);height:6.5rem;padding:.3rem 1.25rem}
 .cm-logo__image{display:block;width:auto;height:6rem;max-width:100%;object-fit:contain;object-position:left center}
 .cm-nav{display:none;align-items:stretch;height:6.5rem;padding:0 .5rem;overflow:visible}
-.cm-nav\3e ul{display:flex;align-items:stretch;gap:0;margin:0;padding:0;list-style:none}
+.cm-nav ul{display:flex;align-items:stretch;gap:0;margin:0;padding:0;list-style:none}
 .cm-nav__item{position:relative;display:flex;align-items:stretch}
 .cm-nav__item--has-children::after{content:"";position:absolute;top:100%;right:0;left:0;height:.5rem}
 .cm-nav__link{display:flex;align-items:center;gap:.4rem;height:100%;padding:0 .65rem;border-radius:8px;color:#142F86;font-size:1rem;font-weight:700;white-space:nowrap;transition:background .15s,color .15s}
-.cm-nav__link:hover,.cm-nav__item:focus-within\3e .cm-nav__link{background:rgb(49 180 244 / .12);color:#142F86}
+.cm-nav__link:hover,.cm-nav__item:focus-within .cm-nav__link{background:rgb(49 180 244 / .12);color:#142F86}
 .cm-nav__link:focus-visible,.cm-nav__dropdown a:focus-visible{outline:2px solid #31B4F4;outline-offset:-2px}
 .cm-nav__chevron{width:1rem;height:1rem;flex:none;transition:transform .15s}
 .cm-nav__item:hover .cm-nav__chevron,.cm-nav__item:focus-within .cm-nav__chevron{transform:rotate(180deg)}
@@ -121,7 +121,7 @@ const headerCss = String.raw`/* header */
     pointer-events:auto;
     background:#F5F5F5;
   }
-  .cm-header:has(.mobile-menu-panel[data-open="true"]) .cm-header__left\3e .cm-logo{
+  .cm-header:has(.mobile-menu-panel[data-open="true"]) .cm-header__left .cm-logo{
     visibility:hidden;
   }
   .mobile-menu-backdrop{
@@ -200,7 +200,7 @@ const headerCss = String.raw`/* header */
   }
   .mobile-menu-row:last-child{border-bottom:0}
   .mobile-menu-row summary,
-  .mobile-menu-row\3e a{
+  .mobile-menu-row a{
     width:100%;
     min-height:48px;
     color:#142F86;
@@ -242,7 +242,7 @@ const headerCss = String.raw`/* header */
 .cm-header a{text-decoration:none}
 body:not(:has(.cm-root)){padding-top:5.75rem}
 @media(min-width:1024px){body:not(:has(.cm-root)){padding-top:8rem}}
-body:has(.cm-root) \3e  header.sticky,body \3e  header.sticky{display:none!important}
+body:has(.cm-root) header.sticky,body header.sticky{display:none!important}
 `;
 
 export function SiteHeader() {
