@@ -219,7 +219,7 @@ const CONTACT = {
 };
 
 const css = String.raw`
-body:has(.cm-root) \3e  header.sticky{display:none!important}
+body:has(.cm-root) header.sticky{display:none!important}
 html:has(.cm-root){scroll-behavior:smooth}
 
 .cm-root{--green:#142F86;--green-deep:#DA1C29;--lime:#31B4F4;--lime-b:rgb(49 180 244 / .82);--mint:#FFFFFF;--mint-deep:#FFFFFF;--ink:#142F86;--muted:rgb(20 47 134 / .55);--subtle:rgb(20 47 134 / .72);--line:rgb(20 47 134 / .16);--glass:#FFFFFF;--glass-s:#FFFFFF;--glass-strong:#FFFFFF;
@@ -261,7 +261,7 @@ html:has(.cm-root){scroll-behavior:smooth}
 .cm-btn--pill .cm-arrow{width:1.1rem;height:1.1rem}
 .cm-hero__button{position:relative;isolation:isolate;overflow:hidden;border-color:transparent;transition:color .9s ease,transform .3s}
 .cm-hero__button::before{content:"";position:absolute;inset:0;z-index:0;transform:translateX(-105%);transition:transform 1s cubic-bezier(.22,1,.36,1)}
-.cm-hero__button\3e span,.cm-hero__button\3e .cm-arrow{position:relative;z-index:1}
+.cm-hero__button span,.cm-hero__button .cm-arrow{position:relative;z-index:1}
 .cm-hero__button:hover::before,.cm-hero__button:focus-visible::before{transform:translateX(0)}
 .cm-hero__button--primary{background:#142F86;color:#FFFFFF}
 .cm-hero__button--primary::before{background:linear-gradient(110deg,#142F86 0%,#31B4F4 52%,#142F86 100%)}
