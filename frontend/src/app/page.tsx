@@ -1748,4 +1748,56 @@ export default function HomePage() {
           <div className="cm-contact__layout">
             <div className="cm-contact__location">
               <div className="cm-contact__head">
-                <h2 className="cm-contact__title cm-reveal">{CONTACT.ey
+                <h2 className="cm-contact__title cm-reveal">{CONTACT.eyebrow}</h2>
+              </div>
+              <div className="cm-location__map" data-rise>
+                <iframe
+                  src={siteConfig.address.mapEmbedHref}
+                  title="Clarus Magnus Health and Diagnostics location in Koramangala"
+                  loading="lazy"
+                  allowFullScreen
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                <a className="cm-location__link" href={siteConfig.address.mapsHref} target="_blank" rel="noopener noreferrer">
+                  Open in Google Maps
+                </a>
+              </div>
+            </div>
+            <div className="cm-form">
+              <span className="cm-form__mark">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={asset("/assets/logo/clarus-magnus-logo.png")} alt={siteConfig.name} loading="lazy" decoding="async" />
+              </span>
+              <h3>{CONTACT.formTitle}</h3>
+              <form>
+                <div className="cm-field">
+                  <label htmlFor="cm-name">Your name</label>
+                  <input id="cm-name" name="name" type="text" placeholder="Name" />
+                </div>
+                <div className="cm-field">
+                  <label htmlFor="cm-phone">Your phone</label>
+                  <input id="cm-phone" name="phone" type="tel" placeholder="Phone" />
+                </div>
+                <div className="cm-field">
+                  <label htmlFor="cm-message">Your message</label>
+                  <textarea id="cm-message" name="message" rows={1} placeholder="Message" />
+                </div>
+                <p className="cm-form__consent">
+                  By submitting, you agree to our{" "}
+                  <Link href="/privacy-policy">Privacy Policy</Link> and the processing of your personal data.
+                </p>
+                <button type="submit" className="cm-form__submit">
+                  <span className="cm-form__submit-label">{CONTACT.submit}</span>
+                  <span className="cm-disc"><Arrow /></span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Script id="cm-interactions" type="module" strategy="afterInteractive" dangerouslySetInnerHTML={{ __html: dnaScript }} />
+    </div>
+  );
+}
+
