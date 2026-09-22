@@ -20,11 +20,17 @@ import { siteConfig } from "@/lib/constants/site-config";
  *    a Cloudflare Worker, anything accepting a JSON POST) be switched on by
  *    setting one repository variable, with no code change.
  *
- * Precedence: the static handler wins if set, otherwise the API, otherwise the
- * form falls back to telephone, WhatsApp and email.
+ * Precedence: Supabase wins when configured, then the static handler, then the
+ * API. Without any destination, the form falls back to direct contact options.
  */
 
 const FORM_ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT ?? "";
+const SUPABASE_URL =
+  process.env.NEXT_PUBLIC_SUPABASE_URL ??
+  "https://ekawbkomvkjrvyyabign.supabase.co";
+const SUPABASE_ANON_KEY =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ??
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVrYXdia29tdmtqcnZ5eWFiaWduIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAwODgzNDgsImV4cCI6MjEwNTY2NDM0OH0.bRKVG_DXlmvwV3yYlKIHuywJhAXKGA-OmGZVucVA9q8";
 
 /** An API URL pointing at localhost is a default, not a deployment. */
 function isRealApiUrl(url: string): boolean {
@@ -32,11 +38,14 @@ function isRealApiUrl(url: string): boolean {
   return !/^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?/i.test(url);
 }
 
-export const leadBackend: "form-endpoint" | "api" | "none" = FORM_ENDPOINT
-  ? "form-endpoint"
-  : isRealApiUrl(API_BASE_URL)
-    ? "api"
-    : "none";
+export const leadBackend: "supabase" | "form-endpoint" | "api" | "none" =
+  SUPABASE_URL && SUPABASE_ANON_KEY
+    ? "supabase"
+    : FORM_ENDPOINT
+      ? "form-endpoint"
+      : isRealApiUrl(API_BASE_URL)
+        ? "api"
+        : "none";
 
 export const isLeadBackendConfigured = leadBackend !== "none";
 
@@ -56,6 +65,38 @@ export async function submitLead(
   apiPath: string,
   payload: Record<string, unknown>,
 ): Promise<void> {
+  if (leadBackend === "supabase") {
+    const fullName =
+      payload.patientName ?? payload.name ?? payload.contactPerson ?? "";
+    const notes = payload.notes ?? payload.message ?? null;
+    const response = await fetch(`${SUPABASE_URL}/rest/v1/lead_submissions`, {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        "Content-Type": "application/json",
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify({
+        form_type: kind,
+        full_name: String(fullName),
+        phone: String(payload.phone ?? ""),
+        email: payload.email || null,
+        department: payload.department || null,
+        preferred_date: payload.preferredDate || null,
+        preferred_time: payload.preferredTime || null,
+        notes: notes || null,
+        company_name: payload.companyName || null,
+        employee_count: payload.employeeCount || null,
+        page_url: typeof window === "undefined" ? null : window.location.href,
+      }),
+    });
+    if (!response.ok) {
+      throw new Error(`Supabase responded ${response.status}`);
+    }
+    return;
+  }
+
   if (leadBackend === "form-endpoint") {
     const response = await fetch(FORM_ENDPOINT, {
       method: "POST",
@@ -82,7 +123,7 @@ export async function submitLead(
   }
 
   throw new Error(
-    "No form destination is configured. Set NEXT_PUBLIC_FORM_ENDPOINT or NEXT_PUBLIC_API_URL.",
+    "No form destination is configured. Set Supabase, NEXT_PUBLIC_FORM_ENDPOINT or NEXT_PUBLIC_API_URL.",
   );
 }
 
@@ -122,3 +163,4 @@ export function whatsappFor(
   const text = [subjects[kind], body].filter(Boolean).join("\n\n");
   return `${siteConfig.whatsapp.href}?text=${encodeURIComponent(text)}`;
 }
+
