@@ -54,7 +54,7 @@ export function ContactForm() {
 
       {isLeadBackendConfigured ? (
         <Button type="submit" size="lg" disabled={isPending} className="w-full">
-          {isPending ? "Sending..." : "Send Message"}
+          {isPending ? "Booking..." : "Instant Book"}
         </Button>
       ) : (
         <DirectContactFallback heading="Messages are answered by phone, WhatsApp and email" />
@@ -75,3 +75,4 @@ export function ContactForm() {
     </form>
   );
 }
+
