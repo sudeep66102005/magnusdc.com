@@ -8,9 +8,7 @@ import { GlobalWidgets } from "@/components/layout/global-widgets";
 import { ScrollToTop } from "@/components/layout/scroll-to-top";
 import { siteConfig } from "@/lib/constants/site-config";
 
-const socialImage = `${siteConfig.url}/assets/logo/${encodeURIComponent(
-  "logo for the title of the website on top.jpeg",
-)}`;
+const socialImage = `${siteConfig.url}/clarus-magnus-favicon-v2.png`;
 const organizationLogo = `${siteConfig.url}/assets/logo/clarus-magnus-logo.png`;
 const searchTitle = "Clarus Magnus Diagnostics, Koramangala | MRI, CT & Lab";
 
@@ -38,7 +36,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   alternates: { canonical: "./" },
   icons: {
-    icon: [{ url: socialImage, type: "image/jpeg" }],
+    icon: [{ url: socialImage, type: "image/png", sizes: "192x192" }],
     shortcut: socialImage,
     apple: socialImage,
   },
