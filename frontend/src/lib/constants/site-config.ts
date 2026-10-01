@@ -6,14 +6,14 @@ export const siteConfig = {
   name: "Clarus Magnus Health & Diagnostics",
   shortName: "Clarus Magnus",
   description:
-    "Radiologist-led advanced diagnostics, laboratory services and multispecialty care in Koramangala, Bengaluru—delivered with precision, transparency and compassion.",
+    "Advanced MRI, CT, ultrasound, laboratory tests and specialist consultations in Koramangala, Bengaluru. Book with Clarus Magnus Health & Diagnostics.",
   url: configuredSiteUrl,
   isPreview: configuredSiteUrl.includes(".github.io"),
   phone: {
-    display: "080 4291 9999",
-    href: "tel:+918042919999",
+    display: "90084 28161",
+    href: "tel:+919008428161",
   },
-  alternatePhones: ["080 6733 5588", "90084 27816", "90084 28161"],
+  alternatePhones: ["080 4291 9999", "080 6733 5588", "90084 27816"],
   whatsapp: {
     display: "Chat on WhatsApp",
     href: "https://wa.me/919008428161",

@@ -11,6 +11,8 @@ import { siteConfig } from "@/lib/constants/site-config";
 const socialImage = `${siteConfig.url}/assets/logo/${encodeURIComponent(
   "logo for the title of the website on top.jpeg",
 )}`;
+const organizationLogo = `${siteConfig.url}/assets/logo/clarus-magnus-logo.png`;
+const searchTitle = "Clarus Magnus Diagnostics, Koramangala | MRI, CT & Lab";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -28,9 +30,10 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteConfig.name} | Advanced Diagnostics in Koramangala`,
+    default: searchTitle,
     template: `%s | ${siteConfig.shortName}`,
   },
+  applicationName: siteConfig.name,
   description: siteConfig.description,
   metadataBase: new URL(siteConfig.url),
   alternates: { canonical: "./" },
@@ -45,7 +48,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: siteConfig.name,
-    title: `${siteConfig.name} | Advanced Diagnostics in Koramangala`,
+    title: searchTitle,
     description: siteConfig.description,
     images: [
       {
@@ -57,7 +60,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} | Advanced Diagnostics in Koramangala`,
+    title: searchTitle,
     description: siteConfig.description,
     images: [socialImage],
   },
@@ -65,21 +68,40 @@ export const metadata: Metadata = {
 
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "MedicalClinic",
-  name: siteConfig.name,
-  url: siteConfig.url,
-  telephone: siteConfig.phone.href.replace(/^tel:/, ""),
-  email: siteConfig.email,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: siteConfig.address.line2,
-    addressLocality: siteConfig.address.city,
-    addressRegion: siteConfig.address.state,
-    postalCode: siteConfig.address.zip,
-    addressCountry: "IN",
-  },
-  hasMap: siteConfig.address.mapsHref,
-  sameAs: Object.values(siteConfig.social),
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteConfig.url}/#website`,
+      url: siteConfig.url,
+      name: siteConfig.name,
+      alternateName: [siteConfig.shortName, "Magnus Diagnostic Centre"],
+      publisher: { "@id": `${siteConfig.url}/#organization` },
+    },
+    {
+      "@type": ["MedicalClinic", "Organization"],
+      "@id": `${siteConfig.url}/#organization`,
+      name: siteConfig.name,
+      alternateName: "Magnus Diagnostic Centre",
+      url: siteConfig.url,
+      logo: {
+        "@type": "ImageObject",
+        url: organizationLogo,
+      },
+      image: organizationLogo,
+      telephone: siteConfig.phone.href.replace(/^tel:/, ""),
+      email: siteConfig.email,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: siteConfig.address.line2,
+        addressLocality: siteConfig.address.city,
+        addressRegion: siteConfig.address.state,
+        postalCode: siteConfig.address.zip,
+        addressCountry: "IN",
+      },
+      hasMap: siteConfig.address.mapsHref,
+      sameAs: Object.values(siteConfig.social),
+    },
+  ],
 };
 
 /* Must be its own export: Next ignores `viewport` and `themeColor` when they
