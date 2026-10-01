@@ -192,7 +192,7 @@ const ABOUT = {
     { value: "18+", label: "Years of trusted care" },
     { value: "3T", label: "Advanced MRI" },
     { value: "24/7", label: "MRI & CT access" },
-    { value: "4.8", label: "Google patient rating" },
+    { value: "4.5", label: "Google patient rating" },
   ],
   paragraph: [
     { text: "Clarus Magnus is a radiologist-led destination in " },

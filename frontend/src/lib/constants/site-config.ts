@@ -16,10 +16,10 @@ export const siteConfig = {
   alternatePhones: ["080 6733 5588", "90084 27816", "90084 28161"],
   whatsapp: {
     display: "Chat on WhatsApp",
-    href: "https://wa.me/919008427816",
+    href: "https://wa.me/919008428161",
   },
   googleReviews: {
-    rating: 4.8,
+    rating: 4.5,
     href: "https://www.google.com/maps/search/?api=1&query=Magnus+Diagnostic+Centre+Koramangala+Bengaluru",
   },
   address: {
@@ -45,8 +45,9 @@ export const siteConfig = {
     homeCollection: "Free home sample collection available*",
   },
   social: {
-    facebook: "https://facebook.com/clarusmagnus",
-    instagram: "https://instagram.com/clarusmagnus",
+    facebook: "https://www.facebook.com/profile.php?id=61573172694712",
+    instagram:
+      "https://www.instagram.com/clarusmagnus_diagnostics?stkn=MWRqMmZsMTFkbnM5MA%3D%3D&utm_source=qr",
     linkedin: "https://linkedin.com/company/clarusmagnus",
   },
 } as const;
