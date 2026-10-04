@@ -4,6 +4,111 @@
       "source": "/home",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/about-us",
+      "destination": "/about",
+      "permanent": true
+    },
+    {
+      "source": "/facilities",
+      "destination": "/diagnostics",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/3t-mri",
+      "destination": "/diagnostics/mri",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/32-slice-ct",
+      "destination": "/diagnostics/ct-scan",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/opg-cbct",
+      "destination": "/diagnostics/opg-cbct",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/ultrasound-scan",
+      "destination": "/diagnostics/ultrasound",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/colour-doppler-scan",
+      "destination": "/diagnostics/doppler",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/computerised-lab",
+      "destination": "/laboratory",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/specialist-doctor-consultations",
+      "destination": "/doctors",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/ambulance-services",
+      "destination": "/contact",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/ecg",
+      "destination": "/diagnostics/advanced-procedures",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/echo",
+      "destination": "/diagnostics/advanced-procedures",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/tmt",
+      "destination": "/diagnostics/advanced-procedures",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/pft",
+      "destination": "/diagnostics/advanced-procedures",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/video-eeg",
+      "destination": "/diagnostics/advanced-procedures",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/enmg-ncs",
+      "destination": "/diagnostics/advanced-procedures",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/bmd",
+      "destination": "/diagnostics/advanced-procedures",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/endoscopy",
+      "destination": "/diagnostics/advanced-procedures",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/colonoscopy",
+      "destination": "/diagnostics/advanced-procedures",
+      "permanent": true
+    },
+    {
+      "source": "/facilities/:path*",
+      "destination": "/diagnostics",
+      "permanent": true
+    },
+    {
+      "source": "/product/:slug*",
+      "destination": "/health-packages",
+      "permanent": true
     }
   ]
 }
