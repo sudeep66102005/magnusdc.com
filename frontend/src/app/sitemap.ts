@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { blogArticles } from "@/lib/data/blog";
 import { siteConfig } from "@/lib/constants/site-config";
 import { getAllDiagnosticSlugs } from "@/lib/data/diagnostics";
 import { getAllLabSlugs } from "@/lib/data/laboratory";
@@ -39,6 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/specialties",
     "/health-packages",
     "/medical-library",
+    "/blog",
     "/patient-info",
     "/patient-info/appointment-booking",
     "/patient-info/patient-support",
@@ -50,6 +52,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const dynamicPaths = [
+    ...blogArticles.map((article) => `/blog/${article.slug}`),
     ...getAllDiagnosticSlugs().map((slug) => `/diagnostics/${slug}`),
     ...getAllLabSlugs().map((slug) => `/laboratory/${slug}`),
     ...getAllSpecialtySlugs().map((slug) => `/specialties/${slug}`),

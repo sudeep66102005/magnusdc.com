@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpen, ClipboardCheck, HeartPulse, ScanLine, ShieldCheck, TestTube2 } from "lucide-react";
 import { PageHero } from "@/components/shared/page-hero";
+import { BlogCards } from "@/components/shared/blog-cards";
+import { blogArticles } from "@/lib/data/blog";
 import { Section } from "@/components/shared/section";
 
 export const metadata: Metadata = {
@@ -56,7 +58,11 @@ export default function MedicalLibraryPage() {
         title="Clear information before every health decision."
         description="Patient-friendly guidance drawn from Clarus Magnus service and package information, designed to help you arrive informed and prepared."
       />
-      <Section>
+      <Section title="Imaging articles" description="Explore two practical guides each for MRI, CT, ultrasound and X-rays.">
+        <BlogCards articles={blogArticles} />
+        <Link href="/blog" className="mt-6 inline-block font-bold text-[#142F86] underline underline-offset-4">Browse all patient guides</Link>
+      </Section>
+      <Section title="More patient resources">
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {guides.map((guide) => {
             const Icon = guide.icon;

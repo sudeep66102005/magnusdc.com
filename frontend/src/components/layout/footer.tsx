@@ -28,6 +28,7 @@ const companyLinks = [
   { label: "For corporates", href: "/for-corporates" },
   { label: "Patient information", href: "/patient-info" },
   { label: "Medical library", href: "/medical-library" },
+  { label: "Patient guides", href: "/blog" },
   { label: "Contact", href: "/contact" },
 ];
 

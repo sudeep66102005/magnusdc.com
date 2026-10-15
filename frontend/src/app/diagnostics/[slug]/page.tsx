@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, CalendarDays, Check, Info } from "lucide-react";
+import { BlogCards } from "@/components/shared/blog-cards";
+import { blogArticles } from "@/lib/data/blog";
 import { Section } from "@/components/shared/section";
 import { siteConfig } from "@/lib/constants/site-config";
 import { diagnostics, getAllDiagnosticSlugs, getDiagnosticBySlug } from "@/lib/data/diagnostics";
@@ -39,6 +41,8 @@ export default async function DiagnosticDetailPage({ params }: DiagnosticPagePro
   if (!item) {
     notFound();
   }
+
+  const patientGuides = blogArticles.filter((article) => article.serviceSlug === slug);
 
   /* Tests sharing a category, so a visitor who landed on the wrong one has a
      route sideways instead of only back. */
@@ -142,6 +146,13 @@ export default async function DiagnosticDetailPage({ params }: DiagnosticPagePro
               </p>
             </div>
           </div>
+
+          {patientGuides.length > 0 && (
+            <section aria-labelledby="patient-guides-title">
+              <h2 id="patient-guides-title" className="mb-5 text-xl font-bold text-[#142F86]">Helpful guides before your scan</h2>
+              <BlogCards articles={patientGuides} />
+            </section>
+          )}
 
           {related.length > 0 && (
             <div>

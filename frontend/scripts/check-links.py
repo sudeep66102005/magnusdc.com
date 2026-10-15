@@ -44,6 +44,9 @@ def existing_routes() -> set[str]:
     routes |= {f"/diagnostics/{s}" for s in re.findall(r'slug: "([^"]+)"', read("lib/data/diagnostics.ts"))}
     routes |= {f"/laboratory/{s}" for s in re.findall(r'slug: "([^"]+)"', read("lib/data/laboratory.ts"))}
 
+    blog = read("lib/data/blog.ts")
+    routes |= {f"/blog/{s}" for s in re.findall(r'slug: "([^"]+)"', blog)}
+
     nav = read("lib/constants/navigation.ts")
     spec_block = nav[nav.index("export const specialties"):nav.index("] as const")]
     routes |= {f"/specialties/{slugify(s)}" for s in re.findall(r'^  "([^"]+)"', spec_block, re.M)}
@@ -75,6 +78,8 @@ def collected_links() -> dict[str, set[str]]:
             for match in re.finditer(pattern, text):
                 raw = next(g for g in match.groups() if g)
                 links.setdefault(raw, set()).add(path.relative_to(SRC).as_posix())
+    for match in re.finditer(r'\]\((/[^)]+)\)', read("lib/data/blog.ts")):
+        links.setdefault(match.group(1), set()).add("lib/data/blog.ts")
     return links
 
 
