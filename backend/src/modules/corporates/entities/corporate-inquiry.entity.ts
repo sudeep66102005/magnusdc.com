@@ -1,10 +1,10 @@
 export class CorporateInquiry {
   id: string;
-  companyName: string;
+  companyName?: string;
   contactPerson: string;
-  email: string;
+  email?: string;
   phone: string;
   employeeCount?: number;
-  message: string;
+  message?: string;
   createdAt: string;
 }

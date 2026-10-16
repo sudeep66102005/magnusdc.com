@@ -132,7 +132,6 @@ export default function ForCorporatesPage() {
           <div className="relative hidden lg:flex lg:items-end lg:justify-center lg:pb-0">
             <div className="relative h-[520px] w-[460px]">
               <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] shadow-2xl">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=920&q=85"
                   alt="Doctor and corporate professional reviewing health data on a tablet"
@@ -195,7 +194,6 @@ export default function ForCorporatesPage() {
                 className="group flex flex-col overflow-hidden rounded-2xl border border-[#142F86]/8 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="relative h-44 w-full overflow-hidden bg-[#EEF4FF]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={img} alt={imgAlt} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#142F86]/30 to-transparent" />
                 </div>
@@ -218,7 +216,6 @@ export default function ForCorporatesPage() {
       <section className="py-20 sm:py-28">
         <div className="mx-auto grid max-w-7xl items-center gap-16 px-5 sm:px-8 lg:grid-cols-2">
           <div className="relative overflow-hidden rounded-3xl shadow-2xl">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=900&q=85"
               alt="Medical team in a modern diagnostic centre"

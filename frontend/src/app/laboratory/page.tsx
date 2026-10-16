@@ -60,7 +60,6 @@ export default function LaboratoryPage() {
           left-weighted scrim so it stays legible at every width. */}
       <section className="relative isolate overflow-hidden bg-gradient-to-b from-[#EFF6FF] via-[#F7FBFF] to-white">
         <div className="pointer-events-none absolute inset-y-0 right-0 w-full sm:w-[66%] lg:w-[56%]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={img(HERO_IMAGE)} alt="" className="size-full object-cover object-left" />
           <span className="absolute inset-0 bg-gradient-to-r from-[#EFF6FF] via-[#EFF6FF]/72 to-transparent sm:via-[#EFF6FF]/35 lg:via-transparent" />
         </div>
@@ -157,7 +156,6 @@ export default function LaboratoryPage() {
                       </span>
                     </span>
                   </div>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={img(item.image)}
                     alt={item.name}

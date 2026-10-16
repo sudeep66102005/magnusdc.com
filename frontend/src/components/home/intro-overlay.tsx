@@ -39,7 +39,6 @@ export function IntroOverlay({ assetSrc }: IntroOverlayProps) {
         <span className="cm-pre__corner cm-pre__corner--br" />
 
         <div className="cm-pre__brand">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="cm-pre__mark"
             data-preloader-layer="ghost"
@@ -47,7 +46,6 @@ export function IntroOverlay({ assetSrc }: IntroOverlayProps) {
             alt=""
           />
 
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="cm-pre__mark cm-pre__color" src={assetSrc} alt="" />
 
           <span className="cm-pre__scan" />

@@ -167,7 +167,6 @@ export default function AboutPage() {
             </dl>
           </div>
 
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={BUILDING}
             alt="The Clarus Magnus building in Koramangala, Bengaluru"
@@ -197,7 +196,6 @@ export default function AboutPage() {
       <section id="who-we-are" className="scroll-mt-28 bg-white pb-14 lg:pb-20">
         <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-14">
           <div className="relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={LABORATORY}
               alt="The Clarus Magnus laboratory in Koramangala"
@@ -337,7 +335,6 @@ export default function AboutPage() {
 
       {/* ---- OUR PROMISE ----------------------------------------------- */}
       <section className="relative overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={PROMISE}
           alt=""

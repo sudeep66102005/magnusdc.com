@@ -102,7 +102,7 @@ const whyChooseUs = [
   {
     icon: ShieldCheck,
     title: "Subspecialty Expertise",
-    body: "Musculoskeletal imaging, neuroimaging, body imaging, fetal medicine, women's imaging and emergency radiology are each covered by radiologists working in that area.",
+    body: "Musculoskeletal imaging, neuroimaging, body imaging, fetal medicine, women&apos;s imaging and emergency radiology are each covered by radiologists working in that area.",
   },
   {
     icon: Stethoscope,
@@ -121,7 +121,7 @@ const whatToProvide = [
   "The original radiology report, if available",
   "Relevant medical records",
   "Previous imaging studies for comparison, if available",
-  "Your treating doctor's clinical notes, if available",
+  "Your treating doctor&apos;s clinical notes, if available",
 ];
 
 const faqs = [
@@ -204,7 +204,7 @@ export default function RadiologySecondOpinionPage() {
             <p>
               Reviews are carried out with subspecialty coverage across
               musculoskeletal imaging, neuroimaging, body imaging, fetal medicine,
-              women's imaging and emergency radiology.
+              women&apos;s imaging and emergency radiology.
             </p>
           </div>
         </div>

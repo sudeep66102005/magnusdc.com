@@ -7,8 +7,8 @@ export class Appointment {
   phone: string;
   email?: string;
   department: string;
-  preferredDate: string;
-  preferredTime: string;
+  preferredDate?: string;
+  preferredTime?: string;
   notes?: string;
   status: AppointmentStatus;
   createdAt: string;

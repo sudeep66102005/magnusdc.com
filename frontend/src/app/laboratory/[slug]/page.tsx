@@ -60,7 +60,6 @@ export default async function LabDetailPage({ params }: LabPageProps) {
               </p>
             </div>
 
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={img(item.image)}
               alt={item.name}

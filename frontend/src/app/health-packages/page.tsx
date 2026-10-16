@@ -71,7 +71,6 @@ export default function HealthPackagesPage() {
                 className="group flex flex-col overflow-hidden rounded-[1.5rem] border border-[#142F86]/18 bg-white transition duration-300 hover:-translate-y-1 hover:border-[#31B4F4]/60 hover:shadow-[0_20px_50px_-32px_rgba(20,47,134,0.65)]"
               >
                 <div className="relative h-40 w-full overflow-hidden bg-[#EEF4FF]">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={image.src} alt={image.alt} className="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#142F86]/20 to-transparent" />
                 </div>

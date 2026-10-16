@@ -214,7 +214,6 @@ export function WhyMagnusSlideshow({ variant = "section" }: { variant?: Variant 
               className={`cm-why-mag__shot${shotIndex === index ? " is-on" : ""}`}
             >
               <source media="(min-width: 768px)" srcSet={shot.desktop} />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={shot.mobile} alt="" loading={shotIndex === 0 ? "eager" : "lazy"} decoding="async" />
             </picture>
           ))}

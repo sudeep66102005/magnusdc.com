@@ -256,7 +256,6 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
             square frame. imagePosition overrides this per-doctor — landscape
             sources (e.g. Dr. Ajay Hegde 921x659) set "50% 50%". */}
         {doctor.image ? (
-          // eslint-disable-next-line @next/next/no-img-element
           <img src={photo(doctor.image)} alt={doctor.name} loading="lazy" decoding="async"
             style={{ objectPosition: doctor.imagePosition ?? "50% 15%" }} />
         ) : (

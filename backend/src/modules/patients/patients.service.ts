@@ -1,3 +1,4 @@
+import { RecordsService } from '../../storage/records.service';
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { CreateSupportTicketDto } from './dto/create-support-ticket.dto';
@@ -5,7 +6,7 @@ import { SupportTicket } from './entities/support-ticket.entity';
 
 @Injectable()
 export class PatientsService {
-  private readonly tickets: SupportTicket[] = [];
+  constructor(private readonly records: RecordsService) {}
 
   createSupportTicket(dto: CreateSupportTicketDto): SupportTicket {
     const ticket: SupportTicket = {
@@ -14,11 +15,11 @@ export class PatientsService {
       status: 'open',
       createdAt: new Date().toISOString(),
     };
-    this.tickets.push(ticket);
+    this.records.insert('support', ticket);
     return ticket;
   }
 
   findAll(): SupportTicket[] {
-    return this.tickets;
+    return this.records.list('support');
   }
 }

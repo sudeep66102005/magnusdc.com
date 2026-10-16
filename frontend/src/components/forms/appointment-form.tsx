@@ -15,8 +15,8 @@ import {
 } from "@/lib/forms/lead-delivery";
 
 const appointmentSchema = z.object({
-  patientName: z.string().min(2, "Please enter your full name"),
-  phone: z.string().min(8, "Please enter a valid phone number"),
+  patientName: z.string().trim().max(100).min(2, "Please enter your full name"),
+  phone: z.string().trim().max(25).regex(/^(?=(?:\D*\d){8,15}\D*$)\+?[0-9][0-9 ()-]*[0-9]$/, "Please enter a valid phone number"),
 });
 
 type AppointmentFormValues = z.infer<typeof appointmentSchema>;

@@ -1,3 +1,5 @@
+import { Transform } from 'class-transformer';
+import { MaxLength, Matches, Max } from 'class-validator';
 import {
   IsEmail,
   IsInt,
@@ -9,28 +11,46 @@ import {
 import { Type } from 'class-transformer';
 
 export class CreateCorporateInquiryDto {
+  @Transform(({ value }: { value: unknown }) =>
+    value === '' ? undefined : value,
+  )
+  @IsOptional()
   @IsString()
   @MinLength(2)
-  companyName: string;
+  @MaxLength(100)
+  companyName?: string;
 
   @IsString()
   @MinLength(2)
+  @MaxLength(100)
   contactPerson: string;
 
+  @Transform(({ value }: { value: unknown }) =>
+    value === '' ? undefined : value,
+  )
+  @IsOptional()
   @IsEmail()
-  email: string;
+  @MaxLength(254)
+  email?: string;
 
   @IsString()
-  @MinLength(8)
+  @Matches(/^(?=(?:\D*\d){8,15}\D*$)\+?[0-9][0-9 ()-]*[0-9]$/)
+  @MaxLength(25)
   phone: string;
 
   @IsOptional()
   @Type(() => Number)
   @IsInt()
   @Min(1)
+  @Max(100000)
   employeeCount?: number;
 
+  @Transform(({ value }: { value: unknown }) =>
+    value === '' ? undefined : value,
+  )
+  @IsOptional()
   @IsString()
   @MinLength(10)
-  message: string;
+  @MaxLength(2000)
+  message?: string;
 }

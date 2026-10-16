@@ -36,3 +36,7 @@ lerna-debug.log*
 
 # Vim
 *.swp
+
+/var/
+*.sqlite
+*.sqlite-*

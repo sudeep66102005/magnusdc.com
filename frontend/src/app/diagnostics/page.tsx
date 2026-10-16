@@ -43,7 +43,6 @@ export default function DiagnosticsPage() {
     <>
       <section className="relative isolate overflow-hidden bg-gradient-to-b from-[#EFF6FF] via-[#F7FBFF] to-white">
         <div className="pointer-events-none absolute inset-y-0 right-0 w-full sm:w-[68%] lg:w-[58%]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={heroImage}
             alt=""
