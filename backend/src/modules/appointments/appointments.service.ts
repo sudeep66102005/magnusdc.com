@@ -1,3 +1,4 @@
+import { RecordsService } from '../../storage/records.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
@@ -6,19 +7,21 @@ import { QueueGateway } from '../queue/queue.gateway';
 
 @Injectable()
 export class AppointmentsService {
-  private readonly appointments: Appointment[] = [];
-
-  constructor(private readonly queueGateway: QueueGateway) {}
+  constructor(
+    private readonly queueGateway: QueueGateway,
+    private readonly records: RecordsService,
+  ) {}
 
   create(dto: CreateAppointmentDto): Appointment {
     const appointment: Appointment = {
       id: randomUUID(),
       ...dto,
+      department: dto.department ?? 'general',
       status: 'pending',
       createdAt: new Date().toISOString(),
     };
 
-    this.appointments.push(appointment);
+    this.records.insert('appointment', appointment);
 
     // Notify connected clients (e.g. live queue displays) of the new booking.
     this.queueGateway.emitQueueUpdate({
@@ -30,12 +33,12 @@ export class AppointmentsService {
     return appointment;
   }
 
-  findAll(): Appointment[] {
-    return this.appointments;
+  findAll(offset = 0): Appointment[] {
+    return this.records.list('appointment', offset);
   }
 
   findOne(id: string): Appointment {
-    const appointment = this.appointments.find((item) => item.id === id);
+    const appointment = this.records.get<Appointment>('appointment', id);
     if (!appointment) {
       throw new NotFoundException(`Appointment "${id}" not found`);
     }
@@ -43,7 +46,6 @@ export class AppointmentsService {
   }
 
   private countByDepartment(department: string): number {
-    return this.appointments.filter((item) => item.department === department)
-      .length;
+    return this.records.count('appointment', department);
   }
 }

@@ -1,0 +1,11 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import ts from 'typescript';
+const source=readFileSync('src/lib/forms/safe-metadata.ts','utf8');
+const js=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.ESNext}}).outputText;
+const {safePagePath}=await import('data:text/javascript;base64,'+Buffer.from(js).toString('base64'));
+test('metadata discards tokens and fragments',()=>{assert.equal(safePagePath('https://www.magnusdc.com/contact?token=private#medical-id'),'/contact');assert.equal(safePagePath('invalid'),'/');});
+test('hosting prevents framing and constrains executable origins',()=>{const c=JSON.parse(readFileSync('vercel.json','utf8'));const h=Object.fromEntries(c.headers[0].headers.map(x=>[x.key,x.value]));assert.equal(h['X-Frame-Options'],'DENY');assert.equal(h['X-Content-Type-Options'],'nosniff');assert.match(h['Content-Security-Policy'],/frame-ancestors 'none'/);assert.match(h['Content-Security-Policy'],/object-src 'none'/);assert.ok(!h['Content-Security-Policy'].includes('unpkg'));});
+test('homepage uses vendored modules',()=>{const s=readFileSync('src/app/page.tsx','utf8');assert.ok(!s.includes('unpkg.com'));assert.ok(s.includes('/assets/vendor/three.module.js'));});
+test('Next runtime server routes disabled',()=>assert.match(readFileSync('next.config.ts','utf8'),/output: "export"/));

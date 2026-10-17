@@ -11,8 +11,8 @@ import { DirectContactFallback } from "@/components/forms/direct-contact-fallbac
 import { isLeadBackendConfigured, mailtoFor } from "@/lib/forms/lead-delivery";
 
 const corporateSchema = z.object({
-  contactPerson: z.string().min(2, "Please enter your name"),
-  phone: z.string().min(8, "Please enter a valid phone number"),
+  contactPerson: z.string().trim().max(100).min(2, "Please enter your name"),
+  phone: z.string().trim().max(25).regex(/^(?=(?:\D*\d){8,15}\D*$)\+?[0-9][0-9 ()-]*[0-9]$/, "Please enter a valid phone number"),
 });
 
 type CorporateFormValues = z.infer<typeof corporateSchema>;

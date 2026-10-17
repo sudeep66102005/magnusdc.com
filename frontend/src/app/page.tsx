@@ -1443,7 +1443,7 @@ function initClarus(root){
   if(reduce)return;
   (async()=>{
     let THREE;
-    try{ THREE=await import('https://unpkg.com/three@0.185.1/build/three.module.js'); }
+    try{ THREE=await import(${JSON.stringify(`${BP}/assets/vendor/three.module.js`)}); }
     catch(err){ console.warn('three unavailable',err); return; }
     if(!root.isConnected)return;
     const hx=v=>{const n=parseInt(v.slice(1),16);return [((n>>16)&255)/255,((n>>8)&255)/255,(n&255)/255];};
@@ -1623,7 +1623,6 @@ export default function HomePage() {
 
           {/* Phone only, both of these. */}
           <div className="cm-why__banner">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={WHY.banner} alt="A Clarus Magnus doctor with a young patient" />
             <span className="cm-why__badge" aria-hidden="true">
               <span>Care</span>
@@ -1664,7 +1663,6 @@ export default function HomePage() {
             <article key={card.title} className={`cm-svc${(card as { variant?: string }).variant === "wf" ? " cm-svc--wf" : ""}`}>
               <picture>
                 <source media="(min-width: 768px)" srcSet={card.desktop} />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img className="cm-svc__img" src={card.mobile} alt={card.title} loading="lazy" decoding="async" style={{ objectPosition: (card as { pos?: string }).pos ?? "50% 50%" }} />
               </picture>
               <div className="cm-svc__head">
@@ -1699,7 +1697,6 @@ export default function HomePage() {
       <section id="about" className="cm-about">
         <div className="cm-shell" style={{ height: "100%", position: "relative" }}>
           <div className="cm-about__banner">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={ABOUT.banner} alt="" loading="lazy" decoding="async" />
           </div>
           <div className="cm-about__content">
@@ -1765,7 +1762,6 @@ export default function HomePage() {
             </div>
             <div className="cm-form">
               <span className="cm-form__mark">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={asset("/assets/logo/clarus-magnus-logo.png")} alt={siteConfig.name} loading="lazy" decoding="async" />
               </span>
               <h3>{CONTACT.formTitle}</h3>

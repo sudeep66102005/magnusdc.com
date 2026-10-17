@@ -1,3 +1,4 @@
+import { safePagePath } from "./safe-metadata";
 import { apiClient, API_BASE_URL } from "@/lib/api/client";
 import { siteConfig } from "@/lib/constants/site-config";
 
@@ -88,7 +89,7 @@ export async function submitLead(
         notes: notes || null,
         company_name: payload.companyName || null,
         employee_count: payload.employeeCount || null,
-        page_url: typeof window === "undefined" ? null : window.location.href,
+        page_url: typeof window === "undefined" ? null : safePagePath(window.location.href),
       }),
     });
     if (!response.ok) {
@@ -108,7 +109,7 @@ export async function submitLead(
         ...payload,
         _form: kind,
         _submittedAt: new Date().toISOString(),
-        _page: typeof window === "undefined" ? "" : window.location.href,
+        _page: typeof window === "undefined" ? "" : safePagePath(window.location.href),
       }),
     });
     if (!response.ok) {

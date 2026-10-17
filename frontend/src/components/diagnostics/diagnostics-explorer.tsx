@@ -32,7 +32,6 @@ export function DiagnosticsExplorer() {
             href={`/diagnostics/${item.slug}`}
             className="group relative flex items-stretch gap-5 overflow-hidden rounded-3xl bg-white p-4 shadow-[0_12px_34px_-20px_rgb(20_47_134/0.4)] ring-1 ring-[#142F86]/10 transition hover:shadow-[0_20px_46px_-22px_rgb(20_47_134/0.5)] hover:ring-[#31B4F4]/45 sm:p-5"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={img(item.image)}
               alt={item.name}

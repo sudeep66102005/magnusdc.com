@@ -63,7 +63,6 @@ export default function DiagnosticPartnershipsPage() {
           <div className="relative hidden lg:flex lg:items-end lg:justify-center">
             <div className="relative h-[500px] w-[440px]">
               <div className="absolute inset-0 overflow-hidden rounded-[2.5rem] shadow-2xl">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?w=880&q=85" alt="Lab technician handling diagnostic samples in a modern laboratory" className="h-full w-full object-cover object-center" />
               </div>
               <div className="absolute -left-8 bottom-16 rounded-2xl bg-white p-4 shadow-xl">
@@ -107,7 +106,6 @@ export default function DiagnosticPartnershipsPage() {
               ))}
             </ul>
             <div className="mt-10 overflow-hidden rounded-2xl shadow-lg">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="https://images.unsplash.com/photo-1631815588090-d1bcbe9a8561?w=800&q=80" alt="Healthcare professionals in a meeting discussing diagnostic partnership" className="h-56 w-full object-cover" />
             </div>
           </div>

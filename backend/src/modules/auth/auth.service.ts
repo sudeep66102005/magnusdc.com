@@ -1,46 +1,45 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { scrypt, timingSafeEqual } from 'node:crypto';
+import { promisify } from 'node:util';
 import { LoginDto } from './dto/login.dto';
 import { AuthenticatedUser } from './entities/authenticated-user.entity';
-
-/**
- * Placeholder user store. Replace with a real user repository backed by a
- * database once persistence is introduced. Do not use in production as-is.
- */
-const PLACEHOLDER_USERS: Array<AuthenticatedUser & { password: string }> = [
-  {
-    id: '1',
-    email: 'admin@magnusdc.com',
-    password: 'ChangeMe123!',
-    role: 'admin',
-  },
-];
-
+const derive = promisify(scrypt);
 @Injectable()
 export class AuthService {
-  constructor(private readonly jwtService: JwtService) {}
-
+  constructor(
+    private readonly jwtService: JwtService,
+    private readonly config: ConfigService,
+  ) {}
   async login(dto: LoginDto) {
-    const user = PLACEHOLDER_USERS.find((item) => item.email === dto.email);
-    if (!user || user.password !== dto.password) {
+    const email = this.config.get<string>('ADMIN_EMAIL');
+    const stored = this.config.get<string>('ADMIN_PASSWORD_HASH');
+    // Derive even for an unknown account; no bundled/default account exists.
+    const [, salt, encoded] = (
+      stored ?? `scrypt$${'0'.repeat(32)}$${'0'.repeat(128)}`
+    ).split('$');
+    const actual = (await derive(dto.password, salt, 64)) as Buffer;
+    const valid = timingSafeEqual(actual, Buffer.from(encoded, 'hex'));
+    if (
+      !email ||
+      !stored ||
+      dto.email.toLowerCase() !== email.toLowerCase() ||
+      !valid
+    ) {
       throw new UnauthorizedException('Invalid credentials');
     }
-
-    const payload: AuthenticatedUser = {
-      id: user.id,
-      email: user.email,
-      role: user.role,
-    };
-
-    return {
-      accessToken: await this.jwtService.signAsync(payload),
-      user: payload,
-    };
+    const user = this.validateUserById('clinic-admin')!;
+    return { accessToken: await this.jwtService.signAsync(user), user };
   }
-
   validateUserById(id: string): AuthenticatedUser | null {
-    const user = PLACEHOLDER_USERS.find((item) => item.id === id);
-    if (!user) return null;
-    return { id: user.id, email: user.email, role: user.role };
+    const email = this.config.get<string>('ADMIN_EMAIL');
+    if (
+      id !== 'clinic-admin' ||
+      !email ||
+      !this.config.get<string>('ADMIN_PASSWORD_HASH')
+    )
+      return null;
+    return { id, email, role: 'admin' };
   }
 }

@@ -91,7 +91,6 @@ export default async function DiagnosticDetailPage({ params }: DiagnosticPagePro
 
             {/* This box is landscape, so it takes the wide crop when the entry
                 has one. Everything else falls back to the single image. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={img(item.imageWide ?? item.image)}
               alt={item.name}

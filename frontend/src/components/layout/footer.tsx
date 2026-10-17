@@ -175,7 +175,6 @@ export function Footer() {
                 A plain image on a tinted plate has nothing to fail, and it keeps
                 the real artwork: navy wordmark, red dot, sky tagline. */}
             <div className="relative h-[62px] w-[220px]">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`${basePath}/assets/logo/clarus-magnus-logo-mono.png`}
                 alt="Clarus Magnus Health and Diagnostics"

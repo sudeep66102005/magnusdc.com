@@ -83,7 +83,6 @@ export default async function DoctorProfilePage({ params }: DoctorPageProps) {
           <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-8">
             <div className="size-28 flex-none overflow-hidden rounded-2xl bg-white ring-1 ring-[#142F86]/12 sm:size-36">
               {doctor.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
                 <img
                   src={photo(doctor.image)}
                   alt={doctor.name}
